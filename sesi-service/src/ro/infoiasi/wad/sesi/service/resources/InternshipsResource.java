@@ -22,7 +22,6 @@ public class InternshipsResource {
 
         Internship i = new Internship();
         i.setName("First Internship");
-
         Internship i2 = new Internship();
         i2.setName("Second Internship");
 

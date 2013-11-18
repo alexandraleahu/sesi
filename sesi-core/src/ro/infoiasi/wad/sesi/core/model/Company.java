@@ -10,9 +10,10 @@ import java.util.List;
  * Time: 14:59
  */
 @XmlRootElement
-public class Company {
+public class Company implements Actor, Resource {
     private String name;
     private String description;
+    private int id;
 
     private List<Internship> availableInternships;
 
@@ -38,5 +39,54 @@ public class Company {
 
     public void setAvailableInternships(List<Internship> availableInternships) {
         this.availableInternships = availableInternships;
+    }
+
+    @Override
+    public Role getType() {
+        return Role.COMPANY;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Company company = (Company) o;
+
+        if (id != company.id) return false;
+        if (availableInternships != null ? !availableInternships.equals(company.availableInternships) : company.availableInternships != null)
+            return false;
+        if (description != null ? !description.equals(company.description) : company.description != null) return false;
+        if (name != null ? !name.equals(company.name) : company.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + id;
+        result = 31 * result + (availableInternships != null ? availableInternships.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                ", availableInternships=" + availableInternships +
+                '}';
     }
 }
