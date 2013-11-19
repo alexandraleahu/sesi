@@ -8,7 +8,7 @@ import java.util.List;
 @XmlRootElement // used for XML/JSON (de)serialization
 public class Internship implements Resource {
 
-    private Company company;
+    private int companyId;
     private String name;
     private String description;
     private String city;
@@ -82,12 +82,12 @@ public class Internship implements Resource {
         this.offeringRelocation = offeringRelocation;
     }
 
-    public Company getCompany() {
-        return company;
+    public int getCompanyId() {
+        return companyId;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     @Override
@@ -97,10 +97,10 @@ public class Internship implements Resource {
 
         Internship that = (Internship) o;
 
+        if (companyId != that.companyId) return false;
         if (offeringRelocation != that.offeringRelocation) return false;
         if (openings != that.openings) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
-        if (company != null ? !company.equals(that.company) : that.company != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (period != null ? !period.equals(that.period) : that.period != null) return false;
@@ -112,7 +112,7 @@ public class Internship implements Resource {
 
     @Override
     public int hashCode() {
-        int result = company != null ? company.hashCode() : 0;
+        int result = companyId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
@@ -127,7 +127,7 @@ public class Internship implements Resource {
     @Override
     public String toString() {
         return "Internship{" +
-                "company=" + company +
+                "companyId=" + companyId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", city='" + city + '\'' +
