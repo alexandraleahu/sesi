@@ -16,7 +16,6 @@ public class StudentProfile {
     private String name;
     private String summary;
     private List<Project> projects;
-    private List<Internship> internships;
     private List<Language> languages;
     private List<String> skills;
     private Map<School, String> education; //school + a small description
@@ -29,7 +28,6 @@ public class StudentProfile {
         StudentProfile that = (StudentProfile) o;
 
         if (education != null ? !education.equals(that.education) : that.education != null) return false;
-        if (internships != null ? !internships.equals(that.internships) : that.internships != null) return false;
         if (languages != null ? !languages.equals(that.languages) : that.languages != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (projects != null ? !projects.equals(that.projects) : that.projects != null) return false;
@@ -44,7 +42,6 @@ public class StudentProfile {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (summary != null ? summary.hashCode() : 0);
         result = 31 * result + (projects != null ? projects.hashCode() : 0);
-        result = 31 * result + (internships != null ? internships.hashCode() : 0);
         result = 31 * result + (languages != null ? languages.hashCode() : 0);
         result = 31 * result + (skills != null ? skills.hashCode() : 0);
         result = 31 * result + (education != null ? education.hashCode() : 0);
@@ -74,14 +71,6 @@ public class StudentProfile {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
-    }
-
-    public List<Internship> getInternships() {
-        return internships;
-    }
-
-    public void setInternships(List<Internship> internships) {
-        this.internships = internships;
     }
 
     public List<Language> getLanguages() {
@@ -114,7 +103,6 @@ public class StudentProfile {
                 "name='" + name + '\'' +
                 ", summary='" + summary + '\'' +
                 ", projects=" + projects +
-                ", internships=" + internships +
                 ", languages=" + languages +
                 ", skills=" + skills +
                 ", education=" + education +
