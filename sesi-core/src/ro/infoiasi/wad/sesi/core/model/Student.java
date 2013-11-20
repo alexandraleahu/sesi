@@ -11,7 +11,6 @@ import java.util.List;
  */
 @XmlRootElement
 public class Student implements Actor, Resource {
-    private String name;
     private List<Internship> acceptedTo;
     private List<Internship> signedUpFor;
     private StudentProfile studentProfile;
@@ -26,13 +25,6 @@ public class Student implements Actor, Resource {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public List<Internship> getAcceptedTo() {
         return acceptedTo;
@@ -72,7 +64,6 @@ public class Student implements Actor, Resource {
 
         if (id != student.id) return false;
         if (acceptedTo != null ? !acceptedTo.equals(student.acceptedTo) : student.acceptedTo != null) return false;
-        if (name != null ? !name.equals(student.name) : student.name != null) return false;
         if (signedUpFor != null ? !signedUpFor.equals(student.signedUpFor) : student.signedUpFor != null) return false;
         if (studentProfile != null ? !studentProfile.equals(student.studentProfile) : student.studentProfile != null)
             return false;
@@ -82,8 +73,7 @@ public class Student implements Actor, Resource {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (acceptedTo != null ? acceptedTo.hashCode() : 0);
+        int result = acceptedTo != null ? acceptedTo.hashCode() : 0;
         result = 31 * result + (signedUpFor != null ? signedUpFor.hashCode() : 0);
         result = 31 * result + (studentProfile != null ? studentProfile.hashCode() : 0);
         result = 31 * result + id;
@@ -93,8 +83,7 @@ public class Student implements Actor, Resource {
     @Override
     public String toString() {
         return "Student{" +
-                "name='" + name + '\'' +
-                ", acceptedTo=" + acceptedTo +
+                "acceptedTo=" + acceptedTo +
                 ", signedUpFor=" + signedUpFor +
                 ", studentProfile=" + studentProfile +
                 ", id=" + id +
