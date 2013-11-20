@@ -17,12 +17,14 @@ public class Internship implements Resource {
     private String city;
     private Period period;
     private int openings;
-    private String requirements;
+    private String minimumRequirements;
     private List<String> skills;
+    private List<String> acquiredSkills;
     private boolean offeringRelocation;
     private int id;
     private Category category;
     private int applicantsNo;
+    private int salary;
 
     @Override
     public boolean equals(Object o) {
@@ -36,12 +38,16 @@ public class Internship implements Resource {
         if (id != that.id) return false;
         if (offeringRelocation != that.offeringRelocation) return false;
         if (openings != that.openings) return false;
-        if (category != null ? !category.equals(that.category) : that.category != null) return false;
+        if (salary != that.salary) return false;
+        if (acquiredSkills != null ? !acquiredSkills.equals(that.acquiredSkills) : that.acquiredSkills != null)
+            return false;
+        if (category != that.category) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (minimumRequirements != null ? !minimumRequirements.equals(that.minimumRequirements) : that.minimumRequirements != null)
+            return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (period != null ? !period.equals(that.period) : that.period != null) return false;
-        if (requirements != null ? !requirements.equals(that.requirements) : that.requirements != null) return false;
         if (skills != null ? !skills.equals(that.skills) : that.skills != null) return false;
 
         return true;
@@ -55,13 +61,32 @@ public class Internship implements Resource {
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (period != null ? period.hashCode() : 0);
         result = 31 * result + openings;
-        result = 31 * result + (requirements != null ? requirements.hashCode() : 0);
+        result = 31 * result + (minimumRequirements != null ? minimumRequirements.hashCode() : 0);
         result = 31 * result + (skills != null ? skills.hashCode() : 0);
+        result = 31 * result + (acquiredSkills != null ? acquiredSkills.hashCode() : 0);
         result = 31 * result + (offeringRelocation ? 1 : 0);
         result = 31 * result + id;
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + applicantsNo;
+        result = 31 * result + salary;
         return result;
+    }
+
+    public List<String> getAcquiredSkills() {
+
+        return acquiredSkills;
+    }
+
+    public void setAcquiredSkills(List<String> acquiredSkills) {
+        this.acquiredSkills = acquiredSkills;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     public int getApplicantsNo() {
@@ -129,12 +154,12 @@ public class Internship implements Resource {
         this.openings = openings;
     }
 
-    public String getRequirements() {
-        return requirements;
+    public String getMinimumRequirements() {
+        return minimumRequirements;
     }
 
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
+    public void setMinimumRequirements(String minimumRequirements) {
+        this.minimumRequirements = minimumRequirements;
     }
 
     public List<String> getSkills() {
@@ -170,12 +195,14 @@ public class Internship implements Resource {
                 ", city='" + city + '\'' +
                 ", period=" + period +
                 ", openings=" + openings +
-                ", requirements='" + requirements + '\'' +
+                ", minimumRequirements='" + minimumRequirements + '\'' +
                 ", skills=" + skills +
+                ", acquiredSkills=" + acquiredSkills +
                 ", offeringRelocation=" + offeringRelocation +
                 ", id=" + id +
-                ", category='" + category + '\'' +
+                ", category=" + category +
                 ", applicantsNo=" + applicantsNo +
+                ", salary=" + salary +
                 '}';
     }
 
