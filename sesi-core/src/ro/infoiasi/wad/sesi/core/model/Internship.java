@@ -25,7 +25,6 @@ public class Internship implements Resource {
     private Category category;
     private int applicantsNo;
     private int salary;
-    private List<String> feedbacks;
 
     @Override
     public boolean equals(Object o) {
@@ -45,7 +44,6 @@ public class Internship implements Resource {
         if (category != that.category) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (feedbacks != null ? !feedbacks.equals(that.feedbacks) : that.feedbacks != null) return false;
         if (minimumRequirements != null ? !minimumRequirements.equals(that.minimumRequirements) : that.minimumRequirements != null)
             return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -71,17 +69,7 @@ public class Internship implements Resource {
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + applicantsNo;
         result = 31 * result + salary;
-        result = 31 * result + (feedbacks != null ? feedbacks.hashCode() : 0);
         return result;
-    }
-
-    public List<String> getFeedbacks() {
-
-        return feedbacks;
-    }
-
-    public void setFeedbacks(List<String> feedbacks) {
-        this.feedbacks = feedbacks;
     }
 
     public List<String> getAcquiredSkills() {
@@ -215,7 +203,6 @@ public class Internship implements Resource {
                 ", category=" + category +
                 ", applicantsNo=" + applicantsNo +
                 ", salary=" + salary +
-                ", feedbacks=" + feedbacks +
                 '}';
     }
 
