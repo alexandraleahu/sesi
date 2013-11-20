@@ -4,6 +4,6 @@ import java.io.Serializable;
 
 public interface Actor extends Serializable {
 
-    Role getType();
+    Role getRole();
     int getId();
 }

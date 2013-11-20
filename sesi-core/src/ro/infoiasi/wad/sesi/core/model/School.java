@@ -31,7 +31,7 @@ public class School implements Actor {
     }
 
     @Override
-    public Role getType() {
+    public Role getRole() {
         return Role.SCHOOL;
     }
 

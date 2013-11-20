@@ -42,7 +42,7 @@ public class Company implements Actor, Resource {
     }
 
     @Override
-    public Role getType() {
+    public Role getRole() {
         return Role.COMPANY;
     }
 

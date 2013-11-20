@@ -68,7 +68,7 @@ public class Student implements Actor, Resource {
     }
 
     @Override
-    public Role getType() {
+    public Role getRole() {
         return Role.STUDENT;
     }
 
