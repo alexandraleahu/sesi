@@ -4,7 +4,8 @@ public class Application {
 
     private int id;
     private Internship internship;
-    private Student student;
+    private int studentId;
+    private StudentProfile studentProfile;
     private boolean accepted;
 
     public int getId() {
@@ -23,13 +24,7 @@ public class Application {
         this.internship = internship;
     }
 
-    public Student getStudent() {
-        return student;
-    }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
 
     public boolean isAccepted() {
         return accepted;
@@ -44,7 +39,8 @@ public class Application {
         return "Application{" +
                 "id=" + id +
                 ", internship=" + internship +
-                ", student=" + student +
+                ", studentId=" + studentId +
+                ", studentProfile=" + studentProfile +
                 ", accepted=" + accepted +
                 '}';
     }
@@ -58,8 +54,10 @@ public class Application {
 
         if (accepted != that.accepted) return false;
         if (id != that.id) return false;
+        if (studentId != that.studentId) return false;
         if (internship != null ? !internship.equals(that.internship) : that.internship != null) return false;
-        if (student != null ? !student.equals(that.student) : that.student != null) return false;
+        if (studentProfile != null ? !studentProfile.equals(that.studentProfile) : that.studentProfile != null)
+            return false;
 
         return true;
     }
@@ -68,8 +66,26 @@ public class Application {
     public int hashCode() {
         int result = id;
         result = 31 * result + (internship != null ? internship.hashCode() : 0);
-        result = 31 * result + (student != null ? student.hashCode() : 0);
+        result = 31 * result + studentId;
+        result = 31 * result + (studentProfile != null ? studentProfile.hashCode() : 0);
         result = 31 * result + (accepted ? 1 : 0);
         return result;
+    }
+
+    public int getStudentId() {
+
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public StudentProfile getStudentProfile() {
+        return studentProfile;
+    }
+
+    public void setStudentProfile(StudentProfile studentProfile) {
+        this.studentProfile = studentProfile;
     }
 }
