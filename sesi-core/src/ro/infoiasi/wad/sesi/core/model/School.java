@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Time: 15:00
  */
 @XmlRootElement
-public class School implements Actor {
+public class School implements Actor, Resource{
     private String name;
     private String description;
     private int id;

@@ -1,7 +1,12 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +20,7 @@ public class Company implements Actor, Resource {
     private String description;
     private int id;
 
-    private List<Internship> availableInternships;
+    private Map<Internship, List<Application>> availableInternships;
 
     public String getName() {
         return name;
@@ -33,12 +38,25 @@ public class Company implements Actor, Resource {
         this.description = description;
     }
 
-    public List<Internship> getAvailableInternships() {
+    public Map<Internship, List<Application>> getAvailableInternships() {
         return availableInternships;
     }
 
-    public void setAvailableInternships(List<Internship> availableInternships) {
+    public Set<Internship> getAvailableInternshipsWithoutApplications() {
+        return Sets.newHashSet(availableInternships.keySet());
+    }
+
+    public void setAvailableInternships(Map<Internship, List<Application>> availableInternships) {
         this.availableInternships = availableInternships;
+    }
+
+    public void addInternship(Internship internship) {
+        availableInternships.put(internship, Lists.<Application>newArrayList());
+    }
+
+    public void addApplication(Internship internship, Application application) {
+        List<Application> applications = availableInternships.get(internship);
+        applications.add(application);
     }
 
     @Override
@@ -89,4 +107,6 @@ public class Company implements Actor, Resource {
                 ", availableInternships=" + availableInternships +
                 '}';
     }
+
+
 }
