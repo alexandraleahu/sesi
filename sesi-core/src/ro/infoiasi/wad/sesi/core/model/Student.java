@@ -12,7 +12,7 @@ import java.util.List;
 @XmlRootElement
 public class Student implements Actor, Resource {
     private List<Internship> acceptedTo;
-    private List<Internship> signedUpFor;
+    private List<Internship> pending;
     private StudentProfile studentProfile;
     private int id;
 
@@ -34,12 +34,12 @@ public class Student implements Actor, Resource {
         this.acceptedTo = acceptedTo;
     }
 
-    public List<Internship> getSignedUpFor() {
-        return signedUpFor;
+    public List<Internship> getPending() {
+        return pending;
     }
 
-    public void setSignedUpFor(List<Internship> signedUpFor) {
-        this.signedUpFor = signedUpFor;
+    public void setPending(List<Internship> pending) {
+        this.pending = pending;
     }
 
     public StudentProfile getStudentProfile() {
@@ -64,7 +64,7 @@ public class Student implements Actor, Resource {
 
         if (id != student.id) return false;
         if (acceptedTo != null ? !acceptedTo.equals(student.acceptedTo) : student.acceptedTo != null) return false;
-        if (signedUpFor != null ? !signedUpFor.equals(student.signedUpFor) : student.signedUpFor != null) return false;
+        if (pending != null ? !pending.equals(student.pending) : student.pending != null) return false;
         if (studentProfile != null ? !studentProfile.equals(student.studentProfile) : student.studentProfile != null)
             return false;
 
@@ -74,7 +74,7 @@ public class Student implements Actor, Resource {
     @Override
     public int hashCode() {
         int result = acceptedTo != null ? acceptedTo.hashCode() : 0;
-        result = 31 * result + (signedUpFor != null ? signedUpFor.hashCode() : 0);
+        result = 31 * result + (pending != null ? pending.hashCode() : 0);
         result = 31 * result + (studentProfile != null ? studentProfile.hashCode() : 0);
         result = 31 * result + id;
         return result;
@@ -84,7 +84,7 @@ public class Student implements Actor, Resource {
     public String toString() {
         return "Student{" +
                 "acceptedTo=" + acceptedTo +
-                ", signedUpFor=" + signedUpFor +
+                ", pending=" + pending +
                 ", studentProfile=" + studentProfile +
                 ", id=" + id +
                 '}';
