@@ -12,7 +12,6 @@ import java.util.List;
 @XmlRootElement
 public class Student implements Actor, Resource {
     private String name;
-    private School school;
     private List<Internship> acceptedTo;
     private List<Internship> signedUpFor;
     private StudentProfile studentProfile;
@@ -33,14 +32,6 @@ public class Student implements Actor, Resource {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public School getSchool() {
-        return school;
-    }
-
-    public void setSchool(School school) {
-        this.school = school;
     }
 
     public List<Internship> getAcceptedTo() {
@@ -82,7 +73,6 @@ public class Student implements Actor, Resource {
         if (id != student.id) return false;
         if (acceptedTo != null ? !acceptedTo.equals(student.acceptedTo) : student.acceptedTo != null) return false;
         if (name != null ? !name.equals(student.name) : student.name != null) return false;
-        if (school != null ? !school.equals(student.school) : student.school != null) return false;
         if (signedUpFor != null ? !signedUpFor.equals(student.signedUpFor) : student.signedUpFor != null) return false;
         if (studentProfile != null ? !studentProfile.equals(student.studentProfile) : student.studentProfile != null)
             return false;
@@ -93,7 +83,6 @@ public class Student implements Actor, Resource {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (school != null ? school.hashCode() : 0);
         result = 31 * result + (acceptedTo != null ? acceptedTo.hashCode() : 0);
         result = 31 * result + (signedUpFor != null ? signedUpFor.hashCode() : 0);
         result = 31 * result + (studentProfile != null ? studentProfile.hashCode() : 0);
@@ -105,7 +94,6 @@ public class Student implements Actor, Resource {
     public String toString() {
         return "Student{" +
                 "name='" + name + '\'' +
-                ", school=" + school +
                 ", acceptedTo=" + acceptedTo +
                 ", signedUpFor=" + signedUpFor +
                 ", studentProfile=" + studentProfile +
