@@ -7,12 +7,12 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>StudentsServlet</servlet-name>
     <servlet-class>ro.infoiasi.wad.sesi.server.GreetingServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>StudentsServlet</servlet-name>
     <url-pattern>/sesi/greet</url-pattern>
   </servlet-mapping>
   

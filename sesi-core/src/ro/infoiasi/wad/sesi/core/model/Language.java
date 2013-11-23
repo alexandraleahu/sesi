@@ -10,5 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 //todo check if this is really needed
 @XmlRootElement
-public class Language {
+public enum Language {
+    Romanian,
+    English
 }

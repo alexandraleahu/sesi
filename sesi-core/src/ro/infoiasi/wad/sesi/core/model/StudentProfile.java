@@ -18,6 +18,7 @@ public class StudentProfile {
     private List<Project> projects;
     private List<Language> languages;
     private List<String> skills;
+
     private Map<School, String> education; //school + a small description
 
     @Override
