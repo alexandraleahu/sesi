@@ -2,7 +2,7 @@ package ro.infoiasi.wad.sesi.core.model;
 
 import java.io.Serializable;
 
-public interface Actor extends Serializable {
+public interface User extends Serializable {
 
     Role getRole();
     int getId();

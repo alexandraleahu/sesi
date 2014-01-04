@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Time: 15:00
  */
 @XmlRootElement
-public class School implements Actor, Resource{
+public class School {
     private String name;
     private String description;
     private int id;
@@ -28,16 +28,6 @@ public class School implements Actor, Resource{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public Role getRole() {
-        return Role.SCHOOL;
-    }
-
-    @Override
-    public int getId() {
-        return id;
     }
 
     public void setId(int id) {

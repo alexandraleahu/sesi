@@ -15,7 +15,7 @@ import java.util.Set;
  * Time: 14:59
  */
 @XmlRootElement
-public class Company implements Actor, Resource {
+public class Company implements User, Resource {
     private String name;
     private String description;
     private int id;

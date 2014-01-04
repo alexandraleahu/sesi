@@ -7,7 +7,7 @@ public enum Role {
 
     STUDENT(1),
     COMPANY(2),
-    SCHOOL(3),
+    TEACHER(3),
     ANONYMOUS(0);
 
 
@@ -21,7 +21,7 @@ public enum Role {
         {
             put(1, STUDENT);
             put(2, COMPANY);
-            put(3, SCHOOL);
+            put(3, TEACHER);
             put(0, ANONYMOUS);
         }
     };

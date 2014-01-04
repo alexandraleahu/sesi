@@ -10,7 +10,7 @@ import java.util.List;
  * Time: 14:59
  */
 @XmlRootElement
-public class Student implements Actor, Resource {
+public class Student implements User, Resource {
     private List<Internship> acceptedTo;
     private List<Internship> pending;
     private StudentProfile studentProfile;
