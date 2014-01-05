@@ -15,20 +15,11 @@ import java.util.Set;
  * Time: 14:59
  */
 @XmlRootElement
-public class Company implements User, Resource {
-    private String name;
+public class Company extends BaseExtraInfo implements User, Resource {
     private String description;
     private int id;
 
     private Map<Internship, List<Application>> availableInternships;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;
@@ -84,16 +75,18 @@ public class Company implements User, Resource {
         if (availableInternships != null ? !availableInternships.equals(company.availableInternships) : company.availableInternships != null)
             return false;
         if (description != null ? !description.equals(company.description) : company.description != null) return false;
-        if (name != null ? !name.equals(company.name) : company.name != null) return false;
+        if ( getName() != null ? !getName().equals(company.getName()) : company.getName() != null) return false;
+        if (getInfoUrl() != null ? !getInfoUrl().equals(company.getInfoUrl()) : company.getInfoUrl() != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = getName() != null ? getName().hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + id;
+        result = 31 * result + (getInfoUrl() != null ? getInfoUrl().hashCode() : 0);
         result = 31 * result + (availableInternships != null ? availableInternships.hashCode() : 0);
         return result;
     }
@@ -101,12 +94,12 @@ public class Company implements User, Resource {
     @Override
     public String toString() {
         return "Company{" +
-                "name='" + name + '\'' +
+                "getName()='" + getName() + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
+                ", getInfoUrl()=" + getInfoUrl() +
                 ", availableInternships=" + availableInternships +
                 '}';
     }
-
 
 }

@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Application {
 
     private int id;
-    private int internshipId;
-    private int studentId;
+    private Internship internship;
+    private Student student;
     private boolean accepted;
 
     public int getId() {
@@ -30,8 +30,8 @@ public class Application {
     public String toString() {
         return "Application{" +
                 "id=" + id +
-                ", internshipId=" + internshipId +
-                ", studentId=" + studentId +
+                ", internship=" + internship +
+                ", student=" + student +
                 ", accepted=" + accepted +
                 '}';
     }
@@ -45,8 +45,8 @@ public class Application {
 
         if (accepted != that.accepted) return false;
         if (id != that.id) return false;
-        if (internshipId != that.internshipId) return false;
-        if (studentId != that.studentId) return false;
+        if (internship != that.internship) return false;
+        if (student != that.student) return false;
 
         return true;
     }
@@ -54,28 +54,28 @@ public class Application {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + internshipId;
-        result = 31 * result + studentId;
+        result = 31 * result + internship.hashCode();
+        result = 31 * result + student.hashCode();
         result = 31 * result + (accepted ? 1 : 0);
         return result;
     }
 
-    public int getInternshipId() {
+    public Internship getInternship() {
 
-        return internshipId;
+        return internship;
     }
 
-    public void setInternshipId(int internshipId) {
-        this.internshipId = internshipId;
+    public void setInternship(Internship internship) {
+        this.internship = internship;
     }
 
-    public int getStudentId() {
+    public Student getStudent() {
 
-        return studentId;
+        return student;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
 }
