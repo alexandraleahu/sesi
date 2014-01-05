@@ -22,7 +22,6 @@ public class Teacher implements User, Resource {
         this.description = description;
     }
 
-    @Override
     public String getDescription() {
         return null;
     }

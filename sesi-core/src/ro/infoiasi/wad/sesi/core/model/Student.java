@@ -1,7 +1,7 @@
 package ro.infoiasi.wad.sesi.core.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,8 +11,9 @@ import java.util.List;
  */
 @XmlRootElement
 public class Student implements User, Resource {
-    private List<Internship> acceptedTo;
-    private List<Internship> pending;
+    private Map<Internship, Application> appliedToInternships;
+    private Map<Internship, Progress> inProgressOrFinishedInternships;
+
     private StudentProfile studentProfile;
     private int id;
 
@@ -26,20 +27,20 @@ public class Student implements User, Resource {
     }
 
 
-    public List<Internship> getAcceptedTo() {
-        return acceptedTo;
+    public Map<Internship, Application> getAppliedToInternships() {
+        return appliedToInternships;
     }
 
-    public void setAcceptedTo(List<Internship> acceptedTo) {
-        this.acceptedTo = acceptedTo;
+    public void setAppliedToInternships(Map<Internship, Application> appliedToInternships) {
+        this.appliedToInternships = appliedToInternships;
     }
 
-    public List<Internship> getPending() {
-        return pending;
+    public Map<Internship, Progress> getInProgressOrFinishedInternships() {
+        return inProgressOrFinishedInternships;
     }
 
-    public void setPending(List<Internship> pending) {
-        this.pending = pending;
+    public void setInProgressOrFinishedInternships(Map<Internship, Progress> inProgressOrFinishedInternships) {
+        this.inProgressOrFinishedInternships = inProgressOrFinishedInternships;
     }
 
     public StudentProfile getStudentProfile() {
@@ -51,11 +52,6 @@ public class Student implements User, Resource {
     }
 
     @Override
-    public Role getRole() {
-        return Role.STUDENT;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -63,8 +59,10 @@ public class Student implements User, Resource {
         Student student = (Student) o;
 
         if (id != student.id) return false;
-        if (acceptedTo != null ? !acceptedTo.equals(student.acceptedTo) : student.acceptedTo != null) return false;
-        if (pending != null ? !pending.equals(student.pending) : student.pending != null) return false;
+        if (appliedToInternships != null ? !appliedToInternships.equals(student.appliedToInternships) : student.appliedToInternships != null)
+            return false;
+        if (inProgressOrFinishedInternships != null ? !inProgressOrFinishedInternships.equals(student.inProgressOrFinishedInternships) : student.inProgressOrFinishedInternships != null)
+            return false;
         if (studentProfile != null ? !studentProfile.equals(student.studentProfile) : student.studentProfile != null)
             return false;
 
@@ -73,20 +71,30 @@ public class Student implements User, Resource {
 
     @Override
     public int hashCode() {
-        int result = acceptedTo != null ? acceptedTo.hashCode() : 0;
-        result = 31 * result + (pending != null ? pending.hashCode() : 0);
+        int result = appliedToInternships != null ? appliedToInternships.hashCode() : 0;
+        result = 31 * result + (inProgressOrFinishedInternships != null ? inProgressOrFinishedInternships.hashCode() : 0);
         result = 31 * result + (studentProfile != null ? studentProfile.hashCode() : 0);
         result = 31 * result + id;
         return result;
     }
 
     @Override
+    public String getDescription() {
+        return studentProfile.getSummary();
+    }
+
+    @Override
     public String toString() {
         return "Student{" +
-                "acceptedTo=" + acceptedTo +
-                ", pending=" + pending +
+                "appliedToInternships=" + appliedToInternships +
+                ", inProgressOrFinishedInternships=" + inProgressOrFinishedInternships +
                 ", studentProfile=" + studentProfile +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.STUDENT;
     }
 }

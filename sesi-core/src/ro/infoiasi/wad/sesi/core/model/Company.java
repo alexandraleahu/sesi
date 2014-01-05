@@ -18,8 +18,12 @@ import java.util.Set;
 public class Company extends BaseExtraInfo implements User, Resource {
     private String description;
     private int id;
+    private boolean active;
+    private int communityRating;
 
     private Map<Internship, List<Application>> availableInternships;
+
+    private Map<Internship, List<Progress>> onGoingAndFinishedInternships;
 
     public String getDescription() {
         return description;
@@ -64,6 +68,31 @@ public class Company extends BaseExtraInfo implements User, Resource {
         this.id = id;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getCommunityRating() {
+        return communityRating;
+    }
+
+    public void setCommunityRating(int communityRating) {
+        this.communityRating = communityRating;
+    }
+
+
+    public Map<Internship, List<Progress>> getOnGoingAndFinishedInternships() {
+        return onGoingAndFinishedInternships;
+    }
+
+    public void setOnGoingAndFinishedInternships(Map<Internship, List<Progress>> onGoingAndFinishedInternships) {
+        this.onGoingAndFinishedInternships = onGoingAndFinishedInternships;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,35 +100,38 @@ public class Company extends BaseExtraInfo implements User, Resource {
 
         Company company = (Company) o;
 
+        if (active != company.active) return false;
+        if (communityRating != company.communityRating) return false;
         if (id != company.id) return false;
         if (availableInternships != null ? !availableInternships.equals(company.availableInternships) : company.availableInternships != null)
             return false;
         if (description != null ? !description.equals(company.description) : company.description != null) return false;
-        if ( getName() != null ? !getName().equals(company.getName()) : company.getName() != null) return false;
-        if (getInfoUrl() != null ? !getInfoUrl().equals(company.getInfoUrl()) : company.getInfoUrl() != null) return false;
+        if (onGoingAndFinishedInternships != null ? !onGoingAndFinishedInternships.equals(company.onGoingAndFinishedInternships) : company.onGoingAndFinishedInternships != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = description != null ? description.hashCode() : 0;
         result = 31 * result + id;
-        result = 31 * result + (getInfoUrl() != null ? getInfoUrl().hashCode() : 0);
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + communityRating;
         result = 31 * result + (availableInternships != null ? availableInternships.hashCode() : 0);
+        result = 31 * result + (onGoingAndFinishedInternships != null ? onGoingAndFinishedInternships.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Company{" +
-                "getName()='" + getName() + '\'' +
-                ", description='" + description + '\'' +
+                "description='" + description + '\'' +
                 ", id=" + id +
-                ", getInfoUrl()=" + getInfoUrl() +
+                ", active=" + active +
+                ", communityRating=" + communityRating +
                 ", availableInternships=" + availableInternships +
+                ", onGoingAndFinishedInternships=" + onGoingAndFinishedInternships +
                 '}';
     }
-
 }
