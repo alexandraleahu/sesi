@@ -11,8 +11,8 @@ import java.util.Map;
  */
 @XmlRootElement
 public class Student implements User, Resource {
-    private Map<Internship, Application> appliedToInternships;
-    private Map<Internship, Progress> inProgressOrFinishedInternships;
+    private Map<Internship, InternshipApplication> appliedToInternships;
+    private Map<Internship, InternshipProgress> inProgressOrFinishedInternships;
 
     private StudentProfile studentProfile;
     private int id;
@@ -27,19 +27,19 @@ public class Student implements User, Resource {
     }
 
 
-    public Map<Internship, Application> getAppliedToInternships() {
+    public Map<Internship, InternshipApplication> getAppliedToInternships() {
         return appliedToInternships;
     }
 
-    public void setAppliedToInternships(Map<Internship, Application> appliedToInternships) {
+    public void setAppliedToInternships(Map<Internship, InternshipApplication> appliedToInternships) {
         this.appliedToInternships = appliedToInternships;
     }
 
-    public Map<Internship, Progress> getInProgressOrFinishedInternships() {
+    public Map<Internship, InternshipProgress> getInProgressOrFinishedInternships() {
         return inProgressOrFinishedInternships;
     }
 
-    public void setInProgressOrFinishedInternships(Map<Internship, Progress> inProgressOrFinishedInternships) {
+    public void setInProgressOrFinishedInternships(Map<Internship, InternshipProgress> inProgressOrFinishedInternships) {
         this.inProgressOrFinishedInternships = inProgressOrFinishedInternships;
     }
 

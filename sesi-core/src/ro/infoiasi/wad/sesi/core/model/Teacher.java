@@ -1,10 +1,13 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import java.util.List;
+
 public class Teacher implements User, Resource {
 
     private School school;
     private int id;
     private String description;
+    private List<InternshipProgress> monitoringInternships;
 
     public School getSchool() {
         return school;
@@ -36,6 +39,14 @@ public class Teacher implements User, Resource {
         return id;
     }
 
+    public List<InternshipProgress> getMonitoringInternships() {
+        return monitoringInternships;
+    }
+
+    public void setMonitoringInternships(List<InternshipProgress> monitoringInternships) {
+        this.monitoringInternships = monitoringInternships;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,6 +56,8 @@ public class Teacher implements User, Resource {
 
         if (id != teacher.id) return false;
         if (description != null ? !description.equals(teacher.description) : teacher.description != null) return false;
+        if (monitoringInternships != null ? !monitoringInternships.equals(teacher.monitoringInternships) : teacher.monitoringInternships != null)
+            return false;
         if (school != null ? !school.equals(teacher.school) : teacher.school != null) return false;
 
         return true;
@@ -55,6 +68,7 @@ public class Teacher implements User, Resource {
         int result = school != null ? school.hashCode() : 0;
         result = 31 * result + id;
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (monitoringInternships != null ? monitoringInternships.hashCode() : 0);
         return result;
     }
 
@@ -64,6 +78,7 @@ public class Teacher implements User, Resource {
                 "school=" + school +
                 ", id=" + id +
                 ", description='" + description + '\'' +
+                ", monitoringInternships=" + monitoringInternships +
                 '}';
     }
 }

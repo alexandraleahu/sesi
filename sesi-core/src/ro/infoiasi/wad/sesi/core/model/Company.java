@@ -21,9 +21,9 @@ public class Company extends BaseExtraInfo implements User, Resource {
     private boolean active;
     private int communityRating;
 
-    private Map<Internship, List<Application>> availableInternships;
+    private Map<Internship, List<InternshipApplication>> availableInternships;
 
-    private Map<Internship, List<Progress>> onGoingAndFinishedInternships;
+    private Map<Internship, List<InternshipProgress>> onGoingAndFinishedInternships;
 
     public String getDescription() {
         return description;
@@ -33,7 +33,7 @@ public class Company extends BaseExtraInfo implements User, Resource {
         this.description = description;
     }
 
-    public Map<Internship, List<Application>> getAvailableInternships() {
+    public Map<Internship, List<InternshipApplication>> getAvailableInternships() {
         return availableInternships;
     }
 
@@ -41,16 +41,16 @@ public class Company extends BaseExtraInfo implements User, Resource {
         return Sets.newHashSet(availableInternships.keySet());
     }
 
-    public void setAvailableInternships(Map<Internship, List<Application>> availableInternships) {
+    public void setAvailableInternships(Map<Internship, List<InternshipApplication>> availableInternships) {
         this.availableInternships = availableInternships;
     }
 
     public void addInternship(Internship internship) {
-        availableInternships.put(internship, Lists.<Application>newArrayList());
+        availableInternships.put(internship, Lists.<InternshipApplication>newArrayList());
     }
 
-    public void addApplication(Internship internship, Application application) {
-        List<Application> applications = availableInternships.get(internship);
+    public void addApplication(Internship internship, InternshipApplication application) {
+        List<InternshipApplication> applications = availableInternships.get(internship);
         applications.add(application);
     }
 
@@ -85,11 +85,11 @@ public class Company extends BaseExtraInfo implements User, Resource {
     }
 
 
-    public Map<Internship, List<Progress>> getOnGoingAndFinishedInternships() {
+    public Map<Internship, List<InternshipProgress>> getOnGoingAndFinishedInternships() {
         return onGoingAndFinishedInternships;
     }
 
-    public void setOnGoingAndFinishedInternships(Map<Internship, List<Progress>> onGoingAndFinishedInternships) {
+    public void setOnGoingAndFinishedInternships(Map<Internship, List<InternshipProgress>> onGoingAndFinishedInternships) {
         this.onGoingAndFinishedInternships = onGoingAndFinishedInternships;
     }
 
