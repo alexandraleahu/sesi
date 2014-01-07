@@ -2,7 +2,7 @@ package ro.infoiasi.wad.sesi.core.model;
 
 import java.util.List;
 
-public class Teacher implements User, Resource {
+public class Teacher implements User {
 
     private School school;
     private int id;

@@ -15,7 +15,7 @@ import java.util.Set;
  * Time: 14:59
  */
 @XmlRootElement
-public class Company extends BaseExtraInfo implements User, Resource {
+public class Company extends BaseExtraInfo implements User {
     private String description;
     private int id;
     private boolean active;

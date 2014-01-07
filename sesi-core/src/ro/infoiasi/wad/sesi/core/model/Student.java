@@ -10,7 +10,7 @@ import java.util.Map;
  * Time: 14:59
  */
 @XmlRootElement
-public class Student implements User, Resource {
+public class Student implements User {
     private Map<Internship, InternshipApplication> appliedToInternships;
     private Map<Internship, InternshipProgress> inProgressOrFinishedInternships;
 
