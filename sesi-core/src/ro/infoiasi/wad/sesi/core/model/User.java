@@ -1,9 +1,7 @@
 package ro.infoiasi.wad.sesi.core.model;
 
-import java.io.Serializable;
-
-public interface User extends Serializable {
+public interface User extends Resource {
 
     Role getRole();
-    int getId();
+
 }

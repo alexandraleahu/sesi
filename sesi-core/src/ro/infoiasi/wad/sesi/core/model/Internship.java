@@ -252,4 +252,5 @@ public class Internship implements Resource {
             return getDescription();
         }
     }
+
 }
