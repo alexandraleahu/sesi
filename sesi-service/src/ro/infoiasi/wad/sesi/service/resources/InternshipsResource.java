@@ -16,10 +16,11 @@ public class InternshipsResource {
 
     @GET
     @Path("/")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Internship> getAllInternships(@QueryParam("q") String searchParam,
-                                              @QueryParam("fields") List<String> fields,
-                                              @QueryParam("matching") int studentId) {
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public List<Internship> getAllInternships(
+            @QueryParam("q") String searchParam,
+            @QueryParam("fields") List<String> fields,
+            @QueryParam("matching") int studentId) {
 
         Internship i = new Internship();
         i.setName("First Internship");
@@ -32,12 +33,11 @@ public class InternshipsResource {
         return ImmutableList.of(i, i2);
     }
 
-
     @GET
     @Path("/{id: \\d+}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Internship getInternship(@PathParam("id") int internshipId,
-                                    @QueryParam("fields") List<String> fields) {
+            @QueryParam("fields") List<String> fields) {
 
         Internship i = new Internship();
         i.setName("First Internship");
@@ -48,11 +48,11 @@ public class InternshipsResource {
 
     @GET
     @Path("/{id: \\d+}/applications")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public List<Application> getInternshipStudents(
-                                                @PathParam("id") int internshipId,
-                                                @QueryParam("fields") List<String> fields,
-                                                @QueryParam("accepted") Boolean accepted) {
+            @PathParam("id") int internshipId,
+            @QueryParam("fields") List<String> fields,
+            @QueryParam("accepted") Boolean accepted) {
 
         return null;
     }

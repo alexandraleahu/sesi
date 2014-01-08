@@ -16,16 +16,18 @@ public class StudentsResource {
 
     @GET
     @Path("/{id: \\d+}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response getStudent(@PathParam("id") int studentId,
-                              @QueryParam("fields") List<String> fields) throws URISyntaxException {
+            @QueryParam("fields") List<String> fields)
+            throws URISyntaxException {
 
         Student student = new Student();
         student.setId(1);
         StudentProfile profile = new StudentProfile();
         profile.setName("Ion Popescu");
         profile.setSummary("Interested in Java technologies.");
-        profile.setLanguages(Lists.newArrayList(Language.Romanian, Language.English));
+        profile.setLanguages(Lists.newArrayList(Language.Romanian,
+                Language.English));
         Project project = new Project();
         project.setName("Poshet");
         project.setDescription("POP3 mail client");
@@ -47,8 +49,9 @@ public class StudentsResource {
     @POST
     @Path("/{id: \\d+}/internships")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Internship> applyToInternship(@PathParam("id") int studentId, @FormParam("internshipId") int internshipId) {
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public List<Internship> applyToInternship(@PathParam("id") int studentId,
+            @FormParam("internshipId") int internshipId) {
 
         Internship internship = new Internship();
         internship.setId(internshipId);
