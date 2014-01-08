@@ -1,7 +1,6 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
-import com.google.common.collect.ImmutableList;
-import ro.infoiasi.wad.sesi.core.model.Application;
+import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 
 import javax.ws.rs.*;
@@ -16,43 +15,30 @@ public class InternshipsResource {
 
     @GET
     @Path("/")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Internship> getAllInternships(
-            @QueryParam("q") String searchParam,
-            @QueryParam("fields") List<String> fields,
-            @QueryParam("matching") int studentId) {
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Internship> getAllInternships(@QueryParam("q") String searchParam,
+                                              @QueryParam("fields") List<String> fields,
+                                              @QueryParam("matching") int studentId) {
 
-        Internship i = new Internship();
-        i.setName("First Internship");
-        i.setCompanyId(1);
-
-        Internship i2 = new Internship();
-        i2.setName("Second Internship");
-        i2.setCompanyId(2);
-
-        return ImmutableList.of(i, i2);
+        return null;
     }
+
 
     @GET
     @Path("/{id: \\d+}")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Internship getInternship(@PathParam("id") int internshipId,
-            @QueryParam("fields") List<String> fields) {
-
-        Internship i = new Internship();
-        i.setName("First Internship");
-        i.setCompanyId(1);
-
-        return i;
+                                    @QueryParam("fields") List<String> fields) {
+        return null;
     }
 
     @GET
     @Path("/{id: \\d+}/applications")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Application> getInternshipStudents(
-            @PathParam("id") int internshipId,
-            @QueryParam("fields") List<String> fields,
-            @QueryParam("accepted") Boolean accepted) {
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<InternshipApplication> getInternshipStudents(
+                                                @PathParam("id") int internshipId,
+                                                @QueryParam("fields") List<String> fields,
+                                                @QueryParam("accepted") Boolean accepted) {
 
         return null;
     }

@@ -15,20 +15,15 @@ import java.util.Set;
  * Time: 14:59
  */
 @XmlRootElement
-public class Company implements Actor, Resource {
-    private String name;
+public class Company extends BaseExtraInfo implements User {
     private String description;
     private int id;
+    private boolean active;
+    private int communityRating;
 
-    private Map<Internship, List<Application>> availableInternships;
+    private Map<Internship, List<InternshipApplication>> availableInternships;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Map<Internship, List<InternshipProgress>> onGoingAndFinishedInternships;
 
     public String getDescription() {
         return description;
@@ -38,7 +33,7 @@ public class Company implements Actor, Resource {
         this.description = description;
     }
 
-    public Map<Internship, List<Application>> getAvailableInternships() {
+    public Map<Internship, List<InternshipApplication>> getAvailableInternships() {
         return availableInternships;
     }
 
@@ -46,16 +41,16 @@ public class Company implements Actor, Resource {
         return Sets.newHashSet(availableInternships.keySet());
     }
 
-    public void setAvailableInternships(Map<Internship, List<Application>> availableInternships) {
+    public void setAvailableInternships(Map<Internship, List<InternshipApplication>> availableInternships) {
         this.availableInternships = availableInternships;
     }
 
     public void addInternship(Internship internship) {
-        availableInternships.put(internship, Lists.<Application>newArrayList());
+        availableInternships.put(internship, Lists.<InternshipApplication>newArrayList());
     }
 
-    public void addApplication(Internship internship, Application application) {
-        List<Application> applications = availableInternships.get(internship);
+    public void addApplication(Internship internship, InternshipApplication application) {
+        List<InternshipApplication> applications = availableInternships.get(internship);
         applications.add(application);
     }
 
@@ -73,6 +68,31 @@ public class Company implements Actor, Resource {
         this.id = id;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getCommunityRating() {
+        return communityRating;
+    }
+
+    public void setCommunityRating(int communityRating) {
+        this.communityRating = communityRating;
+    }
+
+
+    public Map<Internship, List<InternshipProgress>> getOnGoingAndFinishedInternships() {
+        return onGoingAndFinishedInternships;
+    }
+
+    public void setOnGoingAndFinishedInternships(Map<Internship, List<InternshipProgress>> onGoingAndFinishedInternships) {
+        this.onGoingAndFinishedInternships = onGoingAndFinishedInternships;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,33 +100,38 @@ public class Company implements Actor, Resource {
 
         Company company = (Company) o;
 
+        if (active != company.active) return false;
+        if (communityRating != company.communityRating) return false;
         if (id != company.id) return false;
         if (availableInternships != null ? !availableInternships.equals(company.availableInternships) : company.availableInternships != null)
             return false;
         if (description != null ? !description.equals(company.description) : company.description != null) return false;
-        if (name != null ? !name.equals(company.name) : company.name != null) return false;
+        if (onGoingAndFinishedInternships != null ? !onGoingAndFinishedInternships.equals(company.onGoingAndFinishedInternships) : company.onGoingAndFinishedInternships != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = description != null ? description.hashCode() : 0;
         result = 31 * result + id;
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + communityRating;
         result = 31 * result + (availableInternships != null ? availableInternships.hashCode() : 0);
+        result = 31 * result + (onGoingAndFinishedInternships != null ? onGoingAndFinishedInternships.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Company{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                "description='" + description + '\'' +
                 ", id=" + id +
+                ", active=" + active +
+                ", communityRating=" + communityRating +
                 ", availableInternships=" + availableInternships +
+                ", onGoingAndFinishedInternships=" + onGoingAndFinishedInternships +
                 '}';
     }
-
-
 }

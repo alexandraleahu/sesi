@@ -13,13 +13,13 @@ import java.util.List;
 public class Project {
     private String name;
     private String description;
-    private List<String> technologies;
+    private List<Technology> technologies;
 
-    public List<String> getTechnologies() {
+    public List<Technology> getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(List<String> technologies) {
+    public void setTechnologies(List<Technology> technologies) {
         this.technologies = technologies;
     }
 
