@@ -15,7 +15,7 @@ import java.util.Set;
  * Time: 14:59
  */
 @XmlRootElement
-public class Company extends BaseExtraInfo implements User {
+public class Company extends BaseExtraInfo implements Resource {
     private String description;
     private int id;
     private boolean active;
@@ -55,11 +55,6 @@ public class Company extends BaseExtraInfo implements User {
     }
 
     @Override
-    public Role getRole() {
-        return Role.COMPANY;
-    }
-
-    @Override
     public int getId() {
         return id;
     }
@@ -80,10 +75,10 @@ public class Company extends BaseExtraInfo implements User {
         return communityRating;
     }
 
+
     public void setCommunityRating(int communityRating) {
         this.communityRating = communityRating;
     }
-
 
     public Map<Internship, List<InternshipProgress>> getOnGoingAndFinishedInternships() {
         return onGoingAndFinishedInternships;

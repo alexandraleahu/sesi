@@ -2,7 +2,7 @@ package ro.infoiasi.wad.sesi.core.model;
 
 import java.util.List;
 
-public class Teacher implements User {
+public class Teacher implements Resource {
 
     private School school;
     private int id;
@@ -27,11 +27,6 @@ public class Teacher implements User {
 
     public String getDescription() {
         return null;
-    }
-
-    @Override
-    public Role getRole() {
-        return Role.TEACHER;
     }
 
     @Override

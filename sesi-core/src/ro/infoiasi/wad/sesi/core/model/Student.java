@@ -10,7 +10,7 @@ import java.util.Map;
  * Time: 14:59
  */
 @XmlRootElement
-public class Student implements User {
+public class Student implements Resource {
     private Map<Internship, InternshipApplication> appliedToInternships;
     private Map<Internship, InternshipProgress> inProgressOrFinishedInternships;
 
@@ -93,8 +93,4 @@ public class Student implements User {
                 '}';
     }
 
-    @Override
-    public Role getRole() {
-        return Role.STUDENT;
-    }
 }

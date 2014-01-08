@@ -2,8 +2,8 @@
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <uri id="Imports Wizard Entry" name="http://usefulinc.com/ns/doap#" uri="http://usefulinc.com/ns/doap"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1389130790414" name="http://schema.org/" uri="schemaorg.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1389130790414" name="http://www.infoiasi.ro/cinema.ro#" uri="cinema.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1389130790414" name="http://www.infoiasi.ro/wad/schemas/sesi" uri="sesi-schema.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1389201649300" name="http://schema.org/" uri="schemaorg.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1389201649300" name="http://www.infoiasi.ro/cinema.ro#" uri="cinema.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1389201649300" name="http://www.infoiasi.ro/wad/schemas/sesi" uri="sesi-schema.owl"/>
     </group>
 </catalog>
