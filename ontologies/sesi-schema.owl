@@ -2,16 +2,15 @@
 
 
 <!DOCTYPE rdf:RDF [
-    <!ENTITY schema "http://schema.org/" >
+    <!ENTITY s "http://schema.org/" >
     <!ENTITY dcterms "http://purl.org/dc/terms/" >
     <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
     <!ENTITY freebase "http://rdf.freebase.com/ns/" >
-    <!ENTITY doap "http://usefulinc.com/ns/doap#" >
     <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
     <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
-    <!ENTITY sesi "http://www.infoiasi.ro/wad/schemas/sesi/" >
+    <!ENTITY sesiSchema "http://www.infoiasi.ro/wad/schemas/sesi/" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
 ]>
 
@@ -19,16 +18,15 @@
 <rdf:RDF xmlns="http://www.infoiasi.ro/wad/schemas/sesi#"
      xml:base="http://www.infoiasi.ro/wad/schemas/sesi"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:foaf="http://xmlns.com/foaf/0.1/"
-     xmlns:sesi="http://www.infoiasi.ro/wad/schemas/sesi/"
-     xmlns:dcterms="http://purl.org/dc/terms/"
-     xmlns:schema="http://schema.org/"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:sesiSchema="http://www.infoiasi.ro/wad/schemas/sesi/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:s="http://schema.org/"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:freebase="http://rdf.freebase.com/ns/"
-     xmlns:doap="http://usefulinc.com/ns/doap#">
+     xmlns:dcterms="http://purl.org/dc/terms/">
     <owl:Ontology rdf:about="http://www.infoiasi.ro/wad/schemas/sesi"/>
     
 
@@ -46,71 +44,160 @@
 
     <!-- http://schema.org/member -->
 
-    <owl:ObjectProperty rdf:about="&schema;member">
+    <owl:ObjectProperty rdf:about="&s;member">
         <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/acquiredTechnicalSkill -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;acquiredTechnicalSkill">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&sesiSchema;technicalSkill"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/applicationInternship -->
 
-    <owl:ObjectProperty rdf:about="&sesi;applicationInternship">
-        <rdfs:range rdf:resource="&sesi;Internship"/>
-        <rdfs:domain rdf:resource="&sesi;InternshipApplicationStatus"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;applicationInternship">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&sesiSchema;Internship"/>
+        <rdfs:domain rdf:resource="&sesiSchema;InternshipApplication"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/associateInternshipTeacher -->
 
-    <owl:ObjectProperty rdf:about="&sesi;associateInternshipTeacher">
-        <rdfs:domain rdf:resource="&sesi;InternshipProgress"/>
-        <owl:inverseOf rdf:resource="&sesi;isAssociateInternshipTeacherOf"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;associateInternshipTeacher">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&sesiSchema;InternshipProgress"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;isAssociateInternshipTeacherOf"/>
         <rdfs:range rdf:resource="&foaf;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/attendanceProgress -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;attendanceProgress">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Internship"/>
+        <rdfs:range rdf:resource="&sesiSchema;InternshipProgress"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;attendedInternship"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/attendedInternship -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;attendedInternship">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&sesiSchema;Internship"/>
+        <rdfs:domain rdf:resource="&sesiSchema;InternshipProgress"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/attendedInternshipProgress -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;attendedInternshipProgress">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&sesiSchema;InternshipProgress"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Student"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;attendeeStudent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/attendeeStudent -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;attendeeStudent">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&sesiSchema;InternshipProgress"/>
+        <rdfs:range rdf:resource="&sesiSchema;Student"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/candidate -->
 
-    <owl:ObjectProperty rdf:about="&sesi;candidate"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;candidate">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&sesiSchema;InternshipApplication"/>
+        <rdfs:range rdf:resource="&sesiSchema;Student"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/category -->
 
-    <owl:ObjectProperty rdf:about="&sesi;category"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;category">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/developedBy -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;developedBy">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&freebase;computer.software"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;workedOnProject"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&sesiSchema;Company"/>
+                    <rdf:Description rdf:about="&foaf;Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/employedTeacher -->
 
-    <owl:ObjectProperty rdf:about="&sesi;employedTeacher">
-        <rdfs:domain rdf:resource="&schema;CollegeOrUniversity"/>
-        <rdfs:range rdf:resource="&sesi;Teacher"/>
-        <owl:inverseOf rdf:resource="&sesi;isTeacherOf"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;employedTeacher">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&s;CollegeOrUniversity"/>
+        <rdfs:range rdf:resource="&sesiSchema;Teacher"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;isTeacherOf"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/enrolledStudent -->
 
-    <owl:ObjectProperty rdf:about="&sesi;enrolledStudent">
-        <rdfs:domain rdf:resource="&schema;CollegeOrUniversity"/>
-        <rdfs:range rdf:resource="&sesi;Student"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;enrolledStudent">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&s;CollegeOrUniversity"/>
+        <rdfs:range rdf:resource="&sesiSchema;Student"/>
     </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/finishedInternships -->
-
-    <owl:ObjectProperty rdf:about="&sesi;finishedInternships"/>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/hasCurrency -->
 
-    <owl:ObjectProperty rdf:about="&sesi;hasCurrency">
+    <owl:ObjectProperty rdf:about="&sesiSchema;hasCurrency">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
         <rdfs:range rdf:resource="&freebase;finance.currency"/>
     </owl:ObjectProperty>
     
@@ -118,24 +205,31 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/hasSalary -->
 
-    <owl:ObjectProperty rdf:about="&sesi;hasSalary">
-        <rdfs:range rdf:resource="&sesi;Salary"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;hasSalary">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&sesiSchema;Salary"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/inCity -->
 
-    <owl:ObjectProperty rdf:about="&sesi;inCity">
-        <rdfs:range rdf:resource="&schema;City"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;inCity">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&freebase;location.citytown"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/isAssociateInternshipTeacherOf -->
 
-    <owl:ObjectProperty rdf:about="&sesi;isAssociateInternshipTeacherOf">
-        <rdfs:range rdf:resource="&sesi;InternshipProgress"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;isAssociateInternshipTeacherOf">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&sesiSchema;InternshipProgress"/>
         <rdfs:domain rdf:resource="&foaf;Person"/>
     </owl:ObjectProperty>
     
@@ -143,57 +237,131 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/isStudentOf -->
 
-    <owl:ObjectProperty rdf:about="&sesi;isStudentOf">
-        <rdfs:range rdf:resource="&schema;CollegeOrUniversity"/>
-        <rdfs:subPropertyOf rdf:resource="&schema;member"/>
-        <rdfs:domain rdf:resource="&sesi;Student"/>
-        <owl:inverseOf rdf:resource="&sesi;enrolledStudent"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;isStudentOf">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&s;CollegeOrUniversity"/>
+        <rdfs:subPropertyOf rdf:resource="&s;member"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Student"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;enrolledStudent"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/isTeacherOf -->
 
-    <owl:ObjectProperty rdf:about="&sesi;isTeacherOf">
-        <rdfs:range rdf:resource="&schema;CollegeOrUniversity"/>
-        <rdfs:subPropertyOf rdf:resource="&schema;member"/>
-        <rdfs:domain rdf:resource="&sesi;Teacher"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;isTeacherOf">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&s;CollegeOrUniversity"/>
+        <rdfs:subPropertyOf rdf:resource="&s;member"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Teacher"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/level -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;level">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&sesiSchema;KnowledgeLevel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/preferedTechnicalSkill -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;preferedTechnicalSkill">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&sesiSchema;technicalSkill"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/programmingLanguageUsed -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;programmingLanguageUsed">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&freebase;computer.programming_language"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/publishedByCompany -->
 
-    <owl:ObjectProperty rdf:about="&sesi;publishedByCompany">
+    <owl:ObjectProperty rdf:about="&sesiSchema;publishedByCompany">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
-        <rdfs:range rdf:resource="&sesi;Company"/>
-        <rdfs:domain rdf:resource="&sesi;Internship"/>
-        <owl:inverseOf rdf:resource="&sesi;publishedInternship"/>
+        <rdfs:range rdf:resource="&sesiSchema;Company"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Internship"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;publishedInternship"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/publishedInternship -->
 
-    <owl:ObjectProperty rdf:about="&sesi;publishedInternship">
+    <owl:ObjectProperty rdf:about="&sesiSchema;publishedInternship">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
         <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
-        <rdfs:domain rdf:resource="&sesi;Company"/>
-        <rdfs:range rdf:resource="&sesi;Internship"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Company"/>
+        <rdfs:range rdf:resource="&sesiSchema;Internship"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/receivedApplication -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;receivedApplication">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Internship"/>
+        <rdfs:range rdf:resource="&sesiSchema;InternshipApplication"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;applicationInternship"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/status -->
 
-    <owl:ObjectProperty rdf:about="&sesi;status"/>
+    <owl:ObjectProperty rdf:about="&sesiSchema;status">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+    </owl:ObjectProperty>
     
 
 
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/technology -->
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/submittedApplication -->
 
-    <owl:ObjectProperty rdf:about="&sesi;technology">
+    <owl:ObjectProperty rdf:about="&sesiSchema;submittedApplication">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&sesiSchema;InternshipApplication"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Student"/>
+        <owl:inverseOf rdf:resource="&sesiSchema;candidate"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/technicalSkill -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;technicalSkill">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="&sesiSchema;SoftwareSkill"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/technologyUsed -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;technologyUsed">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
         <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
         <rdfs:range rdf:resource="&freebase;computer.software"/>
@@ -203,11 +371,18 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/workedOnProject -->
 
-    <owl:ObjectProperty rdf:about="&sesi;workedOnProject">
+    <owl:ObjectProperty rdf:about="&sesiSchema;workedOnProject">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
         <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
-        <rdfs:range rdf:resource="&doap;Project"/>
-        <rdfs:domain rdf:resource="&sesi;Student"/>
+        <rdfs:range rdf:resource="&freebase;computer.software"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&sesiSchema;Company"/>
+                    <rdf:Description rdf:about="&foaf;Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
     </owl:ObjectProperty>
     
 
@@ -253,29 +428,17 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/acquiredSkill -->
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/acquiredGeneralSkills -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;acquiredSkill">
-        <rdfs:domain rdf:resource="&sesi;Internship"/>
-        <rdfs:subPropertyOf rdf:resource="&sesi;skill"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/applicantsCount -->
-
-    <owl:DatatypeProperty rdf:about="&sesi;applicantsCount">
-        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="&sesi;Internship"/>
-        <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
+    <owl:DatatypeProperty rdf:about="&sesiSchema;acquiredGeneralSkills">
+        <rdfs:subPropertyOf rdf:resource="&sesiSchema;generalSkill"/>
     </owl:DatatypeProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/communityRating -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;communityRating">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;communityRating">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
     </owl:DatatypeProperty>
@@ -284,7 +447,15 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/feedback -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;feedback">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;feedback">
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/generalSkill -->
+
+    <owl:DatatypeProperty rdf:about="&sesiSchema;generalSkill">
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
@@ -292,7 +463,7 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/grade -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;grade">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;grade">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
     </owl:DatatypeProperty>
@@ -301,7 +472,7 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/id -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;id">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;id">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:range rdf:resource="&xsd;integer"/>
     </owl:DatatypeProperty>
@@ -310,7 +481,7 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/isActive -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;isActive">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;isActive">
         <rdfs:range rdf:resource="&xsd;boolean"/>
     </owl:DatatypeProperty>
     
@@ -318,8 +489,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/minimumRequirement -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;minimumRequirement">
-        <rdfs:domain rdf:resource="&sesi;Internship"/>
+    <owl:DatatypeProperty rdf:about="&sesiSchema;minimumRequirement">
+        <rdfs:domain rdf:resource="&sesiSchema;Internship"/>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
@@ -327,7 +498,7 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/name -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;name">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;name">
         <rdfs:label>name</rdfs:label>
         <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
@@ -336,7 +507,7 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/numericalValue -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;numericalValue">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;numericalValue">
         <rdfs:range rdf:resource="&xsd;decimal"/>
     </owl:DatatypeProperty>
     
@@ -344,9 +515,9 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/offersRelocation -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;offersRelocation">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;offersRelocation">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="&sesi;Internship"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Internship"/>
         <rdfs:range rdf:resource="&xsd;boolean"/>
     </owl:DatatypeProperty>
     
@@ -354,36 +525,36 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/openingsCount -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;openingsCount">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;openingsCount">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="&sesi;Internship"/>
+        <rdfs:domain rdf:resource="&sesiSchema;Internship"/>
         <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/preferedSkill -->
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/preferedGeneralSkill -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;preferedSkill">
-        <rdfs:domain rdf:resource="&sesi;Internship"/>
-        <rdfs:subPropertyOf rdf:resource="&sesi;skill"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
+    <owl:DatatypeProperty rdf:about="&sesiSchema;preferedGeneralSkill">
+        <rdfs:subPropertyOf rdf:resource="&sesiSchema;generalSkill"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/repository -->
+
+    <owl:DatatypeProperty rdf:about="&sesiSchema;repository">
+        <rdfs:domain rdf:resource="&freebase;computer.software"/>
+        <rdfs:range rdf:resource="&xsd;anyURI"/>
     </owl:DatatypeProperty>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/sesiUrl -->
 
-    <owl:DatatypeProperty rdf:about="&sesi;sesiUrl">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;sesiUrl">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:range rdf:resource="&xsd;anyURI"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/skill -->
-
-    <owl:DatatypeProperty rdf:about="&sesi;skill">
-        <rdfs:range rdf:resource="&xsd;string"/>
     </owl:DatatypeProperty>
     
 
@@ -399,11 +570,84 @@
     
 
 
+    <!-- http://rdf.freebase.com/ns/computer.programming_language -->
+
+    <owl:Class rdf:about="&freebase;computer.programming_language">
+        <rdfs:label xml:lang="en">ProgrammingLanguage</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/computer/programming_language</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
     <!-- http://rdf.freebase.com/ns/computer.software -->
 
     <owl:Class rdf:about="&freebase;computer.software">
-        <rdfs:label>Technology</rdfs:label>
-        <rdfs:seeAlso rdf:resource="http://www.freebase.com/computer/software"/>
+        <rdfs:label>SoftwareTechnology</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;developedBy"/>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&sesiSchema;Company"/>
+                            <rdf:Description rdf:about="&foaf;Person"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&dc;description"/>
+                <owl:allValuesFrom rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;programmingLanguageUsed"/>
+                <owl:someValuesFrom rdf:resource="&freebase;computer.programming_language"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;repository"/>
+                <owl:someValuesFrom rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&dc;description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;technologyUsed"/>
+                <owl:allValuesFrom rdf:resource="&freebase;computer.software"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;developedBy"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&sesiSchema;Company"/>
+                            <rdf:Description rdf:about="&foaf;Person"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;programmingLanguageUsed"/>
+                <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/computer/software</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -416,138 +660,126 @@
     
 
 
-    <!-- http://rdf.freebase.com/ns/time.event -->
+    <!-- http://rdf.freebase.com/ns/location.citytown -->
 
-    <owl:Class rdf:about="&freebase;time.event">
-        <rdfs:label>Event</rdfs:label>
-        <rdfs:seeAlso rdf:resource="http://www.freebase.com/time/event"/>
+    <owl:Class rdf:about="&freebase;location.citytown">
+        <rdfs:label xml:lang="en">City</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/location/citytown</rdfs:seeAlso>
     </owl:Class>
     
 
 
-    <!-- http://schema.org/City -->
+    <!-- http://rdf.freebase.com/ns/time.event -->
 
-    <owl:Class rdf:about="&schema;City">
-        <rdfs:seeAlso rdf:resource="&schema;City"/>
+    <owl:Class rdf:about="&freebase;time.event">
+        <rdfs:label>Event</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/time/event</rdfs:seeAlso>
     </owl:Class>
     
 
 
     <!-- http://schema.org/CollegeOrUniversity -->
 
-    <owl:Class rdf:about="&schema;CollegeOrUniversity">
+    <owl:Class rdf:about="&s;CollegeOrUniversity">
         <rdfs:label>School</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://www.infoiasi.ro/wad/schemas/sesi#Resource"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;enrolledStudent"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Student"/>
+                <owl:onProperty rdf:resource="&sesiSchema;enrolledStudent"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Student"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;employedTeacher"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Teacher"/>
+                <owl:onProperty rdf:resource="&sesiSchema;name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:seeAlso rdf:resource="&schema;CollegeOrUniversity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;employedTeacher"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Teacher"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;name"/>
+                <owl:allValuesFrom rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
 
     <!-- http://schema.org/Corporation -->
 
-    <owl:Class rdf:about="&schema;Corporation">
-        <rdfs:seeAlso rdf:resource="&schema;Corporation"/>
-    </owl:Class>
-    
-
-
-    <!-- http://usefulinc.com/ns/doap#Project -->
-
-    <owl:Class rdf:about="&doap;Project">
-        <rdfs:label>SoftwareProject</rdfs:label>
-    </owl:Class>
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi#Resource -->
-
-    <owl:Class rdf:about="http://www.infoiasi.ro/wad/schemas/sesi#Resource">
-        <rdfs:label xml:lang="en">Resource</rdfs:label>
+    <owl:Class rdf:about="&s;Corporation">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;sesiUrl"/>
-                <owl:allValuesFrom rdf:resource="&xsd;anyURI"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;id"/>
-                <owl:allValuesFrom rdf:resource="&xsd;integer"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;sesiUrl"/>
+                <owl:onProperty rdf:resource="&sesiSchema;name"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;id"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;integer"/>
+                <owl:onProperty rdf:resource="&sesiSchema;name"/>
+                <owl:allValuesFrom rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:comment xml:lang="en">A resource is an entity that is uniquely defined within our application and is returned by several methods of our service.</rdfs:comment>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&dc;description"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/Company -->
 
-    <owl:Class rdf:about="&sesi;Company">
-        <rdfs:subClassOf rdf:resource="&schema;Corporation"/>
-        <rdfs:subClassOf rdf:resource="http://www.infoiasi.ro/wad/schemas/sesi#Resource"/>
+    <owl:Class rdf:about="&sesiSchema;Company">
+        <rdfs:subClassOf rdf:resource="&s;Corporation"/>
+        <rdfs:subClassOf rdf:resource="&sesiSchema;Resource"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;communityRating"/>
-                <owl:allValuesFrom rdf:resource="&xsd;nonNegativeInteger"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;publishedInternship"/>
-                <owl:onClass rdf:resource="&sesi;Internship"/>
+                <owl:onProperty rdf:resource="&sesiSchema;publishedInternship"/>
+                <owl:onClass rdf:resource="&sesiSchema;Internship"/>
                 <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;isActive"/>
+                <owl:onProperty rdf:resource="&sesiSchema;communityRating"/>
+                <owl:allValuesFrom rdf:resource="&xsd;nonNegativeInteger"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;isActive"/>
                 <owl:allValuesFrom rdf:resource="&xsd;boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;publishedInternship"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Internship"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;communityRating"/>
-                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;nonNegativeInteger"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;isActive"/>
+                <owl:onProperty rdf:resource="&sesiSchema;isActive"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;publishedInternship"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Internship"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;communityRating"/>
+                <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;nonNegativeInteger"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -556,58 +788,80 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/Internship -->
 
-    <owl:Class rdf:about="&sesi;Internship">
+    <owl:Class rdf:about="&sesiSchema;Internship">
         <rdfs:subClassOf rdf:resource="&freebase;time.event"/>
-        <rdfs:subClassOf rdf:resource="http://www.infoiasi.ro/wad/schemas/sesi#Resource"/>
+        <rdfs:subClassOf rdf:resource="&sesiSchema;Resource"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;hasSalary"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Salary"/>
+                <owl:onProperty rdf:resource="&sesiSchema;openingsCount"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;nonNegativeInteger"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;offersRelocation"/>
+                <owl:onProperty rdf:resource="&freebase;time.event.end_date"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&freebase;time.event.end_date"/>
+                <owl:allValuesFrom rdf:resource="&xsd;dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;offersRelocation"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;offersRelocation"/>
+                <owl:onProperty rdf:resource="&sesiSchema;acquiredTechnicalSkill"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;SoftwareSkill"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;acquiredTechnicalSkill"/>
+                <owl:onClass rdf:resource="&sesiSchema;SoftwareSkill"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;category"/>
+                <owl:someValuesFrom rdf:resource="&sesiSchema;SoftwareCategory"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&freebase;time.event.start_date"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;publishedByCompany"/>
+                <owl:onClass rdf:resource="&sesiSchema;Company"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;offersRelocation"/>
                 <owl:allValuesFrom rdf:resource="&xsd;boolean"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;publishedByCompany"/>
-                <owl:onClass rdf:resource="&sesi;Company"/>
+                <owl:onProperty rdf:resource="&sesiSchema;hasSalary"/>
+                <owl:onClass rdf:resource="&sesiSchema;Salary"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;hasSalary"/>
-                <owl:onClass rdf:resource="&sesi;Salary"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;acquiredSkill"/>
-                <owl:someValuesFrom rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;publishedByCompany"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Company"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;openingsCount"/>
-                <owl:allValuesFrom rdf:resource="&xsd;nonNegativeInteger"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -618,54 +872,53 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;applicantsCount"/>
+                <owl:onProperty rdf:resource="&sesiSchema;preferedGeneralSkill"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;attendanceProgress"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;InternshipProgress"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;receivedApplication"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;InternshipApplication"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;openingsCount"/>
                 <owl:allValuesFrom rdf:resource="&xsd;nonNegativeInteger"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&freebase;time.event.end_date"/>
-                <owl:allValuesFrom rdf:resource="&xsd;dateTime"/>
+                <owl:onProperty rdf:resource="&sesiSchema;preferedTechnicalSkill"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;SoftwareSkill"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&freebase;time.event.end_date"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
+                <owl:onProperty rdf:resource="&sesiSchema;hasSalary"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Salary"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&freebase;time.event.start_date"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
+                <owl:onProperty rdf:resource="&sesiSchema;preferedTechnicalSkill"/>
+                <owl:onClass rdf:resource="&sesiSchema;SoftwareSkill"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;applicantsCount"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;nonNegativeInteger"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;openingsCount"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;nonNegativeInteger"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;preferedSkill"/>
-                <owl:someValuesFrom rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;category"/>
-                <owl:someValuesFrom rdf:resource="&sesi;SoftwareCategory"/>
+                <owl:onProperty rdf:resource="&sesiSchema;acquiredGeneralSkills"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -674,45 +927,52 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/InternshipApplication -->
 
-    <owl:Class rdf:about="&sesi;InternshipApplication">
-        <rdfs:subClassOf rdf:resource="http://www.infoiasi.ro/wad/schemas/sesi#Resource"/>
+    <owl:Class rdf:about="&sesiSchema;InternshipApplication">
+        <rdfs:subClassOf rdf:resource="&sesiSchema;Resource"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;status"/>
-                <owl:allValuesFrom rdf:resource="&sesi;InternshipApplicationStatus"/>
+                <owl:onProperty rdf:resource="&sesiSchema;feedback"/>
+                <owl:allValuesFrom rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;status"/>
-                <owl:onClass rdf:resource="&sesi;InternshipApplicationStatus"/>
+                <owl:onProperty rdf:resource="&sesiSchema;status"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;InternshipApplicationStatus"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;candidate"/>
+                <owl:onClass rdf:resource="&sesiSchema;Student"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;candidate"/>
-                <owl:onClass rdf:resource="&sesi;Student"/>
+                <owl:onProperty rdf:resource="&sesiSchema;applicationInternship"/>
+                <owl:onClass rdf:resource="&sesiSchema;Internship"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;applicationInternship"/>
-                <owl:onClass rdf:resource="&sesi;Internship"/>
+                <owl:onProperty rdf:resource="&sesiSchema;status"/>
+                <owl:onClass rdf:resource="&sesiSchema;InternshipApplicationStatus"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;applicationInternship"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Internship"/>
+                <owl:onProperty rdf:resource="&sesiSchema;candidate"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Student"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;candidate"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Student"/>
+                <owl:onProperty rdf:resource="&sesiSchema;feedback"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -721,13 +981,13 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/InternshipApplicationStatus -->
 
-    <owl:Class rdf:about="&sesi;InternshipApplicationStatus">
+    <owl:Class rdf:about="&sesiSchema;InternshipApplicationStatus">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:oneOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&sesi;accepted"/>
-                    <rdf:Description rdf:about="&sesi;pending"/>
-                    <rdf:Description rdf:about="&sesi;rejected"/>
+                    <rdf:Description rdf:about="&sesiSchema;accepted"/>
+                    <rdf:Description rdf:about="&sesiSchema;pending"/>
+                    <rdf:Description rdf:about="&sesiSchema;rejected"/>
                 </owl:oneOf>
             </owl:Class>
         </owl:equivalentClass>
@@ -738,83 +998,83 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/InternshipProgress -->
 
-    <owl:Class rdf:about="&sesi;InternshipProgress">
-        <rdfs:subClassOf rdf:resource="http://www.infoiasi.ro/wad/schemas/sesi#Resource"/>
+    <owl:Class rdf:about="&sesiSchema;InternshipProgress">
+        <rdfs:subClassOf rdf:resource="&sesiSchema;Resource"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;status"/>
-                <owl:allValuesFrom rdf:resource="&sesi;InternshipProgressStatus"/>
+                <owl:onProperty rdf:resource="&sesiSchema;feedback"/>
+                <owl:allValuesFrom rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;associateInternshipTeacher"/>
-                <owl:onClass rdf:resource="&sesi;Teacher"/>
+                <owl:onProperty rdf:resource="&sesiSchema;status"/>
+                <owl:onClass rdf:resource="&sesiSchema;InternshipProgressStatus"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;grade"/>
+                <owl:onProperty rdf:resource="&sesiSchema;associateInternshipTeacher"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Teacher"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;attendedInternship"/>
+                <owl:onClass rdf:resource="&sesiSchema;Internship"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;attendedInternship"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Internship"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;attendeeStudent"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Student"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;feedback"/>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;associateInternshipTeacher"/>
+                <owl:onClass rdf:resource="&sesiSchema;Teacher"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;attendeeStudent"/>
+                <owl:onClass rdf:resource="&sesiSchema;Student"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;grade"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;candidate"/>
-                <owl:onClass rdf:resource="&sesi;Student"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;candidate"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Student"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;associateInternshipTeacher"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Teacher"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;grade"/>
+                <owl:onProperty rdf:resource="&sesiSchema;grade"/>
                 <owl:allValuesFrom rdf:resource="&xsd;integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;feedback"/>
-                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;feedback"/>
-                <owl:allValuesFrom rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;applicationInternship"/>
-                <owl:allValuesFrom rdf:resource="&sesi;Internship"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;status"/>
-                <owl:onClass rdf:resource="&sesi;InternshipProgressStatus"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;applicationInternship"/>
-                <owl:onClass rdf:resource="&sesi;Internship"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&sesiSchema;status"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;InternshipProgressStatus"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -823,12 +1083,30 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/InternshipProgressStatus -->
 
-    <owl:Class rdf:about="&sesi;InternshipProgressStatus">
+    <owl:Class rdf:about="&sesiSchema;InternshipProgressStatus">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:oneOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&sesi;finished"/>
-                    <rdf:Description rdf:about="&sesi;inProgress"/>
+                    <rdf:Description rdf:about="&sesiSchema;finished"/>
+                    <rdf:Description rdf:about="&sesiSchema;inProgress"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">This resource describes the progress of a student that is working or has worked in an internship, together with a feedback, a grade and a teacher that supervizes his project</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/KnowledgeLevel -->
+
+    <owl:Class rdf:about="&sesiSchema;KnowledgeLevel">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&sesiSchema;proficient"/>
+                    <rdf:Description rdf:about="&sesiSchema;basic"/>
+                    <rdf:Description rdf:about="&sesiSchema;intermediate"/>
+                    <rdf:Description rdf:about="&sesiSchema;advanced"/>
                 </owl:oneOf>
             </owl:Class>
         </owl:equivalentClass>
@@ -836,33 +1114,68 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/Salary -->
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/Resource -->
 
-    <owl:Class rdf:about="&sesi;Salary">
+    <owl:Class rdf:about="&sesiSchema;Resource">
+        <rdfs:label xml:lang="en">Resource</rdfs:label>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;hasCurrency"/>
-                <owl:allValuesFrom rdf:resource="&freebase;finance.currency"/>
+                <owl:onProperty rdf:resource="&sesiSchema;id"/>
+                <owl:allValuesFrom rdf:resource="&xsd;integer"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;numericalValue"/>
+                <owl:onProperty rdf:resource="&sesiSchema;id"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;sesiUrl"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;sesiUrl"/>
+                <owl:allValuesFrom rdf:resource="&xsd;anyURI"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A resource is an entity that is uniquely defined by an id within our application and is returned by several methods of our service.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/Salary -->
+
+    <owl:Class rdf:about="&sesiSchema;Salary">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;numericalValue"/>
+                <owl:allValuesFrom rdf:resource="&xsd;decimal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;numericalValue"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;decimal"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;hasCurrency"/>
-                <owl:onClass rdf:resource="&freebase;finance.currency"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&sesiSchema;hasCurrency"/>
+                <owl:allValuesFrom rdf:resource="&freebase;finance.currency"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;numericalValue"/>
-                <owl:allValuesFrom rdf:resource="&xsd;decimal"/>
+                <owl:onProperty rdf:resource="&sesiSchema;hasCurrency"/>
+                <owl:onClass rdf:resource="&freebase;finance.currency"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -871,21 +1184,21 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/SoftwareCategory -->
 
-    <owl:Class rdf:about="&sesi;SoftwareCategory">
+    <owl:Class rdf:about="&sesiSchema;SoftwareCategory">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:oneOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&sesi;cloudComputing"/>
-                    <rdf:Description rdf:about="&sesi;databases"/>
-                    <rdf:Description rdf:about="&sesi;qualityAssurance"/>
-                    <rdf:Description rdf:about="&sesi;webDev"/>
-                    <rdf:Description rdf:about="&sesi;businessSoftware"/>
-                    <rdf:Description rdf:about="&sesi;gaming"/>
-                    <rdf:Description rdf:about="&sesi;embedded"/>
-                    <rdf:Description rdf:about="&sesi;mobile"/>
-                    <rdf:Description rdf:about="&sesi;bigData"/>
-                    <rdf:Description rdf:about="&sesi;management"/>
-                    <rdf:Description rdf:about="&sesi;artificialIntelligence"/>
+                    <rdf:Description rdf:about="&sesiSchema;cloudComputing"/>
+                    <rdf:Description rdf:about="&sesiSchema;databases"/>
+                    <rdf:Description rdf:about="&sesiSchema;qualityAssurance"/>
+                    <rdf:Description rdf:about="&sesiSchema;webDev"/>
+                    <rdf:Description rdf:about="&sesiSchema;businessSoftware"/>
+                    <rdf:Description rdf:about="&sesiSchema;gaming"/>
+                    <rdf:Description rdf:about="&sesiSchema;embedded"/>
+                    <rdf:Description rdf:about="&sesiSchema;mobile"/>
+                    <rdf:Description rdf:about="&sesiSchema;bigData"/>
+                    <rdf:Description rdf:about="&sesiSchema;management"/>
+                    <rdf:Description rdf:about="&sesiSchema;artificialIntelligence"/>
                 </owl:oneOf>
             </owl:Class>
         </owl:equivalentClass>
@@ -893,40 +1206,120 @@
     
 
 
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/SoftwareSkill -->
+
+    <owl:Class rdf:about="&sesiSchema;SoftwareSkill">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;level"/>
+                <owl:onClass rdf:resource="&sesiSchema;KnowledgeLevel"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&sesiSchema;programmingLanguageUsed"/>
+                                <owl:allValuesFrom rdf:resource="&freebase;computer.programming_language"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&sesiSchema;programmingLanguageUsed"/>
+                                <owl:onClass rdf:resource="&freebase;computer.programming_language"/>
+                                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&sesiSchema;technologyUsed"/>
+                                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&sesiSchema;technologyUsed"/>
+                                <owl:allValuesFrom rdf:resource="&freebase;computer.software"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&sesiSchema;programmingLanguageUsed"/>
+                                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:cardinality>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&sesiSchema;technologyUsed"/>
+                                <owl:onClass rdf:resource="&freebase;computer.software"/>
+                                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/Student -->
 
-    <owl:Class rdf:about="&sesi;Student">
-        <rdfs:subClassOf rdf:resource="http://www.infoiasi.ro/wad/schemas/sesi#Resource"/>
+    <owl:Class rdf:about="&sesiSchema;Student">
+        <rdfs:subClassOf rdf:resource="&sesiSchema;Resource"/>
         <rdfs:subClassOf rdf:resource="&foaf;Person"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;name"/>
-                <owl:allValuesFrom rdf:resource="&xsd;string"/>
+                <owl:onProperty rdf:resource="&sesiSchema;isStudentOf"/>
+                <owl:onClass rdf:resource="&s;CollegeOrUniversity"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;isStudentOf"/>
-                <owl:allValuesFrom rdf:resource="&schema;CollegeOrUniversity"/>
+                <owl:onProperty rdf:resource="&sesiSchema;isStudentOf"/>
+                <owl:allValuesFrom rdf:resource="&s;CollegeOrUniversity"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;name"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onProperty rdf:resource="&sesiSchema;attendedInternshipProgress"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;InternshipProgress"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;workedOnProject"/>
+                <owl:allValuesFrom rdf:resource="&freebase;computer.software"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;technicalSkill"/>
+                <owl:onClass rdf:resource="&sesiSchema;SoftwareSkill"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;workedOnProject"/>
+                <owl:someValuesFrom rdf:resource="&sesiSchema;StudentProject"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;generalSkill"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;skill"/>
-                <owl:someValuesFrom rdf:resource="&xsd;string"/>
+                <owl:onProperty rdf:resource="&sesiSchema;submittedApplication"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;InternshipApplication"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;workedOnProject"/>
-                <owl:someValuesFrom rdf:resource="&sesi;StudentProject"/>
+                <owl:onProperty rdf:resource="&sesiSchema;technicalSkill"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;SoftwareSkill"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -935,18 +1328,13 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/StudentProject -->
 
-    <owl:Class rdf:about="&sesi;StudentProject">
-        <rdfs:subClassOf rdf:resource="&doap;Project"/>
+    <owl:Class rdf:about="&sesiSchema;StudentProject">
+        <rdfs:subClassOf rdf:resource="&freebase;computer.software"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;technology"/>
-                <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;technology"/>
-                <owl:someValuesFrom rdf:resource="&freebase;computer.software"/>
+                <owl:onProperty rdf:resource="&sesiSchema;developedBy"/>
+                <owl:onClass rdf:resource="&sesiSchema;Student"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>A software project that a student has worked on</rdfs:comment>
@@ -956,33 +1344,33 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/Teacher -->
 
-    <owl:Class rdf:about="&sesi;Teacher">
-        <rdfs:subClassOf rdf:resource="http://www.infoiasi.ro/wad/schemas/sesi#Resource"/>
+    <owl:Class rdf:about="&sesiSchema;Teacher">
+        <rdfs:subClassOf rdf:resource="&sesiSchema;Resource"/>
         <rdfs:subClassOf rdf:resource="&foaf;Person"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;isTeacherOf"/>
-                <owl:allValuesFrom rdf:resource="&schema;CollegeOrUniversity"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;isAssociateInternshipTeacherOf"/>
-                <owl:onClass rdf:resource="&sesi;InternshipProgress"/>
+                <owl:onProperty rdf:resource="&sesiSchema;isTeacherOf"/>
+                <owl:onClass rdf:resource="&s;CollegeOrUniversity"/>
                 <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;isAssociateInternshipTeacherOf"/>
-                <owl:allValuesFrom rdf:resource="&sesi;InternshipProgress"/>
+                <owl:onProperty rdf:resource="&sesiSchema;isAssociateInternshipTeacherOf"/>
+                <owl:onClass rdf:resource="&sesiSchema;InternshipProgress"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesi;isTeacherOf"/>
-                <owl:onClass rdf:resource="&schema;CollegeOrUniversity"/>
-                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onProperty rdf:resource="&sesiSchema;isTeacherOf"/>
+                <owl:allValuesFrom rdf:resource="&s;CollegeOrUniversity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;isAssociateInternshipTeacherOf"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;InternshipProgress"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -992,7 +1380,20 @@
     <!-- http://xmlns.com/foaf/0.1/Person -->
 
     <owl:Class rdf:about="&foaf;Person">
-        <rdfs:seeAlso rdf:resource="http://xmlns.com/foaf/spec/#term_Person"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;name"/>
+                <owl:allValuesFrom rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://xmlns.com/foaf/spec/#term_Person</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -1010,26 +1411,42 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/accepted -->
 
-    <owl:NamedIndividual rdf:about="&sesi;accepted">
-        <rdf:type rdf:resource="&sesi;InternshipApplicationStatus"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;accepted">
+        <rdf:type rdf:resource="&sesiSchema;InternshipApplicationStatus"/>
         <rdfs:comment xml:lang="en">This application was accepted by the owning company</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/advanced -->
+
+    <owl:NamedIndividual rdf:about="&sesiSchema;advanced">
+        <rdf:type rdf:resource="&sesiSchema;KnowledgeLevel"/>
     </owl:NamedIndividual>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/artificialIntelligence -->
 
-    <owl:NamedIndividual rdf:about="&sesi;artificialIntelligence">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;artificialIntelligence">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Artificial Intelligence</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/basic -->
+
+    <owl:NamedIndividual rdf:about="&sesiSchema;basic">
+        <rdf:type rdf:resource="&sesiSchema;KnowledgeLevel"/>
     </owl:NamedIndividual>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/bigData -->
 
-    <owl:NamedIndividual rdf:about="&sesi;bigData">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;bigData">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Big Data</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1037,8 +1454,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/businessSoftware -->
 
-    <owl:NamedIndividual rdf:about="&sesi;businessSoftware">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;businessSoftware">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Business Software</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1046,8 +1463,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/cloudComputing -->
 
-    <owl:NamedIndividual rdf:about="&sesi;cloudComputing">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;cloudComputing">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Cloud Computing and Networking</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1055,8 +1472,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/databases -->
 
-    <owl:NamedIndividual rdf:about="&sesi;databases">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;databases">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Database Administration</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1064,8 +1481,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/embedded -->
 
-    <owl:NamedIndividual rdf:about="&sesi;embedded">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;embedded">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Embedded Software</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1073,8 +1490,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/finished -->
 
-    <owl:NamedIndividual rdf:about="&sesi;finished">
-        <rdf:type rdf:resource="&sesi;InternshipProgressStatus"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;finished">
+        <rdf:type rdf:resource="&sesiSchema;InternshipProgressStatus"/>
         <rdfs:comment xml:lang="en">The internship is finish (past its end date)</rdfs:comment>
     </owl:NamedIndividual>
     
@@ -1082,8 +1499,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/gaming -->
 
-    <owl:NamedIndividual rdf:about="&sesi;gaming">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;gaming">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Gaming and Graphics</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1091,17 +1508,25 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/inProgress -->
 
-    <owl:NamedIndividual rdf:about="&sesi;inProgress">
-        <rdf:type rdf:resource="&sesi;InternshipProgressStatus"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;inProgress">
+        <rdf:type rdf:resource="&sesiSchema;InternshipProgressStatus"/>
         <rdfs:comment xml:lang="en">The internship is in progress (between its start date and end date)</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/intermediate -->
+
+    <owl:NamedIndividual rdf:about="&sesiSchema;intermediate">
+        <rdf:type rdf:resource="&sesiSchema;KnowledgeLevel"/>
     </owl:NamedIndividual>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/management -->
 
-    <owl:NamedIndividual rdf:about="&sesi;management">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;management">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">IT Project Management and Consulting</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1109,8 +1534,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/mobile -->
 
-    <owl:NamedIndividual rdf:about="&sesi;mobile">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;mobile">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Mobile Development</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1118,17 +1543,25 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/pending -->
 
-    <owl:NamedIndividual rdf:about="&sesi;pending">
-        <rdf:type rdf:resource="&sesi;InternshipApplicationStatus"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;pending">
+        <rdf:type rdf:resource="&sesiSchema;InternshipApplicationStatus"/>
         <rdfs:comment xml:lang="en">This application has not yet received an answer from the owning company</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/proficient -->
+
+    <owl:NamedIndividual rdf:about="&sesiSchema;proficient">
+        <rdf:type rdf:resource="&sesiSchema;KnowledgeLevel"/>
     </owl:NamedIndividual>
     
 
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/qualityAssurance -->
 
-    <owl:NamedIndividual rdf:about="&sesi;qualityAssurance">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;qualityAssurance">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Quality Assurance</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1136,8 +1569,8 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/rejected -->
 
-    <owl:NamedIndividual rdf:about="&sesi;rejected">
-        <rdf:type rdf:resource="&sesi;InternshipApplicationStatus"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;rejected">
+        <rdf:type rdf:resource="&sesiSchema;InternshipApplicationStatus"/>
         <rdfs:comment xml:lang="en">This application has been rejected by the owning company</rdfs:comment>
     </owl:NamedIndividual>
     
@@ -1145,10 +1578,81 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/webDev -->
 
-    <owl:NamedIndividual rdf:about="&sesi;webDev">
-        <rdf:type rdf:resource="&sesi;SoftwareCategory"/>
+    <owl:NamedIndividual rdf:about="&sesiSchema;webDev">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCategory"/>
         <rdfs:label xml:lang="en">Web Development</rdfs:label>
     </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesiSchema;artificialIntelligence"/>
+            <rdf:Description rdf:about="&sesiSchema;bigData"/>
+            <rdf:Description rdf:about="&sesiSchema;businessSoftware"/>
+            <rdf:Description rdf:about="&sesiSchema;cloudComputing"/>
+            <rdf:Description rdf:about="&sesiSchema;databases"/>
+            <rdf:Description rdf:about="&sesiSchema;embedded"/>
+            <rdf:Description rdf:about="&sesiSchema;gaming"/>
+            <rdf:Description rdf:about="&sesiSchema;management"/>
+            <rdf:Description rdf:about="&sesiSchema;mobile"/>
+            <rdf:Description rdf:about="&sesiSchema;qualityAssurance"/>
+            <rdf:Description rdf:about="&sesiSchema;webDev"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesiSchema;finished"/>
+            <rdf:Description rdf:about="&sesiSchema;inProgress"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesiSchema;accepted"/>
+            <rdf:Description rdf:about="&sesiSchema;pending"/>
+            <rdf:Description rdf:about="&sesiSchema;rejected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesiSchema;advanced"/>
+            <rdf:Description rdf:about="&sesiSchema;basic"/>
+            <rdf:Description rdf:about="&sesiSchema;intermediate"/>
+            <rdf:Description rdf:about="&sesiSchema;proficient"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;computer.programming_language"/>
+            <rdf:Description rdf:about="&freebase;finance.currency"/>
+            <rdf:Description rdf:about="&freebase;location.citytown"/>
+            <rdf:Description rdf:about="&s;CollegeOrUniversity"/>
+            <rdf:Description rdf:about="&sesiSchema;Company"/>
+            <rdf:Description rdf:about="&sesiSchema;Internship"/>
+            <rdf:Description rdf:about="&sesiSchema;InternshipApplicationStatus"/>
+            <rdf:Description rdf:about="&sesiSchema;InternshipProgressStatus"/>
+            <rdf:Description rdf:about="&sesiSchema;KnowledgeLevel"/>
+            <rdf:Description rdf:about="&sesiSchema;Salary"/>
+            <rdf:Description rdf:about="&sesiSchema;SoftwareCategory"/>
+            <rdf:Description rdf:about="&sesiSchema;SoftwareSkill"/>
+            <rdf:Description rdf:about="&sesiSchema;Student"/>
+            <rdf:Description rdf:about="&sesiSchema;StudentProject"/>
+            <rdf:Description rdf:about="&sesiSchema;Teacher"/>
+        </owl:members>
+    </rdf:Description>
 </rdf:RDF>
 
 

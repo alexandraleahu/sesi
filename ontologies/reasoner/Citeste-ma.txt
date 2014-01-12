@@ -1,0 +1,46 @@
+Aceste exemple ilustreaza maniera de realizare a deductiilor
+pe baza rationamentului automat facilitat de logicile descrierii.
+
+Folosind ontologia SWonto.owl in cadrul mediului Protege 4.x,
+in tab-ul DL Query pot fi formulate diverse "interogari"
+(adica realizarea de rationamente automate).
+
+In prealabil, se va activa reasoner-ul -- in acest caz, HermiT --
+in meniul Reasoner. Pot fi folosite in mod dinamic mai multe instrumente
+de efectuare a rationamentelor (reasoners).
+
+O serie de exemplificari de rationamente recurgand la sintaxa Manchester
+(pentru detalii, a se (re)vedea prezentarea aferenta cursului):
+			Multimedia
+			Proprietar
+			not Femeie
+			Femeie and not Barbat
+			detine some Multimedia and Femeie
+			detine some Multimedia and Barbat
+			Multimedia and detinutDe some Femeie
+			Multimedia and detinutDe value anca			
+			(Audio or Video or LumiVirtuale) and detinutDe some Femeie
+			detinutDe value eugen
+			(detinutDe value eugen) or (detine some Audio)
+			rudaCu some Femeie
+			rudaCu some Barbat and detine min 1 Video
+			rudaCu some Barbat and detine min 1 Audio 			
+
+Instrumentul Protege este disponibil liber la 
+http://protege.stanford.edu/overview/protege-owl.html
+
+Explicatii privind speciile de logici ale descrierii pot fi furnizate la adresa
+http://www.cs.man.ac.uk/~ezolin/dl/
+
+Ca exercitiu util, folositi un sistem de reasoning intr-un program propriu, 
+pe baza unui framework precum Apache Jena: https://jena.apache.org/
+Pentru detalii de interes, consultati https://jena.apache.org/documentation/ontology/
+
+Un alt experiment presupune realizarea deductiilor logice in cadrul instrumentului
+Fluent Editor 2: http://www.cognitum.eu/semantics/FluentEditor2/
+
+Permisiunile de utilizare sunt cele stipulate de Creative Commons 
+Attribution-NonCommercial-ShareAlike 3.0 License: 
+http://creativecommons.org/licenses/
+
+Ultima actualizare: 09 decembrie 2013

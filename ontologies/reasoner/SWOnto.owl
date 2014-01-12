@@ -1,0 +1,350 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY SWOnto "http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#"
+     xml:base="http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:SWOnto="http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="">
+        <rdfs:label rdf:datatype="&xsd;string"
+            >Ontologie demonstrativa folosita pentru exemplificarea unor concepte discutate la cursul &#39;Semantic Web&#39;.</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">SWOnto</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2009</dc:date>
+        <dc:creator rdf:datatype="&xsd;string">Sabin Buraga</dc:creator>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="&dc;date"/>
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#areGen -->
+
+    <owl:ObjectProperty rdf:about="#areGen">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="#Gen"/>
+        <rdfs:domain rdf:resource="#Persoana"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#detine -->
+
+    <owl:ObjectProperty rdf:about="#detine">
+        <rdfs:range rdf:resource="#Multimedia"/>
+        <rdfs:domain rdf:resource="#Proprietar"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#detinutDe -->
+
+    <owl:ObjectProperty rdf:about="#detinutDe">
+        <owl:inverseOf rdf:resource="#detine"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#rudaCu -->
+
+    <owl:ObjectProperty rdf:about="#rudaCu">
+        <rdf:type rdf:resource="&owl;ReflexiveProperty"/>
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:range rdf:resource="#Persoana"/>
+        <rdfs:domain rdf:resource="#Persoana"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#areVarsta -->
+
+    <owl:DatatypeProperty rdf:about="#areVarsta">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#Persoana"/>
+        <rdfs:range rdf:resource="&xsd;positiveInteger"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#dimensiune -->
+
+    <owl:DatatypeProperty rdf:about="#dimensiune">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#Multimedia"/>
+        <rdfs:range rdf:resource="&xsd;unsignedLong"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Audio -->
+
+    <owl:Class rdf:about="#Audio">
+        <rdfs:subClassOf rdf:resource="#Multimedia"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Barbat -->
+
+    <owl:Class rdf:about="#Barbat">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#areGen"/>
+                <owl:hasValue rdf:resource="#Masculin"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#Persoana"/>
+        <owl:disjointWith rdf:resource="#Femeie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Femeie -->
+
+    <owl:Class rdf:about="#Femeie">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#areGen"/>
+                <owl:hasValue rdf:resource="#Feminin"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#Persoana"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Gen -->
+
+    <owl:Class rdf:about="#Gen">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <owl:disjointWith rdf:resource="#Multimedia"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Specifica genul unei persoane.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#LumiVirtuale -->
+
+    <owl:Class rdf:about="#LumiVirtuale">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <owl:disjointWith rdf:resource="#Proprietar"/>
+        <owl:disjointWith rdf:resource="#Video"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Multimedia -->
+
+    <owl:Class rdf:about="#Multimedia">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <owl:disjointWith rdf:resource="#Proprietar"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Clasa resurselor multimedia, include sub-clase specifice.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Persoana -->
+
+    <owl:Class rdf:about="#Persoana">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Clasa persoanelor.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Proprietar -->
+
+    <owl:Class rdf:about="#Proprietar">
+        <rdfs:subClassOf rdf:resource="#Persoana"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Video -->
+
+    <owl:Class rdf:about="#Video">
+        <rdfs:subClassOf rdf:resource="#Multimedia"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Feminin -->
+
+    <owl:Thing rdf:about="#Feminin">
+        <rdf:type rdf:resource="#Gen"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#Masculin -->
+
+    <Gen rdf:about="#Masculin">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </Gen>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#anca -->
+
+    <owl:Thing rdf:about="#anca">
+        <rdf:type rdf:resource="#Femeie"/>
+        <areVarsta rdf:datatype="&xsd;byte">24</areVarsta>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Individ de tip &#39;Femeie&#39;, care detine diverse resurse multimedia, are o anumita varsta si e ruda cu alte persoane.</rdfs:comment>
+        <detine rdf:resource="#the_wall"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#ancuta -->
+
+    <owl:Thing rdf:about="#ancuta">
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >&#39;Ancuta&#39; este un individ identic cu &#39;Anca&#39;.</rdfs:comment>
+        <owl:sameAs rdf:resource="#anca"/>
+        <rudaCu rdf:resource="#eugen"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#eugen -->
+
+    <Barbat rdf:about="#eugen">
+        <rdf:type rdf:resource="&owl;Thing"/>
+        <detine rdf:resource="#zidul"/>
+    </Barbat>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#the_eye -->
+
+    <owl:Thing rdf:about="#the_eye">
+        <rdf:type rdf:resource="#Audio"/>
+        <detinutDe rdf:resource="#anca"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#the_wall -->
+
+    <owl:Thing rdf:about="#the_wall">
+        <rdf:type rdf:resource="#Video"/>
+        <dimensiune rdf:datatype="&xsd;unsignedLong">600</dimensiune>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Un film de Pink Floyd</rdfs:comment>
+        <detinutDe rdf:resource="#ancuta"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl#zidul -->
+
+    <Video rdf:about="#zidul">
+        <rdf:type rdf:resource="&owl;Thing"/>
+        <rdfs:comment rdf:datatype="&xsd;string"
+            >Un film din Romania.</rdfs:comment>
+    </Video>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#zidul"/>
+            <rdf:Description rdf:about="#the_wall"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 2.2.1.1138) http://owlapi.sourceforge.net -->
+
