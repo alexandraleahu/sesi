@@ -1,0 +1,324 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY s "http://schema.org/" >
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY freebase "http://rdf.freebase.com/ns/" >
+    <!ENTITY doap "http://usefulinc.com/ns/doap#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY sesiSchema "http://www.infoiasi.ro/wad/schemas/sesi/" >
+    <!ENTITY sesi "http://www.infoiasi.ro/wad/objects/sesi/" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.infoiasi.ro/wad/objects/sesi#"
+     xml:base="http://www.infoiasi.ro/wad/objects/sesi"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:sesi="http://www.infoiasi.ro/wad/objects/sesi/"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:sesiSchema="http://www.infoiasi.ro/wad/schemas/sesi/"
+     xmlns:s="http://schema.org/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:freebase="http://rdf.freebase.com/ns/"
+     xmlns:doap="http://usefulinc.com/ns/doap#">
+    <owl:Ontology rdf:about="http://www.infoiasi.ro/wad/objects/sesi">
+        <owl:imports rdf:resource="http://www.infoiasi.ro/wad/schemas/sesi"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://rdf.freebase.com/ns/m.01fhg3 -->
+
+    <owl:NamedIndividual rdf:about="&freebase;m.01fhg3">
+        <rdf:type rdf:resource="&freebase;location.citytown"/>
+        <rdfs:label xml:lang="en">Iasi</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/01fhg3</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://rdf.freebase.com/ns/m.02l6h -->
+
+    <owl:NamedIndividual rdf:about="&freebase;m.02l6h">
+        <rdf:type rdf:resource="&freebase;finance.currency"/>
+        <rdfs:label>EURO</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/02l6h</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://rdf.freebase.com/ns/m.07657k -->
+
+    <owl:NamedIndividual rdf:about="&freebase;m.07657k">
+        <rdf:type rdf:resource="&freebase;computer.programming_language"/>
+        <rdfs:label>C#</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/07657k</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://rdf.freebase.com/ns/m.07sbkfb -->
+
+    <owl:NamedIndividual rdf:about="&freebase;m.07sbkfb">
+        <rdf:type rdf:resource="&freebase;computer.programming_language"/>
+        <rdfs:label>Java</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/07sbkfb</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://rdf.freebase.com/ns/m.0945q0 -->
+
+    <owl:NamedIndividual rdf:about="&freebase;m.0945q0">
+        <rdf:type rdf:resource="&freebase;education.university"/>
+        <rdfs:label>Al.I.Cuza</rdfs:label>
+        <sesiSchema:name rdf:datatype="&xsd;string">Alexandru Ioan Cuza University</sesiSchema:name>
+        <sesiSchema:siteUrl rdf:datatype="&xsd;anyURI">http://uaic.ro/uaic/bin/view/Main/WebHome</sesiSchema:siteUrl>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/0945q0</rdfs:seeAlso>
+        <sesiSchema:inCity rdf:resource="&freebase;m.01fhg3"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://rdf.freebase.com/ns/m.0bs6x -->
+
+    <owl:NamedIndividual rdf:about="&freebase;m.0bs6x">
+        <rdf:type rdf:resource="&freebase;computer.software"/>
+        <rdfs:label>JavaEE</rdfs:label>
+        <dc:description rdf:datatype="&xsd;string">A Java platform for building strong web applications</dc:description>
+        <sesiSchema:name rdf:datatype="&xsd;string">Java Enterprise Edition</sesiSchema:name>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/0bs6x</rdfs:seeAlso>
+        <sesiSchema:programmingLanguageUsed rdf:resource="&freebase;m.07sbkfb"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/001 -->
+
+    <owl:NamedIndividual rdf:about="&sesi;001">
+        <rdf:type rdf:resource="&sesiSchema;Student"/>
+        <rdfs:label xml:lang="en">IonPopescu</rdfs:label>
+        <sesiSchema:id rdf:datatype="&xsd;integer">1</sesiSchema:id>
+        <sesiSchema:generalSkill rdf:datatype="&xsd;string">Team player</sesiSchema:generalSkill>
+        <dc:description>Ambitious student, looking to work mainly with .NET technologies</dc:description>
+        <sesiSchema:sesiUrl>/students/1</sesiSchema:sesiUrl>
+        <sesiSchema:name>Ion Popescu</sesiSchema:name>
+        <sesiSchema:workedOnProject rdf:resource="&sesi;005"/>
+        <sesiSchema:technicalSkill rdf:resource="&sesi;JavaIntermediate"/>
+        <sesiSchema:hasStudies rdf:resource="&sesi;studies007"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/002 -->
+
+    <owl:NamedIndividual rdf:about="&sesi;002">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCompany"/>
+        <rdfs:label xml:lang="en">VirtualComp</rdfs:label>
+        <sesiSchema:id rdf:datatype="&xsd;integer">2</sesiSchema:id>
+        <dc:description rdf:datatype="&xsd;string">A company dealing with Java technologies, for business clients.</dc:description>
+        <sesiSchema:name rdf:datatype="&xsd;string">VirtualComp</sesiSchema:name>
+        <sesiSchema:siteUrl rdf:datatype="&xsd;anyURI">http://virtualcomp.ro</sesiSchema:siteUrl>
+        <sesiSchema:isActive rdf:datatype="&xsd;boolean">true</sesiSchema:isActive>
+        <sesiSchema:sesiUrl>/companies/2</sesiSchema:sesiUrl>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/003 -->
+
+    <owl:NamedIndividual rdf:about="&sesi;003">
+        <rdf:type rdf:resource="&sesiSchema;Internship"/>
+        <rdfs:label xml:lang="en">Java_Web_Internship</rdfs:label>
+        <freebase:time.event.start_date rdf:datatype="&xsd;dateTime">2014-07-14T10:00:00</freebase:time.event.start_date>
+        <freebase:time.event.end_date rdf:datatype="&xsd;dateTime">2014-09-14T18:00:00</freebase:time.event.end_date>
+        <sesiSchema:id rdf:datatype="&xsd;integer">3</sesiSchema:id>
+        <sesiSchema:openingsCount rdf:datatype="&xsd;nonNegativeInteger">5</sesiSchema:openingsCount>
+        <sesiSchema:acquiredGeneralSkills rdf:datatype="&xsd;string">Agile Methodology</sesiSchema:acquiredGeneralSkills>
+        <sesiSchema:name rdf:datatype="&xsd;string">Java Internship for Web</sesiSchema:name>
+        <sesiSchema:preferedGeneralSkill rdf:datatype="&xsd;string">Team player</sesiSchema:preferedGeneralSkill>
+        <dc:description rdf:datatype="&xsd;string">This internship consists of developing new modules to our existing Java EE web application</dc:description>
+        <sesiSchema:offersRelocation rdf:datatype="&xsd;boolean">false</sesiSchema:offersRelocation>
+        <sesiSchema:sesiUrl>/internships/3</sesiSchema:sesiUrl>
+        <sesiSchema:inCity rdf:resource="&freebase;m.01fhg3"/>
+        <sesiSchema:publishedByCompany rdf:resource="&sesi;002"/>
+        <sesiSchema:preferedTechnicalSkill rdf:resource="&sesi;JavaEEBeginner"/>
+        <sesiSchema:acquiredTechnicalSkill rdf:resource="&sesi;JavaEEIntermediate"/>
+        <sesiSchema:preferedTechnicalSkill rdf:resource="&sesi;JavaIntermediate"/>
+        <sesiSchema:offersSalary rdf:resource="&sesi;Java_Web_Internship_Salary"/>
+        <sesiSchema:category rdf:resource="&sesiSchema;businessSoftware"/>
+        <sesiSchema:category rdf:resource="&sesiSchema;webDev"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/004 -->
+
+    <owl:NamedIndividual rdf:about="&sesi;004">
+        <rdf:type rdf:resource="&sesiSchema;InternshipApplication"/>
+        <rdfs:label xml:lang="en">004</rdfs:label>
+        <sesiSchema:id rdf:datatype="&xsd;integer">4</sesiSchema:id>
+        <sesiSchema:sesiUrl>/applications/4</sesiSchema:sesiUrl>
+        <sesiSchema:candidate rdf:resource="&sesi;001"/>
+        <sesiSchema:applicationInternship rdf:resource="&sesi;003"/>
+        <sesiSchema:status rdf:resource="&sesiSchema;pending"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/005 -->
+
+    <owl:NamedIndividual rdf:about="&sesi;005">
+        <rdf:type rdf:resource="&sesiSchema;StudentProject"/>
+        <rdfs:label xml:lang="en">TicTacTough</rdfs:label>
+        <dc:description rdf:datatype="&xsd;string">A desktop application for creating and solving tests, in Java</dc:description>
+        <sesiSchema:name rdf:datatype="&xsd;string">TicTacTough</sesiSchema:name>
+        <sesiSchema:programmingLanguageUsed rdf:resource="&freebase;m.07sbkfb"/>
+        <sesiSchema:developedBy rdf:resource="&sesi;001"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/FII -->
+
+    <owl:NamedIndividual rdf:about="&sesi;FII">
+        <rdf:type rdf:resource="&sesiSchema;Faculty"/>
+        <sesiSchema:name rdf:datatype="&xsd;string">Faculty of Computer Science</sesiSchema:name>
+        <sesiSchema:university rdf:resource="&freebase;m.0945q0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/JavaEEBeginner -->
+
+    <owl:NamedIndividual rdf:about="&sesi;JavaEEBeginner">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareSkill"/>
+        <sesiSchema:technologyUsed rdf:resource="&freebase;m.0bs6x"/>
+        <sesiSchema:level rdf:resource="&sesiSchema;basic"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/JavaEEIntermediate -->
+
+    <owl:NamedIndividual rdf:about="&sesi;JavaEEIntermediate">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareSkill"/>
+        <sesiSchema:technologyUsed rdf:resource="&freebase;m.0bs6x"/>
+        <sesiSchema:level rdf:resource="&sesiSchema;intermediate"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/JavaIntermediate -->
+
+    <owl:NamedIndividual rdf:about="&sesi;JavaIntermediate">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareSkill"/>
+        <sesiSchema:programmingLanguageUsed rdf:resource="&freebase;m.07sbkfb"/>
+        <sesiSchema:level rdf:resource="&sesiSchema;intermediate"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/Java_Web_Internship_Salary -->
+
+    <owl:NamedIndividual rdf:about="&sesi;Java_Web_Internship_Salary">
+        <rdf:type rdf:resource="&sesiSchema;Salary"/>
+        <sesiSchema:numericalValue rdf:datatype="&xsd;decimal">500</sesiSchema:numericalValue>
+        <sesiSchema:hasCurrency rdf:resource="http:/rdf.freebase.com/ns/m.02zsyq"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/studies007 -->
+
+    <owl:NamedIndividual rdf:about="&sesi;studies007">
+        <rdf:type rdf:resource="&sesiSchema;AcademicStudies"/>
+        <rdfs:label xml:lang="en">studies007</rdfs:label>
+        <sesiSchema:yearOfStudy rdf:datatype="&xsd;nonNegativeInteger">2</sesiSchema:yearOfStudy>
+        <sesiSchema:enrolledStudent rdf:resource="&sesi;001"/>
+        <sesiSchema:studyFaculty rdf:resource="&sesi;FII"/>
+        <sesiSchema:degree rdf:resource="https://rdf.freebase.com/ns/m.019v9k"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http:/rdf.freebase.com/ns/m.02zsyq -->
+
+    <owl:NamedIndividual rdf:about="http:/rdf.freebase.com/ns/m.02zsyq">
+        <rdf:type rdf:resource="&freebase;finance.currency"/>
+        <rdfs:label>RON</rdfs:label>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/02zsyq</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;JavaEEBeginner"/>
+            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;JavaEEBeginner"/>
+            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
+            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;m.02l6h"/>
+            <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;m.07657k"/>
+            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
