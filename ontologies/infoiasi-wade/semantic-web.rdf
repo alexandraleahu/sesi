@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- date modelate in RDF referitoare la studentii si profesorii Facultatii de Informatica, UAIC Iasi
+     (orice asemanare cu persoane din lumea reala e pur intamplatoare)
+
+     Convertit automat pe baza 'semantic-web.n3' de instrumentul rdfConvert 
+     oferit de suita dotNetRDF <https://bitbucket.org/dotnetrdf/dotnetrdf>
+
+     Ultima actualizare: 01 noiembrie 2013
+-->
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<firstName xmlns="http://xmlns.com/foaf/0.1/" xml:lang="ro">Ana</firstName>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<gender xmlns="http://xmlns.com/foaf/0.1/">female</gender>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.infoiasi.ro/wade/bogdan" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.infoiasi.ro/wade/cristina" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.infoiasi.ro/wade/diana" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<age xmlns="http://xmlns.com/foaf/0.1/" rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">22</age>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<title xmlns="http://xmlns.com/foaf/0.1/" xml:lang="en">Bachelor of Science</title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/ana">
+	<closeFriendOf xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.infoiasi.ro/wade/cristina" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/bogdan">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/bogdan">
+	<firstName xmlns="http://xmlns.com/foaf/0.1/" xml:lang="ro">Bogdan</firstName>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/bogdan">
+	<gender xmlns="http://xmlns.com/foaf/0.1/">male</gender>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/bogdan">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.infoiasi.ro/wade/cristina" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/bogdan">
+	<age xmlns="http://xmlns.com/foaf/0.1/" rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">23</age>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/bogdan">
+	<title xmlns="http://xmlns.com/foaf/0.1/" xml:lang="en">Bachelor of Science</title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/bogdan">
+	<closeFriendOf xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.infoiasi.ro/wade/diana" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/bogdan">
+	<knowsByReputation xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.w3.org/People/Berners-Lee/card#i" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://purl.org/vocab/aiiso-roles/schema#Research_Student" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<firstName xmlns="http://xmlns.com/foaf/0.1/" xml:lang="ro">Cristina</firstName>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<gender xmlns="http://xmlns.com/foaf/0.1/">female</gender>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.infoiasi.ro/wade/bogdan" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.infoiasi.ro/wade/ana" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<age xmlns="http://xmlns.com/foaf/0.1/" rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">21</age>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<title xmlns="http://xmlns.com/foaf/0.1/" xml:lang="en">Bachelor of Science</title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<closeFriendOf xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.infoiasi.ro/wade/ana" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/cristina">
+	<knowsByReputation xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.w3.org/People/Berners-Lee/card#i" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/diana">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/diana">
+	<firstName xmlns="http://xmlns.com/foaf/0.1/" xml:lang="ro">Diana</firstName>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/diana">
+	<gender xmlns="http://xmlns.com/foaf/0.1/">female</gender>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/diana">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.infoiasi.ro/wade/ana" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/diana">
+	<age xmlns="http://xmlns.com/foaf/0.1/" rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">21</age>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/diana">
+	<siblingOf xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.infoiasi.ro/wade/cristina" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/diana">
+	<worksWith xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.infoiasi.ro/wade/ana" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://purl.org/vocab/aiiso-roles/schema#Senior_Lecturer" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://purl.org/vocab/aiiso-roles/schema#Student_Adviser" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<homepage xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.purl.org/net/busaco" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<gender xmlns="http://xmlns.com/foaf/0.1/">male</gender>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://profs.info.uaic.ro/~adria/" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<knows xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://blankdots.com/" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<influencedBy xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.w3.org/People/Berners-Lee/card#i" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<wouldLikeToKnow xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.w3.org/People/Berners-Lee/card#i" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/dlucanu">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://purl.org/vocab/aiiso-roles/schema#Professor" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/dlucanu">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://purl.org/vocab/aiiso-roles/schema#Head_of_Department" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/dlucanu">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://purl.org/vocab/aiiso-roles/schema#Student_Adviser" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/dlucanu">
+	<gender xmlns="http://xmlns.com/foaf/0.1/">male</gender>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/dlucanu">
+	<firstName xmlns="http://xmlns.com/foaf/0.1/" xml:lang="ro">Dorel</firstName>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/dlucanu">
+	<collaboratesWith xmlns="http://purl.org/vocab/relationship/" rdf:resource="http://www.infoiasi.ro/wade/busaco" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/examineaza">
+	<type xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/examineaza">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/examineaza">
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<examineaza xmlns="http://www.infoiasi.ro/wade/" rdf:resource="http://www.infoiasi.ro/wade/ana" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<examineaza xmlns="http://www.infoiasi.ro/wade/" rdf:resource="http://www.infoiasi.ro/wade/bogdan" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<examineaza xmlns="http://www.infoiasi.ro/wade/" rdf:resource="http://www.infoiasi.ro/wade/cristina" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/busaco">
+	<examineaza xmlns="http://www.infoiasi.ro/wade/" rdf:resource="http://www.infoiasi.ro/wade/diana" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/dlucanu">
+	<examineaza xmlns="http://www.infoiasi.ro/wade/" rdf:resource="http://www.infoiasi.ro/wade/bogdan" />
+</rdf:Description>
+<rdf:Description rdf:about="http://www.infoiasi.ro/wade/dlucanu">
+	<examineaza xmlns="http://www.infoiasi.ro/wade/" rdf:resource="http://www.infoiasi.ro/wade/diana" />
+</rdf:Description>
+</rdf:RDF>

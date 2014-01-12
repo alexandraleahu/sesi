@@ -1,0 +1,59 @@
+@prefix	s:	<http://www.infoiasi.ro/wade/> .
+@prefix	rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix	rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix	foaf:	<http://xmlns.com/foaf/0.1/> .
+@prefix rel:	<http://purl.org/vocab/relationship/> .
+@prefix ac:	<http://purl.org/vocab/aiiso-roles/schema#> .
+
+s:ana 	rdf:type	foaf:Person ;
+		foaf:firstName	"Ana"@ro ;
+		foaf:gender "female" ;
+		foaf:knows s:bogdan, s:cristina, s:diana ;
+		foaf:age	22 ;
+		foaf:title "Bachelor of Science"@en ;
+		rel:closeFriendOf s:cristina .
+		
+s:bogdan	rdf:type	foaf:Person ;
+		foaf:firstName	"Bogdan"@ro ;
+		foaf:gender "male" ;
+		foaf:knows s:cristina ;
+		foaf:age	23 ;
+		foaf:title "Bachelor of Science"@en ;
+		rel:closeFriendOf s:diana ;
+		rel:knowsByReputation <http://www.w3.org/People/Berners-Lee/card#i> .
+		
+s:cristina	rdf:type	foaf:Person , ac:Research_Student ;
+		foaf:firstName	"Cristina"@ro ;
+		foaf:gender "female" ;
+		foaf:knows s:bogdan, s:ana ;
+		foaf:age	21 ;
+		foaf:title "Bachelor of Science"@en ;
+		rel:closeFriendOf s:ana ;
+		rel:knowsByReputation <http://www.w3.org/People/Berners-Lee/card#i> .
+		
+s:diana	rdf:type	foaf:Person ;
+		foaf:firstName	"Diana"@ro ;
+		foaf:gender "female" ;
+		foaf:knows s:ana ;
+		foaf:age	21 ;
+		rel:siblingOf s:cristina ;
+		rel:worksWith s:ana .
+		
+s:busaco	rdf:type	foaf:Person , ac:Senior_Lecturer , ac:Student_Adviser ;
+		foaf:homepage	<http://www.purl.org/net/busaco> ;
+		foaf:gender	"male" ;
+		foaf:knows <http://profs.info.uaic.ro/~adria/> , <http://blankdots.com/> ;
+		rel:influencedBy	<http://www.w3.org/People/Berners-Lee/card#i> ;
+		rel:wouldLikeToKnow <http://www.w3.org/People/Berners-Lee/card#i> .
+		
+s:dlucanu	rdf:type	ac:Professor , ac:Head_of_Department , ac:Student_Adviser ;
+		foaf:gender	"male" ;
+		foaf:firstName	"Dorel"@ro ;
+		rel:collaboratesWith s:busaco .
+		
+s:examineaza	rdf:type	rdf:Property ;
+		rdfs:domain	foaf:Person ;
+		rdfs:range	foaf:Person .
+
+s:busaco	s:examineaza	s:ana , s:bogdan , s:cristina , s:diana .
+s:dlucanu	s:examineaza	s:bogdan , s:diana .

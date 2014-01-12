@@ -1,0 +1,20 @@
+# obtinerea resurselor cunoscute sau rude cu o persoana 
+# si examinate doar de un anumit profesor 
+# (un exemplu de folosire a constructiei UNION)
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rel: <http://purl.org/vocab/relationship/>
+PREFIX s: <http://www.infoiasi.ro/wade/>
+
+SELECT ?cunoscutSauRudaCuCristinaExaminatDoarDeDL
+WHERE {
+   { ?pers foaf:knows s:cristina ;
+           foaf:firstName ?cunoscutSauRudaCuCristinaExaminatDoarDeDL    
+   } 
+   UNION
+   { ?pers rel:siblingOf s:cristina ;
+           foaf:firstName ?cunoscutSauRudaCuCristinaExaminatDoarDeDL    
+   }   
+   s:dlucanu s:examineaza ?pers
+}

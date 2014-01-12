@@ -1,0 +1,13 @@
+# un exemplu SPARQL 1.1 de specificare a drumurilor privind proprietatile 
+# (path properties): determinarea persoanelor care sunt prieteni apropiati
+# sau rude cu un student examinat de un anumit profesor
+# (ca interogarea sa poata fi efectuata, se va recurge la un sistem SPARQL 1.1;
+# pentru SparqlGUI oferit de dotnetRDF, trebuie bifata optiunea 'SPARQL 1.1')
+
+PREFIX rel: <http://purl.org/vocab/relationship/>
+PREFIX s: <http://www.infoiasi.ro/wade/>
+
+SELECT ?persoana
+WHERE { 
+  s:dlucanu s:examineaza/(rel:closeFriendOf|rel:siblingOf) ?persoana
+}

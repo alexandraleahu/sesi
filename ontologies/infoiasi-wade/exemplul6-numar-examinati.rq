@@ -1,0 +1,18 @@
+# interogare SPARQL 1.1 ilustrand folosirea functiilor de agregare;
+# aici, se utilizeaza COUNT() pentru a contoriza studentii examinati 
+# de fiecare dintre profesorii indrumatori
+# (ca interogarea sa aiba succes, se va rula un procesor SPARQL 1.1;
+# pentru SparqlGUI oferit de dotnetRDF, trebuie selectata optiunea 'SPARQL 1.1')
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rel: <http://purl.org/vocab/relationship/>
+PREFIX ac: <http://purl.org/vocab/aiiso-roles/schema#>
+PREFIX s: <http://www.infoiasi.ro/wade/>
+
+SELECT ?prof (COUNT (DISTINCT ?stud) AS ?studenti)
+WHERE { 
+  ?prof a ac:Student_Adviser ;
+        s:examineaza ?stud  
+} 
+GROUP BY ?prof

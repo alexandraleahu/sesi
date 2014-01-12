@@ -1,0 +1,13 @@
+# selectarea numelui si, eventual, a titulaturii persoanelor mai tinere
+# (un exemplu de folosire a clauzelor OPTIONAL si FILTER)
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+SELECT DISTINCT ?studentSub22 ?titulatura
+WHERE {
+   ?persoana foaf:age ?ani ;
+                      foaf:firstName ?studentSub22
+   OPTIONAL { ?persoana foaf:title ?titulatura . }
+   FILTER (?ani <= 22)
+}

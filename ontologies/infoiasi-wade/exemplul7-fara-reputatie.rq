@@ -1,0 +1,17 @@
+# determinarea numelor persoanelor care nu cunosc dupa reputatie 
+# pe cineva important -- o interogare SPARQL 1.1
+# (un exemplu de folosire a clauzei 'NOT EXISTS');
+# ca interogarea sa aiba succes, se va rula un procesor SPARQL 1.1
+# (pentru SparqlGUI oferit de dotnetRDF, se va bifa optiunea 'SPARQL 1.1')
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rel: <http://purl.org/vocab/relationship/>
+PREFIX ac: <http://purl.org/vocab/aiiso-roles/schema#>
+PREFIX s: <http://www.infoiasi.ro/wade/>
+
+SELECT ?nume 
+WHERE {   
+  ?persoana foaf:firstName ?nume 
+  FILTER ( NOT EXISTS { ?persoana rel:knowsByRepution [ ] } )
+}
