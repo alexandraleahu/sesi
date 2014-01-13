@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="Imports Wizard Entry" name="http://www.infoiasi.ro/wad/schemas/sesi" uri="file:/C:/Users/Annouk/Documents/IntelliJProjects/sesi/ontologies/sesi-schema.owl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1389555957058" name="http://schema.org/" uri="schemaorg.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1389555957058" name="http://www.infoiasi.ro/cinema.ro#" uri="cinema.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1389555957058" name="duplicate:http://www.infoiasi.ro/wad/objects/sesi" uri="sesi-objects-backup.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1389555957058" name="duplicate:http://www.infoiasi.ro/wad/objects/sesi" uri="sesi-objects.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1389555957058" name="http://www.infoiasi.ro/wad/schemas/sesi" uri="sesi-schema.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1389555957058" name="http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl" uri="reasoner/SWOnto.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1389555957058" name="http://www.semanticweb.org/ontologies/untitled-ontology-27" uri="test.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1389564093937" name="http://www.infoiasi.ro/wad/objects/sesi" uri="sesi-objects.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1389564093937" name="http://www.infoiasi.ro/wad/schemas/sesi" uri="sesi-schema.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1389564093937" name="http://www.semanticweb.org/ontologies/2008/10/SWOnto.owl" uri="reasoner/SWOnto.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1389564093937" name="http://www.semanticweb.org/ontologies/untitled-ontology-27" uri="test.owl"/>
     </group>
 </catalog>

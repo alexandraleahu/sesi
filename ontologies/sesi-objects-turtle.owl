@@ -1,0 +1,355 @@
+@prefix : <http://www.infoiasi.ro/wad/objects/sesi#> .
+@prefix s: <http://schema.org/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sesi: <http://www.infoiasi.ro/wad/objects/sesi/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix freebase: <http://rdf.freebase.com/ns/> .
+@prefix sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> .
+@base <http://www.infoiasi.ro/wad/objects/sesi> .
+
+<http://www.infoiasi.ro/wad/objects/sesi> rdf:type owl:Ontology ;
+                                          
+                                          owl:imports <http://www.infoiasi.ro/wad/schemas/sesi> .
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://rdf.freebase.com/ns/m.01fhg3
+
+freebase:m.01fhg3 rdf:type freebase:location.citytown ,
+                           owl:NamedIndividual ;
+                  
+                  rdfs:label "Iasi"@en ;
+                  
+                  rdfs:seeAlso "http://www.freebase.com/m/01fhg3"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/m.02l6h
+
+freebase:m.02l6h rdf:type freebase:finance.currency ,
+                          owl:NamedIndividual ;
+                 
+                 rdfs:label "EURO" ;
+                 
+                 rdfs:seeAlso "http://www.freebase.com/m/02l6h"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/m.07657k
+
+freebase:m.07657k rdf:type freebase:computer.programming_language ,
+                           owl:NamedIndividual ;
+                  
+                  rdfs:label "C#" ;
+                  
+                  rdfs:seeAlso "http://www.freebase.com/m/07657k"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/m.07sbkfb
+
+freebase:m.07sbkfb rdf:type freebase:computer.programming_language ,
+                            owl:NamedIndividual ;
+                   
+                   rdfs:label "Java" ;
+                   
+                   rdfs:seeAlso "http://www.freebase.com/m/07sbkfb"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/m.0945q0
+
+freebase:m.0945q0 rdf:type freebase:education.university ,
+                           owl:NamedIndividual ;
+                  
+                  rdfs:label "Al.I.Cuza" ;
+                  
+                  sesiSchema:name "Alexandru Ioan Cuza University"^^xsd:string ;
+                  
+                  sesiSchema:siteUrl "http://uaic.ro/uaic/bin/view/Main/WebHome"^^xsd:anyURI ;
+                  
+                  rdfs:seeAlso "http://www.freebase.com/m/0945q0"^^xsd:anyURI ;
+                  
+                  sesiSchema:inCity freebase:m.01fhg3 .
+
+
+
+###  http://rdf.freebase.com/ns/m.0bs6x
+
+freebase:m.0bs6x rdf:type freebase:computer.software ,
+                          owl:NamedIndividual ;
+                 
+                 rdfs:label "JavaEE" ;
+                 
+                 dc:description "A Java platform for building strong web applications"^^xsd:string ;
+                 
+                 sesiSchema:name "Java Enterprise Edition"^^xsd:string ;
+                 
+                 rdfs:seeAlso "http://www.freebase.com/m/0bs6x"^^xsd:anyURI ;
+                 
+                 sesiSchema:programmingLanguageUsed freebase:m.07sbkfb .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/001
+
+<http://www.infoiasi.ro/wad/objects/sesi/001> rdf:type sesiSchema:Student ,
+                                                       owl:NamedIndividual ;
+                                              
+                                              rdfs:label "IonPopescu"@en ;
+                                              
+                                              sesiSchema:id 1 ;
+                                              
+                                              sesiSchema:generalSkill "Team player"^^xsd:string ;
+                                              
+                                              dc:description "Ambitious student, looking to work mainly with .NET technologies" ;
+                                              
+                                              sesiSchema:sesiUrl "/students/1" ;
+                                              
+                                              sesiSchema:name "Ion Popescu" ;
+                                              
+                                              sesiSchema:workedOnProject <http://www.infoiasi.ro/wad/objects/sesi/005> ;
+                                              
+                                              sesiSchema:technicalSkill sesi:JavaIntermediate ;
+                                              
+                                              sesiSchema:hasStudies sesi:studies007 .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/002
+
+<http://www.infoiasi.ro/wad/objects/sesi/002> rdf:type sesiSchema:SoftwareCompany ,
+                                                       owl:NamedIndividual ;
+                                              
+                                              rdfs:label "VirtualComp"@en ;
+                                              
+                                              sesiSchema:id 2 ;
+                                              
+                                              dc:description "A company dealing with Java technologies, for business clients."^^xsd:string ;
+                                              
+                                              sesiSchema:name "VirtualComp"^^xsd:string ;
+                                              
+                                              sesiSchema:siteUrl "http://virtualcomp.ro"^^xsd:anyURI ;
+                                              
+                                              sesiSchema:isActive "true"^^xsd:boolean ;
+                                              
+                                              sesiSchema:sesiUrl "/companies/2" .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/003
+
+<http://www.infoiasi.ro/wad/objects/sesi/003> rdf:type sesiSchema:Internship ,
+                                                       owl:NamedIndividual ;
+                                              
+                                              rdfs:label "Java_Web_Internship"@en ;
+                                              
+                                              freebase:time.event.start_date "2014-07-14T10:00:00"^^xsd:dateTime ;
+                                              
+                                              freebase:time.event.end_date "2014-09-14T18:00:00"^^xsd:dateTime ;
+                                              
+                                              sesiSchema:id 3 ;
+                                              
+                                              sesiSchema:openingsCount "5"^^xsd:nonNegativeInteger ;
+                                              
+                                              sesiSchema:acquiredGeneralSkills "Agile Methodology"^^xsd:string ;
+                                              
+                                              sesiSchema:name "Java Internship for Web"^^xsd:string ;
+                                              
+                                              sesiSchema:preferedGeneralSkill "Team player"^^xsd:string ;
+                                              
+                                              dc:description "This internship consists of developing new modules to our existing Java EE web application"^^xsd:string ;
+                                              
+                                              sesiSchema:offersRelocation "false"^^xsd:boolean ;
+                                              
+                                              sesiSchema:sesiUrl "/internships/3" ;
+                                              
+                                              sesiSchema:inCity freebase:m.01fhg3 ;
+                                              
+                                              sesiSchema:publishedByCompany <http://www.infoiasi.ro/wad/objects/sesi/002> ;
+                                              
+                                              sesiSchema:preferedTechnicalSkill sesi:JavaEEBeginner ;
+                                              
+                                              sesiSchema:acquiredTechnicalSkill sesi:JavaEEIntermediate ;
+                                              
+                                              sesiSchema:preferedTechnicalSkill sesi:JavaIntermediate ;
+                                              
+                                              sesiSchema:offersSalary sesi:Java_Web_Internship_Salary ;
+                                              
+                                              sesiSchema:category sesiSchema:businessSoftware ,
+                                                                  sesiSchema:webDev .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/004
+
+<http://www.infoiasi.ro/wad/objects/sesi/004> rdf:type sesiSchema:InternshipApplication ,
+                                                       owl:NamedIndividual ;
+                                              
+                                              rdfs:label "004"@en ;
+                                              
+                                              sesiSchema:id 4 ;
+                                              
+                                              sesiSchema:sesiUrl "/applications/4" ;
+                                              
+                                              sesiSchema:candidate <http://www.infoiasi.ro/wad/objects/sesi/001> ;
+                                              
+                                              sesiSchema:applicationInternship <http://www.infoiasi.ro/wad/objects/sesi/003> ;
+                                              
+                                              sesiSchema:status sesiSchema:pending .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/005
+
+<http://www.infoiasi.ro/wad/objects/sesi/005> rdf:type sesiSchema:StudentProject ,
+                                                       owl:NamedIndividual ;
+                                              
+                                              rdfs:label "TicTacTough"@en ;
+                                              
+                                              dc:description "A desktop application for creating and solving tests, in Java"^^xsd:string ;
+                                              
+                                              sesiSchema:name "TicTacTough"^^xsd:string ;
+                                              
+                                              sesiSchema:programmingLanguageUsed freebase:m.07sbkfb ;
+                                              
+                                              sesiSchema:developedBy <http://www.infoiasi.ro/wad/objects/sesi/001> .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/FII
+
+sesi:FII rdf:type sesiSchema:Faculty ,
+                  owl:NamedIndividual ;
+         
+         sesiSchema:name "Faculty of Computer Science"^^xsd:string ;
+         
+         sesiSchema:university freebase:m.0945q0 .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/JavaEEBeginner
+
+sesi:JavaEEBeginner rdf:type sesiSchema:SoftwareSkill ,
+                             owl:NamedIndividual ;
+                    
+                    sesiSchema:technologyUsed freebase:m.0bs6x ;
+                    
+                    sesiSchema:level sesiSchema:basic .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/JavaEEIntermediate
+
+sesi:JavaEEIntermediate rdf:type sesiSchema:SoftwareSkill ,
+                                 owl:NamedIndividual ;
+                        
+                        sesiSchema:technologyUsed freebase:m.0bs6x ;
+                        
+                        sesiSchema:level sesiSchema:intermediate .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/JavaIntermediate
+
+sesi:JavaIntermediate rdf:type sesiSchema:SoftwareSkill ,
+                               owl:NamedIndividual ;
+                      
+                      sesiSchema:programmingLanguageUsed freebase:m.07sbkfb ;
+                      
+                      sesiSchema:level sesiSchema:intermediate .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/Java_Web_Internship_Salary
+
+sesi:Java_Web_Internship_Salary rdf:type sesiSchema:Salary ,
+                                         owl:NamedIndividual ;
+                                
+                                sesiSchema:numericalValue 500 ;
+                                
+                                sesiSchema:hasCurrency <http:/rdf.freebase.com/ns/m.02zsyq> .
+
+
+
+###  http://www.infoiasi.ro/wad/objects/sesi/studies007
+
+sesi:studies007 rdf:type sesiSchema:AcademicStudies ,
+                         owl:NamedIndividual ;
+                
+                rdfs:label "studies007"@en ;
+                
+                sesiSchema:yearOfStudy "2"^^xsd:nonNegativeInteger ;
+                
+                sesiSchema:enrolledStudent <http://www.infoiasi.ro/wad/objects/sesi/001> ;
+                
+                sesiSchema:studyFaculty sesi:FII ;
+                
+                sesiSchema:degree <https://rdf.freebase.com/ns/m.019v9k> .
+
+
+
+###  http:/rdf.freebase.com/ns/m.02zsyq
+
+<http:/rdf.freebase.com/ns/m.02zsyq> rdf:type freebase:finance.currency ,
+                                              owl:NamedIndividual ;
+                                     
+                                     rdfs:label "RON" ;
+                                     
+                                     rdfs:seeAlso "http://www.freebase.com/m/02zsyq"^^xsd:anyURI .
+
+
+
+
+
+#################################################################
+#
+#    General axioms
+#
+#################################################################
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( sesi:JavaEEBeginner
+                        sesi:JavaIntermediate
+                      )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( freebase:m.07657k
+                        freebase:m.07sbkfb
+                      )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( freebase:m.02l6h
+                        <http:/rdf.freebase.com/ns/m.02zsyq>
+                      )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( sesi:JavaEEIntermediate
+                        sesi:JavaIntermediate
+                      )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( sesi:JavaEEBeginner
+                        sesi:JavaEEIntermediate
+                      )
+] .
+
+
+
+
+###  Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net
+

@@ -1,0 +1,1731 @@
+@prefix : <http://www.infoiasi.ro/wad/schemas/sesi#> .
+@prefix s: <http://schema.org/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix freebase: <http://rdf.freebase.com/ns/> .
+@prefix sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> .
+@base <http://www.infoiasi.ro/wad/schemas/sesi> .
+
+<http://www.infoiasi.ro/wad/schemas/sesi> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/acquiredTechnicalSkill
+
+sesiSchema:acquiredTechnicalSkill rdf:type owl:AsymmetricProperty ,
+                                           owl:IrreflexiveProperty ,
+                                           owl:ObjectProperty ;
+                                  
+                                  rdfs:subPropertyOf sesiSchema:technicalSkill .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/applicationInternship
+
+sesiSchema:applicationInternship rdf:type owl:AsymmetricProperty ,
+                                          owl:FunctionalProperty ,
+                                          owl:IrreflexiveProperty ,
+                                          owl:ObjectProperty ;
+                                 
+                                 rdfs:range sesiSchema:Internship ;
+                                 
+                                 rdfs:domain sesiSchema:InternshipApplication .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/associateInternshipTeacher
+
+sesiSchema:associateInternshipTeacher rdf:type owl:AsymmetricProperty ,
+                                               owl:IrreflexiveProperty ,
+                                               owl:ObjectProperty ;
+                                      
+                                      rdfs:domain sesiSchema:InternshipProgress ;
+                                      
+                                      rdfs:range sesiSchema:Teacher ;
+                                      
+                                      owl:inverseOf sesiSchema:isAssociateInternshipTeacherOf .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/attendanceProgress
+
+sesiSchema:attendanceProgress rdf:type owl:AsymmetricProperty ,
+                                       owl:IrreflexiveProperty ,
+                                       owl:ObjectProperty ;
+                              
+                              rdfs:domain sesiSchema:Internship ;
+                              
+                              rdfs:range sesiSchema:InternshipProgress ;
+                              
+                              owl:inverseOf sesiSchema:attendedInternship .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/attendedInternship
+
+sesiSchema:attendedInternship rdf:type owl:AsymmetricProperty ,
+                                       owl:IrreflexiveProperty ,
+                                       owl:ObjectProperty ;
+                              
+                              rdfs:range sesiSchema:Internship ;
+                              
+                              rdfs:domain sesiSchema:InternshipProgress .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/attendedInternshipProgress
+
+sesiSchema:attendedInternshipProgress rdf:type owl:AsymmetricProperty ,
+                                               owl:IrreflexiveProperty ,
+                                               owl:ObjectProperty ;
+                                      
+                                      rdfs:range sesiSchema:InternshipProgress ;
+                                      
+                                      rdfs:domain sesiSchema:Student ;
+                                      
+                                      owl:inverseOf sesiSchema:attendeeStudent .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/attendeeStudent
+
+sesiSchema:attendeeStudent rdf:type owl:AsymmetricProperty ,
+                                    owl:IrreflexiveProperty ,
+                                    owl:ObjectProperty ;
+                           
+                           rdfs:domain sesiSchema:InternshipProgress ;
+                           
+                           rdfs:range sesiSchema:Student .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/candidate
+
+sesiSchema:candidate rdf:type owl:AsymmetricProperty ,
+                              owl:IrreflexiveProperty ,
+                              owl:ObjectProperty ;
+                     
+                     rdfs:domain sesiSchema:InternshipApplication ;
+                     
+                     rdfs:range sesiSchema:Student .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/category
+
+sesiSchema:category rdf:type owl:AsymmetricProperty ,
+                             owl:IrreflexiveProperty ,
+                             owl:ObjectProperty ;
+                    
+                    rdfs:range sesiSchema:SoftwareCategory .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/degree
+
+sesiSchema:degree rdf:type owl:AsymmetricProperty ,
+                           owl:IrreflexiveProperty ,
+                           owl:ObjectProperty ;
+                  
+                  rdfs:range freebase:education.educational_degree .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/developedBy
+
+sesiSchema:developedBy rdf:type owl:AsymmetricProperty ,
+                                owl:IrreflexiveProperty ,
+                                owl:ObjectProperty ;
+                       
+                       rdfs:domain freebase:computer.software ;
+                       
+                       owl:inverseOf sesiSchema:workedOnProject ;
+                       
+                       rdfs:range [ rdf:type owl:Class ;
+                                    owl:unionOf ( sesiSchema:SoftwareCompany
+                                                  foaf:Person
+                                                )
+                                  ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/employedTeacher
+
+sesiSchema:employedTeacher rdf:type owl:AsymmetricProperty ,
+                                    owl:IrreflexiveProperty ,
+                                    owl:ObjectProperty ;
+                           
+                           rdfs:domain sesiSchema:Faculty ;
+                           
+                           rdfs:range sesiSchema:Teacher ;
+                           
+                           owl:inverseOf sesiSchema:isTeacherOf .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/enrolledStudent
+
+sesiSchema:enrolledStudent rdf:type owl:AsymmetricProperty ,
+                                    owl:IrreflexiveProperty ,
+                                    owl:ObjectProperty ;
+                           
+                           rdfs:domain sesiSchema:AcademicStudies ;
+                           
+                           rdfs:range sesiSchema:Student .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/hasApplication
+
+sesiSchema:hasApplication rdf:type owl:ObjectProperty ;
+                          
+                          rdfs:label "hasApplication"@en ;
+                          
+                          rdfs:range sesiSchema:InternshipApplication ;
+                          
+                          rdfs:domain sesiSchema:SoftwareCompany ;
+                          
+                          owl:propertyChainAxiom ( sesiSchema:publishedInternship
+                                                   sesiSchema:hasInternshipApplication
+                                                 ) .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/hasCurrency
+
+sesiSchema:hasCurrency rdf:type owl:AsymmetricProperty ,
+                                owl:FunctionalProperty ,
+                                owl:IrreflexiveProperty ,
+                                owl:ObjectProperty ;
+                       
+                       rdfs:range freebase:finance.currency .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/hasInternshipApplication
+
+sesiSchema:hasInternshipApplication rdf:type owl:AsymmetricProperty ,
+                                             owl:IrreflexiveProperty ,
+                                             owl:ObjectProperty ;
+                                    
+                                    rdfs:domain sesiSchema:Internship ;
+                                    
+                                    rdfs:range sesiSchema:InternshipApplication ;
+                                    
+                                    owl:inverseOf sesiSchema:applicationInternship .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/hasStudies
+
+sesiSchema:hasStudies rdf:type owl:AsymmetricProperty ,
+                               owl:IrreflexiveProperty ,
+                               owl:ObjectProperty ;
+                      
+                      rdfs:range sesiSchema:AcademicStudies ;
+                      
+                      rdfs:domain sesiSchema:Student ;
+                      
+                      owl:inverseOf sesiSchema:enrolledStudent .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/inCity
+
+sesiSchema:inCity rdf:type owl:AsymmetricProperty ,
+                           owl:IrreflexiveProperty ,
+                           owl:ObjectProperty ;
+                  
+                  rdfs:range freebase:location.citytown .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/isAssociateInternshipTeacherOf
+
+sesiSchema:isAssociateInternshipTeacherOf rdf:type owl:AsymmetricProperty ,
+                                                   owl:IrreflexiveProperty ,
+                                                   owl:ObjectProperty ;
+                                          
+                                          rdfs:range sesiSchema:InternshipProgress ;
+                                          
+                                          rdfs:domain sesiSchema:Teacher .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/isTeacherOf
+
+sesiSchema:isTeacherOf rdf:type owl:AsymmetricProperty ,
+                                owl:IrreflexiveProperty ,
+                                owl:ObjectProperty ;
+                       
+                       rdfs:range sesiSchema:Faculty ;
+                       
+                       rdfs:domain sesiSchema:Teacher .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/level
+
+sesiSchema:level rdf:type owl:AsymmetricProperty ,
+                          owl:FunctionalProperty ,
+                          owl:IrreflexiveProperty ,
+                          owl:ObjectProperty ;
+                 
+                 rdfs:range sesiSchema:KnowledgeLevel .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/offersSalary
+
+sesiSchema:offersSalary rdf:type owl:AsymmetricProperty ,
+                                 owl:FunctionalProperty ,
+                                 owl:IrreflexiveProperty ,
+                                 owl:ObjectProperty ;
+                        
+                        rdfs:range sesiSchema:Salary .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/offersStudies
+
+sesiSchema:offersStudies rdf:type owl:AsymmetricProperty ,
+                                  owl:IrreflexiveProperty ,
+                                  owl:ObjectProperty ;
+                         
+                         rdfs:range sesiSchema:AcademicStudies ;
+                         
+                         rdfs:domain sesiSchema:Faculty .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/preferedTechnicalSkill
+
+sesiSchema:preferedTechnicalSkill rdf:type owl:AsymmetricProperty ,
+                                           owl:IrreflexiveProperty ,
+                                           owl:ObjectProperty ;
+                                  
+                                  rdfs:subPropertyOf sesiSchema:technicalSkill .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/programmingLanguageUsed
+
+sesiSchema:programmingLanguageUsed rdf:type owl:AsymmetricProperty ,
+                                            owl:IrreflexiveProperty ,
+                                            owl:ObjectProperty ;
+                                   
+                                   rdfs:range freebase:computer.programming_language .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/publishedByCompany
+
+sesiSchema:publishedByCompany rdf:type owl:AsymmetricProperty ,
+                                       owl:FunctionalProperty ,
+                                       owl:IrreflexiveProperty ,
+                                       owl:ObjectProperty ;
+                              
+                              rdfs:domain sesiSchema:Internship ;
+                              
+                              rdfs:range sesiSchema:SoftwareCompany ;
+                              
+                              owl:inverseOf sesiSchema:publishedInternship .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/publishedInternship
+
+sesiSchema:publishedInternship rdf:type owl:AsymmetricProperty ,
+                                        owl:InverseFunctionalProperty ,
+                                        owl:IrreflexiveProperty ,
+                                        owl:ObjectProperty ;
+                               
+                               rdfs:range sesiSchema:Internship ;
+                               
+                               rdfs:domain sesiSchema:SoftwareCompany .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/status
+
+sesiSchema:status rdf:type owl:AsymmetricProperty ,
+                           owl:IrreflexiveProperty ,
+                           owl:ObjectProperty .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/studyFaculty
+
+sesiSchema:studyFaculty rdf:type owl:AsymmetricProperty ,
+                                 owl:IrreflexiveProperty ,
+                                 owl:ObjectProperty ;
+                        
+                        rdfs:domain sesiSchema:AcademicStudies ;
+                        
+                        rdfs:range sesiSchema:Faculty ;
+                        
+                        owl:inverseOf sesiSchema:offersStudies .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/submittedApplication
+
+sesiSchema:submittedApplication rdf:type owl:AsymmetricProperty ,
+                                         owl:IrreflexiveProperty ,
+                                         owl:ObjectProperty ;
+                                
+                                rdfs:range sesiSchema:InternshipApplication ;
+                                
+                                rdfs:domain sesiSchema:Student ;
+                                
+                                owl:inverseOf sesiSchema:candidate .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/technicalSkill
+
+sesiSchema:technicalSkill rdf:type owl:AsymmetricProperty ,
+                                   owl:IrreflexiveProperty ,
+                                   owl:ObjectProperty ;
+                          
+                          rdfs:range sesiSchema:SoftwareSkill .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/technologyUsed
+
+sesiSchema:technologyUsed rdf:type owl:AsymmetricProperty ,
+                                   owl:IrreflexiveProperty ,
+                                   owl:ObjectProperty ;
+                          
+                          rdfs:range freebase:computer.software .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/university
+
+sesiSchema:university rdf:type owl:AsymmetricProperty ,
+                               owl:IrreflexiveProperty ,
+                               owl:ObjectProperty ;
+                      
+                      rdfs:range freebase:education.university .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/workedOnProject
+
+sesiSchema:workedOnProject rdf:type owl:AsymmetricProperty ,
+                                    owl:IrreflexiveProperty ,
+                                    owl:ObjectProperty ;
+                           
+                           rdfs:range freebase:computer.software ;
+                           
+                           rdfs:domain [ rdf:type owl:Class ;
+                                         owl:unionOf ( sesiSchema:SoftwareCompany
+                                                       foaf:Person
+                                                     )
+                                       ] .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://purl.org/dc/elements/1.1/description
+
+dc:description rdf:type owl:DatatypeProperty ;
+               
+               rdfs:range xsd:string .
+
+
+
+###  http://rdf.freebase.com/ns/time.event.end_date
+
+freebase:time.event.end_date rdf:type owl:DatatypeProperty ,
+                                      owl:FunctionalProperty ;
+                             
+                             rdfs:label "endDate" ;
+                             
+                             rdfs:domain freebase:time.event ;
+                             
+                             rdfs:range xsd:dateTime .
+
+
+
+###  http://rdf.freebase.com/ns/time.event.start_date
+
+freebase:time.event.start_date rdf:type owl:DatatypeProperty ,
+                                        owl:FunctionalProperty ;
+                               
+                               rdfs:label "startDate" ;
+                               
+                               rdfs:domain freebase:time.event ;
+                               
+                               rdfs:range xsd:dateTime .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/acquiredGeneralSkills
+
+sesiSchema:acquiredGeneralSkills rdf:type owl:DatatypeProperty ;
+                                 
+                                 rdfs:subPropertyOf sesiSchema:generalSkill .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/communityRating
+
+sesiSchema:communityRating rdf:type owl:DatatypeProperty ,
+                                    owl:FunctionalProperty ;
+                           
+                           rdfs:range xsd:nonNegativeInteger .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/feedback
+
+sesiSchema:feedback rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:range xsd:string .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/generalSkill
+
+sesiSchema:generalSkill rdf:type owl:DatatypeProperty ;
+                        
+                        rdfs:range xsd:string .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/grade
+
+sesiSchema:grade rdf:type owl:DatatypeProperty ,
+                          owl:FunctionalProperty ;
+                 
+                 rdfs:range xsd:nonNegativeInteger .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/id
+
+sesiSchema:id rdf:type owl:DatatypeProperty ,
+                       owl:FunctionalProperty ;
+              
+              rdfs:range xsd:integer .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/isActive
+
+sesiSchema:isActive rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:range xsd:boolean .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/name
+
+sesiSchema:name rdf:type owl:DatatypeProperty ;
+                
+                rdfs:label "name" ;
+                
+                rdfs:range xsd:string .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/numericalValue
+
+sesiSchema:numericalValue rdf:type owl:DatatypeProperty ;
+                          
+                          rdfs:range xsd:decimal .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/offersRelocation
+
+sesiSchema:offersRelocation rdf:type owl:DatatypeProperty ,
+                                     owl:FunctionalProperty ;
+                            
+                            rdfs:domain sesiSchema:Internship ;
+                            
+                            rdfs:range xsd:boolean .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/openingsCount
+
+sesiSchema:openingsCount rdf:type owl:DatatypeProperty ,
+                                  owl:FunctionalProperty ;
+                         
+                         rdfs:domain sesiSchema:Internship ;
+                         
+                         rdfs:range xsd:nonNegativeInteger .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/preferedGeneralSkill
+
+sesiSchema:preferedGeneralSkill rdf:type owl:DatatypeProperty ;
+                                
+                                rdfs:subPropertyOf sesiSchema:generalSkill .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/repository
+
+sesiSchema:repository rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain freebase:computer.software ;
+                      
+                      rdfs:range xsd:anyURI .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/sesiUrl
+
+sesiSchema:sesiUrl rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/siteUrl
+
+sesiSchema:siteUrl rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:range xsd:anyURI .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/version
+
+sesiSchema:version rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty ;
+                   
+                   rdfs:range xsd:string .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/yearOfStudy
+
+sesiSchema:yearOfStudy rdf:type owl:DatatypeProperty ;
+                       
+                       rdfs:range xsd:nonNegativeInteger .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://rdf.freebase.com/ns/computer.programming_language
+
+freebase:computer.programming_language rdf:type owl:Class ;
+                                       
+                                       rdfs:label "ProgrammingLanguage"@en ;
+                                       
+                                       rdfs:seeAlso "http://www.freebase.com/computer/programming_language"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/computer.software
+
+freebase:computer.software rdf:type owl:Class ;
+                           
+                           rdfs:label "SoftwareTechnology" ;
+                           
+                           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                             owl:onProperty dc:description ;
+                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                             owl:onDataRange xsd:string
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty dc:description ;
+                                             owl:allValuesFrom xsd:string
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:programmingLanguageUsed ;
+                                             owl:onClass freebase:computer.programming_language ;
+                                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:name ;
+                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                             owl:onDataRange xsd:string
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:repository ;
+                                             owl:someValuesFrom xsd:anyURI
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:name ;
+                                             owl:allValuesFrom xsd:string
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:technologyUsed ;
+                                             owl:allValuesFrom freebase:computer.software
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:developedBy ;
+                                             owl:allValuesFrom [ rdf:type owl:Class ;
+                                                                 owl:unionOf ( sesiSchema:SoftwareCompany
+                                                                               foaf:Person
+                                                                             )
+                                                               ]
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:version ;
+                                             owl:allValuesFrom xsd:string
+                                           ] ;
+                           
+                           rdfs:seeAlso "http://www.freebase.com/computer/software"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/education.educational_degree
+
+freebase:education.educational_degree rdf:type owl:Class ;
+                                      
+                                      rdfs:label "AcademicDegree" ;
+                                      
+                                      owl:equivalentClass [ rdf:type owl:Class ;
+                                                            owl:oneOf ( <https://rdf.freebase.com/ns/m.019v9k>
+                                                                        <https://rdf.freebase.com/ns/m.016t_3>
+                                                                        <https://rdf.freebase.com/ns/m.04zx3q1>
+                                                                      )
+                                                          ] ;
+                                      
+                                      rdfs:seeAlso "http://www.freebase.com/education/educational_degree"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/education.university
+
+freebase:education.university rdf:type owl:Class ;
+                              
+                              rdfs:label "CollegeOrUniversity" ;
+                              
+                              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:name ;
+                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                owl:onDataRange xsd:string
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:siteUrl ;
+                                                owl:allValuesFrom xsd:anyURI
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:inCity ;
+                                                owl:allValuesFrom freebase:location.citytown
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:name ;
+                                                owl:allValuesFrom xsd:string
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:inCity ;
+                                                owl:onClass freebase:location.citytown ;
+                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:siteUrl ;
+                                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                owl:onDataRange xsd:anyURI
+                                              ] ;
+                              
+                              rdfs:seeAlso "http://www.freebase.com/education/university"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/finance.currency
+
+freebase:finance.currency rdf:type owl:Class ;
+                          
+                          rdfs:label "Currency"@en .
+
+
+
+###  http://rdf.freebase.com/ns/location.citytown
+
+freebase:location.citytown rdf:type owl:Class ;
+                           
+                           rdfs:label "City"@en ;
+                           
+                           rdfs:seeAlso "http://www.freebase.com/location/citytown"^^xsd:anyURI .
+
+
+
+###  http://rdf.freebase.com/ns/time.event
+
+freebase:time.event rdf:type owl:Class ;
+                    
+                    rdfs:label "Event" ;
+                    
+                    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                      owl:onProperty freebase:time.event.start_date ;
+                                      owl:allValuesFrom xsd:dateTime
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty sesiSchema:name ;
+                                      owl:allValuesFrom xsd:string
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty freebase:time.event.end_date ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:dateTime
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty dc:description ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:string
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty dc:description ;
+                                      owl:allValuesFrom xsd:string
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty sesiSchema:name ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:string
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty sesiSchema:inCity ;
+                                      owl:allValuesFrom freebase:location.citytown
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty freebase:time.event.end_date ;
+                                      owl:allValuesFrom xsd:dateTime
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty freebase:time.event.start_date ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:dateTime
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty sesiSchema:inCity ;
+                                      owl:onClass freebase:location.citytown ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ;
+                    
+                    rdfs:seeAlso "http://www.freebase.com/time/event"^^xsd:anyURI .
+
+
+
+###  http://schema.org/Corporation
+
+s:Corporation rdf:type owl:Class ;
+              
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty dc:description ;
+                                owl:allValuesFrom xsd:string
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty dc:description ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange xsd:string
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty sesiSchema:siteUrl ;
+                                owl:allValuesFrom xsd:anyURI
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty sesiSchema:name ;
+                                owl:allValuesFrom xsd:string
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty sesiSchema:siteUrl ;
+                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange xsd:anyURI
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty sesiSchema:name ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange xsd:string
+                              ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/AcademicStudies
+
+sesiSchema:AcademicStudies rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:yearOfStudy ;
+                                             owl:allValuesFrom xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:studyFaculty ;
+                                             owl:allValuesFrom sesiSchema:Faculty
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:degree ;
+                                             owl:onClass freebase:education.educational_degree ;
+                                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:studyFaculty ;
+                                             owl:onClass sesiSchema:Faculty ;
+                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:enrolledStudent ;
+                                             owl:onClass sesiSchema:Student ;
+                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:enrolledStudent ;
+                                             owl:allValuesFrom sesiSchema:Student
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:degree ;
+                                             owl:allValuesFrom freebase:education.educational_degree
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:yearOfStudy ;
+                                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                             owl:onDataRange xsd:nonNegativeInteger
+                                           ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/Faculty
+
+sesiSchema:Faculty rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:offersStudies ;
+                                     owl:onClass sesiSchema:AcademicStudies ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:university ;
+                                     owl:allValuesFrom freebase:education.university
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:university ;
+                                     owl:onClass freebase:education.university ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:name ;
+                                     owl:allValuesFrom xsd:string
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:employedTeacher ;
+                                     owl:allValuesFrom sesiSchema:Teacher
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:name ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onDataRange xsd:string
+                                   ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/Internship
+
+sesiSchema:Internship rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf freebase:time.event ,
+                                      sesiSchema:Resource ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:category ;
+                                        owl:someValuesFrom sesiSchema:SoftwareCategory
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:offersSalary ;
+                                        owl:onClass sesiSchema:Salary ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:category ;
+                                        owl:onClass sesiSchema:SoftwareCategory ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:offersSalary ;
+                                        owl:allValuesFrom sesiSchema:Salary
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:preferedTechnicalSkill ;
+                                        owl:onClass sesiSchema:SoftwareSkill ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:acquiredTechnicalSkill ;
+                                        owl:allValuesFrom sesiSchema:SoftwareSkill
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:preferedTechnicalSkill ;
+                                        owl:allValuesFrom sesiSchema:SoftwareSkill
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:acquiredGeneralSkills ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onDataRange xsd:string
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:offersRelocation ;
+                                        owl:allValuesFrom xsd:boolean
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:publishedByCompany ;
+                                        owl:onClass sesiSchema:SoftwareCompany ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:preferedGeneralSkill ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onDataRange xsd:string
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:openingsCount ;
+                                        owl:allValuesFrom xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:hasInternshipApplication ;
+                                        owl:allValuesFrom sesiSchema:InternshipApplication
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:acquiredTechnicalSkill ;
+                                        owl:onClass sesiSchema:SoftwareSkill ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:openingsCount ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onDataRange xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:offersRelocation ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onDataRange xsd:boolean
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sesiSchema:attendanceProgress ;
+                                        owl:allValuesFrom sesiSchema:InternshipProgress
+                                      ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/InternshipApplication
+
+sesiSchema:InternshipApplication rdf:type owl:Class ;
+                                 
+                                 rdfs:subClassOf sesiSchema:Resource ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty sesiSchema:applicationInternship ;
+                                                   owl:onClass sesiSchema:Internship ;
+                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty sesiSchema:candidate ;
+                                                   owl:allValuesFrom sesiSchema:Student
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty sesiSchema:candidate ;
+                                                   owl:onClass sesiSchema:Student ;
+                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty sesiSchema:status ;
+                                                   owl:allValuesFrom sesiSchema:InternshipApplicationStatus
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty sesiSchema:feedback ;
+                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                   owl:onDataRange xsd:string
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty sesiSchema:status ;
+                                                   owl:onClass sesiSchema:InternshipApplicationStatus ;
+                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty sesiSchema:feedback ;
+                                                   owl:allValuesFrom xsd:string
+                                                 ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/InternshipApplicationStatus
+
+sesiSchema:InternshipApplicationStatus rdf:type owl:Class ;
+                                       
+                                       owl:equivalentClass [ rdf:type owl:Class ;
+                                                             owl:oneOf ( sesiSchema:accepted
+                                                                         sesiSchema:pending
+                                                                         sesiSchema:rejected
+                                                                       )
+                                                           ] ;
+                                       
+                                       rdfs:comment "The status of an application to the internship. Can only be of types: accepted, rejected"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/InternshipProgress
+
+sesiSchema:InternshipProgress rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf sesiSchema:Resource ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:grade ;
+                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                owl:onDataRange xsd:integer
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:attendeeStudent ;
+                                                owl:onClass sesiSchema:Student ;
+                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:associateInternshipTeacher ;
+                                                owl:allValuesFrom sesiSchema:Teacher
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:status ;
+                                                owl:allValuesFrom sesiSchema:InternshipProgressStatus
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:attendeeStudent ;
+                                                owl:allValuesFrom sesiSchema:Student
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:feedback ;
+                                                owl:cardinality "1"^^xsd:nonNegativeInteger
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:associateInternshipTeacher ;
+                                                owl:onClass sesiSchema:Teacher ;
+                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:feedback ;
+                                                owl:allValuesFrom xsd:string
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:attendedInternship ;
+                                                owl:allValuesFrom sesiSchema:Internship
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:attendedInternship ;
+                                                owl:onClass sesiSchema:Internship ;
+                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:status ;
+                                                owl:onClass sesiSchema:InternshipProgressStatus ;
+                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty sesiSchema:grade ;
+                                                owl:allValuesFrom xsd:integer
+                                              ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/InternshipProgressStatus
+
+sesiSchema:InternshipProgressStatus rdf:type owl:Class ;
+                                    
+                                    owl:equivalentClass [ rdf:type owl:Class ;
+                                                          owl:oneOf ( sesiSchema:finished
+                                                                      sesiSchema:inProgress
+                                                                    )
+                                                        ] ;
+                                    
+                                    rdfs:comment "This resource describes the progress of a student that is working or has worked in an internship, together with a feedback, a grade and a teacher that supervizes his project"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/KnowledgeLevel
+
+sesiSchema:KnowledgeLevel rdf:type owl:Class ;
+                          
+                          owl:equivalentClass [ rdf:type owl:Class ;
+                                                owl:oneOf ( sesiSchema:proficient
+                                                            sesiSchema:basic
+                                                            sesiSchema:intermediate
+                                                            sesiSchema:advanced
+                                                          )
+                                              ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/Resource
+
+sesiSchema:Resource rdf:type owl:Class ;
+                    
+                    rdfs:label "Resource"@en ;
+                    
+                    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                      owl:onProperty sesiSchema:id ;
+                                      owl:allValuesFrom xsd:integer
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty sesiSchema:sesiUrl ;
+                                      owl:cardinality "1"^^xsd:nonNegativeInteger
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty sesiSchema:id ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:integer
+                                    ] ;
+                    
+                    rdfs:comment "A resource is an entity that is uniquely defined by an id within our application and is returned by several methods of our service."@en ;
+                    
+                    owl:hasKey ( sesiSchema:id
+                               ) .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/Salary
+
+sesiSchema:Salary rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                    owl:onProperty sesiSchema:hasCurrency ;
+                                    owl:allValuesFrom freebase:finance.currency
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty sesiSchema:numericalValue ;
+                                    owl:allValuesFrom xsd:decimal
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty sesiSchema:numericalValue ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:decimal
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty sesiSchema:hasCurrency ;
+                                    owl:onClass freebase:finance.currency ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                  ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/SoftwareCategory
+
+sesiSchema:SoftwareCategory rdf:type owl:Class ;
+                            
+                            owl:equivalentClass [ rdf:type owl:Class ;
+                                                  owl:oneOf ( sesiSchema:cloudComputing
+                                                              sesiSchema:databases
+                                                              sesiSchema:qualityAssurance
+                                                              sesiSchema:webDev
+                                                              sesiSchema:businessSoftware
+                                                              sesiSchema:gaming
+                                                              sesiSchema:embedded
+                                                              sesiSchema:mobile
+                                                              sesiSchema:bigData
+                                                              sesiSchema:management
+                                                              sesiSchema:artificialIntelligence
+                                                            )
+                                                ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/SoftwareCompany
+
+sesiSchema:SoftwareCompany rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf s:Corporation ,
+                                           sesiSchema:Resource ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:communityRating ;
+                                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                             owl:onDataRange xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:publishedInternship ;
+                                             owl:onClass sesiSchema:Internship ;
+                                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:isActive ;
+                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                             owl:onDataRange xsd:boolean
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:publishedInternship ;
+                                             owl:allValuesFrom sesiSchema:Internship
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:communityRating ;
+                                             owl:allValuesFrom xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty sesiSchema:isActive ;
+                                             owl:allValuesFrom xsd:boolean
+                                           ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/SoftwareSkill
+
+sesiSchema:SoftwareSkill rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf [ rdf:type owl:Class ;
+                                           owl:unionOf ( [ rdf:type owl:Class ;
+                                                           owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty sesiSchema:programmingLanguageUsed ;
+                                                                                  owl:allValuesFrom freebase:computer.programming_language
+                                                                                ]
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty sesiSchema:programmingLanguageUsed ;
+                                                                                  owl:onClass freebase:computer.programming_language ;
+                                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                                                ]
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty sesiSchema:technologyUsed ;
+                                                                                  owl:cardinality "0"^^xsd:nonNegativeInteger
+                                                                                ]
+                                                                              )
+                                                         ]
+                                                         [ rdf:type owl:Class ;
+                                                           owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty sesiSchema:technologyUsed ;
+                                                                                  owl:allValuesFrom freebase:computer.software
+                                                                                ]
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty sesiSchema:programmingLanguageUsed ;
+                                                                                  owl:cardinality "0"^^xsd:nonNegativeInteger
+                                                                                ]
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty sesiSchema:technologyUsed ;
+                                                                                  owl:onClass freebase:computer.software ;
+                                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                                                ]
+                                                                              )
+                                                         ]
+                                                       )
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty sesiSchema:level ;
+                                           owl:onClass sesiSchema:KnowledgeLevel ;
+                                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                         ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/Student
+
+sesiSchema:Student rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf sesiSchema:Resource ,
+                                   foaf:Person ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:hasStudies ;
+                                     owl:onClass sesiSchema:AcademicStudies ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:workedOnProject ;
+                                     owl:allValuesFrom freebase:computer.software
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:technicalSkill ;
+                                     owl:onClass sesiSchema:SoftwareSkill ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:technicalSkill ;
+                                     owl:allValuesFrom sesiSchema:SoftwareSkill
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:hasStudies ;
+                                     owl:allValuesFrom sesiSchema:AcademicStudies
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:workedOnProject ;
+                                     owl:someValuesFrom sesiSchema:StudentProject
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:generalSkill ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onDataRange xsd:string
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:attendedInternshipProgress ;
+                                     owl:allValuesFrom sesiSchema:InternshipProgress
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:submittedApplication ;
+                                     owl:allValuesFrom sesiSchema:InternshipApplication
+                                   ] .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/StudentProject
+
+sesiSchema:StudentProject rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf freebase:computer.software ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty sesiSchema:developedBy ;
+                                            owl:onClass sesiSchema:Student ;
+                                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                          ] ;
+                          
+                          rdfs:comment "A software project that a student has worked on" .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/Teacher
+
+sesiSchema:Teacher rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf sesiSchema:Resource ,
+                                   foaf:Person ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:isTeacherOf ;
+                                     owl:allValuesFrom sesiSchema:Faculty
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:isAssociateInternshipTeacherOf ;
+                                     owl:onClass sesiSchema:InternshipProgress ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:isTeacherOf ;
+                                     owl:onClass sesiSchema:Faculty ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sesiSchema:isAssociateInternshipTeacherOf ;
+                                     owl:allValuesFrom sesiSchema:InternshipProgress
+                                   ] .
+
+
+
+###  http://xmlns.com/foaf/0.1/Person
+
+foaf:Person rdf:type owl:Class ;
+            
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty sesiSchema:name ;
+                              owl:allValuesFrom xsd:string
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty sesiSchema:name ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onDataRange xsd:string
+                            ] ;
+            
+            rdfs:seeAlso "http://xmlns.com/foaf/spec/#term_Person"^^xsd:anyURI .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/accepted
+
+sesiSchema:accepted rdf:type sesiSchema:InternshipApplicationStatus ,
+                             owl:NamedIndividual ;
+                    
+                    rdfs:comment "This application was accepted by the owning company"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/advanced
+
+sesiSchema:advanced rdf:type sesiSchema:KnowledgeLevel ,
+                             owl:NamedIndividual .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/artificialIntelligence
+
+sesiSchema:artificialIntelligence rdf:type sesiSchema:SoftwareCategory ,
+                                           owl:NamedIndividual ;
+                                  
+                                  rdfs:label "Artificial Intelligence"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/basic
+
+sesiSchema:basic rdf:type sesiSchema:KnowledgeLevel ,
+                          owl:NamedIndividual .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/bigData
+
+sesiSchema:bigData rdf:type sesiSchema:SoftwareCategory ,
+                            owl:NamedIndividual ;
+                   
+                   rdfs:label "Big Data"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/businessSoftware
+
+sesiSchema:businessSoftware rdf:type sesiSchema:SoftwareCategory ,
+                                     owl:NamedIndividual ;
+                            
+                            rdfs:label "Business Software"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/cloudComputing
+
+sesiSchema:cloudComputing rdf:type sesiSchema:SoftwareCategory ,
+                                   owl:NamedIndividual ;
+                          
+                          rdfs:label "Cloud Computing and Networking"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/databases
+
+sesiSchema:databases rdf:type sesiSchema:SoftwareCategory ,
+                              owl:NamedIndividual ;
+                     
+                     rdfs:label "Database Administration"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/embedded
+
+sesiSchema:embedded rdf:type sesiSchema:SoftwareCategory ,
+                             owl:NamedIndividual ;
+                    
+                    rdfs:label "Embedded Software"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/finished
+
+sesiSchema:finished rdf:type sesiSchema:InternshipProgressStatus ,
+                             owl:NamedIndividual ;
+                    
+                    rdfs:comment "The internship is finish (past its end date)"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/gaming
+
+sesiSchema:gaming rdf:type sesiSchema:SoftwareCategory ,
+                           owl:NamedIndividual ;
+                  
+                  rdfs:label "Gaming and Graphics"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/inProgress
+
+sesiSchema:inProgress rdf:type sesiSchema:InternshipProgressStatus ,
+                               owl:NamedIndividual ;
+                      
+                      rdfs:comment "The internship is in progress (between its start date and end date)"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/intermediate
+
+sesiSchema:intermediate rdf:type sesiSchema:KnowledgeLevel ,
+                                 owl:NamedIndividual .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/management
+
+sesiSchema:management rdf:type sesiSchema:SoftwareCategory ,
+                               owl:NamedIndividual ;
+                      
+                      rdfs:label "IT Project Management and Consulting"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/mobile
+
+sesiSchema:mobile rdf:type sesiSchema:SoftwareCategory ,
+                           owl:NamedIndividual ;
+                  
+                  rdfs:label "Mobile Development"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/pending
+
+sesiSchema:pending rdf:type sesiSchema:InternshipApplicationStatus ,
+                            owl:NamedIndividual ;
+                   
+                   rdfs:comment "This application has not yet received an answer from the owning company"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/proficient
+
+sesiSchema:proficient rdf:type sesiSchema:KnowledgeLevel ,
+                               owl:NamedIndividual .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/qualityAssurance
+
+sesiSchema:qualityAssurance rdf:type sesiSchema:SoftwareCategory ,
+                                     owl:NamedIndividual ;
+                            
+                            rdfs:label "Quality Assurance"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/rejected
+
+sesiSchema:rejected rdf:type sesiSchema:InternshipApplicationStatus ,
+                             owl:NamedIndividual ;
+                    
+                    rdfs:comment "This application has been rejected by the owning company"@en .
+
+
+
+###  http://www.infoiasi.ro/wad/schemas/sesi/webDev
+
+sesiSchema:webDev rdf:type sesiSchema:SoftwareCategory ,
+                           owl:NamedIndividual ;
+                  
+                  rdfs:label "Web Development"@en .
+
+
+
+###  https://rdf.freebase.com/ns/m.016t_3
+
+<https://rdf.freebase.com/ns/m.016t_3> rdf:type freebase:education.educational_degree ,
+                                                owl:NamedIndividual ;
+                                       
+                                       rdfs:label "Master" ;
+                                       
+                                       rdfs:seeAlso "https://www.freebase.com/m/016t_3"^^xsd:anyURI .
+
+
+
+###  https://rdf.freebase.com/ns/m.019v9k
+
+<https://rdf.freebase.com/ns/m.019v9k> rdf:type freebase:education.educational_degree ,
+                                                owl:NamedIndividual ;
+                                       
+                                       rdfs:label "Bachelor" ;
+                                       
+                                       rdfs:seeAlso "https://www.freebase.com/m/019v9k"^^xsd:anyURI .
+
+
+
+###  https://rdf.freebase.com/ns/m.04zx3q1
+
+<https://rdf.freebase.com/ns/m.04zx3q1> rdf:type freebase:education.educational_degree ,
+                                                 owl:NamedIndividual ;
+                                        
+                                        rdfs:label "PhD" ;
+                                        
+                                        rdfs:seeAlso "https://www.freebase.com/m/04zx3q1"^^xsd:anyURI .
+
+
+
+
+
+#################################################################
+#
+#    General axioms
+#
+#################################################################
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( sesiSchema:artificialIntelligence
+                        sesiSchema:bigData
+                        sesiSchema:businessSoftware
+                        sesiSchema:cloudComputing
+                        sesiSchema:databases
+                        sesiSchema:embedded
+                        sesiSchema:gaming
+                        sesiSchema:management
+                        sesiSchema:mobile
+                        sesiSchema:qualityAssurance
+                        sesiSchema:webDev
+                      )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( <https://rdf.freebase.com/ns/m.016t_3>
+                        <https://rdf.freebase.com/ns/m.019v9k>
+                        <https://rdf.freebase.com/ns/m.04zx3q1>
+                      )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( sesiSchema:accepted
+                        sesiSchema:pending
+                        sesiSchema:rejected
+                      )
+] .
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( freebase:computer.programming_language
+                freebase:education.educational_degree
+                freebase:education.university
+                freebase:finance.currency
+                freebase:location.citytown
+                sesiSchema:AcademicStudies
+                sesiSchema:Faculty
+                sesiSchema:Internship
+                sesiSchema:InternshipApplication
+                sesiSchema:InternshipApplicationStatus
+                sesiSchema:InternshipProgress
+                sesiSchema:InternshipProgressStatus
+                sesiSchema:KnowledgeLevel
+                sesiSchema:Salary
+                sesiSchema:SoftwareCategory
+                sesiSchema:SoftwareCompany
+                sesiSchema:SoftwareSkill
+                sesiSchema:Student
+                sesiSchema:StudentProject
+                sesiSchema:Teacher
+              )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( sesiSchema:advanced
+                        sesiSchema:basic
+                        sesiSchema:intermediate
+                        sesiSchema:proficient
+                      )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( sesiSchema:finished
+                        sesiSchema:inProgress
+                      )
+] .
+
+
+
+
+###  Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net
+
