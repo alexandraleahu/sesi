@@ -17,7 +17,7 @@
 ]>
 
 
-<rdf:RDF
+<rdf:RDF xmlns="http://www.infoiasi.ro/wad/objects/sesi#"
      xml:base="http://www.infoiasi.ro/wad/objects/sesi"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:foaf="http://xmlns.com/foaf/0.1/"
@@ -26,8 +26,8 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:sesiSchema="http://www.infoiasi.ro/wad/schemas/sesi/"
      xmlns:s="http://schema.org/"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:freebase="http://rdf.freebase.com/ns/"
      xmlns:doap="http://usefulinc.com/ns/doap#">
@@ -119,10 +119,10 @@
     <owl:NamedIndividual rdf:about="&sesi;001">
         <rdf:type rdf:resource="&sesiSchema;Student"/>
         <rdfs:label xml:lang="en">IonPopescu</rdfs:label>
-        <sesiSchema:id rdf:datatype="&xsd;integer">1</sesiSchema:id>
+        <sesiSchema:id rdf:datatype="&xsd;string">001</sesiSchema:id>
         <sesiSchema:generalSkill rdf:datatype="&xsd;string">Team player</sesiSchema:generalSkill>
         <dc:description>Ambitious student, looking to work mainly with .NET technologies</dc:description>
-        <sesiSchema:sesiUrl>/students/1</sesiSchema:sesiUrl>
+        <sesiSchema:sesiUrl>/students/001</sesiSchema:sesiUrl>
         <sesiSchema:name>Ion Popescu</sesiSchema:name>
         <sesiSchema:workedOnProject rdf:resource="&sesi;005"/>
         <sesiSchema:technicalSkill rdf:resource="&sesi;JavaIntermediate"/>
@@ -136,12 +136,12 @@
     <owl:NamedIndividual rdf:about="&sesi;002">
         <rdf:type rdf:resource="&sesiSchema;SoftwareCompany"/>
         <rdfs:label xml:lang="en">VirtualComp</rdfs:label>
-        <sesiSchema:id rdf:datatype="&xsd;integer">2</sesiSchema:id>
+        <sesiSchema:id rdf:datatype="&xsd;string">002</sesiSchema:id>
         <dc:description rdf:datatype="&xsd;string">A company dealing with Java technologies, for business clients.</dc:description>
         <sesiSchema:name rdf:datatype="&xsd;string">VirtualComp</sesiSchema:name>
         <sesiSchema:siteUrl rdf:datatype="&xsd;anyURI">http://virtualcomp.ro</sesiSchema:siteUrl>
         <sesiSchema:isActive rdf:datatype="&xsd;boolean">true</sesiSchema:isActive>
-        <sesiSchema:sesiUrl>/companies/2</sesiSchema:sesiUrl>
+        <sesiSchema:sesiUrl>/companies/002</sesiSchema:sesiUrl>
     </owl:NamedIndividual>
     
 
@@ -153,14 +153,14 @@
         <rdfs:label xml:lang="en">Java_Web_Internship</rdfs:label>
         <freebase:time.event.start_date rdf:datatype="&xsd;dateTime">2014-07-14T10:00:00</freebase:time.event.start_date>
         <freebase:time.event.end_date rdf:datatype="&xsd;dateTime">2014-09-14T18:00:00</freebase:time.event.end_date>
-        <sesiSchema:id rdf:datatype="&xsd;integer">3</sesiSchema:id>
+        <sesiSchema:id rdf:datatype="&xsd;string">003</sesiSchema:id>
         <sesiSchema:openingsCount rdf:datatype="&xsd;nonNegativeInteger">5</sesiSchema:openingsCount>
         <sesiSchema:acquiredGeneralSkills rdf:datatype="&xsd;string">Agile Methodology</sesiSchema:acquiredGeneralSkills>
         <sesiSchema:name rdf:datatype="&xsd;string">Java Internship for Web</sesiSchema:name>
         <sesiSchema:preferedGeneralSkill rdf:datatype="&xsd;string">Team player</sesiSchema:preferedGeneralSkill>
         <dc:description rdf:datatype="&xsd;string">This internship consists of developing new modules to our existing Java EE web application</dc:description>
         <sesiSchema:offersRelocation rdf:datatype="&xsd;boolean">false</sesiSchema:offersRelocation>
-        <sesiSchema:sesiUrl>/internships/3</sesiSchema:sesiUrl>
+        <sesiSchema:sesiUrl>/internships/003</sesiSchema:sesiUrl>
         <sesiSchema:inCity rdf:resource="&freebase;m.01fhg3"/>
         <sesiSchema:publishedByCompany rdf:resource="&sesi;002"/>
         <sesiSchema:preferedTechnicalSkill rdf:resource="&sesi;JavaEEBeginner"/>
@@ -178,8 +178,8 @@
     <owl:NamedIndividual rdf:about="&sesi;004">
         <rdf:type rdf:resource="&sesiSchema;InternshipApplication"/>
         <rdfs:label xml:lang="en">004</rdfs:label>
-        <sesiSchema:id rdf:datatype="&xsd;integer">4</sesiSchema:id>
-        <sesiSchema:sesiUrl>/applications/4</sesiSchema:sesiUrl>
+        <sesiSchema:id rdf:datatype="&xsd;string">004</sesiSchema:id>
+        <sesiSchema:sesiUrl>/applications/004</sesiSchema:sesiUrl>
         <sesiSchema:candidate rdf:resource="&sesi;001"/>
         <sesiSchema:applicationInternship rdf:resource="&sesi;003"/>
         <sesiSchema:status rdf:resource="&sesiSchema;pending"/>
@@ -291,15 +291,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.07657k"/>
-            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
+            <rdf:Description rdf:about="&freebase;m.02l6h"/>
+            <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.02l6h"/>
-            <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
+            <rdf:Description rdf:about="&sesi;JavaEEBeginner"/>
+            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
@@ -312,8 +312,8 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;JavaEEBeginner"/>
-            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
+            <rdf:Description rdf:about="&freebase;m.07657k"/>
+            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>
