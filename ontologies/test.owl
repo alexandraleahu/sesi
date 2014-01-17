@@ -6,18 +6,56 @@
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-    <!ENTITY untitled-ontology-27 "http://www.semanticweb.org/ontologies/untitled-ontology-27/" >
+    <!ENTITY test "http://www.semanticweb.org/ontologies/test/" >
 ]>
 
 
-<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/untitled-ontology-27#"
-     xml:base="http://www.semanticweb.org/ontologies/untitled-ontology-27"
-     xmlns:untitled-ontology-27="http://www.semanticweb.org/ontologies/untitled-ontology-27/"
+<rdf:RDF
+     xml:base="http://www.semanticweb.org/ontologies/test"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:test="http://www.semanticweb.org/ontologies/test/"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <owl:Ontology rdf:about="http://www.semanticweb.org/ontologies/untitled-ontology-27"/>
+    <owl:Ontology rdf:about="http://www.semanticweb.org/ontologies/test"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/test/hasChild -->
+
+    <owl:ObjectProperty rdf:about="&test;hasChild">
+        <owl:inverseOf rdf:resource="&test;hasParent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/test/hasGrandson -->
+
+    <owl:ObjectProperty rdf:about="&test;hasGrandson">
+        <rdfs:range rdf:resource="&test;child"/>
+        <rdfs:domain rdf:resource="&test;parent"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&test;hasChild"/>
+            <rdf:Description rdf:about="&test;hasChild"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/test/hasParent -->
+
+    <owl:ObjectProperty rdf:about="&test;hasParent"/>
     
 
 
@@ -32,15 +70,15 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/untitled-ontology-27/age -->
+    <!-- http://www.semanticweb.org/ontologies/test/age -->
 
-    <owl:DatatypeProperty rdf:about="&untitled-ontology-27;age"/>
+    <owl:DatatypeProperty rdf:about="&test;age"/>
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/untitled-ontology-27/name -->
+    <!-- http://www.semanticweb.org/ontologies/test/name -->
 
-    <owl:DatatypeProperty rdf:about="&untitled-ontology-27;name"/>
+    <owl:DatatypeProperty rdf:about="&test;name"/>
     
 
 
@@ -55,40 +93,15 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/untitled-ontology-27/vrajeala -->
+    <!-- http://www.semanticweb.org/ontologies/test/child -->
 
-    <owl:Class rdf:about="&untitled-ontology-27;vrajeala">
-        <rdfs:subClassOf>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <owl:Class>
-                        <owl:intersectionOf rdf:parseType="Collection">
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&untitled-ontology-27;age"/>
-                                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:cardinality>
-                            </owl:Restriction>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&untitled-ontology-27;name"/>
-                                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
-                            </owl:Restriction>
-                        </owl:intersectionOf>
-                    </owl:Class>
-                    <owl:Class>
-                        <owl:intersectionOf rdf:parseType="Collection">
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&untitled-ontology-27;age"/>
-                                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
-                            </owl:Restriction>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&untitled-ontology-27;name"/>
-                                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">0</owl:cardinality>
-                            </owl:Restriction>
-                        </owl:intersectionOf>
-                    </owl:Class>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:subClassOf>
-    </owl:Class>
+    <owl:Class rdf:about="&test;child"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/test/parent -->
+
+    <owl:Class rdf:about="&test;parent"/>
     
 
 
@@ -103,12 +116,30 @@
     
 
 
-    <!-- http://www.semanticweb.org/ontologies/untitled-ontology-27/vraja_marii -->
+    <!-- http://www.semanticweb.org/ontologies/test/ana -->
 
-    <owl:NamedIndividual rdf:about="&untitled-ontology-27;vraja_marii">
-        <rdf:type rdf:resource="&untitled-ontology-27;vrajeala"/>
-        <untitled-ontology-27:age>22</untitled-ontology-27:age>
-        <untitled-ontology-27:name>ana</untitled-ontology-27:name>
+    <owl:NamedIndividual rdf:about="&test;ana">
+        <rdf:type rdf:resource="&test;child"/>
+        <test:age>22</test:age>
+        <test:name>ana</test:name>
+        <test:hasChild rdf:resource="&test;maria"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/test/liliana -->
+
+    <owl:NamedIndividual rdf:about="&test;liliana">
+        <rdf:type rdf:resource="&test;parent"/>
+        <test:hasChild rdf:resource="&test;ana"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/test/maria -->
+
+    <owl:NamedIndividual rdf:about="&test;maria">
+        <rdf:type rdf:resource="&test;child"/>
     </owl:NamedIndividual>
 </rdf:RDF>
 
