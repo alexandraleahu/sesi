@@ -1,23 +1,20 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.core.model.Student;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Map;
 
 @Path("/students")
 public class StudentsResource {
 
     @GET
-    @Path("/{id: \\d+}")
+    @Path("/{id}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response getStudent(@PathParam("id") int studentId,
+    public Response getStudent(@PathParam("id") String studentId,
             @QueryParam("fields") List<String> fields)
             throws URISyntaxException {
 
@@ -47,23 +44,12 @@ public class StudentsResource {
     }
 
     @POST
-    @Path("/{id: \\d+}/internships")
+    @Path("/{id}/internships")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public List<Internship> applyToInternship(@PathParam("id") int studentId,
-            @FormParam("internshipId") int internshipId) {
+    public Response applyToInternship(@PathParam("id") String studentId,
+            @FormParam("internshipId") String internshipId) {
 
-        Internship internship = new Internship();
-        internship.setId(internshipId);
-
-        internship.setAcquiredSkills(Lists.newArrayList("JavaEE", "JSP"));
-        internship.setCategory(Internship.Category.Business);
-        internship.setApplicantsNo(3);
-        internship.setName("JavaEE Internship");
-
-        List<Internship> pendingInternships = Lists.newArrayList(internship);
-
-        return pendingInternships;
-
+      return null;
     }
 }

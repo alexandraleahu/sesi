@@ -1,44 +1,32 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
-import java.net.URISyntaxException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import ro.infoiasi.wad.sesi.core.model.Company;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
-
-import ro.infoiasi.wad.sesi.core.model.Company;
+import java.net.URISyntaxException;
+import java.util.*;
 
 @PermitAll
 @Path("/companies")
 public class CompaniesResource {
 
-    private static Map<Integer, Company> companies = new HashMap<Integer, Company>();
+    private static Map<String, Company> companies = new HashMap<>();
 
     @Context
     private Context context;
 
     @GET
-    @Path("/{id: \\d+}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_XML)
-    public JAXBElement<Company> getCompany(@PathParam("id") Integer companyId)
+    public JAXBElement<Company> getCompany(@PathParam("id") String companyId)
             throws URISyntaxException {
         if(companies.containsKey(companyId)) {
             return new JAXBElement<Company>(new QName("company"), Company.class, companies.get(companyId));
@@ -49,7 +37,7 @@ public class CompaniesResource {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_XML)
-    public JAXBElement<List<Company>> getCompanies(@PathParam("id") Integer companyId,
+    public JAXBElement<List<Company>> getCompanies(@PathParam("id") String companyId,
             @QueryParam("hasAvailableInternships") Boolean hasAvailableInternships)
             throws URISyntaxException {
         Collection<Company> companies = this.companies.values();
@@ -69,9 +57,9 @@ public class CompaniesResource {
 
     @RolesAllowed("company")
     @PUT
-    @Path("id: \\d+")
+    @Path("id")
     @Produces(MediaType.APPLICATION_XML)
-    public Response editCompany(@PathParam("id") Integer companyId, JAXBElement<Company> company) {
+    public Response editCompany(@PathParam("id") String companyId, JAXBElement<Company> company) {
         if (companies.containsKey(companyId)) {
             companies.put(companyId, company.getValue());
             return Response.status(Status.ACCEPTED).build();
@@ -81,9 +69,9 @@ public class CompaniesResource {
 
     @RolesAllowed("company")
     @POST
-    @Path("id: \\d+")
+    @Path("id")
     @Produces(MediaType.APPLICATION_XML)
-    public Response addCompany(@PathParam("id") Integer companyId, JAXBElement<Company> company) {
+    public Response addCompany(@PathParam("id") String companyId, JAXBElement<Company> company) {
         if (!companies.containsKey(companyId)) {
             companies.put(companyId, company.getValue());
             return Response.status(Status.ACCEPTED).build();
