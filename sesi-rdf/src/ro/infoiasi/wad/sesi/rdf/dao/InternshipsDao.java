@@ -4,10 +4,7 @@ import com.complexible.stardog.StardogException;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
-import com.google.common.collect.Lists;
 import org.openrdf.model.impl.ValueFactoryImpl;
-import org.openrdf.query.BindingSet;
-import org.openrdf.query.TupleQueryResult;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
@@ -15,7 +12,6 @@ import ro.infoiasi.wad.sesi.rdf.util.Constants;
 import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import java.net.URI;
 import java.util.List;
 
 public class InternshipsDao implements Dao {
@@ -65,26 +61,14 @@ public class InternshipsDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", internshipId);
-            TupleQueryResult tupleQueryResult = selectQuery.execute();
-
-            List<ResourceLinks> internships = Lists.newArrayList();
-
-            while (tupleQueryResult.hasNext()) {
-
-                BindingSet next = tupleQueryResult.next();
-
-                ResourceLinks resource = new ResourceLinks();
-                resource.setResourceUri(new URI(next.getValue("application").stringValue()));
-                resource.setSesiRelativeUrl(next.getValue("sesiUrl").stringValue());
-                internships.add(resource);
-            }
-            tupleQueryResult.close();
-            return internships;
+            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery,"application", "sesiUrl");
 
         } finally {
             connectionPool.releaseConnection(con);
         }
     }
+
+
 
     public List<ResourceLinks> getAllInternshipProgressDetails(String internshipId) throws Exception {
 
@@ -101,21 +85,7 @@ public class InternshipsDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", internshipId);
-            TupleQueryResult tupleQueryResult = selectQuery.execute();
-
-            List<ResourceLinks> internships = Lists.newArrayList();
-
-            while (tupleQueryResult.hasNext()) {
-
-                BindingSet next = tupleQueryResult.next();
-
-                ResourceLinks resource = new ResourceLinks();
-                resource.setResourceUri(new URI(next.getValue("progressDetails").stringValue()));
-                resource.setSesiRelativeUrl(next.getValue("sesiUrl").stringValue());
-                internships.add(resource);
-            }
-            tupleQueryResult.close();
-            return internships;
+            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "progressDetails", "sesiUrl");
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -160,7 +130,7 @@ public class InternshipsDao implements Dao {
     public static void main(String[] args) throws Exception {
         InternshipsDao dao = new InternshipsDao();
 
-        dao.deleteInternship("003");
+        System.out.println(dao.getAllInternships(RDFFormat.TURTLE));
 
     }
 
