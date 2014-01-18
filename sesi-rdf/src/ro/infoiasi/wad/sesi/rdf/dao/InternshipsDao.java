@@ -31,11 +31,8 @@ public class InternshipsDao implements Dao {
             GraphQuery graphQuery = con.graph("describe ?i where {?i rdf:type sesiSchema:Internship ; sesiSchema:id ?id .}");
             graphQuery.parameter("id", id);
 
-            GraphQueryResult graphQueryResult = graphQuery.execute();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            QueryResultIO.write(graphQueryResult, format, baos);
+            return writeGraphResultsToString(graphQuery, format);
 
-            return baos.toString();
         } finally {
             connectionPool.releaseConnection(con);
         }
@@ -43,24 +40,12 @@ public class InternshipsDao implements Dao {
 
     }
 
-    public List<ResourceLinks> getAllInternships() throws Exception {
+    public String getAllInternships(RDFFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
-            SelectQuery selectQuery = con.select("select ?internship ?sesiUrl where {?internship rdf:type sesiSchema:Internship ; sesiSchema:sesiUrl ?sesiUrl .}");
-            TupleQueryResult tupleQueryResult = selectQuery.execute();
+            GraphQuery graphQuery = con.graph("describe ?i where {?i rdf:type sesiSchema:Internship .}");
 
-            List<ResourceLinks> internships = Lists.newArrayList();
-            while (tupleQueryResult.hasNext()) {
-
-                BindingSet next = tupleQueryResult.next();
-
-                ResourceLinks resource = new ResourceLinks();
-                resource.setResourceUri(new URI(next.getValue("internship").stringValue()));
-                resource.setSesiRelativeUrl(next.getValue("sesiUrl").stringValue());
-                internships.add(resource);
-            }
-
-            return internships;
+            return writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -72,13 +57,13 @@ public class InternshipsDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                                    .append("select ?application ?sesiUrl ")
-                                    .append("where {")
-                                    .append("[] rdf:type sesiSchema:Internship ; ")
-                                    .append("sesiSchema:id ?id ; ")
-                                    .append("sesiSchema:hasInternshipApplication ?application . ")
-                                    .append("?application sesiSchema:sesiUrl ?sesiUrl .")
-                                    .append("}");
+                    .append("select ?application ?sesiUrl ")
+                    .append("where {")
+                    .append("[] rdf:type sesiSchema:Internship ; ")
+                    .append("sesiSchema:id ?id ; ")
+                    .append("sesiSchema:hasInternshipApplication ?application . ")
+                    .append("?application sesiSchema:sesiUrl ?sesiUrl . ")
+                    .append("}");
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", internshipId);
@@ -113,7 +98,7 @@ public class InternshipsDao implements Dao {
                                     .append("[] rdf:type sesiSchema:Internship ; ")
                                     .append("sesiSchema:id ?id ; ")
                                     .append("sesiSchema:progressDetails ?progressDetails . ")
-                                    .append("?application sesiSchema:sesiUrl ?sesiUrl .")
+                                    .append("?progressDetails sesiSchema:sesiUrl ?sesiUrl . ")
                                     .append("}");
 
             SelectQuery selectQuery = con.select(sb.toString());
@@ -139,7 +124,6 @@ public class InternshipsDao implements Dao {
         }
     }
 
-
     public void deleteInternship(String internshipId) throws StardogException {
         ReasoningConnection con = connectionPool.getConnection();
 
@@ -159,6 +143,7 @@ public class InternshipsDao implements Dao {
 
     }
 
+
     public String createInternship(Internship internship) throws StardogException {
 
         ReasoningConnection con = connectionPool.getConnection();
@@ -166,11 +151,22 @@ public class InternshipsDao implements Dao {
         try {
 
             con.begin();
+
             con.commit();
             return "";
         } finally {
             connectionPool.releaseConnection(con);
         }
+    }
+
+    private String writeGraphResultsToString(GraphQuery graphQuery, RDFFormat format) throws Exception {
+        GraphQueryResult graphQueryResult = graphQuery.execute();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        QueryResultIO.write(graphQueryResult, format, baos);
+
+        graphQueryResult.close();
+        return baos.toString();
     }
 
 
