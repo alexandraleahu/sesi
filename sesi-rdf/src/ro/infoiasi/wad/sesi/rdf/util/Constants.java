@@ -9,4 +9,5 @@ public class Constants {
 
     public static final String INTERNSHIP_CLASS = "Internship";
     public static final String STUDENT_CLASS = "Student";
+    public static final String COMPANY_CLASS = "Company";
 }
