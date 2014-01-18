@@ -2,22 +2,22 @@ package ro.infoiasi.wad.sesi.core.model;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
-import org.joda.time.DateTime;
 import ro.infoiasi.wad.sesi.core.util.HasDescription;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @XmlRootElement // used for XML/JSON (de)serialization
-public class Internship implements Resource {
+public class Internship implements Resource, Event {
 
     private String companyId;
     private String name;
     private String description;
     private City city;
-    private DateTime startDate;
-    private DateTime endDate;
+    private Date startDate;
+    private Date endDate;
     private int openings;
     private List<String> acquiredGeneralSkills;
     private List<TechnicalSkill> acquiredTechnicalSkills;
@@ -94,19 +94,19 @@ public class Internship implements Resource {
         this.city = city;
     }
 
-    public DateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

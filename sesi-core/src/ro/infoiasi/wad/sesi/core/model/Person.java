@@ -1,5 +1,7 @@
 package ro.infoiasi.wad.sesi.core.model;
 
-public interface Person {
-    String getName();
+import ro.infoiasi.wad.sesi.core.util.HasName;
+
+public interface Person extends HasName {
+
 }

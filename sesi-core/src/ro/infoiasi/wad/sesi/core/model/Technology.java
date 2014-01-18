@@ -1,5 +1,7 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import ro.infoiasi.wad.sesi.core.util.HasName;
+
 import java.net.URL;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class Technology extends OntologyExtraInfo {
 
     private String version;
 
-    private Person developedBy;
+    private HasName developedBy;
 
 
     public String getDescription() {
@@ -56,7 +58,7 @@ public class Technology extends OntologyExtraInfo {
         this.version = version;
     }
 
-    public Person getDevelopedBy() {
+    public HasName getDevelopedBy() {
         return developedBy;
     }
 

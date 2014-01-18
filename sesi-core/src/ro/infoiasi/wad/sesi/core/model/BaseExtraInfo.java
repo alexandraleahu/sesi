@@ -1,11 +1,12 @@
 package ro.infoiasi.wad.sesi.core.model;
 
 import ro.infoiasi.wad.sesi.core.util.HasExtraInfo;
+import ro.infoiasi.wad.sesi.core.util.HasName;
 
 import java.io.Serializable;
 import java.net.URL;
 
-public class BaseExtraInfo implements Serializable, HasExtraInfo {
+public class BaseExtraInfo implements Serializable, HasExtraInfo, HasName {
 
     private String name;
 
