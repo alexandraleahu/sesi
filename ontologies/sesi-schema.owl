@@ -297,9 +297,9 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/preferedTechnicalSkill -->
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/preferredTechnicalSkill -->
 
-    <owl:ObjectProperty rdf:about="&sesiSchema;preferedTechnicalSkill">
+    <owl:ObjectProperty rdf:about="&sesiSchema;preferredTechnicalSkill">
         <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
         <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
         <rdfs:subPropertyOf rdf:resource="&sesiSchema;technicalSkill"/>
@@ -572,9 +572,9 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/preferedGeneralSkill -->
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/preferredGeneralSkill -->
 
-    <owl:DatatypeProperty rdf:about="&sesiSchema;preferedGeneralSkill">
+    <owl:DatatypeProperty rdf:about="&sesiSchema;preferredGeneralSkill">
         <rdfs:subPropertyOf rdf:resource="&sesiSchema;generalSkill"/>
     </owl:DatatypeProperty>
     
@@ -1049,16 +1049,9 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesiSchema;preferedGeneralSkill"/>
+                <owl:onProperty rdf:resource="&sesiSchema;preferredGeneralSkill"/>
                 <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesiSchema;preferedTechnicalSkill"/>
-                <owl:onClass rdf:resource="&sesiSchema;SoftwareSkill"/>
-                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -1095,14 +1088,15 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesiSchema;offersSalary"/>
-                <owl:allValuesFrom rdf:resource="&sesiSchema;Salary"/>
+                <owl:onProperty rdf:resource="&sesiSchema;preferredTechnicalSkill"/>
+                <owl:onClass rdf:resource="&sesiSchema;SoftwareSkill"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesiSchema;preferedTechnicalSkill"/>
-                <owl:allValuesFrom rdf:resource="&sesiSchema;SoftwareSkill"/>
+                <owl:onProperty rdf:resource="&sesiSchema;offersSalary"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;Salary"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -1130,6 +1124,12 @@
                 <owl:onProperty rdf:resource="&sesiSchema;offersRelocation"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;preferredTechnicalSkill"/>
+                <owl:allValuesFrom rdf:resource="&sesiSchema;SoftwareSkill"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
