@@ -10,7 +10,7 @@
 ]>
 
 
-<rdf:RDF
+<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/test#"
      xml:base="http://www.semanticweb.org/ontologies/test"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:test="http://www.semanticweb.org/ontologies/test/"
@@ -127,6 +127,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/ontologies/test/camelia -->
+
+    <owl:NamedIndividual rdf:about="&test;camelia">
+        <rdf:type rdf:resource="&test;child"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.semanticweb.org/ontologies/test/liliana -->
 
     <owl:NamedIndividual rdf:about="&test;liliana">
@@ -140,6 +148,7 @@
 
     <owl:NamedIndividual rdf:about="&test;maria">
         <rdf:type rdf:resource="&test;child"/>
+        <test:hasChild rdf:resource="&test;camelia"/>
     </owl:NamedIndividual>
 </rdf:RDF>
 
