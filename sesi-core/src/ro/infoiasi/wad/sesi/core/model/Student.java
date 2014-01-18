@@ -13,7 +13,7 @@ import java.util.Map;
 @XmlRootElement
 public class Student implements Resource, Person {
     private Map<Internship, InternshipApplication> appliedToInternships;
-    private Map<Internship, InternshipProgress> inProgressOrFinishedInternships;
+    private Map<Internship, InternshipProgressDetails> inProgressOrFinishedInternships;
 
     private String name;
     private String description;
@@ -26,6 +26,11 @@ public class Student implements Resource, Person {
     @Override
     public String getId() {
         return id;
+    }
+
+    @Override
+    public String getRelativeUri() {
+        return "/students/" + getId();
     }
 
     public void setId(String id) {
@@ -41,11 +46,11 @@ public class Student implements Resource, Person {
         this.appliedToInternships = appliedToInternships;
     }
 
-    public Map<Internship, InternshipProgress> getInProgressOrFinishedInternships() {
+    public Map<Internship, InternshipProgressDetails> getInProgressOrFinishedInternships() {
         return inProgressOrFinishedInternships;
     }
 
-    public void setInProgressOrFinishedInternships(Map<Internship, InternshipProgress> inProgressOrFinishedInternships) {
+    public void setInProgressOrFinishedInternships(Map<Internship, InternshipProgressDetails> inProgressOrFinishedInternships) {
         this.inProgressOrFinishedInternships = inProgressOrFinishedInternships;
     }
 

@@ -7,7 +7,7 @@ public class Teacher implements Resource, Person {
     private School school;
     private String id;
     private String description;
-    private List<InternshipProgress> monitoringInternships;
+    private List<InternshipProgressDetails> monitoringInternships;
     private String name;
 
     public School getSchool() {
@@ -35,11 +35,16 @@ public class Teacher implements Resource, Person {
         return id;
     }
 
-    public List<InternshipProgress> getMonitoringInternships() {
+    @Override
+    public String getRelativeUri() {
+        return "/teachers/" + getId();
+    }
+
+    public List<InternshipProgressDetails> getMonitoringInternships() {
         return monitoringInternships;
     }
 
-    public void setMonitoringInternships(List<InternshipProgress> monitoringInternships) {
+    public void setMonitoringInternships(List<InternshipProgressDetails> monitoringInternships) {
         this.monitoringInternships = monitoringInternships;
     }
 

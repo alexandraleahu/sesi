@@ -1,5 +1,7 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import ro.infoiasi.wad.sesi.core.util.HasExtraInfo;
+
 import java.io.Serializable;
 import java.net.URL;
 
@@ -7,7 +9,7 @@ public class BaseExtraInfo implements Serializable, HasExtraInfo {
 
     private String name;
 
-    private URL url;
+    private URL infoUrl;
 
 
     public String getName() {
@@ -19,12 +21,12 @@ public class BaseExtraInfo implements Serializable, HasExtraInfo {
     }
 
 
-    public void setUrl(URL url) {
-        this.url = url;
+    public void setInfoUrl(URL url) {
+        this.infoUrl = url;
     }
 
     @Override
     public URL getInfoUrl() {
-        return url;
+        return infoUrl;
     }
 }

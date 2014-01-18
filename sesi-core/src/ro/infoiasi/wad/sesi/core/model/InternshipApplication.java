@@ -36,4 +36,9 @@ public class InternshipApplication extends StudentInternshipRelation {
                 .add("description", description)
                 .toString();
     }
+
+    @Override
+    public String getRelativeUri() {
+        return "/applications/" + getId();
+    }
 }

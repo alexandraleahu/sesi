@@ -23,7 +23,7 @@ public class Company extends BaseExtraInfo implements Resource {
 
     private Map<Internship, List<InternshipApplication>> availableInternships;
 
-    private Map<Internship, List<InternshipProgress>> onGoingAndFinishedInternships;
+    private Map<Internship, List<InternshipProgressDetails>> onGoingAndFinishedInternships;
 
     public String getDescription() {
         return description;
@@ -59,6 +59,11 @@ public class Company extends BaseExtraInfo implements Resource {
         return id;
     }
 
+    @Override
+    public String getRelativeUri() {
+        return "/companies/" + getId();
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -80,11 +85,11 @@ public class Company extends BaseExtraInfo implements Resource {
         this.communityRating = communityRating;
     }
 
-    public Map<Internship, List<InternshipProgress>> getOnGoingAndFinishedInternships() {
+    public Map<Internship, List<InternshipProgressDetails>> getOnGoingAndFinishedInternships() {
         return onGoingAndFinishedInternships;
     }
 
-    public void setOnGoingAndFinishedInternships(Map<Internship, List<InternshipProgress>> onGoingAndFinishedInternships) {
+    public void setOnGoingAndFinishedInternships(Map<Internship, List<InternshipProgressDetails>> onGoingAndFinishedInternships) {
         this.onGoingAndFinishedInternships = onGoingAndFinishedInternships;
     }
 

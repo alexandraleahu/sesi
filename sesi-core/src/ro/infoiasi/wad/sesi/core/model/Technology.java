@@ -3,9 +3,8 @@ package ro.infoiasi.wad.sesi.core.model;
 import java.net.URL;
 import java.util.List;
 
-public class Technology extends BaseExtraInfo {
+public class Technology extends OntologyExtraInfo {
 
-    private String name;
     private String description;
     private URL repository;
     private List<String> programmingLanguages;
@@ -16,13 +15,6 @@ public class Technology extends BaseExtraInfo {
 
     private Person developedBy;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;

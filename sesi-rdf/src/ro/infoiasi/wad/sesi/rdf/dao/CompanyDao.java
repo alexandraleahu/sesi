@@ -3,14 +3,11 @@ package ro.infoiasi.wad.sesi.rdf.dao;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
-import org.openrdf.query.GraphQueryResult;
-import org.openrdf.query.resultio.QueryResultIO;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import static ro.infoiasi.wad.sesi.rdf.util.Constants.COMPANY_CLASS;
@@ -37,11 +34,7 @@ public class CompanyDao implements Dao {
             GraphQuery graphQuery = con.graph("describe ?c where {?c rdf:type sesiSchema:SoftwareCompany ; sesiSchema:id ?id .}");
             graphQuery.parameter("id", id);
 
-            GraphQueryResult graphQueryResult = graphQuery.execute();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            QueryResultIO.write(graphQueryResult, format, baos);
-
-            return baos.toString();
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
         } finally {
             connectionPool.releaseConnection(con);
         }
@@ -59,7 +52,6 @@ public class CompanyDao implements Dao {
                     .append("?internship sesiSchema:sesiUrl ?sesiUrl . ")
                     .append("}");
 
-            System.out.println(sb);
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
             return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "internship", "sesiUrl");
@@ -78,8 +70,7 @@ public class CompanyDao implements Dao {
                     .append("where {")
                     .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
                     .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:publishedInternship ?internship . ")
-                    .append("?internship sesiSchema:hasInternshipApplication ?application .")
+                    .append("sesiSchema:hasApplication ?application . ")
                     .append("?application sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
@@ -104,7 +95,7 @@ public class CompanyDao implements Dao {
             System.out.println("\n\n company internships");
             System.out.println(companyDao.getAllCompanyInternships("002"));
 
-            System.out.println("\n\n internship applications");
+            System.out.println("\n\n company applications");
             System.out.println(companyDao.getAllCompanyApplications("002"));
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

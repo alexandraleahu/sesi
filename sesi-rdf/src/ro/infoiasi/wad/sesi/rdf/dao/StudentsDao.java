@@ -3,14 +3,11 @@ package ro.infoiasi.wad.sesi.rdf.dao;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
-import org.openrdf.query.GraphQueryResult;
-import org.openrdf.query.resultio.QueryResultIO;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import static ro.infoiasi.wad.sesi.rdf.util.Constants.STUDENT_CLASS;
@@ -37,11 +34,7 @@ public class StudentsDao implements Dao {
             GraphQuery graphQuery = con.graph("describe ?s where {?s rdf:type sesiSchema:Student ; sesiSchema:id ?id .}");
             graphQuery.parameter("id", id);
 
-            GraphQueryResult graphQueryResult = graphQuery.execute();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            QueryResultIO.write(graphQueryResult, format, baos);
-
-            return baos.toString();
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
         } finally {
             connectionPool.releaseConnection(con);
         }

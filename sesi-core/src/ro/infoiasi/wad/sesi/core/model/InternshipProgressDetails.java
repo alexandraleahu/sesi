@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 
 import java.util.EnumSet;
 
-public class InternshipProgress extends StudentInternshipRelation {
+public class InternshipProgressDetails extends StudentInternshipRelation {
 
     private Teacher mentor;
     private int currentGrade;
@@ -57,5 +57,10 @@ public class InternshipProgress extends StudentInternshipRelation {
                 .add("currentGrade", currentGrade)
                 .add("companyFeedback", companyFeedback)
                 .toString();
+    }
+
+    @Override
+    public String getRelativeUri() {
+        return "/internshipProgressDetails/" + getId();
     }
 }

@@ -1,4 +1,4 @@
-package ro.infoiasi.wad.sesi.core.model;
+package ro.infoiasi.wad.sesi.core.util;
 
 import java.net.URL;
 

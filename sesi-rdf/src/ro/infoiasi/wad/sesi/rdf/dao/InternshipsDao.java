@@ -4,6 +4,7 @@ import com.complexible.stardog.StardogException;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
+import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Internship;
@@ -119,6 +120,8 @@ public class InternshipsDao implements Dao {
         try {
 
             con.begin();
+            // generating an id for the new resource
+            String id = RandomStringUtils.randomAlphanumeric(4);
 
             con.commit();
             return "";
@@ -130,7 +133,7 @@ public class InternshipsDao implements Dao {
     public static void main(String[] args) throws Exception {
         InternshipsDao dao = new InternshipsDao();
 
-        System.out.println(dao.getAllInternships(RDFFormat.TURTLE));
+        System.out.println(dao.getInternshipById("003", RDFFormat.TURTLE));
 
     }
 
