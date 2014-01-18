@@ -7,16 +7,14 @@ import com.complexible.stardog.api.reasoning.ReasoningConnection;
 import com.google.common.collect.Lists;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.query.BindingSet;
-import org.openrdf.query.GraphQueryResult;
 import org.openrdf.query.TupleQueryResult;
-import org.openrdf.query.resultio.QueryResultIO;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.Constants;
 import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
+import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class InternshipsDao implements Dao {
             GraphQuery graphQuery = con.graph("describe ?i where {?i rdf:type sesiSchema:Internship ; sesiSchema:id ?id .}");
             graphQuery.parameter("id", id);
 
-            return writeGraphResultsToString(graphQuery, format);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -45,7 +43,7 @@ public class InternshipsDao implements Dao {
         try {
             GraphQuery graphQuery = con.graph("describe ?i where {?i rdf:type sesiSchema:Internship .}");
 
-            return writeGraphResultsToString(graphQuery, format);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -158,17 +156,6 @@ public class InternshipsDao implements Dao {
             connectionPool.releaseConnection(con);
         }
     }
-
-    private String writeGraphResultsToString(GraphQuery graphQuery, RDFFormat format) throws Exception {
-        GraphQueryResult graphQueryResult = graphQuery.execute();
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        QueryResultIO.write(graphQueryResult, format, baos);
-
-        graphQueryResult.close();
-        return baos.toString();
-    }
-
 
     public static void main(String[] args) throws Exception {
         InternshipsDao dao = new InternshipsDao();
