@@ -80,7 +80,7 @@ public class InternshipsDao implements Dao {
                 resource.setSesiRelativeUrl(next.getValue("sesiUrl").stringValue());
                 internships.add(resource);
             }
-
+            tupleQueryResult.close();
             return internships;
 
         } finally {
@@ -116,7 +116,7 @@ public class InternshipsDao implements Dao {
                 resource.setSesiRelativeUrl(next.getValue("sesiUrl").stringValue());
                 internships.add(resource);
             }
-
+            tupleQueryResult.close();
             return internships;
 
         } finally {
