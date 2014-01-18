@@ -145,7 +145,7 @@ public class InternshipsDao implements Dao {
 
         try {
             org.openrdf.model.URI internshipUri =
-                    ValueFactoryImpl.getInstance().createURI(Constants.SESI_SCHEMA_NS + internshipId);
+                    ValueFactoryImpl.getInstance().createURI(Constants.SESI_OBJECTS_NS + internshipId);
 
             // deleting an individual means deleting all statements that have the individual as a subject or as an object
             con.begin();
