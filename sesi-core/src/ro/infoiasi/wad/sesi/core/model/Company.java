@@ -17,7 +17,7 @@ import java.util.Set;
 @XmlRootElement
 public class Company extends BaseExtraInfo implements Resource {
     private String description;
-    private int id;
+    private String id;
     private boolean active;
     private int communityRating;
 
@@ -55,11 +55,11 @@ public class Company extends BaseExtraInfo implements Resource {
     }
 
     @Override
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -86,36 +86,6 @@ public class Company extends BaseExtraInfo implements Resource {
 
     public void setOnGoingAndFinishedInternships(Map<Internship, List<InternshipProgress>> onGoingAndFinishedInternships) {
         this.onGoingAndFinishedInternships = onGoingAndFinishedInternships;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Company company = (Company) o;
-
-        if (active != company.active) return false;
-        if (communityRating != company.communityRating) return false;
-        if (id != company.id) return false;
-        if (availableInternships != null ? !availableInternships.equals(company.availableInternships) : company.availableInternships != null)
-            return false;
-        if (description != null ? !description.equals(company.description) : company.description != null) return false;
-        if (onGoingAndFinishedInternships != null ? !onGoingAndFinishedInternships.equals(company.onGoingAndFinishedInternships) : company.onGoingAndFinishedInternships != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = description != null ? description.hashCode() : 0;
-        result = 31 * result + id;
-        result = 31 * result + (active ? 1 : 0);
-        result = 31 * result + communityRating;
-        result = 31 * result + (availableInternships != null ? availableInternships.hashCode() : 0);
-        result = 31 * result + (onGoingAndFinishedInternships != null ? onGoingAndFinishedInternships.hashCode() : 0);
-        return result;
     }
 
     @Override

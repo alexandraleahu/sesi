@@ -1,6 +1,7 @@
 package ro.infoiasi.wad.sesi.core.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,19 +11,24 @@ import java.util.Map;
  * Time: 14:59
  */
 @XmlRootElement
-public class Student implements Resource {
+public class Student implements Resource, Person {
     private Map<Internship, InternshipApplication> appliedToInternships;
     private Map<Internship, InternshipProgress> inProgressOrFinishedInternships;
 
-    private StudentProfile studentProfile;
-    private int id;
+    private String name;
+    private String description;
+    private List<Technology> projects;
+    private List<String> skills;
+
+    private Map<School, String> education; //school + a small description
+    private String id;
 
     @Override
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,54 +49,47 @@ public class Student implements Resource {
         this.inProgressOrFinishedInternships = inProgressOrFinishedInternships;
     }
 
-    public StudentProfile getStudentProfile() {
-        return studentProfile;
-    }
-
-    public void setStudentProfile(StudentProfile studentProfile) {
-        this.studentProfile = studentProfile;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Student student = (Student) o;
-
-        if (id != student.id) return false;
-        if (appliedToInternships != null ? !appliedToInternships.equals(student.appliedToInternships) : student.appliedToInternships != null)
-            return false;
-        if (inProgressOrFinishedInternships != null ? !inProgressOrFinishedInternships.equals(student.inProgressOrFinishedInternships) : student.inProgressOrFinishedInternships != null)
-            return false;
-        if (studentProfile != null ? !studentProfile.equals(student.studentProfile) : student.studentProfile != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = appliedToInternships != null ? appliedToInternships.hashCode() : 0;
-        result = 31 * result + (inProgressOrFinishedInternships != null ? inProgressOrFinishedInternships.hashCode() : 0);
-        result = 31 * result + (studentProfile != null ? studentProfile.hashCode() : 0);
-        result = 31 * result + id;
-        return result;
-    }
 
     @Override
     public String getDescription() {
-        return studentProfile.getSummary();
+        return description;
     }
 
     @Override
-    public String toString() {
-        return "Student{" +
-                "appliedToInternships=" + appliedToInternships +
-                ", inProgressOrFinishedInternships=" + inProgressOrFinishedInternships +
-                ", studentProfile=" + studentProfile +
-                ", id=" + id +
-                '}';
+    public String getName() {
+        return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public List<Technology> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Technology> projects) {
+        this.projects = projects;
+    }
+
+    public List<String> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<String> skills) {
+        this.skills = skills;
+    }
+
+    public Map<School, String> getEducation() {
+        return education;
+    }
+
+    public void setEducation(Map<School, String> education) {
+        this.education = education;
+    }
 }

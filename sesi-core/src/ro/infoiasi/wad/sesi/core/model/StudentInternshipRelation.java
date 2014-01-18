@@ -15,7 +15,7 @@ public abstract class StudentInternshipRelation implements Resource {
 
     private Internship internship;
     private Student student;
-    private int id;
+    private String id;
     private Status status;
 
     public Internship getInternship() {
@@ -36,11 +36,11 @@ public abstract class StudentInternshipRelation implements Resource {
 
     public abstract EnumSet<Status> getPossibleStatus();
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

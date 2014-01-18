@@ -44,35 +44,7 @@ public class InternshipProgress extends StudentInternshipRelation {
         this.companyFeedback = companyFeedback;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        InternshipProgress that = (InternshipProgress) o;
-        if (getId() != that.getId()) return false;
-        if (!getInternship().equals(that.getInternship())) return false;
-        if (!getStudent().equals(that.getStudent())) return false;
-        if (!getStatus().equals(that.getStatus())) return false;
-        if (currentGrade != that.currentGrade) return false;
-        if (companyFeedback != null ? !companyFeedback.equals(that.companyFeedback) : that.companyFeedback != null)
-            return false;
-        if (mentor != null ? !mentor.equals(that.mentor) : that.mentor != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = mentor != null ? mentor.hashCode() : 0;
-        result = 31 * result + currentGrade;
-        result = 31 * result + getId();
-        result = 31 * result + getStudent().hashCode();
-        result = 31 * result + getInternship().hashCode();
-        result = 31 * result + getStatus().hashCode();
-        result = 31 * result + (companyFeedback != null ? companyFeedback.hashCode() : 0);
-        return result;
-    }
 
     @Override
     public String toString() {
