@@ -167,8 +167,8 @@
         <sesiSchema:acquiredTechnicalSkill rdf:resource="&sesi;JavaEEIntermediate"/>
         <sesiSchema:preferedTechnicalSkill rdf:resource="&sesi;JavaIntermediate"/>
         <sesiSchema:offersSalary rdf:resource="&sesi;Java_Web_Internship_Salary"/>
-        <sesiSchema:category rdf:resource="&sesiSchema;businessSoftware"/>
-        <sesiSchema:category rdf:resource="&sesiSchema;webDev"/>
+        <sesiSchema:category rdf:resource="&sesiSchema;BusinessSoftware"/>
+        <sesiSchema:category rdf:resource="&sesiSchema;WebDev"/>
     </owl:NamedIndividual>
     
 
