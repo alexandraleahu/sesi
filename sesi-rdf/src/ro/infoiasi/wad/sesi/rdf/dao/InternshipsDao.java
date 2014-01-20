@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.rdf.dao;
 
+import com.complexible.common.rdf.model.StardogValueFactory;
 import com.complexible.common.rdf.model.Values;
 import com.complexible.stardog.StardogException;
 import com.complexible.stardog.api.Adder;
@@ -149,20 +150,20 @@ public class InternshipsDao implements Dao {
             URI city = Values.uri(SESI_SCHEMA_NS, CITY_PROP);
 
 
-            adder.statement(newInternship, name, Values.literal(internship.getName()));
+            adder.statement(newInternship, name, Values.literal(internship.getName(), StardogValueFactory.XSD.STRING));
             adder.statement(newInternship, RDFS.LABEL, Values.literal(internship.getName()));
-            adder.statement(newInternship, description, Values.literal(internship.getDescription()));
+            adder.statement(newInternship, description, Values.literal(internship.getDescription(), StardogValueFactory.XSD.STRING));
             adder.statement(newInternship, startDate, valueFactory.createLiteral(internship.getStartDate()));
             adder.statement(newInternship, endDate, valueFactory.createLiteral(internship.getEndDate()));
 
             //adding the city
             City internshipCity = internship.getCity();
-            URI cityResource = Values.uri(internshipCity.getOntologyUri().toString());
+            URI cityResource = Values.uri(internshipCity.getOntologyUri());
 
             adder.statement(cityResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(cityResource, RDF.TYPE, Values.uri(FREEBASE_NS, CITY_CLASS));
             adder.statement(cityResource, RDFS.LABEL, Values.literal(internshipCity.getName()));
-            adder.statement(cityResource, RDFS.SEEALSO, Values.uri(internshipCity.getInfoUrl()));
+            adder.statement(cityResource, RDFS.SEEALSO, Values.literal(internshipCity.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
             adder.statement(newInternship, city, cityResource);
 
@@ -175,7 +176,7 @@ public class InternshipsDao implements Dao {
             URI sesiUrl = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
 
             adder.statement(newInternship, publishedByCompany, Values.uri(SESI_OBJECTS_NS, internship.getCompanyId()));
-            adder.statement(newInternship, ID, Values.literal(internship.getId()));
+            adder.statement(newInternship, ID, Values.literal(internship.getId(), StardogValueFactory.XSD.STRING));
             adder.statement(newInternship, offersRelocation, Values.literal(internship.isOfferingRelocation()));
             adder.statement(newInternship, openingsCount, Values.literal(internship.getOpenings()));
             adder.statement(newInternship, category, Values.uri(SESI_OBJECTS_NS, internship.getCategory().toString()));
@@ -190,12 +191,12 @@ public class InternshipsDao implements Dao {
                 URI numericalValue = Values.uri(SESI_SCHEMA_NS, SALARY_VALUE_PROP);
                 // adding the currency
                 Currency internshipCurrency = internshipSalary.getCurrency();
-                URI currencyResource = Values.uri(internshipCurrency.getOntologyUri().toString());
+                URI currencyResource = Values.uri(internshipCurrency.getOntologyUri());
 
                 adder.statement(currencyResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                 adder.statement(currencyResource, RDF.TYPE, Values.uri(FREEBASE_NS, CURRENCY_CLASS));
                 adder.statement(currencyResource, RDFS.LABEL, Values.literal(internshipCurrency.getName()));
-                adder.statement(currencyResource, RDFS.SEEALSO, Values.uri(internshipCurrency.getInfoUrl()));
+                adder.statement(currencyResource, RDFS.SEEALSO, Values.literal(internshipCurrency.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
                 // linking the currency resource to the salary resource
                 adder.statement(salaryResource, hasCurrency, currencyResource);
@@ -210,7 +211,7 @@ public class InternshipsDao implements Dao {
                 for (String acquiredGeneralSkill : internship.getAcquiredGeneralSkills()) {
 
                     URI acqGeneralSkillProp = Values.uri(SESI_SCHEMA_NS, ACQUIRED_GENERAL_PROP);
-                    adder.statement(newInternship, acqGeneralSkillProp, Values.literal(acquiredGeneralSkill));
+                    adder.statement(newInternship, acqGeneralSkillProp, Values.literal(acquiredGeneralSkill, StardogValueFactory.XSD.STRING));
                 }
             }
 
@@ -219,7 +220,7 @@ public class InternshipsDao implements Dao {
                 for (String preferredGeneralSkill : internship.getPreferredGeneralSkills()) {
 
                     URI prefGeneralSkillProp = Values.uri(SESI_SCHEMA_NS, PREFERRED_GENERAL_PROP);
-                    adder.statement(newInternship, prefGeneralSkillProp, Values.literal(preferredGeneralSkill));
+                    adder.statement(newInternship, prefGeneralSkillProp, Values.literal(preferredGeneralSkill, StardogValueFactory.XSD.STRING));
                 }
             }
 
@@ -258,7 +259,7 @@ public class InternshipsDao implements Dao {
                 adder.statement(technologyUri, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                 adder.statement(technologyUri, RDF.TYPE, Values.uri(FREEBASE_NS, PROGRAMMING_LANG_CLASS));
                 adder.statement(technologyUri, RDFS.LABEL, Values.literal(programmingLanguage.getName()));
-                adder.statement(technologyUri, RDFS.SEEALSO, Values.uri(programmingLanguage.getInfoUrl()));
+                adder.statement(technologyUri, RDFS.SEEALSO, Values.literal(programmingLanguage.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
                 languageOrSoftwareUri = Values.uri(SESI_SCHEMA_NS, PROGRAMMING_USED_PROP);
                 sb.append(programmingLanguage.getName().replace(' ', '_'));
@@ -269,7 +270,7 @@ public class InternshipsDao implements Dao {
                 adder.statement(technologyUri, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                 adder.statement(technologyUri, RDF.TYPE, Values.uri(FREEBASE_NS, SOFTWARE_CLASS));
                 adder.statement(technologyUri, RDFS.LABEL, Values.literal(software.getName()));
-                adder.statement(technologyUri, RDFS.SEEALSO, Values.uri(software.getInfoUrl()));
+                adder.statement(technologyUri, RDFS.SEEALSO, Values.literal(software.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
                 languageOrSoftwareUri = Values.uri(SESI_SCHEMA_NS, TECHNOLOGY_USED_PROP);
                 sb.append(software.getName().replace(' ', '_'));
@@ -278,12 +279,12 @@ public class InternshipsDao implements Dao {
             sb.append(technicalSkill.getLevel().toString());
 
             URI softwareSkillResource = Values.uri(SESI_OBJECTS_NS, sb.toString());
-            URI level = Values.uri(SESI_OBJECTS_NS, technicalSkill.getLevel().toString());
+            URI level = Values.uri(SESI_SCHEMA_NS, technicalSkill.getLevel().toString());
             URI hasLevel = Values.uri(SESI_SCHEMA_NS, LEVEL_PROP);
 
             // composing the software skill
             adder.statement(softwareSkillResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
-            adder.statement(softwareSkillResource, RDF.TYPE, Values.uri(FREEBASE_NS, SOFTWARE_SKILL_CLASS));
+            adder.statement(softwareSkillResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, SOFTWARE_SKILL_CLASS));
 
             adder.statement(softwareSkillResource, languageOrSoftwareUri, technologyUri);
             adder.statement(softwareSkillResource, hasLevel, level);
@@ -297,11 +298,9 @@ public class InternshipsDao implements Dao {
     public static void main(String[] args) throws Exception {
         
         InternshipsDao dao = new InternshipsDao();
-       
-        Internship internship = createNewInternship();
-        String uri = dao.createInternship(internship);
-        System.out.println(uri);
 
+//        System.out.println(dao.createInternship(createNewInternship()));
+        System.out.println(dao.getInternshipById("tmrS", RDFFormat.TURTLE));
 
     }
 
@@ -350,7 +349,7 @@ public class InternshipsDao implements Dao {
         java.setOntologyUri("http://rdf.freebase.com/ns/m.07sbkfb");
 
         TechnicalSkill javaIntermediate = new TechnicalSkill();
-        javaIntermediate.setLevel(KnowledgeLevel.intermediate);
+        javaIntermediate.setLevel(KnowledgeLevel.Intermediate);
 
         javaIntermediate.setProgrammingLanguage(java);
 
@@ -362,7 +361,7 @@ public class InternshipsDao implements Dao {
         android.setOntologyUri("http://rdf.freebase.com/ns/m.02wxtgw");
 
         TechnicalSkill androidAdvanced = new TechnicalSkill();
-        androidAdvanced.setLevel(KnowledgeLevel.advanced);
+        androidAdvanced.setLevel(KnowledgeLevel.Advanced);
         androidAdvanced.setTechnology(android);
 
         internship.setAcquiredTechnicalSkills(Arrays.asList(androidAdvanced));
