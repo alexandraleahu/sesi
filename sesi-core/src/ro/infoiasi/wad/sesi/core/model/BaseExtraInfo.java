@@ -4,13 +4,12 @@ import ro.infoiasi.wad.sesi.core.util.HasExtraInfo;
 import ro.infoiasi.wad.sesi.core.util.HasName;
 
 import java.io.Serializable;
-import java.net.URL;
 
 public class BaseExtraInfo implements Serializable, HasExtraInfo, HasName {
 
     private String name;
 
-    private URL infoUrl;
+    private String infoUrl;
 
 
     public String getName() {
@@ -22,12 +21,12 @@ public class BaseExtraInfo implements Serializable, HasExtraInfo, HasName {
     }
 
 
-    public void setInfoUrl(URL url) {
+    public void setInfoUrl(String url) {
         this.infoUrl = url;
     }
 
     @Override
-    public URL getInfoUrl() {
+    public String getInfoUrl() {
         return infoUrl;
     }
 }

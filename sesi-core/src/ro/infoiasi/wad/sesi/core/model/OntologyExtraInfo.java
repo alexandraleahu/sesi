@@ -2,18 +2,16 @@ package ro.infoiasi.wad.sesi.core.model;
 
 import ro.infoiasi.wad.sesi.core.util.HasOntologyUri;
 
-import java.net.URI;
-
 public class OntologyExtraInfo extends BaseExtraInfo implements HasOntologyUri {
 
-    private URI ontologyUri;
+    private String ontologyUri;
 
     @Override
-    public URI getOntologyUri() {
+    public String getOntologyUri() {
         return ontologyUri;
     }
 
-    public void setOntologyUri(URI ontologyUri) {
+    public void setOntologyUri(String ontologyUri) {
         this.ontologyUri = ontologyUri;
     }
 }

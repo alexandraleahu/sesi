@@ -6,8 +6,7 @@ import java.util.EnumSet;
 
 public class InternshipProgressDetails extends StudentInternshipRelation {
 
-    private Teacher mentor;
-    private int currentGrade;
+    private String teacherId;
     private String companyFeedback;
 
     @Override
@@ -20,20 +19,12 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
         return getCompanyFeedback();
     }
 
-    public Teacher getMentor() {
-        return mentor;
+    public String getTeacherId() {
+        return teacherId;
     }
 
-    public void setMentor(Teacher mentor) {
-        this.mentor = mentor;
-    }
-
-    public int getCurrentGrade() {
-        return currentGrade;
-    }
-
-    public void setCurrentGrade(int currentGrade) {
-        this.currentGrade = currentGrade;
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getCompanyFeedback() {
@@ -53,8 +44,7 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
                 .add("internship", getInternship())
                 .add("student", getStudent())
                 .add("status", getStatus())
-                .add("mentor", mentor)
-                .add("currentGrade", currentGrade)
+                .add("teacherId", teacherId)
                 .add("companyFeedback", companyFeedback)
                 .toString();
     }

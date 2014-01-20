@@ -1,11 +1,12 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import ro.infoiasi.wad.sesi.core.util.HasDescription;
 import ro.infoiasi.wad.sesi.core.util.HasName;
 
 import java.net.URL;
 import java.util.List;
 
-public class Technology extends OntologyExtraInfo {
+public class Technology extends OntologyExtraInfo implements HasDescription {
 
     private String description;
     private URL repository;

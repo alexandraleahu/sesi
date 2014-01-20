@@ -8,6 +8,7 @@ public class Constants {
 
     private Constants() {}
 
+    public static final int ID_LENGTH = 4;
     public static final String SESI_SCHEMA_NS = "http://www.infoiasi.ro/wad/schemas/sesi/";
     public static final String SESI_OBJECTS_NS = "http://www.infoiasi.ro/wad/objects/sesi/";
     public static final String FREEBASE_NS = "http://rdf.freebase.com/ns/";
@@ -16,15 +17,23 @@ public class Constants {
     public static final String STUDENT_CLASS = "Student";
     public static final String COMPANY_CLASS = "SoftwareCompany";
     public static final String CITY_CLASS = "location.citytown";
+    public static final String CURRENCY_CLASS = "finance.currency";
+    public static final String SOFTWARE_SKILL_CLASS = "SoftwareSkill";
+    public static final String PROGRAMMING_LANG_CLASS = "computer.programming_language";
+    public static final String SOFTWARE_CLASS = "computer.software";
 
     public static final String ID_PROP = "id";
     public static final String NAME_PROP = "name";
     public static final String DESCRIPTION_PROP = "description";
+    public static final String SESI_URL_PROP = "sesiUrl";
 
     public static final String ACQUIRED_TECHNICAL_PROP = "acquiredTechnicalSkill";
     public static final String ACQUIRED_GENERAL_PROP = "acquiredGeneralSkill";
     public static final String PREFERRED_GENERAL_PROP = "preferredGeneralSkill";
     public static final String PREFERRED_TECHNICAL_PROP = "preferredTechnicalSkill";
+    public static final String LEVEL_PROP = "level";
+    public static final String PROGRAMMING_USED_PROP = "programmingLanguageUsed";
+    public static final String TECHNOLOGY_USED_PROP = "technologyUsed";
 
     public static final String CATEGORY_PROP = "category";
     public static final String START_DATE_PROP = "startDate";
@@ -32,7 +41,12 @@ public class Constants {
 
     public static final String CITY_PROP = "inCity";
     public static final String RELOCATION_PROP = "offersRelocation";
+
     public static final String SALARY_PROP = "offersSalary";
+    public static final String CURRENCY_PROP = "hasCurrency";
+    public static final String SALARY_VALUE_PROP = "numericalValue";
+
+
     public static final String OPENINGS_PROP = "openingsCount";
 
     public static final String PROGRESS_PROP = "progressDetails";

@@ -26,7 +26,6 @@ public class Internship implements Resource, Event {
     private boolean offeringRelocation;
     private String id;
     private Category category;
-    private int applicantsNo;
     private Salary salary;
 
     @Override
@@ -61,7 +60,6 @@ public class Internship implements Resource, Event {
                 .add("offeringRelocation", offeringRelocation)
                 .add("id", id)
                 .add("category", category)
-                .add("applicantsNo", applicantsNo)
                 .add("salary", salary)
                 .toString();
     }
@@ -170,14 +168,6 @@ public class Internship implements Resource, Event {
         this.category = category;
     }
 
-    public int getApplicantsNo() {
-        return applicantsNo;
-    }
-
-    public void setApplicantsNo(int applicantsNo) {
-        this.applicantsNo = applicantsNo;
-    }
-
     public Salary getSalary() {
         return salary;
     }
@@ -225,11 +215,6 @@ public class Internship implements Resource, Event {
         @Override
         public String getDescription() {
             return description;
-        }
-
-        @Override
-        public String toString() {
-            return getDescription();
         }
     }
 
