@@ -1,7 +1,9 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
+import org.openrdf.rio.RDFFormat;
+import ro.infoiasi.wad.sesi.rdf.dao.InternshipsDao;
+
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -12,17 +14,20 @@ import java.util.List;
 @Path("/internships")
 public class InternshipsResource {
 
-    @Context
-    Context context;
-
     @GET
     @Path("/")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, "application/rdf+xml"})
     public Response getAllInternships(@QueryParam("q") String searchParam,
                                               @QueryParam("fields") List<String> fields,
                                               @QueryParam("matching") String studentId) {
 
-        return null;
+        InternshipsDao dao = new InternshipsDao();
+        try {
+            String allInternships = dao.getAllInternships(RDFFormat.RDFXML);
+            return Response.ok(allInternships, "application/rdf+xml").build();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Could not retrieve internships", e);
+        }
     }
 
 

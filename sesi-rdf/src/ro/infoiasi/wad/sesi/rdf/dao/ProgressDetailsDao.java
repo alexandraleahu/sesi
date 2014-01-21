@@ -53,7 +53,7 @@ public class ProgressDetailsDao implements Dao {
 
         try {
 
-            Resource newApplication = Values.uri(SESI_OBJECTS_NS, progressDetails.getId());
+            Resource newProgressDetails = Values.uri(SESI_OBJECTS_NS, progressDetails.getId());
             URI progressDetailsClass = Values.uri(SESI_SCHEMA_NS, getOntClassName());
 
             con.begin();
@@ -61,32 +61,32 @@ public class ProgressDetailsDao implements Dao {
             Adder adder = con.add();
 
             // adding the class and the owl:namedIndividual type
-            adder.statement(newApplication, RDF.TYPE, progressDetailsClass);
-            adder.statement(newApplication, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+            adder.statement(newProgressDetails, RDF.TYPE, progressDetailsClass);
+            adder.statement(newProgressDetails, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
 
             // then, the id and sesiUrl
             URI ID = Values.uri(SESI_SCHEMA_NS, ID_PROP);
             URI sesiUrl = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
 
-            adder.statement(newApplication, ID, Values.literal(progressDetails.getId(), StardogValueFactory.XSD.STRING));
-            adder.statement(newApplication, sesiUrl, Values.literal(progressDetails.getRelativeUri()));
+            adder.statement(newProgressDetails, ID, Values.literal(progressDetails.getId(), StardogValueFactory.XSD.STRING));
+            adder.statement(newProgressDetails, sesiUrl, Values.literal(progressDetails.getRelativeUri()));
 
             // adding the attendeeStudent and the internship and the teacher
             URI attendeeStudent = Values.uri(SESI_SCHEMA_NS, ATTENDEE_STUDENT_PROP);
             URI internship = Values.uri(SESI_SCHEMA_NS, ATTENDED_INTERNSHIP_PROP);
             URI mentorTeacher = Values.uri(SESI_SCHEMA_NS, TEACHER_MENTOR_PROP);
 
-            adder.statement(newApplication, attendeeStudent, Values.uri(SESI_OBJECTS_NS, progressDetails.getStudentId()));
-            adder.statement(newApplication, internship, Values.uri(SESI_OBJECTS_NS, progressDetails.getInternshipId()));
-            adder.statement(newApplication, mentorTeacher, Values.uri(SESI_OBJECTS_NS, progressDetails.getTeacherId()));
+            adder.statement(newProgressDetails, attendeeStudent, Values.uri(SESI_OBJECTS_NS, progressDetails.getStudentId()));
+            adder.statement(newProgressDetails, internship, Values.uri(SESI_OBJECTS_NS, progressDetails.getInternshipId()));
+            adder.statement(newProgressDetails, mentorTeacher, Values.uri(SESI_OBJECTS_NS, progressDetails.getTeacherId()));
 
             // adding the status and the feedback
             URI status = Values.uri(SESI_SCHEMA_NS, STATUS_PROP);
             URI feedback = Values.uri(SESI_SCHEMA_NS, FEEDBACK_PROP);
 
             // we set the status initially to inProgress, when the progressDetails is first submitted
-            adder.statement(newApplication, status, Values.uri(SESI_SCHEMA_NS, InternshipProgressDetails.Status.inProgress.toString()));
-            adder.statement(newApplication, feedback, Values.literal(INITIAL_ATTENDANCE_FEEDBACK, StardogValueFactory.XSD.STRING));
+            adder.statement(newProgressDetails, status, Values.uri(SESI_SCHEMA_NS, InternshipProgressDetails.Status.inProgress.toString()));
+            adder.statement(newProgressDetails, feedback, Values.literal(INITIAL_ATTENDANCE_FEEDBACK, StardogValueFactory.XSD.STRING));
             con.commit();
 
             return progressDetails.getRelativeUri();

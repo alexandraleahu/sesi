@@ -27,6 +27,7 @@ public class Constants {
     public static final String FACULTY_CLASS = "Faculty";
     public static final String DEGREE_CLASS = "education.educational_degree";
     public static final String STUDIES_CLASS= "AcademicStudies";
+    public static final String TEACHER_CLASS = "Teacher";
 
     public static final String ID_PROP = "id";
     public static final String NAME_PROP = "name";
@@ -85,6 +86,8 @@ public class Constants {
 
     public static final String INITIAL_FEEDBACK = "Your application was submitted into the system.";
     public static final String INITIAL_ATTENDANCE_FEEDBACK = "The student has just started the internship.";
+
+    public static final String IS_TEACHER_OF_PROP = "isTeacherOf";
 
     public static final URI OWL_NAMED_INDIVIDUAL = Values.uri(OWL.NAMESPACE, "NamedIndividual");
 
