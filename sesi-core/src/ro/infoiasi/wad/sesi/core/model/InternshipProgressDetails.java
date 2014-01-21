@@ -11,7 +11,7 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
 
     @Override
     public EnumSet<Status> getPossibleStatus() {
-        return EnumSet.of(Status.InProgress, Status.Finished);
+        return EnumSet.of(Status.inProgress, Status.finished);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("id", getId())
-                .add("internship", getInternship())
-                .add("student", getStudent())
+                .add("internship", getInternshipId())
+                .add("student", getStudentId())
                 .add("status", getStatus())
                 .add("teacherId", teacherId)
                 .add("companyFeedback", companyFeedback)

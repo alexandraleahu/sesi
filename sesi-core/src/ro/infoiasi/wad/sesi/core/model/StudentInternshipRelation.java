@@ -6,32 +6,32 @@ public abstract class StudentInternshipRelation implements Resource {
 
     public static enum Status {
 
-        Accepted,
-        Rejected,
-        Pending,
-        InProgress,
-        Finished
+        accepted,
+        rejected,
+        pending,
+        inProgress,
+        finished
     }
 
-    private Internship internship;
-    private Student student;
+    private String internshipId;
+    private String studentId;
     private String id;
     private Status status;
 
-    public Internship getInternship() {
-        return internship;
+    public String getInternshipId() {
+        return internshipId;
     }
 
-    public void setInternship(Internship internship) {
-        this.internship = internship;
+    public void setInternshipId(String internshipId) {
+        this.internshipId = internshipId;
     }
 
-    public Student getStudent() {
-        return student;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
     public abstract EnumSet<Status> getPossibleStatus();

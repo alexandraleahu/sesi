@@ -14,6 +14,8 @@ public class Constants {
     public static final String FREEBASE_NS = "http://rdf.freebase.com/ns/";
 
     public static final String INTERNSHIP_CLASS = "Internship";
+    public static final String APPLICATION_CLASS = "InternshipApplication";
+    public static final String PROGRESS_DETAILS_CLASS = "InternshipProgressDetails";
     public static final String STUDENT_CLASS = "Student";
     public static final String COMPANY_CLASS = "SoftwareCompany";
     public static final String CITY_CLASS = "location.citytown";
@@ -52,6 +54,18 @@ public class Constants {
     public static final String PROGRESS_PROP = "progressDetails";
     public static final String PUBLISHED_BY_PROP = "publishedByCompany";
     public static final String HAS_INTERNSHIP_APPLICATION_PROP = "hasInternshipApplication";
+
+    public static final String CANDIDATE_PROP = "candidate";
+    public static final String APPLICATION_INTERNSHIP_PROP = "applicationInternship";
+    public static final String STATUS_PROP = "status";
+    public static final String FEEDBACK_PROP = "feedback";
+
+    public static final String TEACHER_MENTOR_PROP = "associateInternshipTeacher";
+    public static final String ATTENDED_INTERNSHIP_PROP = "attendedInternship";
+    public static final String ATTENDEE_STUDENT_PROP = "attendeeStudent";
+
+    public static final String INITIAL_FEEDBACK = "Your application was submitted into the system.";
+    public static final String INITIAL_ATTENDANCE_FEEDBACK = "The student has just started the internship.";
 
     public static final URI OWL_NAMED_INDIVIDUAL = Values.uri(OWL.NAMESPACE, "NamedIndividual");
 

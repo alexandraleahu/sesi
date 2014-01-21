@@ -12,7 +12,7 @@ public class InternshipApplication extends StudentInternshipRelation {
 
     @Override
     public EnumSet<Status> getPossibleStatus() {
-        return EnumSet.of(Status.Accepted, Status.Rejected, Status.Pending);
+        return EnumSet.of(Status.accepted, Status.rejected, Status.pending);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class InternshipApplication extends StudentInternshipRelation {
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("id", getId())
-                .add("internship", getInternship())
-                .add("student", getStudent())
+                .add("internship", getInternshipId())
+                .add("student", getStudentId())
                 .add("status", getStatus())
                 .add("description", description)
                 .toString();
