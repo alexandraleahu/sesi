@@ -4,18 +4,18 @@ import java.util.List;
 
 public class Teacher implements Resource, Person {
 
-    private School school;
+    private Faculty faculty;
     private String id;
     private String description;
     private List<InternshipProgressDetails> monitoringInternships;
     private String name;
 
-    public School getSchool() {
-        return school;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setSchool(School school) {
-        this.school = school;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public void setId(String id) {
@@ -59,7 +59,7 @@ public class Teacher implements Resource, Person {
     @Override
     public String toString() {
         return "Teacher{" +
-                "school=" + school +
+                "faculty=" + faculty +
                 ", id=" + id +
                 ", description='" + description + '\'' +
                 ", monitoringInternships=" + monitoringInternships +

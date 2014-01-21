@@ -1,5 +1,7 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import com.google.common.collect.Lists;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +20,17 @@ public class Student implements Resource, Person {
     private String name;
     private String description;
     private List<Technology> projects;
-    private List<String> skills;
+    private List<String> generalSkills;
+    private List<TechnicalSkill> technicalSkills;
 
-    private Map<School, String> education; //school + a small description
+    private Studies studies;
     private String id;
+
+    public Student() {
+        projects = Lists.newArrayList();
+        generalSkills = Lists.newArrayList();
+        technicalSkills = Lists.newArrayList();
+    }
 
     @Override
     public String getId() {
@@ -82,19 +91,28 @@ public class Student implements Resource, Person {
         this.projects = projects;
     }
 
-    public List<String> getSkills() {
-        return skills;
+    public List<String> getGeneralSkills() {
+        return generalSkills;
     }
 
-    public void setSkills(List<String> skills) {
-        this.skills = skills;
+    public void setGeneralSkills(List<String> generalSkills) {
+        this.generalSkills = generalSkills;
     }
 
-    public Map<School, String> getEducation() {
-        return education;
+    public void setTechnicalSkills(List<TechnicalSkill> technicalSkills) {
+
+        this.technicalSkills = technicalSkills;
     }
 
-    public void setEducation(Map<School, String> education) {
-        this.education = education;
+    public List<TechnicalSkill> getTechnicalSkills() {
+        return technicalSkills;
+    }
+
+    public Studies getStudies() {
+        return studies;
+    }
+
+    public void setStudies(Studies studies) {
+        this.studies = studies;
     }
 }

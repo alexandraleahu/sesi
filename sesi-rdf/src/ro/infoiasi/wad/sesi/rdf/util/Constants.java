@@ -23,6 +23,10 @@ public class Constants {
     public static final String SOFTWARE_SKILL_CLASS = "SoftwareSkill";
     public static final String PROGRAMMING_LANG_CLASS = "computer.programming_language";
     public static final String SOFTWARE_CLASS = "computer.software";
+    public static final String UNIVERSITY_CLASS = "education.university";
+    public static final String FACULTY_CLASS = "Faculty";
+    public static final String DEGREE_CLASS = "education.educational_degree";
+    public static final String STUDIES_CLASS= "AcademicStudies";
 
     public static final String ID_PROP = "id";
     public static final String NAME_PROP = "name";
@@ -54,6 +58,21 @@ public class Constants {
     public static final String PROGRESS_PROP = "progressDetails";
     public static final String PUBLISHED_BY_PROP = "publishedByCompany";
     public static final String HAS_INTERNSHIP_APPLICATION_PROP = "hasInternshipApplication";
+
+    public static final String WORKED_ON_PROJECT_PROP = "workedOnProject";
+    public static final String TECHNICAL_SKILL_PROP = "technicalSkill";
+    public static final String HAS_STUDIES_PROP = "hasStudies";
+    public static final String GENERAL_SKILL_PROP="generalSkill";
+    public static final String UNIVERSITY_PROP="university";
+    public static final String FACULTY_PROP="studyFaculty";
+    public static final String YEAR_OF_STUDY_PROP = "yearOfStudy";
+    public static final String ENROLLED_STUDENT_PROP = "enrolledStudent";
+    public static final String DEGREE_PROP = "degree";
+
+    public static final String IS_ACTIVE= "isActive";
+    public static final String SITE_URL = "siteUrl";
+
+
 
     public static final String CANDIDATE_PROP = "candidate";
     public static final String APPLICATION_INTERNSHIP_PROP = "applicationInternship";

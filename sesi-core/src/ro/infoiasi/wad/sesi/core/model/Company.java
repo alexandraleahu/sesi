@@ -19,6 +19,7 @@ public class Company extends BaseExtraInfo implements Resource {
     private String description;
     private String id;
     private boolean active;
+    private String siteUrl;
     private int communityRating;
 
     private Map<Internship, List<InternshipApplication>> availableInternships;
@@ -31,6 +32,14 @@ public class Company extends BaseExtraInfo implements Resource {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSiteUrl() {
+        return siteUrl;
+    }
+
+    public void setSiteUrl(String siteUrl) {
+        this.siteUrl = siteUrl;
     }
 
     public Map<Internship, List<InternshipApplication>> getAvailableInternships() {

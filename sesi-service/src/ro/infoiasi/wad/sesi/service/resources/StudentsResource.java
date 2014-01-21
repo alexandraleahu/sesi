@@ -30,12 +30,12 @@ public class StudentsResource {
 //        project.setDescription("POP3 mail client");
 //        project.setTechnologies(Lists.newArrayList("Java", "XML"));
 //        profile.setProjects(Lists.newArrayList(project));
-//        profile.setSkills(Lists.newArrayList("Java", "SQL", "XML"));
-//        School school = new School();
+//        profile.setGeneralSkills(Lists.newArrayList("Java", "SQL", "XML"));
+//        Faculty school = new Faculty();
 //        school.setId(2);
 //        school.setName("Faculty of Computer Science");
 //        school.setDescription("Be among the first");
-//        Map<School, String> education = Maps.newHashMap();
+//        Map<Faculty, String> education = Maps.newHashMap();
 //        education.put(school, "I participated in various academic activities");
 //        profile.setEducation(education);
 //
