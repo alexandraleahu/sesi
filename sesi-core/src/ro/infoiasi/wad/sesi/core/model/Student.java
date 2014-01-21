@@ -19,7 +19,7 @@ public class Student implements Resource, Person {
 
     private String name;
     private String description;
-    private List<Technology> projects;
+    private List<StudentProject> projects;
     private List<String> generalSkills;
     private List<TechnicalSkill> technicalSkills;
 
@@ -30,6 +30,7 @@ public class Student implements Resource, Person {
         projects = Lists.newArrayList();
         generalSkills = Lists.newArrayList();
         technicalSkills = Lists.newArrayList();
+        projects = Lists.newArrayList();
     }
 
     @Override
@@ -83,11 +84,11 @@ public class Student implements Resource, Person {
     }
 
 
-    public List<Technology> getProjects() {
+    public List<StudentProject> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<Technology> projects) {
+    public void setProjects(List<StudentProject> projects) {
         this.projects = projects;
     }
 

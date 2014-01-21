@@ -19,6 +19,7 @@ import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static ro.infoiasi.wad.sesi.rdf.util.Constants.*;
@@ -116,8 +117,22 @@ public class StudentsDao implements Dao {
             adder.statement(newStudent, uri, Values.literal(student.getRelativeUri(), StardogValueFactory.XSD.STRING));
 
             //add projects
-            for (Technology technology : student.getProjects()) {
+            for (StudentProject studentProject: student.getProjects()) {
+                URI projectResource = Values.uri(SESI_OBJECTS_NS,  RandomStringUtils.randomAlphanumeric(ID_LENGTH));
+                adder.statement(projectResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+                adder.statement(projectResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDENT_PROJECT_CLASS));
+                adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getLabel()), StardogValueFactory.XSD.STRING);
+                adder.statement(projectResource, Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP), Values.literal(studentProject.getDescription()), StardogValueFactory.XSD.STRING);
 
+                URI programmingLanguageURI = Values.uri(studentProject.getProgrammingLanguage().getOntologyUri());
+                adder.statement(programmingLanguageURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+                adder.statement(programmingLanguageURI, RDF.TYPE, Values.uri(FREEBASE_NS, PROGRAMMING_LANG_CLASS));
+                adder.statement(programmingLanguageURI, RDFS.LABEL, Values.literal(studentProject.getProgrammingLanguage().getName()));
+                adder.statement(programmingLanguageURI, RDFS.SEEALSO, Values.literal(studentProject.getProgrammingLanguage().getInfoUrl(), StardogValueFactory.XSD.ANYURI));
+                URI programmingLanguageProperty = Values.uri(SESI_SCHEMA_NS, TECHNOLOGY_USED_PROP);
+                adder.statement(projectResource, programmingLanguageProperty, programmingLanguageURI);
+                adder.statement(projectResource, Values.uri(SESI_SCHEMA_NS, DEVELOPED_BY_PROP), newStudent);
+                adder.statement(newStudent, Values.uri(SESI_SCHEMA_NS, WORKED_ON_PROJECT_PROP), projectResource);
             }
             //add studies
             Studies studies = student.getStudies();
@@ -131,7 +146,6 @@ public class StudentsDao implements Dao {
             adder.statement(cityResource, RDF.TYPE, Values.uri(FREEBASE_NS, CITY_CLASS));
             adder.statement(cityResource, RDFS.LABEL, Values.literal(facultyCity.getName(), StardogValueFactory.XSD.STRING));
             adder.statement(cityResource, RDFS.SEEALSO, Values.uri(facultyCity.getInfoUrl()));
-
             adder.statement(newStudent, cityProp, cityResource);
 
             //add the university
@@ -143,17 +157,28 @@ public class StudentsDao implements Dao {
             adder.statement(universityResource, RDFS.SEEALSO, Values.uri(university.getInfoUrl()));
 
            //add the faculty
-            URI facultyResource = Values.uri(SESI_OBJECTS_NS, FACULTY_PROP);
+            URI facultyResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
             adder.statement(facultyResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+            adder.statement(facultyResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, FACULTY_CLASS));
             adder.statement(facultyResource,  Values.uri(SESI_SCHEMA_NS, UNIVERSITY_PROP), Values.uri(university.getOntologyUri()));
 
             //add the studies resource
-            URI studiesResource = Values.uri(SESI_OBJECTS_NS, STUDIES_CLASS);
+            URI studiesResource = Values.uri(SESI_OBJECTS_NS, studies.getLabel());
+            adder.statement(studiesResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+            adder.statement(studiesResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDIES_CLASS));
             adder.statement(studiesResource, RDFS.LABEL, Values.literal(studies.getLabel()), StardogValueFactory.XSD.STRING);
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, FACULTY_PROP), facultyResource);
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, YEAR_OF_STUDY_PROP), Values.literal(studies.getYearOfStudy().toString(), StardogValueFactory.XSD.NON_NEGATIVE_INTEGER));
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, ENROLLED_STUDENT_PROP), newStudent);
+            //add studies degree
+            URI degreeURI = Values.uri(studies.getDegree().getOntologyUri().toString());
+            adder.statement(degreeURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+            adder.statement(degreeURI, RDF.TYPE, Values.uri(FREEBASE_NS, DEGREE_CLASS));
+            adder.statement(degreeURI, RDFS.LABEL, Values.literal(studies.getDegree().getName(), StardogValueFactory.XSD.STRING));
+            adder.statement(degreeURI, RDFS.SEEALSO, Values.uri(studies.getDegree().getInfoUrl()));
+            adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, DEGREE_PROP), degreeURI);
 
+            adder.statement(newStudent, Values.uri(SESI_SCHEMA_NS, HAS_STUDIES_PROP), studiesResource);
 
             //add general skills
             for (String generalSkill : student.getGeneralSkills()) {
@@ -161,7 +186,10 @@ public class StudentsDao implements Dao {
                 adder.statement(newStudent, generalSkillProp, Values.literal(generalSkill));
             }
             //add technical skills
-
+            if(student.getTechnicalSkills() != null) {
+                URI technicalSkillsProp =  Values.uri(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP);
+                addTechnicalSkills(student.getTechnicalSkills(), newStudent, adder, technicalSkillsProp);
+            }
             con.commit();
             return student.getRelativeUri();
         } finally {
@@ -169,10 +197,63 @@ public class StudentsDao implements Dao {
         }
     }
 
+    private void addTechnicalSkills(List<TechnicalSkill> technicalSkills, Resource newStudent, Adder adder, URI technicalSkillsProp) throws StardogException {
+
+        for (TechnicalSkill technicalSkill : technicalSkills) {
+
+            // creating the programming language / technology (if it exists, the old triples won't be affected)
+            StringBuilder sb = new StringBuilder();
+            ProgrammingLanguage programmingLanguage = technicalSkill.getProgrammingLanguage();
+            URI technologyUri = null;
+            URI languageOrSoftwareUri = null;
+
+            if (programmingLanguage != null) {
+                technologyUri = Values.uri(programmingLanguage.getOntologyUri());
+                adder.statement(technologyUri, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+                adder.statement(technologyUri, RDF.TYPE, Values.uri(FREEBASE_NS, PROGRAMMING_LANG_CLASS));
+                adder.statement(technologyUri, RDFS.LABEL, Values.literal(programmingLanguage.getName()));
+                adder.statement(technologyUri, RDFS.SEEALSO, Values.literal(programmingLanguage.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
+
+                languageOrSoftwareUri = Values.uri(SESI_SCHEMA_NS, PROGRAMMING_USED_PROP);
+                sb.append(programmingLanguage.getName().replace(' ', '_'));
+
+            } else {
+                Technology software = technicalSkill.getTechnology();
+                technologyUri = Values.uri(software.getOntologyUri());
+                adder.statement(technologyUri, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+                adder.statement(technologyUri, RDF.TYPE, Values.uri(FREEBASE_NS, SOFTWARE_CLASS));
+                adder.statement(technologyUri, RDFS.LABEL, Values.literal(software.getName()));
+                adder.statement(technologyUri, RDFS.SEEALSO, Values.literal(software.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
+
+                languageOrSoftwareUri = Values.uri(SESI_SCHEMA_NS, TECHNOLOGY_USED_PROP);
+                sb.append(software.getName().replace(' ', '_'));
+
+            }
+            sb.append(technicalSkill.getLevel().toString());
+
+            URI softwareSkillResource = Values.uri(SESI_OBJECTS_NS, sb.toString());
+            URI level = Values.uri(SESI_SCHEMA_NS, technicalSkill.getLevel().toString());
+            URI hasLevel = Values.uri(SESI_SCHEMA_NS, LEVEL_PROP);
+
+            // composing the software skill
+            adder.statement(softwareSkillResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+            adder.statement(softwareSkillResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, SOFTWARE_SKILL_CLASS));
+
+            adder.statement(softwareSkillResource, languageOrSoftwareUri, technologyUri);
+            adder.statement(softwareSkillResource, hasLevel, level);
+
+            // adding the software skills to the technicalSkills
+            adder.statement(newStudent, technicalSkillsProp, softwareSkillResource);
+        }
+    }
+
+
     public static void main(String[] args) {
         StudentsDao dao = new StudentsDao();
 
         try {
+            System.out.println("Student ID 1");
+            System.out.println(dao.getStudent("001", RDFFormat.TURTLE));
             //add student
             Student student = newStudent("Gigel");
             dao.createStudent(student);
@@ -185,7 +266,7 @@ public class StudentsDao implements Dao {
 
     }
 
-    static Student newStudent(String name) {
+    static Student newStudent(String name)  {
         Student student = new Student();
         student.setId(RandomStringUtils.randomAlphanumeric(4));
         student.setName(name);
@@ -198,7 +279,7 @@ public class StudentsDao implements Dao {
 
         University university = new University();
         university.setSiteUrl("http://uaic.ro/uaic/bin/view/Main/WebHome");
-        university.setName("Alexandru Ioan Cuza University");
+        university.setName("Some Random University");
         university.setInfoUrl("http://www.freebase.com/m/0945q0");
         university.setOntologyUri("http://rdf.freebase.com/ns/m.0945q0");
         university.setCity(iasi);
@@ -217,7 +298,36 @@ public class StudentsDao implements Dao {
         degree.setName("degree name");
         studies.setDegree(degree);
 
+        ProgrammingLanguage java = new ProgrammingLanguage();
+        java.setName("Java");
+        java.setInfoUrl("http://www.freebase.com/m/07sbkfb");
+        java.setOntologyUri("http://rdf.freebase.com/ns/m.07sbkfb");
+
+        TechnicalSkill javaIntermediate = new TechnicalSkill();
+        javaIntermediate.setLevel(KnowledgeLevel.Intermediate);
+        javaIntermediate.setProgrammingLanguage(java);
+
+        Technology android = new Technology();
+        android.setName("Android");
+        android.setInfoUrl("http://www.freebase.com/m/02wxtgw");
+        android.setOntologyUri("http://rdf.freebase.com/ns/m.02wxtgw");
+
+        TechnicalSkill androidAdvanced = new TechnicalSkill();
+        androidAdvanced.setLevel(KnowledgeLevel.Advanced);
+        androidAdvanced.setTechnology(android);
+
+        student.setTechnicalSkills(Arrays.asList(javaIntermediate, androidAdvanced));
+
         student.setStudies(studies);
+
+        StudentProject project = new StudentProject();
+        project.setName("SESI PROJECT");
+        project.setLabel("sesiproj");
+        project.setDescription("internship application for students");
+        project.setStudentID(student.getId());
+        project.setProgrammingLanguage(java);
+
+        student.setProjects(Lists.newArrayList(project));
 
         return student;
     }

@@ -26,6 +26,7 @@ public class Constants {
     public static final String UNIVERSITY_CLASS = "education.university";
     public static final String FACULTY_CLASS = "Faculty";
     public static final String DEGREE_CLASS = "education.educational_degree";
+    public static final String STUDENT_PROJECT_CLASS = "StudentProject";
     public static final String STUDIES_CLASS= "AcademicStudies";
     public static final String TEACHER_CLASS = "Teacher";
 
@@ -63,16 +64,16 @@ public class Constants {
     public static final String WORKED_ON_PROJECT_PROP = "workedOnProject";
     public static final String TECHNICAL_SKILL_PROP = "technicalSkill";
     public static final String HAS_STUDIES_PROP = "hasStudies";
-    public static final String GENERAL_SKILL_PROP="generalSkill";
-    public static final String UNIVERSITY_PROP="university";
-    public static final String FACULTY_PROP="studyFaculty";
+    public static final String GENERAL_SKILL_PROP = "generalSkill";
+    public static final String UNIVERSITY_PROP = "university";
+    public static final String FACULTY_PROP = "studyFaculty";
     public static final String YEAR_OF_STUDY_PROP = "yearOfStudy";
     public static final String ENROLLED_STUDENT_PROP = "enrolledStudent";
     public static final String DEGREE_PROP = "degree";
+    public static final String DEVELOPED_BY_PROP = "developedBy";
 
-    public static final String IS_ACTIVE= "isActive";
+    public static final String IS_ACTIVE = "isActive";
     public static final String SITE_URL = "siteUrl";
-
 
 
     public static final String CANDIDATE_PROP = "candidate";
