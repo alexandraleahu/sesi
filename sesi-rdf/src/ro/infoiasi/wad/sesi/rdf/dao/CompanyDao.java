@@ -1,11 +1,13 @@
 package ro.infoiasi.wad.sesi.rdf.dao;
 
+import com.complexible.common.rdf.model.StardogValueFactory;
 import com.complexible.common.rdf.model.Values;
 import com.complexible.stardog.StardogException;
 import com.complexible.stardog.api.Adder;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
+import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
@@ -98,13 +100,14 @@ public class CompanyDao implements Dao {
                     .append("where {")
                     .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
                     .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:hasCompanyProgressDetails ?progressDetails . ")
+                    .append("sesiSchema:publishedInternship ?internship . ")
+                    .append("?internship sesiSchema:progressDetails ?progressDetails . ")
                     .append("?progressDetails sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "progressDetails", "sesiUrl");
+            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "application", "sesiUrl");
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -125,13 +128,15 @@ public class CompanyDao implements Dao {
             adder.statement(newCompany, RDF.TYPE, companyClass);
             adder.statement(newCompany, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
 
+            URI id = Values.uri(SESI_SCHEMA_NS, ID_PROP);
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
-            URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
-            URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE_PROP);
+            URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL);
+            URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE);
 
-            adder.statement(newCompany, name, Values.literal(company.getName()));
-            adder.statement(newCompany, description, Values.literal(company.getDescription()));
+            adder.statement(newCompany, id, Values.literal(company.getId(), StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, name, Values.literal(company.getName(), StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, description, Values.literal(company.getDescription(), StardogValueFactory.XSD.STRING));
             adder.statement(newCompany, siteUrl, Values.literal(company.getSiteUrl()));
             adder.statement(newCompany, isActive, Values.literal(company.isActive()));
 
@@ -146,32 +151,31 @@ public class CompanyDao implements Dao {
     public static void main(String[] args) {
         CompanyDao companyDao = new CompanyDao();
         try {
-//            System.out.println("ALL COMPANIES");
-//            System.out.println(companyDao.getAllCompanies(RDFFormat.TURTLE));
+            System.out.println("ALL COMPANIES");
+            System.out.println(companyDao.getAllCompanies(RDFFormat.TURTLE));
 
             System.out.println("Company id 2");
-            System.out.println(companyDao.getCompany("virtualcomp", RDFFormat.TURTLE));
+            System.out.println(companyDao.getCompany("002", RDFFormat.TURTLE));
 
-//            System.out.println("\n\n company internships");
-//            System.out.println(companyDao.getAllCompanyInternships("virtualcomp"));
-//
-//            System.out.println("\n\n company applications");
-//            System.out.println(companyDao.getAllCompanyApplications("virtualcomp"));
-//
-//            System.out.println("\n\n company internships progress details");
-//            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp"));
-//
-//            //adding a company
-//            Company company = new Company();
-//            company.setName("Company 1");
-//            company.setTitle("My first company");
-//            company.setId("200");
-//            company.setSiteUrl("www.Company1.com");
-//            company.setActive(true);
-//            companyDao.createCompany(company);
-//
-//            System.out.println("company id 200");
-//            System.out.println(companyDao.getCompany("210", RDFFormat.TURTLE));
+            System.out.println("\n\n company internships");
+            System.out.println(companyDao.getAllCompanyInternships("002"));
+
+            System.out.println("\n\n company applications");
+            System.out.println(companyDao.getAllCompanyApplications("002"));
+
+            System.out.println("\n\n company internships progress details");
+            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("002"));
+
+            //adding a company
+            Company company = new Company();
+            company.setName("Company 1");
+            company.setDescription("My first company");
+            company.setId(RandomStringUtils.randomAlphanumeric(4));
+            company.setSiteUrl("www.Company1.com");
+            company.setActive(true);
+
+            companyDao.createCompany(company);
+            System.out.println(companyDao.getCompany(company.getId(), RDFFormat.TURTLE));
         } catch (Exception e) {
             e.printStackTrace();
         }
