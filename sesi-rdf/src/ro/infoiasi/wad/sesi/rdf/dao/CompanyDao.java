@@ -155,16 +155,16 @@ public class CompanyDao implements Dao {
             System.out.println(companyDao.getAllCompanies(RDFFormat.TURTLE));
 
             System.out.println("Company id 2");
-            System.out.println(companyDao.getCompany("002", RDFFormat.TURTLE));
+            System.out.println(companyDao.getCompany("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company internships");
-            System.out.println(companyDao.getAllCompanyInternships("002"));
+            System.out.println(companyDao.getAllCompanyInternships("virtualcomp"));
 
             System.out.println("\n\n company applications");
-            System.out.println(companyDao.getAllCompanyApplications("002"));
+            System.out.println(companyDao.getAllCompanyApplications("virtualcomp"));
 
             System.out.println("\n\n company internships progress details");
-            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("002"));
+            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp"));
 
             //adding a company
             Company company = new Company();
