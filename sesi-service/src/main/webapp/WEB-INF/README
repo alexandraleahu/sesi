@@ -1,0 +1,11 @@
+Ca sa mearga deploy-ul cu Guava 16, l-am lasat compile in sesi-core si l-am pus ca dependinta provided in sesi-rdf.
+Trebuie pus dupa aia provided in orice alt modul care depinde de core, daca vreti sa-l folositi.
+De asemenea, aveti grija sa stergeti toate celelalte versiuni de guava din maven libraries si din artifacte.
+
+Alte indicatii ca sa nu aveti toate problemele de deploy pe care le-am avut eu:
+
+Trebuie ca toate jar-urile din directorul lib din sesi-rdf sa fie puse intr-un library separat (click dreapta pe lib -> Add as Library, la mine se numeste sesi-rdf-libs),
+care va fi apoi adaugat in sesi-service ca dependinta.
+
+In artifactul sesi-service, structura trebuie sa fie ca in poza sesi-service-artifact.JPG
+Ar trebui sa puneti sesi-core.jar (generat de maven) doar in lib si sa nu aveti si in classes/sesi-core compile output
