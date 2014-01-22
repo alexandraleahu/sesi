@@ -131,8 +131,8 @@ public class CompanyDao implements Dao {
             URI id = Values.uri(SESI_SCHEMA_NS, ID_PROP);
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
-            URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL);
-            URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE);
+            URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
+            URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE_PROP);
 
             adder.statement(newCompany, id, Values.literal(company.getId(), StardogValueFactory.XSD.STRING));
             adder.statement(newCompany, name, Values.literal(company.getName(), StardogValueFactory.XSD.STRING));
