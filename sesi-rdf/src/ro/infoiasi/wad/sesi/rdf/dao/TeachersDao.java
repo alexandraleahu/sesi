@@ -11,18 +11,17 @@ import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
+import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.City;
 import ro.infoiasi.wad.sesi.core.model.Faculty;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
 import ro.infoiasi.wad.sesi.core.model.University;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
-import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import java.util.List;
-
 import static ro.infoiasi.wad.sesi.rdf.util.Constants.*;
+
 public class TeachersDao implements Dao {
 
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
@@ -53,7 +52,7 @@ public class TeachersDao implements Dao {
         }
     }
 
-    public List<ResourceLinks> getAllInternshipProgressDetails(String teacherId) throws Exception {
+    public String getAllInternshipProgressDetails(String teacherId, TupleQueryResultFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
@@ -68,7 +67,7 @@ public class TeachersDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", teacherId);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "details", SESI_URL_PROP);
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);

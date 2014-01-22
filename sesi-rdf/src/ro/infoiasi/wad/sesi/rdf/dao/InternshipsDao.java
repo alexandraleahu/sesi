@@ -60,7 +60,7 @@ public class InternshipsDao implements Dao {
         }
     }
 
-    public List<ResourceLinks> getAllInternshipApplications(String internshipId) throws Exception {
+    public String getAllInternshipApplications(String internshipId, TupleQueryResultFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
@@ -75,7 +75,7 @@ public class InternshipsDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", internshipId);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "application", SESI_URL_PROP);
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -302,7 +302,7 @@ public class InternshipsDao implements Dao {
         InternshipsDao dao = new InternshipsDao();
 
 //        System.out.println(dao.createInternship(createNewInternship()));
-        System.out.println(dao.getInternshipById("tmrS", RDFFormat.TURTLE));
+        System.out.println(dao.getAllInternshipApplications("003", TupleQueryResultFormat.JSON));
 
     }
 

@@ -13,6 +13,7 @@ import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
+import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.*;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
@@ -49,7 +50,7 @@ public class StudentsDao implements Dao {
         }
     }
 
-    public List<ResourceLinks> getAllStudentApplications(String id) throws Exception {
+    public String getAllStudentApplications(String id, TupleQueryResultFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
@@ -63,14 +64,14 @@ public class StudentsDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "application", "sesiUrl");
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
         }
     }
 
-    public List<ResourceLinks> getStudentInternshipsProgressDetails(String id) throws Exception {
+    public String getStudentInternshipsProgressDetails(String id, TupleQueryResultFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
@@ -84,7 +85,7 @@ public class StudentsDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "progressDetails", "sesiUrl");
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery,format);
 
         } finally {
             connectionPool.releaseConnection(con);

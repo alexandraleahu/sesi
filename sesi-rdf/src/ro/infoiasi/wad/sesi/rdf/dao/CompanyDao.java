@@ -11,6 +11,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
@@ -49,7 +50,7 @@ public class CompanyDao implements Dao {
         }
     }
 
-    public List<ResourceLinks> getAllCompanyInternships(String id) throws Exception {
+    public String getAllCompanyInternships(String id, TupleQueryResultFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
@@ -63,14 +64,14 @@ public class CompanyDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "internship", "sesiUrl");
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
         }
     }
 
-    public List<ResourceLinks> getAllCompanyApplications(String id) throws Exception {
+    public String getAllCompanyApplications(String id, TupleQueryResultFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
@@ -84,14 +85,14 @@ public class CompanyDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "application", "sesiUrl");
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
         }
     }
 
-    public List<ResourceLinks> getAllCompanyInternshipProgressDetails(String id) throws Exception {
+    public String getAllCompanyInternshipProgressDetails(String id, TupleQueryResultFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
@@ -107,7 +108,7 @@ public class CompanyDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "application", "sesiUrl");
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -158,13 +159,13 @@ public class CompanyDao implements Dao {
             System.out.println(companyDao.getCompany("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company internships");
-            System.out.println(companyDao.getAllCompanyInternships("virtualcomp"));
+            System.out.println(companyDao.getAllCompanyInternships("virtualcomp", TupleQueryResultFormat.JSON));
 
             System.out.println("\n\n company applications");
-            System.out.println(companyDao.getAllCompanyApplications("virtualcomp"));
+            System.out.println(companyDao.getAllCompanyApplications("virtualcomp", TupleQueryResultFormat.JSON));
 
             System.out.println("\n\n company internships progress details");
-            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp"));
+            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp", TupleQueryResultFormat.JSON));
 
             //adding a company
             Company company = new Company();

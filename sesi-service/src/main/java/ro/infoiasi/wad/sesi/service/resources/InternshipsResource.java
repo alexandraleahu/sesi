@@ -1,7 +1,9 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
+import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.rdf.dao.InternshipsDao;
+import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
@@ -21,8 +23,50 @@ public class InternshipsResource {
     @Path("/")
     @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
     public Response getAllInternships(@QueryParam("q") String searchParam,
+                                      @QueryParam("fields") List<String> fields,
+                                      @QueryParam("matching") String studentId,
+                                      @Context HttpHeaders headers) {
+
+        InternshipsDao dao = new InternshipsDao();
+        try {
+            List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
+
+            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+
+            String allInternships = dao.getAllInternships(RDFFormat.JSONLD);
+            return Response.ok(allInternships, returnTypes.getMediaType()).build();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Could not retrieve internships", e);
+        }
+    }
+
+
+    @GET
+    @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
+    public Response getInternship(@PathParam("id") String internshipId,
+                                  @QueryParam("q") String searchParam,
+                                  @QueryParam("fields") List<String> fields,
+                                  @Context HttpHeaders headers) {
+        InternshipsDao dao = new InternshipsDao();
+        try {
+            List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
+
+            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+
+            String internship = dao.getInternshipById(internshipId, RDFFormat.JSONLD);
+            return Response.ok(internship, returnTypes.getMediaType()).build();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Could not retrieve internship with id" + internshipId, e);
+        }
+    }
+
+    @GET
+    @Path("/{id}/applications")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getInternshipApplications(@PathParam("id") String internshipId,
                                               @QueryParam("fields") List<String> fields,
-                                              @QueryParam("matching") String studentId,
+                                              @QueryParam("accepted") Boolean accepted,
                                               @Context HttpHeaders headers) {
 
         InternshipsDao dao = new InternshipsDao();
@@ -31,31 +75,10 @@ public class InternshipsResource {
 
             MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
 
-            String allInternships = dao.getAllInternships((RDFFormat) returnTypes.getRdfFormat());
-            return Response.ok(allInternships, returnTypes.getMediaType()).build();
+            String applications = dao.getAllInternshipApplications(internshipId, TupleQueryResultFormat.JSON);
+            return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internships", e);
+            throw new InternalServerErrorException("Could not retrieve internship applications for internship with id" + internshipId, e);
         }
-
-    }
-
-
-    @GET
-    @Path("/{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
-    public Response getInternship(@PathParam("id") String internshipId,
-                                    @QueryParam("fields") List<String> fields) {
-        return null;
-    }
-
-    @GET
-    @Path("/{id}/applications")
-    @Produces({MediaTypeConstants.SPARQL_JSON_STRING, MediaTypeConstants.SPARQL_XML_STRING})
-    public Response getInternshipApplications(
-                                                @PathParam("id") String internshipId,
-                                                @QueryParam("fields") List<String> fields,
-                                                @QueryParam("accepted") Boolean accepted) {
-
-        return null;
     }
 }
