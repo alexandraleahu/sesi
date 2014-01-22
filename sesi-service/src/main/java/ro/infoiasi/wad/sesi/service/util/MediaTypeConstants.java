@@ -15,12 +15,15 @@ public class MediaTypeConstants {
     public static final String TURTLE_STRING = "text/turtle";
     public static final MediaType RDFXML = new MediaType("application", "rdf+xml");
     public static final String RDFXML_STRING = "application/rdf+xml";
+    public static final MediaType JSONLD = new MediaType("application", "ld+json");
+    public static final String JSON_LD_STRING = "application/ld+json";
+    
     public static final MediaType DEFAULT_RDF_TYPE = MediaType.APPLICATION_JSON_TYPE;
 
     private static Map<MediaType, RDFFormat> buildMimeTypeToRdfFormatMappings() {
 
         Map<MediaType, RDFFormat> mappings = Maps.newHashMap();
-        mappings.put(MediaType.APPLICATION_JSON_TYPE, RDFFormat.JSONLD);
+        mappings.put(JSONLD, RDFFormat.JSONLD);
         mappings.put(RDFXML, RDFFormat.RDFXML);
         mappings.put(TURTLE, RDFFormat.TURTLE);
 
@@ -45,16 +48,16 @@ public class MediaTypeConstants {
         RDFFormat rdfReturnType = null;
         MediaType returnContentType = null;
 
-        if (acceptableMediaTypes.contains(MediaType.APPLICATION_JSON_TYPE)) {
-            return new MediaTypeAndRdfFormat(MediaType.APPLICATION_JSON_TYPE, MAPPINGS.get(MediaType.APPLICATION_JSON_TYPE));
+        if (acceptableMediaTypes.contains(JSONLD)) {
+            return new MediaTypeAndRdfFormat(JSONLD, MAPPINGS.get(JSONLD));
 
         } else if (
-                acceptableMediaTypes.contains(MediaTypeConstants.RDFXML)) {
+                acceptableMediaTypes.contains(RDFXML)) {
 
-            return new MediaTypeAndRdfFormat(MediaTypeConstants.RDFXML, MAPPINGS.get(MediaTypeConstants.RDFXML));
+            return new MediaTypeAndRdfFormat(RDFXML, MAPPINGS.get(RDFXML));
 
-        } else if (acceptableMediaTypes.contains(MediaTypeConstants.TURTLE)) {
-            return new MediaTypeAndRdfFormat(MediaTypeConstants.TURTLE, MAPPINGS.get(MediaTypeConstants.TURTLE));
+        } else if (acceptableMediaTypes.contains(TURTLE)) {
+            return new MediaTypeAndRdfFormat(TURTLE, MAPPINGS.get(TURTLE));
 
         } else {
             return new MediaTypeAndRdfFormat(DEFAULT_RDF_TYPE, MAPPINGS.get(DEFAULT_RDF_TYPE));

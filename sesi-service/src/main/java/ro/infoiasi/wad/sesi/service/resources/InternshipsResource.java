@@ -18,7 +18,7 @@ public class InternshipsResource {
 
     @GET
     @Path("/")
-    @Produces({MediaType.APPLICATION_JSON, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
+    @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
     public Response getAllInternships(@QueryParam("q") String searchParam,
                                               @QueryParam("fields") List<String> fields,
                                               @QueryParam("matching") String studentId,
