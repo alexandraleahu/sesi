@@ -7,12 +7,14 @@ import com.complexible.stardog.api.Adder;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
+import info.aduna.lang.FileFormat;
 import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
+import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.*;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
@@ -73,7 +75,7 @@ public class InternshipsDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", internshipId);
-            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery,"application", SESI_URL_PROP);
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "application", SESI_URL_PROP);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -82,7 +84,7 @@ public class InternshipsDao implements Dao {
 
 
 
-    public List<ResourceLinks> getAllInternshipProgressDetails(String internshipId) throws Exception {
+    public String getAllInternshipProgressDetails(String internshipId, TupleQueryResultFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
@@ -97,7 +99,7 @@ public class InternshipsDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", internshipId);
-            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "progressDetails", SESI_URL_PROP);
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);

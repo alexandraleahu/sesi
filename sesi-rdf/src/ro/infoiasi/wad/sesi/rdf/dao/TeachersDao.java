@@ -68,7 +68,7 @@ public class TeachersDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", teacherId);
-            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery,"details", SESI_URL_PROP);
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "details", SESI_URL_PROP);
 
         } finally {
             connectionPool.releaseConnection(con);

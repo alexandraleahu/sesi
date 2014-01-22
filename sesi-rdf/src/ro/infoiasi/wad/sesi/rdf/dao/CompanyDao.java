@@ -63,7 +63,7 @@ public class CompanyDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "internship", "sesiUrl");
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "internship", "sesiUrl");
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -84,7 +84,7 @@ public class CompanyDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "application", "sesiUrl");
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "application", "sesiUrl");
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -107,7 +107,7 @@ public class CompanyDao implements Dao {
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "application", "sesiUrl");
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, "application", "sesiUrl");
 
         } finally {
             connectionPool.releaseConnection(con);

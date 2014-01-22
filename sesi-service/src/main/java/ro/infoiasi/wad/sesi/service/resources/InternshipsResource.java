@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
+import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.rdf.dao.InternshipsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
@@ -30,7 +31,7 @@ public class InternshipsResource {
 
             MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
 
-            String allInternships = dao.getAllInternships(returnTypes.getRdfFormat());
+            String allInternships = dao.getAllInternships((RDFFormat) returnTypes.getRdfFormat());
             return Response.ok(allInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internships", e);
@@ -49,7 +50,7 @@ public class InternshipsResource {
 
     @GET
     @Path("/{id}/applications")
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces({MediaTypeConstants.SPARQL_JSON_STRING, MediaTypeConstants.SPARQL_XML_STRING})
     public Response getInternshipApplications(
                                                 @PathParam("id") String internshipId,
                                                 @QueryParam("fields") List<String> fields,
