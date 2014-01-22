@@ -310,7 +310,7 @@ public class InternshipsDao implements Dao {
         internship.setId(RandomStringUtils.randomAlphanumeric(ID_LENGTH));
         internship.setName("Android internship");
         internship.setDescription("An internship in which students will work on Android applications published on the market");
-        internship.setCompanyId("002");
+        internship.setCompanyId("virtualcomp");
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.set(2014, Calendar.JUNE, 19, 9, 0 , 0);
         internship.setStartDate(calendar.getTime());

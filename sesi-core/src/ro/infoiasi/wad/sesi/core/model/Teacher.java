@@ -1,14 +1,18 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import com.google.common.base.Objects;
+
 import java.util.List;
 
 public class Teacher implements Resource, Person {
 
     private Faculty faculty;
     private String id;
-    private String description;
+    private String title;
     private List<InternshipProgressDetails> monitoringInternships;
     private String name;
+    private String siteUrl;
+
 
     public Faculty getFaculty() {
         return faculty;
@@ -22,12 +26,16 @@ public class Teacher implements Resource, Person {
         this.id = id;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
-        return null;
+        return title;
     }
 
     @Override
@@ -38,6 +46,14 @@ public class Teacher implements Resource, Person {
     @Override
     public String getRelativeUri() {
         return "/teachers/" + getId();
+    }
+
+    public String getSiteUrl() {
+        return siteUrl;
+    }
+
+    public void setSiteUrl(String siteUrl) {
+        this.siteUrl = siteUrl;
     }
 
     public List<InternshipProgressDetails> getMonitoringInternships() {
@@ -58,11 +74,13 @@ public class Teacher implements Resource, Person {
 
     @Override
     public String toString() {
-        return "Teacher{" +
-                "faculty=" + faculty +
-                ", id=" + id +
-                ", description='" + description + '\'' +
-                ", monitoringInternships=" + monitoringInternships +
-                '}';
+        return Objects.toStringHelper(this)
+                .add("faculty", faculty)
+                .add("id", id)
+                .add("title", title)
+                .add("monitoringInternships", monitoringInternships)
+                .add("name", name)
+                .add("siteUrl", siteUrl)
+                .toString();
     }
 }

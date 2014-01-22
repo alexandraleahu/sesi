@@ -72,8 +72,8 @@ public class Constants {
     public static final String DEGREE_PROP = "degree";
     public static final String DEVELOPED_BY_PROP = "developedBy";
 
-    public static final String IS_ACTIVE = "isActive";
-    public static final String SITE_URL = "siteUrl";
+    public static final String IS_ACTIVE_PROP = "isActive";
+    public static final String SITE_URL_PROP = "siteUrl";
 
 
     public static final String CANDIDATE_PROP = "candidate";
@@ -89,6 +89,10 @@ public class Constants {
     public static final String INITIAL_ATTENDANCE_FEEDBACK = "The student has just started the internship.";
 
     public static final String IS_TEACHER_OF_PROP = "isTeacherOf";
+    public static final String TITLE_PROP = "title";
+
+    public static final String HAS_APPLICATION_PROP = "hasApplication";
+    public static final String HAS_COMPANY_PROGRESS_DETAILS_PROP = "hasCompanyProgressDetails";
 
     public static final URI OWL_NAMED_INDIVIDUAL = Values.uri(OWL.NAMESPACE, "NamedIndividual");
 

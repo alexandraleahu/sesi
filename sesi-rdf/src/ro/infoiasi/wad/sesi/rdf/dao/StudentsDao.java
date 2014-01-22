@@ -108,18 +108,20 @@ public class StudentsDao implements Dao {
             URI id = Values.uri(SESI_SCHEMA_NS, ID_PROP);
             URI uri = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
             URI cityProp = Values.uri(SESI_SCHEMA_NS, CITY_PROP);
+            URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
 
-            adder.statement(newStudent, RDFS.LABEL, Values.literal(student.getName(), StardogValueFactory.XSD.STRING));
+            adder.statement(newStudent, RDFS.LABEL, Values.literal(student.getName()));
             adder.statement(newStudent, name, Values.literal(student.getName(), StardogValueFactory.XSD.STRING));
             adder.statement(newStudent, id, Values.literal(student.getId(), StardogValueFactory.XSD.STRING));
             adder.statement(newStudent, uri, Values.literal(student.getRelativeUri(), StardogValueFactory.XSD.STRING));
+            adder.statement(newStudent, description, Values.literal(student.getDescription(), StardogValueFactory.XSD.STRING));
 
             //add projects
             for (StudentProject studentProject: student.getProjects()) {
                 URI projectResource = Values.uri(SESI_OBJECTS_NS,  RandomStringUtils.randomAlphanumeric(ID_LENGTH));
                 adder.statement(projectResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                 adder.statement(projectResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDENT_PROJECT_CLASS));
-                adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getLabel()), StardogValueFactory.XSD.STRING);
+                adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getLabel()));
                 adder.statement(projectResource, Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP), Values.literal(studentProject.getDescription()), StardogValueFactory.XSD.STRING);
 
                 URI programmingLanguageURI = Values.uri(studentProject.getProgrammingLanguage().getOntologyUri());
@@ -137,34 +139,41 @@ public class StudentsDao implements Dao {
             //adding the city
             Faculty faculty = studies.getFaculty();
             University university = faculty.getUniversity();
-            City facultyCity = university.getCity();
+            City universityCity = university.getCity();
 
-            URI cityResource = Values.uri(facultyCity.getOntologyUri());
+            URI cityResource = Values.uri(universityCity.getOntologyUri());
             adder.statement(cityResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(cityResource, RDF.TYPE, Values.uri(FREEBASE_NS, CITY_CLASS));
-            adder.statement(cityResource, RDFS.LABEL, Values.literal(facultyCity.getName(), StardogValueFactory.XSD.STRING));
-            adder.statement(cityResource, RDFS.SEEALSO, Values.uri(facultyCity.getInfoUrl()));
-            adder.statement(newStudent, cityProp, cityResource);
+            adder.statement(cityResource, RDFS.LABEL, Values.literal(universityCity.getName()));
+            adder.statement(cityResource, RDFS.SEEALSO, Values.literal(universityCity.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
             //add the university
             URI universityResource = Values.uri(university.getOntologyUri());
+            URI site = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
+
             adder.statement(universityResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(universityResource, RDF.TYPE, Values.uri(FREEBASE_NS, UNIVERSITY_CLASS));
-            adder.statement(universityResource, RDFS.LABEL, Values.literal(university.getName(), StardogValueFactory.XSD.STRING));
+            adder.statement(universityResource, RDFS.LABEL, Values.literal(university.getName()));
+            adder.statement(universityResource, name, Values.literal(university.getName(), StardogValueFactory.XSD.STRING));
+            adder.statement(universityResource, site, Values.literal(university.getSiteUrl(), StardogValueFactory.XSD.ANYURI));
             adder.statement(universityResource, RDFS.LITERAL, Values.literal(university.getSiteUrl(), StardogValueFactory.XSD.STRING));
-            adder.statement(universityResource, RDFS.SEEALSO, Values.uri(university.getInfoUrl()));
+            adder.statement(universityResource, RDFS.SEEALSO, Values.literal(university.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
+            adder.statement(universityResource, cityProp, cityResource);
 
-           //add the faculty
-            URI facultyResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
+
+            //add the faculty
+            URI facultyResource = Values.uri(SESI_OBJECTS_NS, faculty.getName().replace(' ', '_'));
             adder.statement(facultyResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(facultyResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, FACULTY_CLASS));
-            adder.statement(facultyResource,  Values.uri(SESI_SCHEMA_NS, UNIVERSITY_PROP), Values.uri(university.getOntologyUri()));
+            adder.statement(facultyResource, Values.uri(SESI_SCHEMA_NS, UNIVERSITY_PROP), Values.uri(university.getOntologyUri()));
+            adder.statement(facultyResource, RDFS.LABEL, Values.literal(faculty.getName()));
+            adder.statement(facultyResource, name, Values.literal(faculty.getName(), StardogValueFactory.XSD.STRING));
+
 
             //add the studies resource
-            URI studiesResource = Values.uri(SESI_OBJECTS_NS, studies.getLabel());
+            URI studiesResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
             adder.statement(studiesResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(studiesResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDIES_CLASS));
-            adder.statement(studiesResource, RDFS.LABEL, Values.literal(studies.getLabel()), StardogValueFactory.XSD.STRING);
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, FACULTY_PROP), facultyResource);
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, YEAR_OF_STUDY_PROP), Values.literal(studies.getYearOfStudy().toString(), StardogValueFactory.XSD.NON_NEGATIVE_INTEGER));
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, ENROLLED_STUDENT_PROP), newStudent);
@@ -172,8 +181,8 @@ public class StudentsDao implements Dao {
             URI degreeURI = Values.uri(studies.getDegree().getOntologyUri());
             adder.statement(degreeURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(degreeURI, RDF.TYPE, Values.uri(FREEBASE_NS, DEGREE_CLASS));
-            adder.statement(degreeURI, RDFS.LABEL, Values.literal(studies.getDegree().getName(), StardogValueFactory.XSD.STRING));
-            adder.statement(degreeURI, RDFS.SEEALSO, Values.uri(studies.getDegree().getInfoUrl()));
+            adder.statement(degreeURI, RDFS.LABEL, Values.literal(studies.getDegree().getName()));
+            adder.statement(degreeURI, RDFS.SEEALSO, Values.literal(studies.getDegree().getInfoUrl(), StardogValueFactory.XSD.ANYURI));
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, DEGREE_PROP), degreeURI);
 
             adder.statement(newStudent, Values.uri(SESI_SCHEMA_NS, HAS_STUDIES_PROP), studiesResource);
@@ -251,7 +260,7 @@ public class StudentsDao implements Dao {
 
         try {
             System.out.println("Student ID 1");
-            System.out.println(dao.getStudent("001", RDFFormat.TURTLE));
+            System.out.println(dao.getStudent("ionpopescu", RDFFormat.TURTLE));
             //add student
             Student student = newStudent("Gigel");
             dao.createStudent(student);

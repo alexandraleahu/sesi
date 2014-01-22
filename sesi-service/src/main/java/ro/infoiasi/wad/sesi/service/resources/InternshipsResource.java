@@ -41,7 +41,7 @@ public class InternshipsResource {
 
     @GET
     @Path("/{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
     public Response getInternship(@PathParam("id") String internshipId,
                                     @QueryParam("fields") List<String> fields) {
         return null;
@@ -49,8 +49,8 @@ public class InternshipsResource {
 
     @GET
     @Path("/{id}/applications")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getInternshipStudents(
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getInternshipApplications(
                                                 @PathParam("id") String internshipId,
                                                 @QueryParam("fields") List<String> fields,
                                                 @QueryParam("accepted") Boolean accepted) {

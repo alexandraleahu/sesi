@@ -98,14 +98,13 @@ public class CompanyDao implements Dao {
                     .append("where {")
                     .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
                     .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:publishedInternship ?internship . ")
-                    .append("?internship sesiSchema:progressDetails ?progressDetails . ")
+                    .append("sesiSchema:hasCompanyProgressDetails ?progressDetails . ")
                     .append("?progressDetails sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
-            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "application", "sesiUrl");
+            return ResultIOUtils.getResourceLinksFromSelectQuery(selectQuery, "progressDetails", "sesiUrl");
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -128,8 +127,8 @@ public class CompanyDao implements Dao {
 
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
-            URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL);
-            URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE);
+            URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
+            URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE_PROP);
 
             adder.statement(newCompany, name, Values.literal(company.getName()));
             adder.statement(newCompany, description, Values.literal(company.getDescription()));
@@ -151,21 +150,21 @@ public class CompanyDao implements Dao {
 //            System.out.println(companyDao.getAllCompanies(RDFFormat.TURTLE));
 
             System.out.println("Company id 2");
-            System.out.println(companyDao.getCompany("002", RDFFormat.TURTLE));
+            System.out.println(companyDao.getCompany("virtualcomp", RDFFormat.TURTLE));
 
 //            System.out.println("\n\n company internships");
-//            System.out.println(companyDao.getAllCompanyInternships("002"));
+//            System.out.println(companyDao.getAllCompanyInternships("virtualcomp"));
 //
 //            System.out.println("\n\n company applications");
-//            System.out.println(companyDao.getAllCompanyApplications("002"));
+//            System.out.println(companyDao.getAllCompanyApplications("virtualcomp"));
 //
 //            System.out.println("\n\n company internships progress details");
-//            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("002"));
+//            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp"));
 //
 //            //adding a company
 //            Company company = new Company();
 //            company.setName("Company 1");
-//            company.setDescription("My first company");
+//            company.setTitle("My first company");
 //            company.setId("200");
 //            company.setSiteUrl("www.Company1.com");
 //            company.setActive(true);
