@@ -31,9 +31,7 @@ public class StudentsDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             GraphQuery graphQuery = con.graph("describe ?s where {?s rdf:type sesiSchema:Student .}");
-
             return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
-
         } finally {
             connectionPool.releaseConnection(con);
         }
@@ -141,7 +139,7 @@ public class StudentsDao implements Dao {
             University university = faculty.getUniversity();
             City facultyCity = university.getCity();
 
-            URI cityResource = Values.uri(facultyCity.getOntologyUri().toString());
+            URI cityResource = Values.uri(facultyCity.getOntologyUri());
             adder.statement(cityResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(cityResource, RDF.TYPE, Values.uri(FREEBASE_NS, CITY_CLASS));
             adder.statement(cityResource, RDFS.LABEL, Values.literal(facultyCity.getName(), StardogValueFactory.XSD.STRING));
@@ -149,7 +147,7 @@ public class StudentsDao implements Dao {
             adder.statement(newStudent, cityProp, cityResource);
 
             //add the university
-            URI universityResource = Values.uri(university.getOntologyUri().toString());
+            URI universityResource = Values.uri(university.getOntologyUri());
             adder.statement(universityResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(universityResource, RDF.TYPE, Values.uri(FREEBASE_NS, UNIVERSITY_CLASS));
             adder.statement(universityResource, RDFS.LABEL, Values.literal(university.getName(), StardogValueFactory.XSD.STRING));
@@ -171,7 +169,7 @@ public class StudentsDao implements Dao {
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, YEAR_OF_STUDY_PROP), Values.literal(studies.getYearOfStudy().toString(), StardogValueFactory.XSD.NON_NEGATIVE_INTEGER));
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, ENROLLED_STUDENT_PROP), newStudent);
             //add studies degree
-            URI degreeURI = Values.uri(studies.getDegree().getOntologyUri().toString());
+            URI degreeURI = Values.uri(studies.getDegree().getOntologyUri());
             adder.statement(degreeURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(degreeURI, RDF.TYPE, Values.uri(FREEBASE_NS, DEGREE_CLASS));
             adder.statement(degreeURI, RDFS.LABEL, Values.literal(studies.getDegree().getName(), StardogValueFactory.XSD.STRING));

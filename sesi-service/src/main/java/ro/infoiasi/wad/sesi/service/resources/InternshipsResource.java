@@ -1,8 +1,7 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
-import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.rdf.dao.InternshipsDao;
-import ro.infoiasi.wad.sesi.service.util.MimeTypeConstants;
+import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -19,7 +18,7 @@ public class InternshipsResource {
 
     @GET
     @Path("/")
-    @Produces({MediaType.APPLICATION_JSON, MimeTypeConstants.RDFXML_STRING, MimeTypeConstants.TURTLE_STRING})
+    @Produces({MediaType.APPLICATION_JSON, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
     public Response getAllInternships(@QueryParam("q") String searchParam,
                                               @QueryParam("fields") List<String> fields,
                                               @QueryParam("matching") String studentId,
@@ -28,9 +27,11 @@ public class InternshipsResource {
         InternshipsDao dao = new InternshipsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            System.out.println(acceptableMediaTypes.get(0).toString());
-            String allInternships = dao.getAllInternships(RDFFormat.JSONLD);
-            return Response.ok(allInternships, MediaType.APPLICATION_JSON).build();
+
+            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+
+            String allInternships = dao.getAllInternships(returnTypes.getRdfFormat());
+            return Response.ok(allInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internships", e);
         }

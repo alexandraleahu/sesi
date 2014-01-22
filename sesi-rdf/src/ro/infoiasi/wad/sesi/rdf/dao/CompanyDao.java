@@ -147,32 +147,32 @@ public class CompanyDao implements Dao {
     public static void main(String[] args) {
         CompanyDao companyDao = new CompanyDao();
         try {
-            System.out.println("ALL COMPANIES");
-            System.out.println(companyDao.getAllCompanies(RDFFormat.TURTLE));
+//            System.out.println("ALL COMPANIES");
+//            System.out.println(companyDao.getAllCompanies(RDFFormat.TURTLE));
 
             System.out.println("Company id 2");
             System.out.println(companyDao.getCompany("002", RDFFormat.TURTLE));
 
-            System.out.println("\n\n company internships");
-            System.out.println(companyDao.getAllCompanyInternships("002"));
-
-            System.out.println("\n\n company applications");
-            System.out.println(companyDao.getAllCompanyApplications("002"));
-
-            System.out.println("\n\n company internships progress details");
-            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("002"));
-
-            //adding a company
-            Company company = new Company();
-            company.setName("Company 1");
-            company.setDescription("My first company");
-            company.setId("200");
-            company.setSiteUrl("www.Company1.com");
-            company.setActive(true);
-            companyDao.createCompany(company);
-
-            System.out.println("company id 200");
-            System.out.println(companyDao.getCompany("210", RDFFormat.TURTLE));
+//            System.out.println("\n\n company internships");
+//            System.out.println(companyDao.getAllCompanyInternships("002"));
+//
+//            System.out.println("\n\n company applications");
+//            System.out.println(companyDao.getAllCompanyApplications("002"));
+//
+//            System.out.println("\n\n company internships progress details");
+//            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("002"));
+//
+//            //adding a company
+//            Company company = new Company();
+//            company.setName("Company 1");
+//            company.setDescription("My first company");
+//            company.setId("200");
+//            company.setSiteUrl("www.Company1.com");
+//            company.setActive(true);
+//            companyDao.createCompany(company);
+//
+//            System.out.println("company id 200");
+//            System.out.println(companyDao.getCompany("210", RDFFormat.TURTLE));
         } catch (Exception e) {
             e.printStackTrace();
         }
