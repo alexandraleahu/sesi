@@ -5,20 +5,16 @@ import com.complexible.common.rdf.model.Values;
 import com.complexible.stardog.StardogException;
 import com.complexible.stardog.api.Adder;
 import com.complexible.stardog.api.GraphQuery;
-import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
-import info.aduna.lang.FileFormat;
 import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
-import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.*;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
-import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import java.util.Arrays;
@@ -60,22 +56,21 @@ public class InternshipsDao implements Dao {
         }
     }
 
-    public String getAllInternshipApplications(String internshipId, TupleQueryResultFormat format) throws Exception {
+    public String getAllInternshipApplications(String internshipId, RDFFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("select ?application ?sesiUrl ")
+                    .append("describe ?application ")
                     .append("where {")
                     .append("[] rdf:type sesiSchema:Internship ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:hasInternshipApplication ?application . ")
-                    .append("?application sesiSchema:sesiUrl ?sesiUrl . ")
                     .append("}");
 
-            SelectQuery selectQuery = con.select(sb.toString());
-            selectQuery.parameter("id", internshipId);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", internshipId);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -84,22 +79,21 @@ public class InternshipsDao implements Dao {
 
 
 
-    public String getAllInternshipProgressDetails(String internshipId, TupleQueryResultFormat format) throws Exception {
+    public String getAllInternshipProgressDetails(String internshipId, RDFFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                                    .append("select ?progressDetails ?sesiUrl ")
+                                    .append("describe ?progressDetails ")
                                     .append("where {")
                                     .append("[] rdf:type sesiSchema:Internship ; ")
                                     .append("sesiSchema:id ?id ; ")
                                     .append("sesiSchema:progressDetails ?progressDetails . ")
-                                    .append("?progressDetails sesiSchema:sesiUrl ?sesiUrl . ")
                                     .append("}");
 
-            SelectQuery selectQuery = con.select(sb.toString());
-            selectQuery.parameter("id", internshipId);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", internshipId);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -185,14 +179,13 @@ public class InternshipsDao implements Dao {
             adder.statement(newInternship, sesiUrl, Values.literal(internship.getRelativeUri()));
 
             // adding another salary
-            Salary internshipSalary = internship.getSalary();
-            if (internshipSalary != null) {
+            double internshipSalary = internship.getSalaryValue();
+            if (internshipSalary != 0.0) {
 
-                URI salaryResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
                 URI hasCurrency = Values.uri(SESI_SCHEMA_NS, CURRENCY_PROP);
                 URI numericalValue = Values.uri(SESI_SCHEMA_NS, SALARY_VALUE_PROP);
                 // adding the currency
-                Currency internshipCurrency = internshipSalary.getCurrency();
+                Currency internshipCurrency = internship.getSalaryCurrency();
                 URI currencyResource = Values.uri(internshipCurrency.getOntologyUri());
 
                 adder.statement(currencyResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
@@ -200,13 +193,10 @@ public class InternshipsDao implements Dao {
                 adder.statement(currencyResource, RDFS.LABEL, Values.literal(internshipCurrency.getName()));
                 adder.statement(currencyResource, RDFS.SEEALSO, Values.literal(internshipCurrency.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
-                // linking the currency resource to the salary resource
-                adder.statement(salaryResource, hasCurrency, currencyResource);
-                adder.statement(salaryResource, numericalValue, Values.literal(internshipSalary.getNumericalValue()));
-
                 // linking the salary to the internship
-                URI offersSalary = Values.uri(SESI_SCHEMA_NS, SALARY_PROP);
-                adder.statement(newInternship, offersSalary, salaryResource);
+                adder.statement(newInternship, hasCurrency, currencyResource);
+                adder.statement(newInternship, numericalValue, Values.literal(internshipSalary));
+
             }
             if (internship.getAcquiredGeneralSkills() != null)  {
 
@@ -302,7 +292,7 @@ public class InternshipsDao implements Dao {
         InternshipsDao dao = new InternshipsDao();
 
 //        System.out.println(dao.createInternship(createNewInternship()));
-        System.out.println(dao.getAllInternshipApplications("003", TupleQueryResultFormat.JSON));
+        System.out.println(dao.getAllInternshipApplications("003", RDFFormat.JSONLD));
 
     }
 
@@ -336,11 +326,8 @@ public class InternshipsDao implements Dao {
         euro.setInfoUrl("http://www.freebase.com/m/02l6h");
         euro.setOntologyUri("http://rdf.freebase.com/ns/m.02l6h");
 
-        Salary salary = new Salary();
-        salary.setCurrency(euro);
-        salary.setNumericalValue(200);
-
-        internship.setSalary(salary);
+        internship.setSalaryCurrency(euro);
+        internship.setSalaryValue(100);
 
         internship.setPreferredGeneralSkills(Arrays.asList("Team player", "Motivated", "Hard Working"));
         internship.setAcquiredGeneralSkills(Arrays.asList("Working in a team"));

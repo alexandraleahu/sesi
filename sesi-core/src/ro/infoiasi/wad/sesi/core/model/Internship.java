@@ -26,7 +26,8 @@ public class Internship implements Resource, Event {
     private boolean offeringRelocation;
     private String id;
     private Category category;
-    private Salary salary;
+    private Currency salaryCurrency;
+    private double salaryValue;
 
     @Override
     public String getId() {
@@ -60,8 +61,25 @@ public class Internship implements Resource, Event {
                 .add("offeringRelocation", offeringRelocation)
                 .add("id", id)
                 .add("category", category)
-                .add("salary", salary)
+                .add("salaryCurrency", salaryCurrency)
+                .add("salaryValue", salaryValue)
                 .toString();
+    }
+
+    public Currency getSalaryCurrency() {
+        return salaryCurrency;
+    }
+
+    public void setSalaryCurrency(Currency salaryCurrency) {
+        this.salaryCurrency = salaryCurrency;
+    }
+
+    public double getSalaryValue() {
+        return salaryValue;
+    }
+
+    public void setSalaryValue(double salaryValue) {
+        this.salaryValue = salaryValue;
     }
 
     public String getCompanyId() {
@@ -168,13 +186,6 @@ public class Internship implements Resource, Event {
         this.category = category;
     }
 
-    public Salary getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Salary salary) {
-        this.salary = salary;
-    }
 
     public static enum Category implements HasDescription {
 

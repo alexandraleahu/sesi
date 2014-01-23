@@ -10,13 +10,29 @@
     <servlet-name>StudentsServlet</servlet-name>
     <servlet-class>ro.infoiasi.wad.sesi.server.GreetingServiceImpl</servlet-class>
   </servlet>
-  
-  <servlet-mapping>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi Internships</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.InternshipsImpl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipsService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.InternshipsServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
     <servlet-name>StudentsServlet</servlet-name>
     <url-pattern>/sesi/greet</url-pattern>
   </servlet-mapping>
-  
-  <!-- Default page to serve -->
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi Internships</servlet-name>
+        <url-pattern>/sesi/Internships</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipsService</servlet-name>
+        <url-pattern>/sesi/InternshipsService</url-pattern>
+    </servlet-mapping>
+
+    <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Sesi.html</welcome-file>
   </welcome-file-list>

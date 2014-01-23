@@ -24,6 +24,7 @@
 
     <!-- Specify the app entry point class.                         -->
     <entry-point class='ro.infoiasi.wad.sesi.client.Sesi'/>
+    <servlet path="/InternshipsService" class="ro.infoiasi.wad.sesi.server.InternshipsServiceImpl"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>

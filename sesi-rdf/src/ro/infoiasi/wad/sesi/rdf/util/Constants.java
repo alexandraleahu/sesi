@@ -51,8 +51,8 @@ public class Constants {
     public static final String RELOCATION_PROP = "offersRelocation";
 
     public static final String SALARY_PROP = "offersSalary";
-    public static final String CURRENCY_PROP = "hasCurrency";
-    public static final String SALARY_VALUE_PROP = "numericalValue";
+    public static final String CURRENCY_PROP = "salaryCurrency";
+    public static final String SALARY_VALUE_PROP = "salaryValue";
 
 
     public static final String OPENINGS_PROP = "openingsCount";
