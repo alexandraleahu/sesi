@@ -50,7 +50,7 @@ public class CompanyDao implements Dao {
         }
     }
 
-    public String getAllCompanyInternships(String id, TupleQueryResultFormat format) throws Exception {
+    public String getAllCompanyInternships(String id, RDFFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
@@ -62,16 +62,16 @@ public class CompanyDao implements Dao {
                     .append("?internship sesiSchema:sesiUrl ?sesiUrl . ")
                     .append("}");
 
-            SelectQuery selectQuery = con.select(sb.toString());
-            selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", id);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
         }
     }
 
-    public String getAllCompanyApplications(String id, TupleQueryResultFormat format) throws Exception {
+    public String getAllCompanyApplications(String id, RDFFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
@@ -83,16 +83,16 @@ public class CompanyDao implements Dao {
                     .append("?application sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
-            SelectQuery selectQuery = con.select(sb.toString());
-            selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", id);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
         }
     }
 
-    public String getAllCompanyInternshipProgressDetails(String id, TupleQueryResultFormat format) throws Exception {
+    public String getAllCompanyInternshipProgressDetails(String id, RDFFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
@@ -106,9 +106,10 @@ public class CompanyDao implements Dao {
                     .append("?progressDetails sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
-            SelectQuery selectQuery = con.select(sb.toString());
-            selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", id);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -159,13 +160,13 @@ public class CompanyDao implements Dao {
             System.out.println(companyDao.getCompany("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company internships");
-            System.out.println(companyDao.getAllCompanyInternships("virtualcomp", TupleQueryResultFormat.JSON));
+            System.out.println(companyDao.getAllCompanyInternships("virtualcomp", RDFFormat.RDFA));
 
             System.out.println("\n\n company applications");
-            System.out.println(companyDao.getAllCompanyApplications("virtualcomp", TupleQueryResultFormat.JSON));
+            System.out.println(companyDao.getAllCompanyApplications("virtualcomp", RDFFormat.RDFA));
 
             System.out.println("\n\n company internships progress details");
-            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp", TupleQueryResultFormat.JSON));
+            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp", RDFFormat.RDFA));
 
             //adding a company
             Company company = new Company();

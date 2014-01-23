@@ -5,13 +5,11 @@ import com.complexible.common.rdf.model.Values;
 import com.complexible.stardog.StardogException;
 import com.complexible.stardog.api.Adder;
 import com.complexible.stardog.api.GraphQuery;
-import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
-import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.City;
 import ro.infoiasi.wad.sesi.core.model.Faculty;
@@ -52,7 +50,7 @@ public class TeachersDao implements Dao {
         }
     }
 
-    public String getAllInternshipProgressDetails(String teacherId, TupleQueryResultFormat format) throws Exception {
+    public String getAllInternshipProgressDetails(String teacherId, RDFFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
@@ -65,9 +63,9 @@ public class TeachersDao implements Dao {
                     .append("?details sesiSchema:sesiUrl ?sesiUrl . ")
                     .append("}");
 
-            SelectQuery selectQuery = con.select(sb.toString());
-            selectQuery.parameter("id", teacherId);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", teacherId);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);

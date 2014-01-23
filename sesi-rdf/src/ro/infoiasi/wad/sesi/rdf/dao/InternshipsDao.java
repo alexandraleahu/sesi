@@ -5,6 +5,7 @@ import com.complexible.common.rdf.model.Values;
 import com.complexible.stardog.StardogException;
 import com.complexible.stardog.api.Adder;
 import com.complexible.stardog.api.GraphQuery;
+import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
 import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
@@ -12,6 +13,7 @@ import org.openrdf.model.URI;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
+import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.*;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
@@ -56,6 +58,25 @@ public class InternshipsDao implements Dao {
         }
     }
 
+    public String getInternshipsByCategory(String category, RDFFormat format) throws Exception {
+
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            StringBuilder sb = new StringBuilder()
+                    .append("describe ?i ")
+                    .append("where {")
+                    .append("?i rdf:type sesiSchema:Internship ; ")
+                    .append("sesiSchema:category sesiSchema:").append(category).append(" . ")
+                    .append("}");
+
+            GraphQuery graphQuery = con.graph(sb.toString());
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
     public String getAllInternshipApplications(String internshipId, RDFFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
@@ -77,19 +98,38 @@ public class InternshipsDao implements Dao {
         }
     }
 
+    public String getInternshipApplicationsCount(String internshipId, TupleQueryResultFormat format) throws Exception {
 
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            StringBuilder sb = new StringBuilder()
+                    .append("select ?application (COUNT(?application) as ?applicationCount) ")
+                    .append("where {")
+                    .append("[] rdf:type sesiSchema:Internship ; ")
+                    .append("sesiSchema:id ?id ; ")
+                    .append("sesiSchema:hasInternshipApplication ?application . ")
+                    .append("} GROUP BY ?application");
+
+            SelectQuery selectQuery = con.select(sb.toString());
+            selectQuery.parameter("id", internshipId);
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
 
     public String getAllInternshipProgressDetails(String internshipId, RDFFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                                    .append("describe ?progressDetails ")
-                                    .append("where {")
-                                    .append("[] rdf:type sesiSchema:Internship ; ")
-                                    .append("sesiSchema:id ?id ; ")
-                                    .append("sesiSchema:progressDetails ?progressDetails . ")
-                                    .append("}");
+                    .append("describe ?progressDetails ")
+                    .append("where {")
+                    .append("[] rdf:type sesiSchema:Internship ; ")
+                    .append("sesiSchema:id ?id ; ")
+                    .append("sesiSchema:progressDetails ?progressDetails . ")
+                    .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
             graphQuery.parameter("id", internshipId);
@@ -110,8 +150,8 @@ public class InternshipsDao implements Dao {
             // deleting an individual means deleting all statements that have the individual as a subject or as an object
             con.begin();
             con.remove()
-               .statements(internshipUri, null, null)
-               .statements(null, null, internshipUri);
+                    .statements(internshipUri, null, null)
+                    .statements(null, null, internshipUri);
             con.commit();
         } finally {
             connectionPool.releaseConnection(con);
@@ -198,7 +238,7 @@ public class InternshipsDao implements Dao {
                 adder.statement(newInternship, numericalValue, Values.literal(internshipSalary));
 
             }
-            if (internship.getAcquiredGeneralSkills() != null)  {
+            if (internship.getAcquiredGeneralSkills() != null) {
 
                 for (String acquiredGeneralSkill : internship.getAcquiredGeneralSkills()) {
 
@@ -218,13 +258,13 @@ public class InternshipsDao implements Dao {
 
             if (internship.getAcquiredTechnicalSkills() != null) {
 
-                URI acqTechnicalSkillProp =  Values.uri(SESI_SCHEMA_NS, ACQUIRED_TECHNICAL_PROP);
+                URI acqTechnicalSkillProp = Values.uri(SESI_SCHEMA_NS, ACQUIRED_TECHNICAL_PROP);
                 addTechnicalSkills(internship.getAcquiredTechnicalSkills(), newInternship, adder, acqTechnicalSkillProp);
             }
 
             if (internship.getPreferredTechnicalSkills() != null) {
 
-                URI prefTechnicalSkillProp =  Values.uri(SESI_SCHEMA_NS, PREFERRED_TECHNICAL_PROP);
+                URI prefTechnicalSkillProp = Values.uri(SESI_SCHEMA_NS, PREFERRED_TECHNICAL_PROP);
                 addTechnicalSkills(internship.getPreferredTechnicalSkills(), newInternship, adder, prefTechnicalSkillProp);
             }
 
@@ -288,25 +328,28 @@ public class InternshipsDao implements Dao {
 
 
     public static void main(String[] args) throws Exception {
-        
+
         InternshipsDao dao = new InternshipsDao();
 
 //        System.out.println(dao.createInternship(createNewInternship()));
-        System.out.println(dao.getAllInternshipApplications("003", RDFFormat.JSONLD));
+        System.out.println(dao.getInternshipApplicationsCount("003", TupleQueryResultFormat.JSON));
+        System.out.println("WebDev\n" + dao.getInternshipsByCategory("WebDev", RDFFormat.JSONLD));
+        System.out.println("WebDev1\n" + dao.getInternshipsByCategory("1111", RDFFormat.JSONLD));
+
 
     }
 
     private static Internship createNewInternship() throws Exception {
         Internship internship = new Internship();
-        
+
         internship.setId(RandomStringUtils.randomAlphanumeric(ID_LENGTH));
         internship.setName("Android internship");
         internship.setDescription("An internship in which students will work on Android applications published on the market");
         internship.setCompanyId("virtualcomp");
         Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(2014, Calendar.JUNE, 19, 9, 0 , 0);
+        calendar.set(2014, Calendar.JUNE, 19, 9, 0, 0);
         internship.setStartDate(calendar.getTime());
-        calendar.set(2014, Calendar.SEPTEMBER, 19, 9, 0 , 0);
+        calendar.set(2014, Calendar.SEPTEMBER, 19, 9, 0, 0);
         internship.setEndDate(calendar.getTime());
 
         internship.setOfferingRelocation(true);

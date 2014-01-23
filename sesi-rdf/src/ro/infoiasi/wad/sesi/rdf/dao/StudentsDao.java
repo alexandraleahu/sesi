@@ -50,17 +50,37 @@ public class StudentsDao implements Dao {
         }
     }
 
-    public String getAllStudentApplications(String id, TupleQueryResultFormat format) throws Exception {
+    public String getAllStudentApplications(String id, RDFFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("select ?application ?sesiUrl ")
+                    .append("describe ?application ?sesiUrl ")
                     .append("where {")
                     .append("[] rdf:type sesiSchema:Student ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:submittedApplication ?application . ")
                     .append("?application sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
+
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", id);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
+    public String getStudentApplicationsCount(String id, TupleQueryResultFormat format) throws Exception {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            StringBuilder sb = new StringBuilder()
+                    .append("select ?application (COUNT(?application) as ?applicationCount) ")
+                    .append("where {")
+                    .append("[] rdf:type sesiSchema:Student ; ")
+                    .append("sesiSchema:id ?id ; ")
+                    .append("sesiSchema:submittedApplication ?application . ")
+                    .append("}  GROUP BY ?application");
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", id);
@@ -71,7 +91,7 @@ public class StudentsDao implements Dao {
         }
     }
 
-    public String getStudentInternshipsProgressDetails(String id, TupleQueryResultFormat format) throws Exception {
+    public String getStudentInternshipsProgressDetails(String id, RDFFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
@@ -83,9 +103,9 @@ public class StudentsDao implements Dao {
                     .append("?application sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
-            SelectQuery selectQuery = con.select(sb.toString());
-            selectQuery.parameter("id", id);
-            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery,format);
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", id);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
 
         } finally {
             connectionPool.releaseConnection(con);
@@ -260,13 +280,15 @@ public class StudentsDao implements Dao {
         StudentsDao dao = new StudentsDao();
 
         try {
-            System.out.println("Student ID 1");
-            System.out.println(dao.getStudent("ionpopescu", RDFFormat.TURTLE));
+//            System.out.println(dao.getStudent("ionpopescu", RDFFormat.TURTLE));
+
+            System.out.println("applications " + dao.getAllStudentApplications("ionpopescu", RDFFormat.JSONLD));
+            System.out.println("\n applications count " + dao.getStudentApplicationsCount("ionpopescu", TupleQueryResultFormat.JSON));
             //add student
-            Student student = newStudent("Gigel");
-            dao.createStudent(student);
-            System.out.println("\n am inserat + " + student.getId());
-            System.out.println(dao.getStudent(student.getId(), RDFFormat.TURTLE));
+//            Student student = newStudent("Gigel");
+//            dao.createStudent(student);
+//            System.out.println("\n am inserat + " + student.getId());
+//            System.out.println(dao.getStudent(student.getId(), RDFFormat.TURTLE));
         } catch (Exception e) {
             e.printStackTrace();
         }
