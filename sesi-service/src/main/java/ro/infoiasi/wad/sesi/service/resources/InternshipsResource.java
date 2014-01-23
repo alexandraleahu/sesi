@@ -1,9 +1,7 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
-import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.rdf.dao.InternshipsDao;
-import ro.infoiasi.wad.sesi.rdf.util.ResourceLinks;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
@@ -43,7 +41,7 @@ public class InternshipsResource {
 
     @GET
     @Path("/{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
+    @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
     public Response getInternship(@PathParam("id") String internshipId,
                                   @QueryParam("q") String searchParam,
                                   @QueryParam("fields") List<String> fields,
@@ -63,7 +61,7 @@ public class InternshipsResource {
 
     @GET
     @Path("/{id}/applications")
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
     public Response getInternshipApplications(@PathParam("id") String internshipId,
                                               @QueryParam("fields") List<String> fields,
                                               @QueryParam("accepted") Boolean accepted,
@@ -75,7 +73,7 @@ public class InternshipsResource {
 
             MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
 
-            String applications = dao.getAllInternshipApplications(internshipId, TupleQueryResultFormat.JSON);
+            String applications = dao.getAllInternshipApplications(internshipId, RDFFormat.JSONLD);
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internship applications for internship with id" + internshipId, e);
