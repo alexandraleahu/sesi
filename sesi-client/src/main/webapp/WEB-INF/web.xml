@@ -16,7 +16,7 @@
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipsService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.InternshipsServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.InternshipsServiceImpl</servlet-class>
     </servlet>
 
     <servlet-mapping>

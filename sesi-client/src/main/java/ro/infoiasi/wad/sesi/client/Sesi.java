@@ -17,6 +17,5 @@ public class Sesi implements EntryPoint {
     public void onModuleLoad() {
         SesiResources.INSTANCE.style().ensureInjected();
         HandlerManager eventBus = new HandlerManager(null);
-
     }
 }

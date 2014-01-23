@@ -12,6 +12,7 @@
     <inherits name="com.google.gwt.logging.Logging"/>
     <inherits name="com.google.gwt.editor.Editor" />
 
+
     <!-- Inherit the default GWT style sheet.  You can change       -->
     <!-- the theme of your GWT application by uncommenting          -->
     <!-- any one of the following lines.                            -->
@@ -21,10 +22,14 @@
     <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
     <!-- Other module inherits                                      -->
+    <inherits name="com.github.gwtbootstrap.Bootstrap" />
+
+    <!-- Settings                                                   -->
+    <set-property name="bootstrap.responsiveDesign" value="true"/>
 
     <!-- Specify the app entry point class.                         -->
     <entry-point class='ro.infoiasi.wad.sesi.client.Sesi'/>
-    <servlet path="/InternshipsService" class="ro.infoiasi.wad.sesi.server.InternshipsServiceImpl"/>
+    <servlet path="/InternshipsService" class="ro.infoiasi.wad.sesi.server.rpc.InternshipsServiceImpl"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>

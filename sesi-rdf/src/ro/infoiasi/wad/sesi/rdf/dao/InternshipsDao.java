@@ -333,8 +333,8 @@ public class InternshipsDao implements Dao {
 
 //        System.out.println(dao.createInternship(createNewInternship()));
         System.out.println(dao.getInternshipApplicationsCount("003", TupleQueryResultFormat.JSON));
-        System.out.println("WebDev\n" + dao.getInternshipsByCategory("WebDev", RDFFormat.JSONLD));
-        System.out.println("WebDev1\n" + dao.getInternshipsByCategory("1111", RDFFormat.JSONLD));
+        System.out.println("WebDev\n" + dao.getInternshipsByCategory("WebDev", RDFFormat.TURTLE));
+        System.out.println("WebDev1\n" + dao.getInternshipsByCategory("1111", RDFFormat.TURTLE));
 
 
     }
