@@ -54,12 +54,11 @@ public class StudentsDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("describe ?application ?sesiUrl ")
+                    .append("describe ?application  ")
                     .append("where {")
                     .append("[] rdf:type sesiSchema:Student ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:submittedApplication ?application . ")
-                    .append("?application sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
@@ -95,12 +94,11 @@ public class StudentsDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("select ?progressDetails ?sesiUrl ")
+                    .append("describe ?progressDetails ")
                     .append("where {")
                     .append("[] rdf:type sesiSchema:Student ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:attendedInternshipProgress ?progressDetails . ")
-                    .append("?application sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());

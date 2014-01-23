@@ -55,12 +55,11 @@ public class TeachersDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("select ?details ?sesiUrl ")
+                    .append("describe ?details ")
                     .append("where {")
                     .append("[] rdf:type sesiSchema:Teacher ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:isAssociateInternshipTeacherOf ?details . ")
-                    .append("?details sesiSchema:sesiUrl ?sesiUrl . ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());

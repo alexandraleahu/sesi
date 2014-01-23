@@ -54,12 +54,11 @@ public class CompanyDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("select ?internship ?sesiUrl ")
+                    .append("describe ?internship ")
                     .append("where {")
                     .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:publishedInternship ?internship . ")
-                    .append("?internship sesiSchema:sesiUrl ?sesiUrl . ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
@@ -75,12 +74,11 @@ public class CompanyDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("select ?application ?sesiUrl ")
+                    .append("describe ?application ")
                     .append("where {")
                     .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:hasApplication ?application . ")
-                    .append("?application sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
@@ -97,13 +95,12 @@ public class CompanyDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("select ?progressDetails ?sesiUrl ")
+                    .append("describe ?progressDetails ")
                     .append("where {")
                     .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:publishedInternship ?internship . ")
                     .append("?internship sesiSchema:progressDetails ?progressDetails . ")
-                    .append("?progressDetails sesiSchema:sesiUrl ?sesiUrl .  ")
                     .append("}");
 
 
@@ -160,13 +157,13 @@ public class CompanyDao implements Dao {
             System.out.println(companyDao.getCompany("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company internships");
-            System.out.println(companyDao.getAllCompanyInternships("virtualcomp", RDFFormat.RDFA));
+            System.out.println(companyDao.getAllCompanyInternships("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company applications");
-            System.out.println(companyDao.getAllCompanyApplications("virtualcomp", RDFFormat.RDFA));
+            System.out.println(companyDao.getAllCompanyApplications("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company internships progress details");
-            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp", RDFFormat.RDFA));
+            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp", RDFFormat.TURTLE));
 
             //adding a company
             Company company = new Company();
