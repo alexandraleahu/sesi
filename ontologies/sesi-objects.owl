@@ -131,20 +131,6 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/objects/sesi/002 -->
-
-    <owl:NamedIndividual rdf:about="&sesi;002">
-        <rdf:type rdf:resource="&sesiSchema;SoftwareCompany"/>
-        <dc:description rdf:datatype="&xsd;string">A company dealing with Java technologies, for business clients.</dc:description>
-        <sesiSchema:name rdf:datatype="&xsd;string">VirtualComp</sesiSchema:name>
-        <sesiSchema:siteUrl rdf:datatype="&xsd;anyURI">http://virtualcomp.ro</sesiSchema:siteUrl>
-        <sesiSchema:isActive rdf:datatype="&xsd;boolean">true</sesiSchema:isActive>
-        <sesiSchema:id rdf:datatype="&xsd;string">virtualcomp</sesiSchema:id>
-        <sesiSchema:sesiUrl>/companies/002</sesiSchema:sesiUrl>
-    </owl:NamedIndividual>
-    
-
-
     <!-- http://www.infoiasi.ro/wad/objects/sesi/003 -->
 
     <owl:NamedIndividual rdf:about="&sesi;003">
@@ -162,10 +148,10 @@
         <sesiSchema:offersRelocation rdf:datatype="&xsd;boolean">false</sesiSchema:offersRelocation>
         <sesiSchema:sesiUrl>/internships/003</sesiSchema:sesiUrl>
         <sesiSchema:inCity rdf:resource="&freebase;m.01fhg3"/>
-        <sesiSchema:publishedByCompany rdf:resource="&sesi;002"/>
         <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;JavaEEBasic"/>
         <sesiSchema:acquiredTechnicalSkill rdf:resource="&sesi;JavaEEIntermediate"/>
         <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;JavaIntermediate"/>
+        <sesiSchema:publishedByCompany rdf:resource="&sesi;virtualcomp"/>
         <sesiSchema:category rdf:resource="&sesiSchema;BusinessSoftware"/>
         <sesiSchema:category rdf:resource="&sesiSchema;WebDev"/>
         <sesiSchema:salaryCurrency rdf:resource="http:/rdf.freebase.com/ns/m.02zsyq"/>
@@ -278,6 +264,20 @@
         <sesiSchema:studyFaculty rdf:resource="&sesi;Faculty_Of_Computer_Science"/>
         <sesiSchema:enrolledStudent rdf:resource="&sesi;ionpopescu"/>
         <sesiSchema:degree rdf:resource="https://rdf.freebase.com/ns/m.019v9k"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/virtualcomp -->
+
+    <owl:NamedIndividual rdf:about="&sesi;virtualcomp">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareCompany"/>
+        <dc:description rdf:datatype="&xsd;string">A company dealing with Java technologies, for business clients.</dc:description>
+        <sesiSchema:name rdf:datatype="&xsd;string">VirtualComp</sesiSchema:name>
+        <sesiSchema:siteUrl rdf:datatype="&xsd;anyURI">http://virtualcomp.ro</sesiSchema:siteUrl>
+        <sesiSchema:isActive rdf:datatype="&xsd;boolean">true</sesiSchema:isActive>
+        <sesiSchema:id rdf:datatype="&xsd;string">virtualcomp</sesiSchema:id>
+        <sesiSchema:sesiUrl>/companies/virtualcomp</sesiSchema:sesiUrl>
     </owl:NamedIndividual>
     
 
