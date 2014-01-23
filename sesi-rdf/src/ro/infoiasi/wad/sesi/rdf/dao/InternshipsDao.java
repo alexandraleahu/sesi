@@ -7,6 +7,9 @@ import com.complexible.stardog.api.Adder;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
@@ -42,8 +45,74 @@ public class InternshipsDao implements Dao {
         } finally {
             connectionPool.releaseConnection(con);
         }
+    }
+
+    public String getInternshipFieldsById(String id, List<String> fields, TupleQueryResultFormat format) throws Exception {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+
+            List<String> prefixedFields = Lists.transform(fields, prefixFieldQuestionMark);
+            String queryFields = Joiner.on(" ").join(prefixedFields);
+            List<String> queryStatements = Lists.transform(fields, formQueryStatement);
+            String query = Joiner.on(" ; ").join(queryStatements);
+            StringBuilder sb = new StringBuilder()
+                    .append("select ").append(queryFields).append(" ")
+                    .append("where {")
+                    .append("[] rdf:type sesiSchema:Internship ; ")
+                    .append("sesiSchema:id ?id ; ")
+                    .append(query).append(" . ")
+                    .append("}");
+
+            SelectQuery selectQuery = con.select(sb.toString());
+            selectQuery.parameter("id", id);
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
 
 
+    public String getInternshipSalary(String internshipId, TupleQueryResultFormat format) throws Exception {
+
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            StringBuilder sb = new StringBuilder()
+                    .append("select ?salary ")
+                    .append("where {")
+                    .append("[] rdf:type sesiSchema:Internship ; ")
+                    .append("sesiSchema:id ?id ; ")
+                    .append("sesiSchema:salaryValue ?salary . ")
+                    .append("}" );
+
+            SelectQuery selectQuery = con.select(sb.toString());
+            selectQuery.parameter("id", internshipId);
+            return ResultIOUtils.getSparqlResultsFromSelectQuery(selectQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
+
+    public String getInternshipCurrency(String internshipId, RDFFormat format) throws Exception {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            StringBuilder sb = new StringBuilder()
+                    .append("describe ?currency ")
+                    .append("where {")
+                    .append("?i rdf:type sesiSchema:Internship ; ")
+                    .append("sesiSchema:id ?id ; ")
+                    .append("sesiSchema:salaryCurrency ?currency . ")
+                    .append("}");
+
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", internshipId);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
     }
 
     public String getAllInternships(RDFFormat format) throws Exception {
@@ -158,6 +227,18 @@ public class InternshipsDao implements Dao {
         }
 
     }
+
+    Function<String, String> prefixFieldQuestionMark = new Function<String, String>() {
+        public String apply(String string) {
+            return "?" + string;
+        }
+    };
+
+    Function<String, String> formQueryStatement = new Function<String, String>() {
+        public String apply(String string) {
+            return "sesiSchema:" + string + " ?" + string;
+        }
+    };
 
     // we return the relative URI of the newly created resource for the service to set the Location header
     public String createInternship(Internship internship) throws StardogException {
@@ -405,4 +486,5 @@ public class InternshipsDao implements Dao {
     public String getOntClassName() {
         return INTERNSHIP_CLASS;
     }
+
 }
