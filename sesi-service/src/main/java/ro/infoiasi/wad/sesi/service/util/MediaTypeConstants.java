@@ -35,6 +35,7 @@ public class MediaTypeConstants {
         mappings.put(TURTLE, RDFFormat.TURTLE);
         mappings.put(SPARQL_JSON, TupleQueryResultFormat.JSON);
         mappings.put(SPARQL_XML, TupleQueryResultFormat.SPARQL);
+        mappings.put(DEFAULT_RDF_TYPE, RDFFormat.RDFJSON);
 
         return mappings;
 
