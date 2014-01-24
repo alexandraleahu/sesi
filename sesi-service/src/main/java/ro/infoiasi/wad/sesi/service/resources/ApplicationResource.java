@@ -23,9 +23,9 @@ public class ApplicationResource {
         ApplicationsDao dao = new ApplicationsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String allApplications = dao.getAllApplications((RDFFormat) returnTypes.getRdfFormat());
+            String allApplications = dao.getAllApplications(returnTypes.getRdfFormat());
             return Response.ok(allApplications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve applications", e);
@@ -42,9 +42,9 @@ public class ApplicationResource {
         ApplicationsDao dao = new ApplicationsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String application = dao.getApplicationById(applicationId, (RDFFormat) returnTypes.getRdfFormat());
+            String application = dao.getApplicationById(applicationId, returnTypes.getRdfFormat());
             return Response.ok(application, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve application with id:" + applicationId, e);

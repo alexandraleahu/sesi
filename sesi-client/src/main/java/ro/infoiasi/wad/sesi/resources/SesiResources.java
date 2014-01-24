@@ -14,7 +14,7 @@ public interface SesiResources extends ClientBundle {
      * @return the CSS implementing Style
      */
     @NotStrict
-    @Source({"../../../../../../webapp/css/Sesi.css"})
+    @Source({"Sesi.css"})
     Style style();
 
     public interface Style extends CssResource {
@@ -27,5 +27,22 @@ public interface SesiResources extends ClientBundle {
         String sendButton();
 
         String serverResponseLabelError();
+
+        String floatLeft();
+
+        String withScroll();
+
+        String bigText();
+
+        String floatRight();
+
+        String backgroundColor();
+
+        String bigLabel();
+
+        @ClassName("gwt-Anchor")
+        String gwtAnchor();
+
+        String smallMarginLeft();
     }
 }

@@ -22,7 +22,7 @@ import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 import java.util.Arrays;
 import java.util.List;
 
-import static ro.infoiasi.wad.sesi.rdf.util.Constants.*;
+import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
 public class StudentsDao implements Dao {
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;

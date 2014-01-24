@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import static ro.infoiasi.wad.sesi.rdf.util.Constants.*;
+import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
 public class InternshipsDao implements Dao {
 
@@ -127,7 +127,7 @@ public class InternshipsDao implements Dao {
         }
     }
 
-    public String getInternshipsByCategory(String category, RDFFormat format) throws Exception {
+    public String getInternshipsByCategory(Internship.Category category, RDFFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
         try {
@@ -135,7 +135,7 @@ public class InternshipsDao implements Dao {
                     .append("describe ?i ")
                     .append("where {")
                     .append("?i rdf:type sesiSchema:Internship ; ")
-                    .append("sesiSchema:category sesiSchema:").append(category).append(" . ")
+                    .append("sesiSchema:category sesiSchema:").append(category.toString()).append(" . ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
@@ -292,7 +292,7 @@ public class InternshipsDao implements Dao {
             URI category = Values.uri(SESI_SCHEMA_NS, CATEGORY_PROP);
             URI sesiUrl = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
 
-            adder.statement(newInternship, publishedByCompany, Values.uri(SESI_OBJECTS_NS, internship.getCompanyId()));
+            adder.statement(newInternship, publishedByCompany, Values.uri(SESI_OBJECTS_NS, internship.getCompany().getId()));
             adder.statement(newInternship, ID, Values.literal(internship.getId(), StardogValueFactory.XSD.STRING));
             adder.statement(newInternship, offersRelocation, Values.literal(internship.isOfferingRelocation()));
             adder.statement(newInternship, openingsCount, Values.literal(internship.getOpenings()));
@@ -414,8 +414,7 @@ public class InternshipsDao implements Dao {
 
 //        System.out.println(dao.createInternship(createNewInternship()));
         System.out.println(dao.getInternshipApplicationsCount("003", TupleQueryResultFormat.JSON));
-        System.out.println("WebDev\n" + dao.getInternshipsByCategory("WebDev", RDFFormat.TURTLE));
-        System.out.println("WebDev1\n" + dao.getInternshipsByCategory("1111", RDFFormat.TURTLE));
+        System.out.println("WebDev\n" + dao.getInternshipsByCategory(Internship.Category.WebDev, RDFFormat.TURTLE));
 
 
     }
@@ -426,7 +425,8 @@ public class InternshipsDao implements Dao {
         internship.setId(RandomStringUtils.randomAlphanumeric(ID_LENGTH));
         internship.setName("Android internship");
         internship.setDescription("An internship in which students will work on Android applications published on the market");
-        internship.setCompanyId("virtualcomp");
+        Company company  = new Company();
+        company.setId("virtualcomp");
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.set(2014, Calendar.JUNE, 19, 9, 0, 0);
         internship.setStartDate(calendar.getTime());

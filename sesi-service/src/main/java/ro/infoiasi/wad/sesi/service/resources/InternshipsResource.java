@@ -2,6 +2,7 @@ package ro.infoiasi.wad.sesi.service.resources;
 
 import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
+import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.rdf.dao.InternshipsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
@@ -21,18 +22,20 @@ public class InternshipsResource {
     @GET
     @Path("/")
     @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
-    public Response getAllInternships(@QueryParam("q") String searchParam,
-                                      @QueryParam("fields") List<String> fields,
-                                      @QueryParam("matching") String studentId,
+    public Response getAllInternships(@QueryParam("category")Internship.Category category,
                                       @Context HttpHeaders headers) {
 
         InternshipsDao dao = new InternshipsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
 
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
-
-            String allInternships = dao.getAllInternships((RDFFormat) returnTypes.getRdfFormat());
+            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
+            String allInternships  = null;
+            if (category != null) {
+                allInternships = dao.getInternshipsByCategory(category, (RDFFormat) returnTypes.getRdfFormat());
+            }  else {
+                allInternships = dao.getAllInternships((RDFFormat) returnTypes.getRdfFormat());
+            }
             return Response.ok(allInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internships", e);
@@ -51,8 +54,9 @@ public class InternshipsResource {
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
 
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
-            String internship = dao.getInternshipById(internshipId, (RDFFormat) returnTypes.getRdfFormat());
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
+
+            String internship = dao.getInternshipById(internshipId, returnTypes.getRdfFormat());
             return Response.ok(internship, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internship with id" + internshipId, e);
@@ -71,7 +75,7 @@ public class InternshipsResource {
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
 
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
             String applications = dao.getAllInternshipApplications(internshipId, (RDFFormat) returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
@@ -90,9 +94,9 @@ public class InternshipsResource {
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
 
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<TupleQueryResultFormat> returnTypes = MediaTypeConstants.getBestSparqlReturnTypes(acceptableMediaTypes);
 
-            String applications = dao.getInternshipSalary(internshipId, (TupleQueryResultFormat) returnTypes.getRdfFormat());
+            String applications = dao.getInternshipSalary(internshipId, returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internship applications for internship with id" + internshipId, e);
@@ -109,9 +113,9 @@ public class InternshipsResource {
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
 
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String applications = dao.getInternshipCurrency(internshipId, (RDFFormat) returnTypes.getRdfFormat());
+            String applications = dao.getInternshipCurrency(internshipId, returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internship applications for internship with id" + internshipId, e);

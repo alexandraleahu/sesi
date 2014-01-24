@@ -6,31 +6,49 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
-  <servlet>
-    <servlet-name>StudentsServlet</servlet-name>
-    <servlet-class>ro.infoiasi.wad.sesi.server.GreetingServiceImpl</servlet-class>
-  </servlet>
     <servlet>
-        <servlet-name>ro.infoiasi.wad.sesi.Sesi Internships</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.InternshipsImpl</servlet-class>
+        <servlet-name>InternshipsServlet</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.InternshipsServiceImpl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipsService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.InternshipsServiceImpl</servlet-class>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi CompaniesService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.CompaniesServiceImpl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi OntologyExtraInfoService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.OntologyExtraInfoServiceImpl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi TechnologyService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.TechnologyServiceImpl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi TechnicalSkillsService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.TechnicalSkillsServiceImpl</servlet-class>
     </servlet>
 
     <servlet-mapping>
-    <servlet-name>StudentsServlet</servlet-name>
-    <url-pattern>/sesi/greet</url-pattern>
-  </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ro.infoiasi.wad.sesi.Sesi Internships</servlet-name>
-        <url-pattern>/sesi/Internships</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipsService</servlet-name>
+        <servlet-name>InternshipsServlet</servlet-name>
         <url-pattern>/sesi/InternshipsService</url-pattern>
+
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi CompaniesService</servlet-name>
+        <url-pattern>/sesi/CompaniesService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi OntologyExtraInfoService</servlet-name>
+        <url-pattern>/sesi/OntologyExtraInfoService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi TechnologyService</servlet-name>
+        <url-pattern>/sesi/TechnologyService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi TechnicalSkillsService</servlet-name>
+        <url-pattern>/sesi/TechnicalSkillsService</url-pattern>
+    </servlet-mapping>
+
 
     <!-- Default page to serve -->
   <welcome-file-list>

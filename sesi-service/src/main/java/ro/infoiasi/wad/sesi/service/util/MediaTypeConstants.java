@@ -24,65 +24,82 @@ public class MediaTypeConstants {
     public static final String SPARQL_XML_STRING = "application/sparql-results+xml";
     public static final MediaType SPARQL_JSON = new MediaType("application", "sparql-results+json");
     public static final String SPARQL_JSON_STRING = "application/sparql-results+json";
-    
-    public static final MediaType DEFAULT_RDF_TYPE = MediaType.APPLICATION_JSON_TYPE;
 
-    private static Map<MediaType, FileFormat> buildMimeTypeToRdfFormatMappings() {
+    public static final MediaType DEFAULT_RDF_TYPE = TURTLE;
+    public static final MediaType DEFAULT_SPARQL_TYPE = SPARQL_JSON;
+    private static Map<MediaType, RDFFormat> buildMimeTypeToRdfFormatMappings() {
 
-        Map<MediaType, FileFormat> mappings = Maps.newHashMap();
+        Map<MediaType, RDFFormat> mappings = Maps.newHashMap();
         mappings.put(JSONLD, RDFFormat.JSONLD);
         mappings.put(RDFXML, RDFFormat.RDFXML);
         mappings.put(TURTLE, RDFFormat.TURTLE);
-        mappings.put(SPARQL_JSON, TupleQueryResultFormat.JSON);
-        mappings.put(SPARQL_XML, TupleQueryResultFormat.SPARQL);
-        mappings.put(DEFAULT_RDF_TYPE, RDFFormat.RDFJSON);
+
 
         return mappings;
 
     }
 
-    private static final Map<MediaType, FileFormat> MAPPINGS = buildMimeTypeToRdfFormatMappings();
+    private static Map<MediaType, TupleQueryResultFormat> buildMimeTypeToSparqlFormatMappings() {
+
+        Map<MediaType, TupleQueryResultFormat> mappings = Maps.newHashMap();
+        mappings.put(SPARQL_JSON, TupleQueryResultFormat.JSON);
+        mappings.put(SPARQL_XML, TupleQueryResultFormat.SPARQL);
 
 
-    public static FileFormat getRdfFormat(MediaType mediaType) {
+        return mappings;
 
-        if (MAPPINGS.get(mediaType) != null) {
+    }
 
-            return MAPPINGS.get(mediaType);
-        }
+    private static final Map<MediaType, RDFFormat> RDF_MAPPINGS = buildMimeTypeToRdfFormatMappings();
+    private static final Map<MediaType, TupleQueryResultFormat> SPARQL_MAPPINGS = buildMimeTypeToSparqlFormatMappings();
 
-        return MAPPINGS.get(DEFAULT_RDF_TYPE);
+
+    public static RDFFormat getRdfFormat(MediaType mediaType) {
+        return RDF_MAPPINGS.get(mediaType);
+
+    }
+
+    public static TupleQueryResultFormat getSparqlFormat(MediaType mediaType) {
+        return SPARQL_MAPPINGS.get(mediaType);
+
     }
 
 
-    public static MediaTypeAndRdfFormat getBestReturnTypes(List<MediaType> acceptableMediaTypes) {
-
-        RDFFormat rdfReturnType = null;
-        MediaType returnContentType = null;
+    public static MediaTypeAndRdfFormat<RDFFormat> getBestRdfReturnTypes(List<MediaType> acceptableMediaTypes) {
 
         if (acceptableMediaTypes.contains(JSONLD)) {
-            return new MediaTypeAndRdfFormat(JSONLD, MAPPINGS.get(JSONLD));
+            return new MediaTypeAndRdfFormat<>(JSONLD, RDF_MAPPINGS.get(JSONLD));
         } else if (
                 acceptableMediaTypes.contains(RDFXML)) {
-            return new MediaTypeAndRdfFormat(RDFXML, MAPPINGS.get(RDFXML));
+            return new MediaTypeAndRdfFormat<>(RDFXML, RDF_MAPPINGS.get(RDFXML));
         } else if (acceptableMediaTypes.contains(TURTLE)) {
-            return new MediaTypeAndRdfFormat(TURTLE, MAPPINGS.get(TURTLE));
-        } else if (acceptableMediaTypes.contains(SPARQL_JSON)) {
-            return new MediaTypeAndRdfFormat(SPARQL_JSON, MAPPINGS.get(SPARQL_JSON));
-        } else if (acceptableMediaTypes.contains(SPARQL_XML)) {
-            return new MediaTypeAndRdfFormat(SPARQL_XML, MAPPINGS.get(SPARQL_XML));
+            return new MediaTypeAndRdfFormat<>(TURTLE, RDF_MAPPINGS.get(TURTLE));
         } else {
-            return new MediaTypeAndRdfFormat(DEFAULT_RDF_TYPE, MAPPINGS.get(DEFAULT_RDF_TYPE));
+            return new MediaTypeAndRdfFormat<>(DEFAULT_RDF_TYPE, RDF_MAPPINGS.get(DEFAULT_RDF_TYPE));
+
+        }
+
+
+    }
+    public static MediaTypeAndRdfFormat<TupleQueryResultFormat> getBestSparqlReturnTypes(List<MediaType> acceptableMediaTypes) {
+
+
+        if (acceptableMediaTypes.contains(SPARQL_JSON)) {
+            return new MediaTypeAndRdfFormat<>(SPARQL_JSON, SPARQL_MAPPINGS.get(SPARQL_JSON));
+        } else if (acceptableMediaTypes.contains(SPARQL_XML)) {
+            return new MediaTypeAndRdfFormat<>(SPARQL_XML, SPARQL_MAPPINGS.get(SPARQL_XML));
+        } else {
+            return new MediaTypeAndRdfFormat<>(DEFAULT_SPARQL_TYPE, SPARQL_MAPPINGS.get(DEFAULT_SPARQL_TYPE));
 
         }
 
 
     }
 
-    public static class MediaTypeAndRdfFormat {
+    public static class MediaTypeAndRdfFormat<T extends FileFormat> {
 
         private MediaType mediaType;
-        private FileFormat rdfFormat;
+        private T rdfFormat;
 
         public MediaType getMediaType() {
             return mediaType;
@@ -92,15 +109,15 @@ public class MediaTypeConstants {
             this.mediaType = mediaType;
         }
 
-        public FileFormat getRdfFormat() {
+        public T getRdfFormat() {
             return rdfFormat;
         }
 
-        public void setRdfFormat(FileFormat rdfFormat) {
+        public void setRdfFormat(T rdfFormat) {
             this.rdfFormat = rdfFormat;
         }
 
-        public MediaTypeAndRdfFormat(MediaType mediaType, FileFormat rdfFormat) {
+        public MediaTypeAndRdfFormat(MediaType mediaType, T rdfFormat) {
             this.mediaType = mediaType;
             this.rdfFormat = rdfFormat;
         }

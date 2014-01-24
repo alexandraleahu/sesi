@@ -29,9 +29,9 @@ public class CompaniesResource {
         CompanyDao dao = new CompanyDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String company = dao.getCompany(companyId, (RDFFormat) returnTypes.getRdfFormat());
+            String company = dao.getCompany(companyId, returnTypes.getRdfFormat());
             return Response.ok(company, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve company with id " + companyId, e);
@@ -49,9 +49,9 @@ public class CompaniesResource {
         CompanyDao dao = new CompanyDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String allCompanies = dao.getAllCompanies((RDFFormat) returnTypes.getRdfFormat());
+            String allCompanies = dao.getAllCompanies(returnTypes.getRdfFormat());
             return Response.ok(allCompanies, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve companies", e);
@@ -68,9 +68,9 @@ public class CompaniesResource {
         CompanyDao dao = new CompanyDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String companiesInternships = dao.getAllCompanyInternships(companyId, (RDFFormat) returnTypes.getRdfFormat());
+            String companiesInternships = dao.getAllCompanyInternships(companyId, returnTypes.getRdfFormat());
             return Response.ok(companiesInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve companies internships", e);
@@ -87,9 +87,9 @@ public class CompaniesResource {
         CompanyDao dao = new CompanyDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String companyApplications = dao.getAllCompanyApplications(companyId, (RDFFormat) returnTypes.getRdfFormat());
+            String companyApplications = dao.getAllCompanyApplications(companyId, returnTypes.getRdfFormat());
             return Response.ok(companyApplications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve company applications", e);
@@ -106,9 +106,9 @@ public class CompaniesResource {
         CompanyDao dao = new CompanyDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String companyInternshipProgressDetails = dao.getAllCompanyInternshipProgressDetails(companyId, (RDFFormat) returnTypes.getRdfFormat());
+            String companyInternshipProgressDetails = dao.getAllCompanyInternshipProgressDetails(companyId, returnTypes.getRdfFormat());
             return Response.ok(companyInternshipProgressDetails, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve company internship progress details", e);
@@ -120,7 +120,7 @@ public class CompaniesResource {
     @PUT
     @Path("id")
     @Produces(MediaType.APPLICATION_XML)
-    public Response editCompany(@PathParam("id") String companyId, JAXBElement<Company> company) {
+    public Response editCompany(@PathParam("id") String companyId) {
         return null;
     }
 
@@ -131,4 +131,5 @@ public class CompaniesResource {
     public Response addCompany(@PathParam("id") String companyId, JAXBElement<Company> company) {
         return null;
     }
+   
 }

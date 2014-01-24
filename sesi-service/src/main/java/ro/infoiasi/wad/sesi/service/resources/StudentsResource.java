@@ -1,7 +1,6 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.rdf.dao.InternshipsDao;
 import ro.infoiasi.wad.sesi.rdf.dao.StudentsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
@@ -25,9 +24,9 @@ public class StudentsResource {
         StudentsDao dao = new StudentsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String allInternships = dao.getAllStudents((RDFFormat) returnTypes.getRdfFormat());
+            String allInternships = dao.getAllStudents(returnTypes.getRdfFormat());
             return Response.ok(allInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve students", e);
@@ -44,9 +43,9 @@ public class StudentsResource {
         StudentsDao dao = new StudentsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String student = dao.getStudent(studentId, (RDFFormat) returnTypes.getRdfFormat());
+            String student = dao.getStudent(studentId, returnTypes.getRdfFormat());
             return Response.ok(student, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve student with id " + studentId, e);
@@ -64,9 +63,9 @@ public class StudentsResource {
         StudentsDao dao = new StudentsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String applications = dao.getAllStudentApplications(studentId, (RDFFormat) returnTypes.getRdfFormat());
+            String applications = dao.getAllStudentApplications(studentId, returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internship applications for student with id" + studentId, e);
@@ -84,8 +83,8 @@ public class StudentsResource {
         StudentsDao dao = new StudentsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
-            String progressDetails = dao.getStudentInternshipsProgressDetails(studentId, (RDFFormat) returnTypes.getRdfFormat());
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
+            String progressDetails = dao.getStudentInternshipsProgressDetails(studentId, returnTypes.getRdfFormat());
             return Response.ok(progressDetails, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internship progress details for student with id" + studentId, e);

@@ -9,7 +9,6 @@
   <!-- Inherit the core Web Toolkit stuff.                        -->
     <inherits name="com.google.gwt.user.User" />
     <inherits name="com.google.gwt.resources.Resources" />
-    <inherits name="com.google.gwt.logging.Logging"/>
     <inherits name="com.google.gwt.editor.Editor" />
 
 
@@ -23,6 +22,10 @@
 
     <!-- Other module inherits                                      -->
     <inherits name="com.github.gwtbootstrap.Bootstrap" />
+    <inherits name="ro.infoiasi.wad.sesi.Core"/>
+    <inherits name='com.github.gwtbootstrap.datepicker.Datepicker' />
+    <inherits name='com.github.gwtbootstrap.datetimepicker.Datetimepicker' />
+    <inherits name="com.google.common.base.Base"/>
 
     <!-- Settings                                                   -->
     <set-property name="bootstrap.responsiveDesign" value="true"/>
@@ -30,10 +33,15 @@
     <!-- Specify the app entry point class.                         -->
     <entry-point class='ro.infoiasi.wad.sesi.client.Sesi'/>
     <servlet path="/InternshipsService" class="ro.infoiasi.wad.sesi.server.rpc.InternshipsServiceImpl"/>
+    <servlet path="/CompaniesService" class="ro.infoiasi.wad.sesi.server.rpc.CompaniesServiceImpl"/>
+    <servlet path="/OntologyExtraInfoService" class="ro.infoiasi.wad.sesi.server.rpc.OntologyExtraInfoServiceImpl"/>
+    <servlet path="/TechnologyService" class="ro.infoiasi.wad.sesi.server.rpc.TechnologyServiceImpl"/>
+    <servlet path="/TechnicalSkillsService" class="ro.infoiasi.wad.sesi.server.rpc.TechnicalSkillsServiceImpl"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>
     <source path='shared'/>
     <source path="resources" />
+    <source path="core"/>
 
 </module>

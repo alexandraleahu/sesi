@@ -15,7 +15,7 @@ public class UsersTable {
                     + "', '" + user.getPass()
                     + "', '" + user.getType()
                     + "')";
-            connection = DriverManager.getConnection("jdbc:sqlite:sesi-accounts.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:ro-accounts.db");
             statement = connection.createStatement();
             statement.execute(sql);
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class UsersTable {
         Statement statement = null;
         String result = null;
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:sesi-accounts.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:ro-accounts.db");
             statement = connection.createStatement();
             ResultSet results = statement.executeQuery(query);
             if(results != null && results.next()) {
@@ -92,7 +92,7 @@ public class UsersTable {
         Statement stmt = null;
         try {
           Class.forName("org.sqlite.JDBC");
-          connection = DriverManager.getConnection("jdbc:sqlite:sesi-accounts.db");
+          connection = DriverManager.getConnection("jdbc:sqlite:ro-accounts.db");
           System.out.println("Opened database successfully");
 
           stmt = connection.createStatement();

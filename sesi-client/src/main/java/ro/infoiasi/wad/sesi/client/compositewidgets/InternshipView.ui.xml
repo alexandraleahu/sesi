@@ -1,7 +1,130 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
-             xmlns:b="urn:import:com.github.gwtbootstrap.client.ui">
-    <div>
+             xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
+             xmlns:base="urn:import:com.github.gwtbootstrap.client.ui.base">
 
-    </div>
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources" />
+    <g:HTMLPanel styleName="{resource.style.withScroll}">
+         <g:Label  ui:field="internshipTitleHeader" styleName="{resource.style.bigLabel}" addStyleNames="{resource.style.bigLabel})"/>
+         <b:Row>
+             <b:Column size="1">
+                 <b:Label type="INVERSE" text="Published by"/>
+             </b:Column>
+
+             <b:Column size="2">
+                 <g:Anchor ui:field="companyLink"/>
+             </b:Column>
+         </b:Row>
+
+        <b:Row>
+             <b:Column size="1">
+                 <b:Label type="INVERSE" text="Start date"/>
+             </b:Column>
+
+             <b:Column size="2">
+                 <g:Label ui:field="startDateLabel"/>
+             </b:Column>
+
+            <b:Column size="1">
+                <b:Label type="INVERSE" text="Openings"/>
+            </b:Column>
+
+            <b:Column size="2">
+                <g:Label ui:field="openingsLabel"/>
+            </b:Column>
+
+         </b:Row>
+
+        <b:Row>
+             <b:Column size="1">
+                 <b:Label type="INVERSE" text="End date"/>
+             </b:Column>
+
+             <b:Column size="2">
+                 <g:Label ui:field="endDateLabel"/>
+             </b:Column>
+
+            <b:Column size="1">
+                <b:Label type="INVERSE" text="Applications"/>
+            </b:Column>
+
+            <b:Column size="2">
+                <g:Label ui:field="applicationsLabel"/>
+            </b:Column>
+
+         </b:Row>
+
+        <b:Row>
+            <b:Column size="1">
+                <b:Label type="INVERSE" text="Category"/>
+            </b:Column>
+
+            <b:Column size="2">
+                <g:Label ui:field="categoryLabel"/>
+            </b:Column>
+        </b:Row>
+
+        <b:Row>
+            <b:Column size="1">
+                <b:Label type="INVERSE" text="Description"/>
+            </b:Column>
+
+            <b:Column size="8">
+                <b:Hero>
+                    <g:Label ui:field="descriptionLabel"/>
+                </b:Hero>
+            </b:Column>
+        </b:Row>
+
+        <b:Row>
+            <b:Column size="2">
+                <b:Label type="INVERSE" text="Preferred general skills"/>
+            </b:Column>
+
+            <b:Column size="4">
+                <g:Label ui:field="preferredGeneralSkillsLabel"/>
+            </b:Column>
+        </b:Row>
+
+        <b:Row>
+            <b:Column size="2">
+                <b:Label type="INVERSE" text="Acquired general skills"/>
+            </b:Column>
+
+            <b:Column size="4">
+                <g:Label ui:field="acquiredGeneralSkillsLabel"/>
+            </b:Column>
+        </b:Row>
+        <b:Row>
+            <b:Column size="1">
+                <b:Label type="INVERSE" text="Salary"/>
+            </b:Column>
+
+            <b:Column size="1">
+                <g:Label ui:field="salaryValueLabel"/>
+            </b:Column>
+
+            <b:Column size="1">
+                <g:Label ui:field="salaryCurrencyLabel"/>
+            </b:Column>
+        </b:Row>
+        <b:Row>
+            <b:Column size="1">
+                <b:Label type="INVERSE" text="City"/>
+            </b:Column>
+
+            <b:Column size="1">
+                <g:Anchor ui:field="cityLink"/>
+            </b:Column>
+        </b:Row>
+        <b:Row>
+            <b:Column size="2">
+                <b:Label type="INVERSE" text="Offers relocation"/>
+            </b:Column>
+
+            <b:Column size="1">
+                <g:Label ui:field="relocationLabel"/>
+            </b:Column>
+        </b:Row>
+    </g:HTMLPanel>
 </ui:UiBinder>

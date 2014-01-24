@@ -22,9 +22,9 @@ public class InternshipProgressDetailsResource {
         ProgressDetailsDao dao = new ProgressDetailsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String allProgressDetails = dao.getAllProgressDetails((RDFFormat) returnTypes.getRdfFormat());
+            String allProgressDetails = dao.getAllProgressDetails(returnTypes.getRdfFormat());
             return Response.ok(allProgressDetails, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve progress details ", e);
@@ -41,9 +41,9 @@ public class InternshipProgressDetailsResource {
         ProgressDetailsDao dao = new ProgressDetailsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String progressDetails = dao.getProgressDetailsById(id, (RDFFormat) returnTypes.getRdfFormat());
+            String progressDetails = dao.getProgressDetailsById(id, returnTypes.getRdfFormat());
             return Response.ok(progressDetails, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve progress details for id: " + id, e);

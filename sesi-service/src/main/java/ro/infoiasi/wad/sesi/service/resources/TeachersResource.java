@@ -1,7 +1,6 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.rdf.dao.CompanyDao;
 import ro.infoiasi.wad.sesi.rdf.dao.TeachersDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
@@ -23,9 +22,9 @@ public class TeachersResource {
         TeachersDao dao = new TeachersDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String allTeachers = dao.getAllTeachers((RDFFormat) returnTypes.getRdfFormat());
+            String allTeachers = dao.getAllTeachers(returnTypes.getRdfFormat());
             return Response.ok(allTeachers, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve teachers", e);
@@ -42,9 +41,9 @@ public class TeachersResource {
         TeachersDao dao = new TeachersDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String teacher = dao.getTeacherById(teacherId, (RDFFormat) returnTypes.getRdfFormat());
+            String teacher = dao.getTeacherById(teacherId, returnTypes.getRdfFormat());
             return Response.ok(teacher, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve teacher with id " + teacherId, e);
@@ -62,9 +61,9 @@ public class TeachersResource {
         TeachersDao dao = new TeachersDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-            MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestReturnTypes(acceptableMediaTypes);
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
-            String teacher = dao.getAllInternshipProgressDetails(teacherId, (RDFFormat) returnTypes.getRdfFormat());
+            String teacher = dao.getAllInternshipProgressDetails(teacherId, returnTypes.getRdfFormat());
             return Response.ok(teacher, returnTypes.getMediaType()).build();
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve teacher internship progress details with sid " + teacherId, e);

@@ -14,7 +14,7 @@ import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import static ro.infoiasi.wad.sesi.rdf.util.Constants.*;
+import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
 public class ApplicationsDao implements Dao {
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
@@ -73,8 +73,8 @@ public class ApplicationsDao implements Dao {
             URI candidate = Values.uri(SESI_SCHEMA_NS, CANDIDATE_PROP);
             URI internship = Values.uri(SESI_SCHEMA_NS, APPLICATION_INTERNSHIP_PROP);
 
-            adder.statement(newApplication, candidate, Values.uri(SESI_OBJECTS_NS, application.getStudentId()));
-            adder.statement(newApplication, internship, Values.uri(SESI_OBJECTS_NS, application.getInternshipId()));
+            adder.statement(newApplication, candidate, Values.uri(SESI_OBJECTS_NS, application.getStudent().getId()));
+            adder.statement(newApplication, internship, Values.uri(SESI_OBJECTS_NS, application.getInternship().getId()));
 
             // adding the status and the feedback
             URI status = Values.uri(SESI_SCHEMA_NS, STATUS_PROP);
@@ -172,8 +172,8 @@ public class ApplicationsDao implements Dao {
 //        InternshipApplication application = new InternshipApplication();
 //        String id = RandomStringUtils.randomAlphanumeric(ID_LENGTH);
 //        application.setId(id);
-//        application.setInternshipId("003");
-//        application.setStudentId("dm");
+//        application.setInternship("003");
+//        application.setStudent("dm");
 //
 //        System.out.println(dao.createProgressDetails(application));
 

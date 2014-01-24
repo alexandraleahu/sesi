@@ -1,8 +1,11 @@
 package ro.infoiasi.wad.sesi.client.rpc;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.google.gwt.core.client.GWT;
+import ro.infoiasi.wad.sesi.core.model.Internship;
+
+import java.util.List;
 
 
 @RemoteServiceRelativePath("InternshipsService")
@@ -18,4 +21,12 @@ public interface InternshipsService extends RemoteService {
             return ourInstance;
         }
     }
+
+    Internship getInternshipById(String internshipId);
+
+    int getApplicationsCount(String internshipId);
+
+    List<Internship> getAllinternshipsByCategory(Internship.Category category);
+
+    public static final String RESOURCE_PATH = "internships";
 }

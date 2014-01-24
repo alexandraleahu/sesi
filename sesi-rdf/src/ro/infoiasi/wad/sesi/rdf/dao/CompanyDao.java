@@ -15,7 +15,7 @@ import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import static ro.infoiasi.wad.sesi.rdf.util.Constants.*;
+import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
 public class CompanyDao implements Dao {
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;

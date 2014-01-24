@@ -18,7 +18,7 @@ import ro.infoiasi.wad.sesi.core.model.University;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import static ro.infoiasi.wad.sesi.rdf.util.Constants.*;
+import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
 public class TeachersDao implements Dao {
 
