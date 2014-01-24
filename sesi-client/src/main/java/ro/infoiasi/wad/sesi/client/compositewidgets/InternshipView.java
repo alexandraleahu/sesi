@@ -34,20 +34,22 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
 
     @UiField
     @Path("openings")
-    Label openingsLabel;
+    IntegerView openingsLabel;
 
     @UiField
+    @Ignore
     Label startDateLabel;
 
     @UiField
+    @Ignore
     Label endDateLabel;
 
     @UiField
     @Path("applicationsCount")
-    Label applicationsLabel;
+    IntegerView applicationsLabel;
 
     @UiField
-    @Path("category")
+    @Ignore
     Label categoryLabel;
 
     @UiField
@@ -55,9 +57,11 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     Label descriptionLabel;
 
     @UiField
+    @Ignore
     Label preferredGeneralSkillsLabel;
 
     @UiField
+    @Ignore
     Label relocationLabel;
 
     @UiField
@@ -66,9 +70,10 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
 
     @UiField
     @Path("salaryValue")
-    Label salaryValueLabel;
+    DoubleView salaryValueLabel;
 
     @UiField
+    @Ignore
     Label acquiredGeneralSkillsLabel;
 
     @UiField
@@ -96,7 +101,7 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
 
         preferredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getPreferredGeneralSkills()));
         acquiredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getAcquiredGeneralSkills()));
-
+        categoryLabel.setText(internship.getCategory().getDescription());
     }
 
 
