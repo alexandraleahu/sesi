@@ -70,6 +70,7 @@
     <owl:NamedIndividual rdf:about="&freebase;m.01fhg3">
         <rdf:type rdf:resource="&freebase;location.citytown"/>
         <rdfs:label>Iasi</rdfs:label>
+        <sesiSchema:name rdf:datatype="&xsd;string">Iasi</sesiSchema:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/01fhg3</rdfs:seeAlso>
     </owl:NamedIndividual>
     
@@ -80,6 +81,7 @@
     <owl:NamedIndividual rdf:about="&freebase;m.02l6h">
         <rdf:type rdf:resource="&freebase;finance.currency"/>
         <rdfs:label>EURO</rdfs:label>
+        <sesiSchema:name rdf:datatype="&xsd;string">EURO</sesiSchema:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/02l6h</rdfs:seeAlso>
     </owl:NamedIndividual>
     
@@ -90,6 +92,7 @@
     <owl:NamedIndividual rdf:about="&freebase;m.07657k">
         <rdf:type rdf:resource="&freebase;computer.programming_language"/>
         <rdfs:label>C#</rdfs:label>
+        <sesiSchema:name rdf:datatype="&xsd;string">C#</sesiSchema:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/07657k</rdfs:seeAlso>
     </owl:NamedIndividual>
     
@@ -100,6 +103,7 @@
     <owl:NamedIndividual rdf:about="&freebase;m.07sbkfb">
         <rdf:type rdf:resource="&freebase;computer.programming_language"/>
         <rdfs:label>Java</rdfs:label>
+        <sesiSchema:name rdf:datatype="&xsd;string">Java</sesiSchema:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/07sbkfb</rdfs:seeAlso>
     </owl:NamedIndividual>
     
@@ -288,6 +292,7 @@
     <owl:NamedIndividual rdf:about="http:/rdf.freebase.com/ns/m.02zsyq">
         <rdf:type rdf:resource="&freebase;finance.currency"/>
         <rdfs:label>RON</rdfs:label>
+        <sesiSchema:name rdf:datatype="&xsd;string">EURO</sesiSchema:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/02zsyq</rdfs:seeAlso>
     </owl:NamedIndividual>
     
@@ -311,20 +316,6 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
-            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.02l6h"/>
-            <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&freebase;m.07657k"/>
             <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
         </owl:distinctMembers>
@@ -334,6 +325,20 @@
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&sesi;JavaEEBasic"/>
             <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
+            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;m.02l6h"/>
+            <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>
