@@ -1,0 +1,2 @@
+serviceClass: ro.infoiasi.wad.sesi.client.GreetingService
+path: 23030048BF437D7323E007A2E8DEBD26.gwt.rpc
