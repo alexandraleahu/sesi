@@ -262,8 +262,8 @@ public class InternshipsDao implements Dao {
             //adding the event specific properties
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
-            URI startDate = Values.uri(SESI_SCHEMA_NS, START_DATE_PROP);
-            URI endDate = Values.uri(SESI_SCHEMA_NS, END_DATE_PROP);
+            URI startDate = Values.uri(FREEBASE_NS, START_DATE_PROP);
+            URI endDate = Values.uri(FREEBASE_NS, END_DATE_PROP);
             URI city = Values.uri(SESI_SCHEMA_NS, CITY_PROP);
 
 

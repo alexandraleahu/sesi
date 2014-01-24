@@ -40,8 +40,8 @@ public class Constants {
     public static final String TECHNOLOGY_USED_PROP = "technologyUsed";
 
     public static final String CATEGORY_PROP = "category";
-    public static final String START_DATE_PROP = "startDate";
-    public static final String END_DATE_PROP = "endDate";
+    public static final String START_DATE_PROP = "time.event.start_date";
+    public static final String END_DATE_PROP = "time.event.end_date";
 
     public static final String CITY_PROP = "inCity";
     public static final String RELOCATION_PROP = "offersRelocation";
