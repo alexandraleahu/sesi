@@ -17,10 +17,12 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     interface InternshipViewUiBinder extends UiBinder<HTMLPanel, InternshipView> {
 
     }
+
     private static InternshipViewUiBinder ourUiBinder = GWT.create(InternshipViewUiBinder.class);
 
     // Empty interface declaration, similar to UiBinder
-    interface Driver extends SimpleBeanEditorDriver<Internship, InternshipView> {}
+    interface Driver extends SimpleBeanEditorDriver<Internship, InternshipView> {
+    }
 
     // Create the Driver
     Driver driver = GWT.create(Driver.class);
@@ -89,6 +91,10 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     @Override
     public void edit(Internship internship) {
         driver.edit(internship);
+        if (internship.getCity() != null) {
+            cityLink.setHref(internship.getCity().getInfoUrl());
+            cityLink.setText(internship.getCity().getName());
+        }
         if (internship.getCompany() != null)
             companyLink.setText(internship.getCompany().getName());
 

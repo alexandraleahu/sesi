@@ -38,7 +38,6 @@ public class InternshipsServiceImpl extends RemoteServiceServlet implements Inte
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
 
         Internship internship = new InternshipDeserializer().deserialize(m, internshipId);
-//        internship.setCity(getCity(internshipId));
         client.close();
         return internship;
     }
