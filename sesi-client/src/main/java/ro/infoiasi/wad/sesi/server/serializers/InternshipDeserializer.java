@@ -7,6 +7,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.server.util.SparqlService;
 import ro.infoiasi.wad.sesi.core.model.City;
 import ro.infoiasi.wad.sesi.core.model.Currency;
 import ro.infoiasi.wad.sesi.core.model.Internship;
@@ -20,6 +22,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
 
     @Override
     public Internship deserialize(OntModel m, String internshipId) {
+        SparqlService sparqlService = new SparqlService();
         Internship internship = new Internship();
         internship.setId(internshipId);
 
@@ -32,7 +35,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
 
         // description
         statement = m.getProperty(internshipResource,
-                        ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
+                ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
 
         internship.setDescription(statement.getLiteral().getString());
 
@@ -45,7 +48,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
 
         // end date
         statement = m.getProperty(internshipResource,
-                      ResourceFactory.createProperty(FREEBASE_NS, END_DATE_PROP));
+                ResourceFactory.createProperty(FREEBASE_NS, END_DATE_PROP));
 
         XSDDateTime endDate = (XSDDateTime) (statement.getLiteral().getValue());
         internship.setEndDate(endDate.asCalendar().getTime());
@@ -59,7 +62,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
 
         // openings
         statement = m.getProperty(internshipResource,
-                                  ResourceFactory.createProperty(SESI_SCHEMA_NS, OPENINGS_PROP));
+                ResourceFactory.createProperty(SESI_SCHEMA_NS, OPENINGS_PROP));
 
         internship.setOpenings(statement.getLiteral().getInt());
 
@@ -84,21 +87,28 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
             internship.setSalaryValue(statement.getLiteral().getDouble());
 
             // salary currency - just taking the name
-            statement = m.getProperty(internshipResource,
-                    ResourceFactory.createProperty(SESI_SCHEMA_NS, CURRENCY_PROP));
+            statement = m.getProperty(internshipResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CURRENCY_PROP));
 
+            OntologyExtraInfo currencyExtraInfo = sparqlService.getOntologyExtraInfo(statement.getResource().getURI());
             Currency currency = new Currency();
-            currency.setName(statement.getObject().asResource().getLocalName());
+            currency.setName(currencyExtraInfo.getName());
+            currency.setInfoUrl(currencyExtraInfo.getInfoUrl());
+            currency.setOntologyUri(currencyExtraInfo.getOntologyUri());
             internship.setSalaryCurrency(currency);
         }
 
         //city
-        City city = (City) new OntologyExtraInfoServiceImpl().get("A", internshipId);
+        statement = m.getProperty(internshipResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CITY_PROP));
+        OntologyExtraInfo extraInfo = sparqlService.getOntologyExtraInfo(statement.getResource().getURI());
+        City city = new City();
+        city.setInfoUrl(extraInfo.getInfoUrl());
+        city.setName(extraInfo.getName());
+        city.setOntologyUri(extraInfo.getOntologyUri());
         internship.setCity(city);
         // preferred general skills
         List<String> preferredGeneralSkills = Lists.newArrayList();
         StmtIterator stmtIterator = internshipResource.listProperties(ResourceFactory.
-                                                    createProperty(SESI_SCHEMA_NS, PREFERRED_GENERAL_PROP));
+                createProperty(SESI_SCHEMA_NS, PREFERRED_GENERAL_PROP));
 
         while (stmtIterator.hasNext()) {
             Statement nextStatement = stmtIterator.nextStatement();
@@ -111,7 +121,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
         // acquired general skills
         List<String> acquiredGeneralSkills = Lists.newArrayList();
         stmtIterator = internshipResource.listProperties(ResourceFactory.
-                                                    createProperty(SESI_SCHEMA_NS, ACQUIRED_GENERAL_PROP));
+                createProperty(SESI_SCHEMA_NS, ACQUIRED_GENERAL_PROP));
 
         while (stmtIterator.hasNext()) {
             Statement nextStatement = stmtIterator.nextStatement();
@@ -120,6 +130,27 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
             acquiredGeneralSkills.add(generalSkill);
         }
         internship.setAcquiredGeneralSkills(acquiredGeneralSkills);
+
+        //acquiredTechnicalSkills
+        List<TechnicalSkill> acquiredTechnicalSkills = Lists.newArrayList();
+        stmtIterator = internshipResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, ACQUIRED_TECHNICAL_PROP));
+        while (stmtIterator.hasNext()) {
+            Statement nextStatement = stmtIterator.nextStatement();
+            TechnicalSkill acquiredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
+            acquiredTechnicalSkills.add(acquiredSkill);
+        }
+        internship.setAcquiredTechnicalSkills(acquiredTechnicalSkills);
+
+
+        //prefferedTechnicalSkill
+        List<TechnicalSkill> prefferedTechnicalSkills = Lists.newArrayList();
+        stmtIterator = internshipResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, PREFERRED_TECHNICAL_PROP));
+        while (stmtIterator.hasNext()) {
+            Statement nextStatement = stmtIterator.nextStatement();
+            TechnicalSkill acquiredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
+            prefferedTechnicalSkills.add(acquiredSkill);
+        }
+        internship.setPreferredTechnicalSkills(prefferedTechnicalSkills);
 
         return internship;
     }
