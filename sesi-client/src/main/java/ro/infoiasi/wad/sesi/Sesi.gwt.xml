@@ -38,6 +38,7 @@
     <servlet path="/OntologyExtraInfoService" class="ro.infoiasi.wad.sesi.server.rpc.OntologyExtraInfoServiceImpl"/>
     <servlet path="/TechnologyService" class="ro.infoiasi.wad.sesi.server.rpc.TechnologyServiceImpl"/>
     <servlet path="/TechnicalSkillsService" class="ro.infoiasi.wad.sesi.server.rpc.TechnicalSkillsServiceImpl"/>
+    <servlet path="/StudentService" class="ro.infoiasi.wad.sesi.server.rpc.StudentServiceImpl"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>

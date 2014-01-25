@@ -343,4 +343,59 @@ public class SparqlService {
 
     }
 
+    public Object[] getStatus(String uri) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
+                .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
+                .append("select ?comment where { ")
+                .append("<").append(uri).append(">").append(" rdfs:comment ?comment . } ");
+        Query query = QueryFactory.create(builder.toString());
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+
+        try {
+            ResultSet rs = qe.execSelect();
+            if (rs.hasNext()) {
+                QuerySolution solution = rs.nextSolution();
+                String comment = solution.getLiteral("comment").getString();
+                String[] split = uri.split("/");
+                String name = split[split.length - 1];
+                StudentInternshipRelation.Status status = null;
+
+                if (name.equals("accepted")) status = StudentInternshipRelation.Status.accepted;
+                if (name.equals("rejected")) status = StudentInternshipRelation.Status.rejected;
+                if (name.equals("pending")) status = StudentInternshipRelation.Status.pending;
+                if (name.equals("inProgress")) status = StudentInternshipRelation.Status.inProgress;
+                if (name.equals("finished")) status = StudentInternshipRelation.Status.finished;
+                return new Object[]{comment, status};
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            qe.close();
+        }
+        return null;
+    }
+
+    public String getIDFromURI(String uri) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
+                .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
+                .append("select ?id where { ")
+                .append("<").append(uri).append(">").append(" sesiSchema:id ?id . } ");
+        Query query = QueryFactory.create(builder.toString());
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+
+        try {
+            ResultSet rs = qe.execSelect();
+            if (rs.hasNext()) {
+                QuerySolution solution = rs.nextSolution();
+                return solution.getLiteral("id").getString();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            qe.close();
+        }
+        return null;
+    }
 }

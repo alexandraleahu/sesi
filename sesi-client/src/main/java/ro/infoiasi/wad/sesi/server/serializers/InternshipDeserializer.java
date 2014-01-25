@@ -8,6 +8,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.server.rpc.StudentServiceImpl;
 import ro.infoiasi.wad.sesi.server.util.SparqlService;
 import ro.infoiasi.wad.sesi.core.model.City;
 import ro.infoiasi.wad.sesi.core.model.Currency;
@@ -23,6 +24,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
     @Override
     public Internship deserialize(OntModel m, String internshipId) {
         SparqlService sparqlService = new SparqlService();
+        StudentServiceImpl studentService = new StudentServiceImpl();
         Internship internship = new Internship();
         internship.setId(internshipId);
 
