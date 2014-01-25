@@ -141,6 +141,7 @@
         <rdf:type rdf:resource="&sesiSchema;Internship"/>
         <rdfs:label>Java_Web_Internship</rdfs:label>
         <sesiSchema:id rdf:datatype="&xsd;string">003</sesiSchema:id>
+        <sesiSchema:publishedAt rdf:datatype="&xsd;dateTime">2014-01-22T11:00:00</sesiSchema:publishedAt>
         <freebase:time.event.start_date rdf:datatype="&xsd;dateTime">2014-07-14T10:00:00</freebase:time.event.start_date>
         <freebase:time.event.end_date rdf:datatype="&xsd;dateTime">2014-09-14T18:00:00</freebase:time.event.end_date>
         <sesiSchema:openingsCount rdf:datatype="&xsd;nonNegativeInteger">5</sesiSchema:openingsCount>
@@ -170,6 +171,7 @@
         <rdf:type rdf:resource="&sesiSchema;InternshipApplication"/>
         <rdfs:label>004</rdfs:label>
         <sesiSchema:id rdf:datatype="&xsd;string">004</sesiSchema:id>
+        <sesiSchema:publishedAt rdf:datatype="&xsd;dateTime">2014-01-24T12:00:00</sesiSchema:publishedAt>
         <sesiSchema:sesiUrl>/applications/004</sesiSchema:sesiUrl>
         <sesiSchema:applicationInternship rdf:resource="&sesi;003"/>
         <sesiSchema:candidate rdf:resource="&sesi;ionpopescu"/>
@@ -316,20 +318,6 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
-            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.02l6h"/>
-            <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&freebase;m.07657k"/>
             <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
         </owl:distinctMembers>
@@ -339,6 +327,20 @@
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&sesi;JavaEEBasic"/>
             <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
+            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;m.02l6h"/>
+            <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>

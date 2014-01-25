@@ -593,6 +593,14 @@
     
 
 
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/publishedAt -->
+
+    <owl:DatatypeProperty rdf:about="&sesiSchema;publishedAt">
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/repository -->
 
     <owl:DatatypeProperty rdf:about="&sesiSchema;repository">
@@ -1059,6 +1067,13 @@
         <rdfs:subClassOf rdf:resource="&sesiSchema;Resource"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;publishedAt"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="&sesiSchema;salaryValue"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;decimal"/>
@@ -1104,16 +1119,16 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesiSchema;category"/>
-                <owl:onClass rdf:resource="&sesiSchema;SoftwareCategory"/>
+                <owl:onProperty rdf:resource="&sesiSchema;acquiredGeneralSkill"/>
                 <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&sesiSchema;acquiredGeneralSkill"/>
+                <owl:onProperty rdf:resource="&sesiSchema;category"/>
+                <owl:onClass rdf:resource="&sesiSchema;SoftwareCategory"/>
                 <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -1153,6 +1168,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&sesiSchema;category"/>
                 <owl:someValuesFrom rdf:resource="&sesiSchema;SoftwareCategory"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;publishedAt"/>
+                <owl:allValuesFrom rdf:resource="&xsd;dateTime"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
