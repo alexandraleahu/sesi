@@ -1,12 +1,10 @@
 package ro.infoiasi.wad.sesi.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import ro.infoiasi.wad.sesi.client.compositewidgets.InternshipView;
+import ro.infoiasi.wad.sesi.client.compositewidgets.InternshipEditor;
 import ro.infoiasi.wad.sesi.client.rpc.InternshipsService;
 import ro.infoiasi.wad.sesi.client.rpc.InternshipsServiceAsync;
-import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 /**
@@ -24,18 +22,51 @@ public class Sesi implements EntryPoint {
         InternshipsServiceAsync instance = InternshipsService.App.getInstance();
         RootLayoutPanel.get().setStyleName(SesiResources.INSTANCE.style().backgroundColor());
 
-        instance.getInternshipById("003", new AsyncCallback<Internship>() {
-            @Override
-            public void onFailure(Throwable caught) {
+//        instance.getInternshipById("003", new AsyncCallback<Internship>() {
+//            @Override
+//            public void onFailure(Throwable caught) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(Internship internship) {
+//                final InternshipView internshipView = new InternshipView();
+//                internshipView.edit(internship);
+//                RootLayoutPanel.get().add(internshipView);
+//            }
+//        });
 
-            }
-
-            @Override
-            public void onSuccess(Internship internship) {
-                final InternshipView internshipView = new InternshipView();
-                internshipView.edit(internship);
-                RootLayoutPanel.get().add(internshipView);
-            }
-        });
+        RootLayoutPanel.get().add(new InternshipEditor());
+        freebase();
     }
+    // !!! This has to be called after the elements used inside it are attached to the document !!!
+    public static native void freebase() /*-{
+
+        $wnd.$("#freebasePreferredTechnicalSkills").suggest({"key": "AIzaSyACLiHBsbLdFR5glh1j_rMtBV40R7Yp_0g",
+            filter:'(all type:/computer/software)'})
+            .bind("fb-select", function(e, data) {
+                init = $wnd.$("#preferredTechnicalSkillId").val();
+                if (init.length != 0) {
+                    $wnd.$("#preferredTechnicalSkillId").val(init + ", " + data.name + ":" + data.id);
+                } else {
+                    $wnd.$("#preferredTechnicalSkillId").val(data.name + ":" + data.id);
+
+                }
+            }
+        )
+        $wnd.$("#freebaseAcquiredTechnicalSkills").suggest({"key": "AIzaSyACLiHBsbLdFR5glh1j_rMtBV40R7Yp_0g",
+            filter:'(all type:/computer/software)'})
+            .bind("fb-select", function(e, data) {
+                init = $wnd.$("#acquiredTechnicalSkillId").val();
+                if (init.length != 0) {
+                    $wnd.$("#acquiredTechnicalSkillId").val(init + ", " + data.name + ":" + data.id);
+                } else {
+                    $wnd.$("#acquiredTechnicalSkillId").val(data.name + ":" + data.id);
+
+                }
+            }
+        )
+
+
+    }-*/;
 }

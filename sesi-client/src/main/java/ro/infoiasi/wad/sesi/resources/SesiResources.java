@@ -44,5 +44,6 @@ public interface SesiResources extends ClientBundle {
         String gwtAnchor();
 
         String smallMarginLeft();
+
     }
 }
