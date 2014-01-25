@@ -542,7 +542,9 @@
 
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/motivation -->
 
-    <owl:DatatypeProperty rdf:about="&sesiSchema;motivation"/>
+    <owl:DatatypeProperty rdf:about="&sesiSchema;motivation">
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
     
 
 

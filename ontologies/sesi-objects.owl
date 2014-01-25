@@ -170,7 +170,6 @@
         <rdf:type rdf:resource="&sesiSchema;InternshipApplication"/>
         <rdfs:label>004</rdfs:label>
         <sesiSchema:id rdf:datatype="&xsd;string">004</sesiSchema:id>
-        <sesiSchema:motivation rdf:datatype="&xsd;string">I am highly interested in developing performant java web applications</sesiSchema:motivation>
         <sesiSchema:sesiUrl>/applications/004</sesiSchema:sesiUrl>
         <sesiSchema:applicationInternship rdf:resource="&sesi;003"/>
         <sesiSchema:candidate rdf:resource="&sesi;ionpopescu"/>
