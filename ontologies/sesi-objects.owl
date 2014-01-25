@@ -170,6 +170,7 @@
         <rdf:type rdf:resource="&sesiSchema;InternshipApplication"/>
         <rdfs:label>004</rdfs:label>
         <sesiSchema:id rdf:datatype="&xsd;string">004</sesiSchema:id>
+        <sesiSchema:motivation rdf:datatype="&xsd;string">I am highly interested in developing performant java web applications</sesiSchema:motivation>
         <sesiSchema:sesiUrl>/applications/004</sesiSchema:sesiUrl>
         <sesiSchema:applicationInternship rdf:resource="&sesi;003"/>
         <sesiSchema:candidate rdf:resource="&sesi;ionpopescu"/>
@@ -316,20 +317,6 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.07657k"/>
-            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;JavaEEBasic"/>
-            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
             <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
         </owl:distinctMembers>
@@ -339,6 +326,20 @@
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&freebase;m.02l6h"/>
             <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;m.07657k"/>
+            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;JavaEEBasic"/>
+            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>

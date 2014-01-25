@@ -540,6 +540,12 @@
     
 
 
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/motivation -->
+
+    <owl:DatatypeProperty rdf:about="&sesiSchema;motivation"/>
+    
+
+
     <!-- http://www.infoiasi.ro/wad/schemas/sesi/name -->
 
     <owl:DatatypeProperty rdf:about="&sesiSchema;name">
@@ -1209,6 +1215,13 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;motivation"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="&sesiSchema;status"/>
                 <owl:allValuesFrom rdf:resource="&sesiSchema;InternshipApplicationStatus"/>
             </owl:Restriction>
@@ -1225,6 +1238,12 @@
                 <owl:onProperty rdf:resource="&sesiSchema;applicationInternship"/>
                 <owl:onClass rdf:resource="&sesiSchema;Internship"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sesiSchema;motivation"/>
+                <owl:allValuesFrom rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
