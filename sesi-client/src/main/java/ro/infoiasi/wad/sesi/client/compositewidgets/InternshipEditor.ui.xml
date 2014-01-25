@@ -5,7 +5,7 @@
              xmlns:bdate="urn:import:com.github.gwtbootstrap.datetimepicker.client.ui">
 
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources" />
-    <g:HTMLPanel>
+    <g:HTMLPanel styleName="{resource.style.withScroll}">
 
         <b:Hero>
             <g:Label  text="Define new internship" styleName="{resource.style.bigLabel}" addStyleNames="{resource.style.bigLabel})"/>
@@ -115,14 +115,14 @@
                     <c:IntegerEditor ui:field="openingsBox"/>
                 </b:Column>
             </b:Row>
+
+            <b:Row>
                 <b:Column size="2">
                     <b:Label type="INFO" text="Salary"/>
                 </b:Column>
                 <b:Column size="2">
                     <c:DoubleEditor ui:field="salaryValue" />
                 </b:Column>
-            <b:Row>
-
             </b:Row>
 
             <b:Row>
