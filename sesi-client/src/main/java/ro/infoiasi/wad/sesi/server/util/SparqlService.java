@@ -181,9 +181,166 @@ public class SparqlService {
         return null;
     }
 
-    public static void main(String[] args) {
-        getTechnicalSkill("http://www.infoiasi.ro/wad/objects/sesi/JavaEEIntermediate");
+    public Studies getStudies(String studiesUri) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
+                .append("select ?yearsOfStudy ?degree ?faculty where { ")
+                .append("<").append(studiesUri).append(">").append(" sesiSchema:yearOfStudy ?yearOfStudy . ")
+                .append("<").append(studiesUri).append(">").append(" sesiSchema:degree ?degree . ")
+                .append("<").append(studiesUri).append(">").append(" sesiSchema:studyFaculty ?studyFaculty . }");
+        Query query = QueryFactory.create(builder.toString());
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
 
-//        getProgrammingLanguage("http://rdf.freebase.com/ns/m.07657k");
+        try {
+            ResultSet rs = qe.execSelect();
+            if (rs.hasNext()) {
+                Studies studies = new Studies();
+                QuerySolution solution = rs.nextSolution();
+                Integer yearOfStudy = solution.getLiteral("yearOfStudy").getInt();
+                String degreeUri = solution.getLiteral("degree").getString();
+                Degree degree = getDegree(degreeUri);
+                String facultyUri = solution.getLiteral("faculty").getString();
+                Faculty faculty = getFaculty(facultyUri);
+                studies.setDegree(degree);
+                studies.setYearOfStudy(yearOfStudy);
+                studies.setFaculty(faculty);
+                return studies;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            qe.close();
+        }
+        return null;
     }
+
+    private Faculty getFaculty(String facultyUri) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
+                .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
+                .append("select ?name ?university where { ")
+                .append("<").append(facultyUri).append(">").append(" sesiSchema:name ?name . ")
+                .append("<").append(facultyUri).append(">").append(" sesiSchema:university ?university . }");
+        Query query = QueryFactory.create(builder.toString());
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+
+        try {
+            ResultSet rs = qe.execSelect();
+            if (rs.hasNext()) {
+                QuerySolution solution = rs.nextSolution();
+                String name = solution.getLiteral("name").getString();
+                String universityUri = solution.getResource("university").getURI();
+                University university = getUniversity(universityUri);
+                Faculty faculty = new Faculty();
+                faculty.setName(name);
+                faculty.setUniversity(university);
+                return faculty;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            qe.close();
+        }
+        return null;
+    }
+
+    private University getUniversity(String universityUri) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
+                .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
+                .append("select ?name ?label ?siteUrl ?seeAlso ?city where { ")
+                .append("<").append(universityUri).append(">").append(" sesiSchema:name ?name . ")
+                .append("<").append(universityUri).append(">").append(" rdfs:label ?label . ")
+                .append("<").append(universityUri).append(">").append(" sesiSchema:siteUrl ?siteUrl . ")
+                .append("<").append(universityUri).append(">").append(" rdfs:seeAlso ?seeAlso . ")
+                .append("<").append(universityUri).append(">").append(" sesiSchema:inCity ?city . }");
+        Query query = QueryFactory.create(builder.toString());
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+
+        try {
+            ResultSet rs = qe.execSelect();
+            if (rs.hasNext()) {
+                QuerySolution solution = rs.nextSolution();
+                String name = solution.getLiteral("name").getString();
+                String label = solution.getLiteral("label").getString();
+                String siteUrl = solution.getLiteral("siteUrl").getString();
+                String seeAlso = solution.getLiteral("siteUrl").getString();
+                String cityUri = solution.getResource("city").getURI();
+                City city = getCity(cityUri);
+                University university = new University();
+                university.setName(name);
+                university.setLabel(label);
+                university.setOntologyUri(universityUri);
+                university.setSiteUrl(siteUrl);
+                university.setInfoUrl(seeAlso);
+                university.setCity(city);
+                return university;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            qe.close();
+        }
+        return null;
+    }
+
+
+    public StudentProject getStudentProject(String projectUri) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
+                .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
+                .append("select ?name ?label ?description ?programmingLanguageUsed where { ")
+                .append("<").append(projectUri).append(">").append(" sesiSchema:name ?name . ")
+                .append("<").append(projectUri).append(">").append(" rdfs:label ?label . ")
+                .append("<").append(projectUri).append(">").append(" sesiSchema:description ?description . ")
+                .append("<").append(projectUri).append(">").append(" sesiSchema:programmingLanguageUsed ?programmingLanguageUsed . }");
+        Query query = QueryFactory.create(builder.toString());
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+
+        try {
+            ResultSet rs = qe.execSelect();
+            if (rs.hasNext()) {
+                QuerySolution solution = rs.nextSolution();
+                String name = solution.getLiteral("name").getString();
+                String label = solution.getLiteral("label").getString();
+                String description = solution.getLiteral("description").getString();
+                String programmingLanguageUri = solution.getResource("programmingLanguageUsed").getURI();
+                ProgrammingLanguage programmingLanguage = getProgrammingLanguage(programmingLanguageUri);
+                StudentProject project = new StudentProject();
+                project.setName(name);
+                project.setLabel(label);
+                project.setDescription(description);
+                project.setProgrammingLanguage(programmingLanguage);
+                return project;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            qe.close();
+        }
+        return null;
+    }
+
+    private City getCity(String cityUri) {
+        OntologyExtraInfo extraInfo = getOntologyExtraInfo(cityUri);
+        City city = new City();
+        city.setOntologyUri(cityUri);
+        city.setName(extraInfo.getName());
+        city.setInfoUrl(extraInfo.getInfoUrl());
+        return city;
+    }
+
+    private Degree getDegree(String degreeUri) {
+        OntologyExtraInfo extraInfo = getOntologyExtraInfo(degreeUri);
+        Degree degree = new Degree();
+        degree.setInfoUrl(extraInfo.getInfoUrl());
+        degree.setName(extraInfo.getName());
+        degree.setOntologyUri(degreeUri);
+        return degree;
+    }
+
+    public static void main(String[] args) {
+
+    }
+
 }
