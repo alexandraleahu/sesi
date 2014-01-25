@@ -7,6 +7,15 @@ import java.util.EnumSet;
 public class InternshipApplication extends StudentInternshipRelation {
 
     private String description;
+    private String motivation;
+
+    public String getMotivation() {
+        return motivation;
+    }
+
+    public void setMotivation(String motivation) {
+        this.motivation = motivation;
+    }
 
     @Override
     public EnumSet<Status> getPossibleStatus() {
@@ -30,6 +39,7 @@ public class InternshipApplication extends StudentInternshipRelation {
         sb.append(", student='").append(getStudent()).append('\'');
         sb.append(", status='").append(getStatus()).append('\'');
         sb.append(", description='").append(getDescription()).append('\'');
+        sb.append(", motivation='").append(getMotivation()).append('\'');
 
         return sb.toString();
     }

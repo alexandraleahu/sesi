@@ -76,13 +76,15 @@ public class ApplicationsDao implements Dao {
             adder.statement(newApplication, candidate, Values.uri(SESI_OBJECTS_NS, application.getStudent().getId()));
             adder.statement(newApplication, internship, Values.uri(SESI_OBJECTS_NS, application.getInternship().getId()));
 
-            // adding the status and the feedback
+            // adding the status and the feedback and the motivation
             URI status = Values.uri(SESI_SCHEMA_NS, STATUS_PROP);
             URI feedback = Values.uri(SESI_SCHEMA_NS, FEEDBACK_PROP);
+            URI motivation = Values.uri(SESI_SCHEMA_NS, MOTIVATION_PROP);
 
             // we set the status initially to pending, when the application is first submitted
             adder.statement(newApplication, status, Values.uri(SESI_SCHEMA_NS, InternshipApplication.Status.pending.toString()));
             adder.statement(newApplication, feedback, Values.literal(INITIAL_FEEDBACK, StardogValueFactory.XSD.STRING));
+            adder.statement(newApplication, motivation, Values.literal(application.getMotivation(), StardogValueFactory.XSD.STRING));
             con.commit();
 
             return application.getRelativeUri();

@@ -74,6 +74,7 @@ public class Constants {
 
     public static final String CANDIDATE_PROP = "candidate";
     public static final String APPLICATION_INTERNSHIP_PROP = "applicationInternship";
+    public static final String MOTIVATION_PROP = "motivation";
     public static final String STATUS_PROP = "status";
     public static final String FEEDBACK_PROP = "feedback";
 

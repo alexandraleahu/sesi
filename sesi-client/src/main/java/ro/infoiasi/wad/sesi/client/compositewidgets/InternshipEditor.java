@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.client.compositewidgets;
 
+import com.github.gwtbootstrap.client.ui.CheckBox;
 import com.github.gwtbootstrap.client.ui.TextArea;
 import com.github.gwtbootstrap.client.ui.TextBox;
 import com.github.gwtbootstrap.client.ui.ValueListBox;
@@ -80,6 +81,18 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
     @UiField
             @Ignore
     TextArea acquiredGeneralSkillsField;
+    @UiField
+            @Path("openings")
+    IntegerEditor openingsBox;
+    @UiField
+            @Ignore
+    TextBox cityBox;
+    @UiField
+            @Ignore
+    TextArea cityIdLabel;
+    @UiField
+            @Path("offeringRelocation")
+    CheckBox offersRelocationCheckbox;
 
 
     public InternshipEditor() {

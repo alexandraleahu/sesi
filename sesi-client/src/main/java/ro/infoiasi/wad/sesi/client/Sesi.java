@@ -42,30 +42,25 @@ public class Sesi implements EntryPoint {
     // !!! This has to be called after the elements used inside it are attached to the document !!!
     public static native void freebase() /*-{
 
-        $wnd.$("#freebasePreferredTechnicalSkills").suggest({"key": "AIzaSyACLiHBsbLdFR5glh1j_rMtBV40R7Yp_0g",
-            filter:'(all type:/computer/software)'})
-            .bind("fb-select", function(e, data) {
-                init = $wnd.$("#preferredTechnicalSkillId").val();
-                if (init.length != 0) {
-                    $wnd.$("#preferredTechnicalSkillId").val(init + ", " + data.name + ":" + data.id);
-                } else {
-                    $wnd.$("#preferredTechnicalSkillId").val(data.name + ":" + data.id);
+        function fbSuggest(suggestBoxId, resultBoxId, topic, append) {
+            $wnd.$("#" + suggestBoxId)
+                .suggest({"key": "AIzaSyACLiHBsbLdFR5glh1j_rMtBV40R7Yp_0g",
+                           filter:'(all type:' + topic + ')'})
+                .bind("fb-select", function(e, data) {
+                    init = $wnd.$("#" + resultBoxId).val();
+                    if (init.length != 0 && append) {
+                        $wnd.$("#" + resultBoxId).val(init + ", " + data.name + ":" + data.id);
+                    } else {
+                        $wnd.$("#" + resultBoxId).val(data.name + ":" + data.id);
 
+                    }
                 }
-            }
-        )
-        $wnd.$("#freebaseAcquiredTechnicalSkills").suggest({"key": "AIzaSyACLiHBsbLdFR5glh1j_rMtBV40R7Yp_0g",
-            filter:'(all type:/computer/software)'})
-            .bind("fb-select", function(e, data) {
-                init = $wnd.$("#acquiredTechnicalSkillId").val();
-                if (init.length != 0) {
-                    $wnd.$("#acquiredTechnicalSkillId").val(init + ", " + data.name + ":" + data.id);
-                } else {
-                    $wnd.$("#acquiredTechnicalSkillId").val(data.name + ":" + data.id);
+            )
+        }
 
-                }
-            }
-        )
+        fbSuggest("freebasePreferredTechnicalSkills", "preferredTechnicalSkillId", "/computer/software", true);
+        fbSuggest("freebaseAcquiredTechnicalSkills", "acquiredTechnicalSkillId", "/computer/software", true);
+        fbSuggest("freebaseCity", "cityId", "/location/citytown", false)
 
 
     }-*/;

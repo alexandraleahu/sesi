@@ -106,6 +106,42 @@
                 </b:Column>
             </b:Row>
 
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Openings count"/>
+                </b:Column>
+
+                <b:Column size="1" >
+                    <c:IntegerEditor ui:field="openingsBox"/>
+                </b:Column>
+            </b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Salary"/>
+                </b:Column>
+                <b:Column size="2">
+                    <c:DoubleEditor ui:field="salaryValue" />
+                </b:Column>
+            <b:Row>
+
+            </b:Row>
+
+            <b:Row>
+
+                <b:Column size="2">
+                    <b:Label type="INFO" text="City"/>
+                </b:Column>
+
+                <b:Column size="2">
+                    <b:TextBox ui:field="cityBox" b:id="freebaseCity" size="2"/>
+                    <b:CheckBox ui:field="offersRelocationCheckbox" text="Offers relocation"/>
+                </b:Column>
+
+                <b:Column size="3" >
+                    <b:TextArea ui:field="cityIdLabel" b:id="cityId" placeholder="Selected city will go here" />
+                </b:Column>
+
+            </b:Row>
+
         </b:WellForm>
     </g:HTMLPanel>
 </ui:UiBinder>
