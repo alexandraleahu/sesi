@@ -50,12 +50,25 @@ h1 {
 
     overflow: auto;
 }
-
+.withBottomBorder {
+    border-bottom-style: ridge;
+    border-bottom: 1px;
+    border-bottom-color: #3f3f3f;
+}
+.standardMarginTop {
+    margin-top: 10pt;
+}
 .bigText {
 
     font-size: 30pt;
 }
+.standardTextArea {
+    height: 70pt;
+}
 
+.bigTextArea {
+    height: 150pt;
+}
 .backgroundColor {
     background-color: #e6e6e6;
 }

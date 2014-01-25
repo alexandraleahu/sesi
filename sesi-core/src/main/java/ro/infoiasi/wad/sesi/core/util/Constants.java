@@ -8,6 +8,7 @@ public class Constants {
     public static final String SESI_SCHEMA_NS = "http://www.infoiasi.ro/wad/schemas/sesi/";
     public static final String SESI_OBJECTS_NS = "http://www.infoiasi.ro/wad/objects/sesi/";
     public static final String FREEBASE_NS = "http://rdf.freebase.com/ns/";
+    public static final String FREEBASE_INFO = "http://freebase.com/";
 
     public static final String INTERNSHIP_CLASS = "Internship";
     public static final String APPLICATION_CLASS = "InternshipApplication";

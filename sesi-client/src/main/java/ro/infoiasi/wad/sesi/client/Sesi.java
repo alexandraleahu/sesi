@@ -22,9 +22,7 @@ public class Sesi implements EntryPoint {
         InternshipsServiceAsync instance = InternshipsService.App.getInstance();
         RootLayoutPanel.get().setStyleName(SesiResources.INSTANCE.style().backgroundColor());
 
-//        instance.getInternshipById("003", new AsyncCallback<Internship>() {
-//            @Override
-//            public void onFailure(Throwable caught) {
+//        instance.getInternshipById("003", new AsyncCallback<InternsskillFailure(Throwable caught) {
 //
 //            }
 //
@@ -39,29 +37,39 @@ public class Sesi implements EntryPoint {
         RootLayoutPanel.get().add(new InternshipEditor());
         freebase();
     }
+
+
     // !!! This has to be called after the elements used inside it are attached to the document !!!
     public static native void freebase() /*-{
 
-        function fbSuggest(suggestBoxId, resultBoxId, topic, append) {
+        function fbSuggest(suggestBoxId, resultBoxId, topic, append, levelBoxId) {
             $wnd.$("#" + suggestBoxId)
                 .suggest({"key": "AIzaSyACLiHBsbLdFR5glh1j_rMtBV40R7Yp_0g",
                            filter:'(all type:' + topic + ')'})
                 .bind("fb-select", function(e, data) {
                     init = $wnd.$("#" + resultBoxId).val();
-                    if (init.length != 0 && append) {
-                        $wnd.$("#" + resultBoxId).val(init + ", " + data.name + ":" + data.id);
-                    } else {
-                        $wnd.$("#" + resultBoxId).val(data.name + ":" + data.id);
+                    level = "";
+                    if (levelBoxId != null && levelBoxId != undefined) {
+                        level = ":" + $wnd.$("#" + levelBoxId).find(":selected").text();
+                    }
 
+                    var skill = data.name + ":" + data.id + level;
+
+                    if (init.length != 0 && append) {
+                        $wnd.$("#" + resultBoxId).val(init + "\n"+ skill);
+                    } else {
+                        $wnd.$("#" + resultBoxId).val(skill);
                     }
                 }
             )
         }
 
-        fbSuggest("freebasePreferredTechnicalSkills", "preferredTechnicalSkillId", "/computer/software", true);
-        fbSuggest("freebaseAcquiredTechnicalSkills", "acquiredTechnicalSkillId", "/computer/software", true);
-        fbSuggest("freebaseCity", "cityId", "/location/citytown", false)
+        fbSuggest("freebasePreferredTechnicalSkills", "preferredTechnicalSkillId", "/computer/software", true, "preferredLevelList");
+        fbSuggest("freebaseAcquiredTechnicalSkills", "acquiredTechnicalSkillId", "/computer/software", true, "acquiredLevelList");
+        fbSuggest("freebaseCity", "cityId", "/location/citytown", false);
 
 
     }-*/;
+
+
 }

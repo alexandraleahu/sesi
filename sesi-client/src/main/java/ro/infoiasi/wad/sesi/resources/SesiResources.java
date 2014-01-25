@@ -45,5 +45,12 @@ public interface SesiResources extends ClientBundle {
 
         String smallMarginLeft();
 
+        String standardMarginTop();
+
+        String standardTextArea();
+
+        String bigTextArea();
+
+        String withBottomBorder();
     }
 }

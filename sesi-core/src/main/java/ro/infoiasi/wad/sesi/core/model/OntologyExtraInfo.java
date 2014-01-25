@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.core.util.HasOntologyUri;
 
 public class OntologyExtraInfo extends BaseExtraInfo implements HasOntologyUri {
@@ -15,5 +16,11 @@ public class OntologyExtraInfo extends BaseExtraInfo implements HasOntologyUri {
         this.ontologyUri = ontologyUri;
     }
 
+    public static <T extends OntologyExtraInfo> void fillWithOntologyExtraInfo(T instance, String name, String freebaseId) {
 
+        instance.setName(name);
+        instance.setInfoUrl(Constants.FREEBASE_INFO + freebaseId);
+        instance.setOntologyUri(Constants.FREEBASE_NS + freebaseId.substring(1).replace('/', '.'));
+
+    }
 }

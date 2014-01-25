@@ -5,47 +5,55 @@
              xmlns:bdate="urn:import:com.github.gwtbootstrap.datetimepicker.client.ui">
 
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources" />
-    <g:HTMLPanel styleName="{resource.style.withScroll}">
+    <g:HTMLPanel addStyleNames="{resource.style.withScroll}
+                                ">
+
 
         <b:Hero>
-            <g:Label  text="Define new internship" styleName="{resource.style.bigLabel}" addStyleNames="{resource.style.bigLabel})"/>
+            <g:Label  text="Define new internship" styleName="{resource.style.bigLabel}"/>
         </b:Hero>
 
         <b:WellForm>
             <b:Row>
                 <b:Column size="2">
-                    <b:Label type="INFO" text="Name"  />
+                    <b:Label type="INFO" text="Name" />
                 </b:Column>
+            </b:Row>
 
-                <b:Column size="2">
-                    <b:TextBox ui:field="internshipNameLabel"/>
+            <b:Row>
+                <b:Column size="3">
+                    <b:TextBox ui:field="internshipNameBox" size="3"/>
                 </b:Column>
             </b:Row>
             <b:Row>
                 <b:Column size="2">
                     <b:Label type="INFO" text="Start date"/>
                 </b:Column>
-
-                <b:Column size="2">
-                    <bdate:DateTimeBox format="dd/mm/yyyy hh:ii" autoClose="true" ui:field="startDateBox"/>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <bdate:DateTimeBox format="dd/mm/yyyy hh:ii" autoClose="true" ui:field="startDateBox" size="3"/>
                 </b:Column>
             </b:Row>
             <b:Row>
                 <b:Column size="2">
                     <b:Label type="INFO" text="End date"/>
                 </b:Column>
-
-                <b:Column size="2">
-                    <bdate:DateTimeBox format="dd/mm/yyyy hh:ii" autoClose="true" ui:field="endDateBox"/>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <bdate:DateTimeBox format="dd/mm/yyyy hh:ii" autoClose="true" ui:field="endDateBox" size="3"/>
                 </b:Column>
             </b:Row>
+
             <b:Row>
                 <b:Column size="2">
                     <b:Label type="INFO" text="Category"/>
                 </b:Column>
-
-                <b:Column size="2">
-                    <b:ValueListBox ui:field="categoryList"/>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <b:ValueListBox ui:field="categoryList" size="3"/>
                 </b:Column>
             </b:Row>
 
@@ -53,18 +61,10 @@
                 <b:Column size="2">
                     <b:Label type="INFO" text="Description"/>
                 </b:Column>
-
-                <b:Column size="2">
-                    <b:TextArea  ui:field="descriptionArea" placeholder="Description of the internship" size="3"/>
-                </b:Column>
             </b:Row>
             <b:Row>
-                <b:Column size="2">
-                    <b:Label type="INFO" text="Preferred general skills"/>
-                </b:Column>
-
-                <b:Column size="4" >
-                    <b:TextArea ui:field="preferredGeneralSkillsField" size="4" placeholder="E.g. team player, ambitious,.." />
+                <b:Column size="5">
+                    <b:TextArea  ui:field="descriptionArea" styleName="{resource.style.bigTextArea}" size="5" placeholder="Description of the internship"/>
                 </b:Column>
             </b:Row>
 
@@ -72,75 +72,105 @@
                 <b:Column size="2">
                     <b:Label type="INFO" text="Preferred technical skills"/>
                 </b:Column>
-
-                <b:Column size="3">
-                    <b:TextBox ui:field="preferredFreebaseTechnicalSkillsBox" b:id="freebasePreferredTechnicalSkills" size="3"/>
-                </b:Column>
-
-                <b:Column size="4" >
-                    <b:TextArea ui:field="preferredTechnicalSkillIdLabel" b:id="preferredTechnicalSkillId" size="4" placeholder="Selected technologies will go here" />
-                </b:Column>
             </b:Row>
-
             <b:Row>
-                <b:Column size="2">
-                    <b:Label type="INFO" text="Acquired general skills"/>
+                <b:Column size="3">
+                    <b:TextBox ui:field="preferredFreebaseTechnicalSkillsBox" b:id="freebasePreferredTechnicalSkills" size="3" placeholder="Freebase search technologies"/>
                 </b:Column>
-
-                <b:Column size="4" >
-                    <b:TextArea ui:field="acquiredGeneralSkillsField" size="4" placeholder="E.g. working in large teams, daily scrums,.." />
+                <b:Column size="2">
+                    <b:ValueListBox ui:field="preferredLevelList" size="2" b:id="preferredLevelList"/>
                 </b:Column>
             </b:Row>
-
+            <b:Row>
+                <b:Column size="5" >
+                    <b:TextArea ui:field="preferredTechnicalSkillIdArea" b:id="preferredTechnicalSkillId" styleName="{resource.style.standardTextArea}" size="5" placeholder="Selected technologies will go here" />
+                </b:Column>
+            </b:Row>
             <b:Row>
                 <b:Column size="2">
                     <b:Label type="INFO" text="Acquired technical skills"/>
                 </b:Column>
-
+            </b:Row>
+            <b:Row>
                 <b:Column size="3">
-                    <b:TextBox ui:field="acquiredTechnicalSkillsBox" b:id="freebaseAcquiredTechnicalSkills" size="3"/>
+                    <b:TextBox ui:field="acquiredTechnicalSkillsBox" b:id="freebaseAcquiredTechnicalSkills" size="3" placeholder="Freebase search technologies"/>
                 </b:Column>
-
-                <b:Column size="4" >
-                    <b:TextArea ui:field="acquiredTechnicalSkillIdLabel" b:id="acquiredTechnicalSkillId" size="4" placeholder="Selected technologies will go here" />
+                <b:Column size="2">
+                    <b:ValueListBox ui:field="acquiredLevelList" size="2" b:id="acquiredLevelList"/>
                 </b:Column>
             </b:Row>
+            <b:Row>
+                <b:Column size="5" >
+                    <b:TextArea ui:field="acquiredTechnicalSkillIdArea" b:id="acquiredTechnicalSkillId" styleName="{resource.style.standardTextArea}" size="5" placeholder="Selected technologies will go here" />
+                </b:Column>
+            </b:Row>
+
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Preferred general skills"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="5" >
+                    <b:TextArea ui:field="preferredGeneralSkillsArea" styleName="{resource.style.standardTextArea}" size="5" placeholder="E.g. team player, ambitious,.." />
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Acquired general skills"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="5" >
+                    <b:TextArea ui:field="acquiredGeneralSkillsArea" styleName="{resource.style.standardTextArea}" size="5" placeholder="E.g. working in large teams, daily scrums,.." />
+                </b:Column>
+            </b:Row>
+
+
 
             <b:Row>
                 <b:Column size="2">
                     <b:Label type="INFO" text="Openings count"/>
                 </b:Column>
-
-                <b:Column size="1" >
-                    <c:IntegerEditor ui:field="openingsBox"/>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3" >
+                    <c:IntegerEditor ui:field="openingsBox" size="3"/>
                 </b:Column>
             </b:Row>
 
             <b:Row>
                 <b:Column size="2">
-                    <b:Label type="INFO" text="Salary"/>
+                    <b:Label type="INFO" text="Salary" />
                 </b:Column>
-                <b:Column size="2">
-                    <c:DoubleEditor ui:field="salaryValue" />
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <c:DoubleEditor ui:field="salaryValue" size="3" />
                 </b:Column>
-                <b:Column size="2">
-                    <c:DoubleEditor ui:field="salaryValue" />
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <b:ListBox ui:field="currencyBox" size="3"/>
                 </b:Column>
+
             </b:Row>
 
             <b:Row>
-
                 <b:Column size="2">
                     <b:Label type="INFO" text="City"/>
                 </b:Column>
-
-                <b:Column size="2">
-                    <b:TextBox ui:field="cityBox" b:id="freebaseCity" size="2"/>
-                    <b:CheckBox ui:field="offersRelocationCheckbox" text="Offers relocation"/>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <b:TextBox ui:field="cityBox" b:id="freebaseCity" size="3" placeholder="Freebase search city"/>
                 </b:Column>
-
+            </b:Row>
+            <b:Row>
                 <b:Column size="3" >
-                    <b:TextArea ui:field="cityIdLabel" b:id="cityId" placeholder="Selected city will go here" />
+                    <b:TextArea ui:field="cityIdArea" b:id="cityId" size="3" placeholder="Selected city will go here" />
+                    <b:CheckBox ui:field="offersRelocationCheckbox" text="Offers relocation"/>
+
                 </b:Column>
 
             </b:Row>
