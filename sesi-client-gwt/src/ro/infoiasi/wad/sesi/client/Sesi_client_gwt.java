@@ -1,6 +1,7 @@
 package ro.infoiasi.wad.sesi.client;
 
 import ro.infoiasi.wad.sesi.client.authentication.users.User;
+import ro.infoiasi.wad.sesi.client.ui.ContentBuilder;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
