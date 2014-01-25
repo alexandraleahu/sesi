@@ -51,7 +51,7 @@ public class InternshipsDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
 
-            List<String> prefixedFields = Lists.transform(fields, prefixFieldQuestionMark);
+            List<String> prefixedFields = Lists.transform(fields, prefixFieldForQuery);
             String queryFields = Joiner.on(" ").join(prefixedFields);
             List<String> queryStatements = Lists.transform(fields, formQueryStatement);
             String query = Joiner.on(" ; ").join(queryStatements);
@@ -61,6 +61,8 @@ public class InternshipsDao implements Dao {
                     .append("[] rdf:type sesiSchema:Internship ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append(query).append(" . ")
+                    .append(Joiner.on(" . ").join(Lists.transform(fields, formQueryStatementForName))).append(" . ")
+                    .append(Joiner.on(" . ").join(Lists.transform(fields, formQueryStatementForSeeAlso))).append(" . ")
                     .append("}");
 
             SelectQuery selectQuery = con.select(sb.toString());
@@ -83,7 +85,7 @@ public class InternshipsDao implements Dao {
                     .append("[] rdf:type sesiSchema:Internship ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:salaryValue ?salary . ")
-                    .append("}" );
+                    .append("}");
 
             SelectQuery selectQuery = con.select(sb.toString());
             selectQuery.parameter("id", internshipId);
@@ -104,6 +106,26 @@ public class InternshipsDao implements Dao {
                     .append("?i rdf:type sesiSchema:Internship ; ")
                     .append("sesiSchema:id ?id ; ")
                     .append("sesiSchema:salaryCurrency ?currency . ")
+                    .append("}");
+
+            GraphQuery graphQuery = con.graph(sb.toString());
+            graphQuery.parameter("id", internshipId);
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
+    public String getInternshipCity(String internshipId, RDFFormat format) throws Exception {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            StringBuilder sb = new StringBuilder()
+                    .append("describe ?city ")
+                    .append("where {")
+                    .append("?i rdf:type sesiSchema:Internship ; ")
+                    .append("sesiSchema:id ?id ; ")
+                    .append("sesiSchema:inCity ?city . ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
@@ -228,17 +250,30 @@ public class InternshipsDao implements Dao {
 
     }
 
-    Function<String, String> prefixFieldQuestionMark = new Function<String, String>() {
+    Function<String, String> prefixFieldForQuery = new Function<String, String>() {
         public String apply(String string) {
-            return "?" + string;
+            return "?" + string + " ?" + string + "SesiUrl ?" + string + "SeeAlso ?" + string + "Name ";
         }
     };
 
     Function<String, String> formQueryStatement = new Function<String, String>() {
         public String apply(String string) {
-            return "sesiSchema:" + string + " ?" + string;
+            return " sesiSchema:" + string + " ?" + string;
         }
     };
+
+    Function<String, String> formQueryStatementForSeeAlso = new Function<String, String>() {
+        public String apply(String string) {
+            return "?" + string + " rdfs:seeAlso ?" + string + "SeeAlso ";
+        }
+    };
+
+    Function<String, String> formQueryStatementForName = new Function<String, String>() {
+        public String apply(String string) {
+            return "?" + string + " sesiSchema:name ?" + string + "Name ";
+        }
+    };
+
 
     // we return the relative URI of the newly created resource for the service to set the Location header
     public String createInternship(Internship internship) throws StardogException {
@@ -411,10 +446,11 @@ public class InternshipsDao implements Dao {
     public static void main(String[] args) throws Exception {
 
         InternshipsDao dao = new InternshipsDao();
+        System.out.println(dao.getInternshipFieldsById("003", Lists.newArrayList("salaryCurrency"), TupleQueryResultFormat.JSON));
 
 //        System.out.println(dao.createInternship(createNewInternship()));
-        System.out.println(dao.getInternshipApplicationsCount("003", TupleQueryResultFormat.JSON));
-        System.out.println("WebDev\n" + dao.getInternshipsByCategory(Internship.Category.WebDev, RDFFormat.TURTLE));
+//        System.out.println(dao.getInternshipApplicationsCount("003", TupleQueryResultFormat.JSON));
+//        System.out.println("WebDev\n" + dao.getInternshipsByCategory(Internship.Category.WebDev, RDFFormat.TURTLE));
 
 
     }
@@ -425,7 +461,7 @@ public class InternshipsDao implements Dao {
         internship.setId(RandomStringUtils.randomAlphanumeric(ID_LENGTH));
         internship.setName("Android internship");
         internship.setDescription("An internship in which students will work on Android applications published on the market");
-        Company company  = new Company();
+        Company company = new Company();
         company.setId("virtualcomp");
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.set(2014, Calendar.JUNE, 19, 9, 0, 0);

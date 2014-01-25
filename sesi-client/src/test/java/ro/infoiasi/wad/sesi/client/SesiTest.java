@@ -1,19 +1,23 @@
-package ro.infoiasi.wad.sesi.client;
-
-import com.google.gwt.junit.client.GWTTestCase;
-
-/**
- * GWT JUnit tests must extend GWTTestCase.
- */
-public class SesiTest extends GWTTestCase {
-
-  /**
-   * Must refer to a valid module that sources this class.
-   */
-  public String getModuleName() {
-    return "ro.infoiasi.wad.sesi.SesiJUnit";
-  }
-
+//package ro.infoiasi.wad.sesi.client;
+//
+//import ro.infoiasi.wad.sesi.shared.FieldVerifier;
+//import com.google.gwt.core.client.GWT;
+//import com.google.gwt.junit.client.GWTTestCase;
+//import com.google.gwt.user.client.rpc.AsyncCallback;
+//import com.google.gwt.user.client.rpc.ServiceDefTarget;
+//
+///**
+// * GWT JUnit tests must extend GWTTestCase.
+// */
+//public class SesiTest extends GWTTestCase {
+//
+//  /**
+//   * Must refer to a valid module that sources this class.
+//   */
+//  public String getModuleName() {
+//    return "ro.infoiasi.wad.sesi.SesiJUnit";
+//  }
+//
 //  /**
 //   * Tests the FieldVerifier.
 //   */
@@ -59,6 +63,6 @@ public class SesiTest extends GWTTestCase {
 //      }
 //    });
 //  }
-
-
-}
+//
+//
+//}

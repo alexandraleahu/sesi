@@ -24,21 +24,21 @@ public class InternshipsServiceImpl extends RemoteServiceServlet implements Inte
 
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL)
-                                 .path(RESOURCE_PATH)
-                                 .path(internshipId);
+                .path(RESOURCE_PATH)
+                .path(internshipId);
 
         Invocation invocation = target.request()
-                                      .accept(DEFAULT_ACCEPT_RDF_TYPE)
-                                      .buildGet();
+                .accept(DEFAULT_ACCEPT_RDF_TYPE)
+                .buildGet();
 
         String rdfAnswer = invocation.invoke()
-                                     .readEntity(String.class);
+                .readEntity(String.class);
 
         OntModel m = ModelFactory.createOntologyModel();
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
 
         Internship internship = new InternshipDeserializer().deserialize(m, internshipId);
-
+//        internship.setCity(getCity(internshipId));
         client.close();
         return internship;
     }
