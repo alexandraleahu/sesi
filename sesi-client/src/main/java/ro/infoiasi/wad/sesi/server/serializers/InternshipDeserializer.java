@@ -1,22 +1,15 @@
 package ro.infoiasi.wad.sesi.server.serializers;
 
 import com.google.common.collect.Lists;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-import ro.infoiasi.wad.sesi.client.rpc.InternshipsService;
-import ro.infoiasi.wad.sesi.client.rpc.InternshipsServiceAsync;
-import ro.infoiasi.wad.sesi.client.rpc.OntologyExtraInfoService;
-import ro.infoiasi.wad.sesi.client.rpc.OntologyExtraInfoServiceAsync;
 import ro.infoiasi.wad.sesi.core.model.City;
 import ro.infoiasi.wad.sesi.core.model.Currency;
 import ro.infoiasi.wad.sesi.core.model.Internship;
-import ro.infoiasi.wad.sesi.core.model.OntologyExtraInfo;
-import ro.infoiasi.wad.sesi.resources.SesiResources;
 import ro.infoiasi.wad.sesi.server.rpc.OntologyExtraInfoServiceImpl;
 
 import java.util.List;
@@ -45,7 +38,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
 
         // start date
         statement = m.getProperty(internshipResource,
-                ResourceFactory.createProperty(FREEBASE_NS, START_DATE_PROP));
+                    ResourceFactory.createProperty(FREEBASE_NS, START_DATE_PROP));
 
         XSDDateTime startDate = (XSDDateTime) (statement.getLiteral().getValue());
         internship.setStartDate(startDate.asCalendar().getTime());
@@ -56,6 +49,13 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
 
         XSDDateTime endDate = (XSDDateTime) (statement.getLiteral().getValue());
         internship.setEndDate(endDate.asCalendar().getTime());
+
+        // published at
+        statement = m.getProperty(internshipResource,
+                    ResourceFactory.createProperty(SESI_SCHEMA_NS, PUBLISHED_AT_PROP));
+
+        XSDDateTime publishedAt = (XSDDateTime) (statement.getLiteral().getValue());
+        internship.setPublishedAt(publishedAt.asCalendar().getTime());
 
         // openings
         statement = m.getProperty(internshipResource,

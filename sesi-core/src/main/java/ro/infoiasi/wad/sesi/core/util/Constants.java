@@ -55,6 +55,7 @@ public class Constants {
 
     public static final String PROGRESS_PROP = "progressDetails";
     public static final String PUBLISHED_BY_PROP = "publishedByCompany";
+    public static final String PUBLISHED_AT_PROP = "publishedAt";
     public static final String HAS_INTERNSHIP_APPLICATION_PROP = "hasInternshipApplication";
 
     public static final String WORKED_ON_PROJECT_PROP = "workedOnProject";

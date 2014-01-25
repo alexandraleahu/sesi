@@ -300,6 +300,7 @@ public class InternshipsDao implements Dao {
             URI startDate = Values.uri(FREEBASE_NS, START_DATE_PROP);
             URI endDate = Values.uri(FREEBASE_NS, END_DATE_PROP);
             URI city = Values.uri(SESI_SCHEMA_NS, CITY_PROP);
+            URI publishedAt = Values.uri(SESI_SCHEMA_NS, PUBLISHED_AT_PROP);
 
 
             adder.statement(newInternship, name, Values.literal(internship.getName(), StardogValueFactory.XSD.STRING));
@@ -307,6 +308,7 @@ public class InternshipsDao implements Dao {
             adder.statement(newInternship, description, Values.literal(internship.getDescription(), StardogValueFactory.XSD.STRING));
             adder.statement(newInternship, startDate, valueFactory.createLiteral(internship.getStartDate()));
             adder.statement(newInternship, endDate, valueFactory.createLiteral(internship.getEndDate()));
+            adder.statement(newInternship, publishedAt, valueFactory.createLiteral(internship.getPublishedAt()));
 
             //adding the city
             City internshipCity = internship.getCity();

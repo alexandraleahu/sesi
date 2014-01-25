@@ -8,6 +8,7 @@ import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
+import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
@@ -53,6 +54,7 @@ public class ApplicationsDao implements Dao {
 
             Resource newApplication = Values.uri(SESI_OBJECTS_NS, application.getId());
             URI applicationClass = Values.uri(SESI_SCHEMA_NS, getOntClassName());
+            ValueFactoryImpl valueFactory = ValueFactoryImpl.getInstance();
 
             con.begin();
 
@@ -80,11 +82,13 @@ public class ApplicationsDao implements Dao {
             URI status = Values.uri(SESI_SCHEMA_NS, STATUS_PROP);
             URI feedback = Values.uri(SESI_SCHEMA_NS, FEEDBACK_PROP);
             URI motivation = Values.uri(SESI_SCHEMA_NS, MOTIVATION_PROP);
+            URI publishedAt = Values.uri(SESI_SCHEMA_NS, PUBLISHED_AT_PROP);
 
             // we set the status initially to pending, when the application is first submitted
             adder.statement(newApplication, status, Values.uri(SESI_SCHEMA_NS, InternshipApplication.Status.pending.toString()));
             adder.statement(newApplication, feedback, Values.literal(INITIAL_FEEDBACK, StardogValueFactory.XSD.STRING));
             adder.statement(newApplication, motivation, Values.literal(application.getMotivation(), StardogValueFactory.XSD.STRING));
+            adder.statement(newApplication, publishedAt, valueFactory.createLiteral(application.getPublishedAt()));
             con.commit();
 
             return application.getRelativeUri();

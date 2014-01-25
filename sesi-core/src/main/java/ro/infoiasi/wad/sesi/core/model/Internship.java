@@ -28,6 +28,15 @@ public class Internship implements Resource, Event {
     private Currency salaryCurrency;
     private double salaryValue;
     private int applicationsCount;
+    private Date publishedAt;
+
+    public Date getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void setPublishedAt(Date publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 
     public int getApplicationsCount() {
         return applicationsCount;
@@ -72,6 +81,7 @@ public class Internship implements Resource, Event {
         sb.append(", salaryCurrency=").append(salaryCurrency);
         sb.append(", salaryValue=").append(salaryValue);
         sb.append(", applicationsCount=").append(applicationsCount);
+        sb.append(", publishedAt=").append(publishedAt);
         sb.append('}');
         return sb.toString();
     }

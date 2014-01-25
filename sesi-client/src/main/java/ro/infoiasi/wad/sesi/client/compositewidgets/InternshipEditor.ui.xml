@@ -123,6 +123,9 @@
                 <b:Column size="2">
                     <c:DoubleEditor ui:field="salaryValue" />
                 </b:Column>
+                <b:Column size="2">
+                    <c:DoubleEditor ui:field="salaryValue" />
+                </b:Column>
             </b:Row>
 
             <b:Row>
