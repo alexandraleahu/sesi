@@ -398,4 +398,42 @@ public class SparqlService {
         }
         return null;
     }
+
+    public Teacher getTeacher(String uri) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
+                .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
+                .append("select ?title ?name ?siteUrl ?faculty where { ")
+                .append("<").append(uri).append(">").append(" sesiSchema:title ?title . ")
+                .append("<").append(uri).append(">").append(" sesiSchema:name ?name . ")
+                .append("<").append(uri).append(">").append(" sesiSchema:siteUrl ?siteUrl . ")
+                .append("<").append(uri).append(">").append(" sesiSchema:isTeacherOf ?faculty . }");
+        Query query = QueryFactory.create(builder.toString());
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+
+        try {
+            ResultSet rs = qe.execSelect();
+            if (rs.hasNext()) {
+                QuerySolution solution = rs.nextSolution();
+                String name = solution.getLiteral("name").getString();
+                String title = solution.getLiteral("title").getString();
+                String facultyUri = solution.getResource("faculty").getURI();
+                Faculty faculty = getFaculty(facultyUri);
+                String siteUrl = solution.getLiteral("siteUrl").getString();
+
+                Teacher teacher = new Teacher();
+                teacher.setName(name);
+                teacher.setTitle(title);
+                teacher.setSiteUrl(siteUrl);
+                teacher.setFaculty(faculty);
+
+                return teacher;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            qe.close();
+        }
+        return null;
+    }
 }
