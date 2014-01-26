@@ -4,11 +4,11 @@ public class Degree extends OntologyExtraInfo {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("City{");
+        final StringBuilder sb = new StringBuilder("Degree{");
         sb.append("extraInfoUrl='").append(getInfoUrl()).append('\'');
         sb.append(", name='").append(getName()).append('\'');
         sb.append(", ontologyUri='").append(getOntologyUri()).append('\'');
-
+        sb.append('}');
         return sb.toString();
     }
 

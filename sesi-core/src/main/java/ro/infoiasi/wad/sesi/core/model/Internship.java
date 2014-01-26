@@ -38,6 +38,12 @@ public class Internship implements Resource, Event {
         this.publishedAt = publishedAt;
     }
 
+    public Internship() {
+        category = Category.WebDev;
+        salaryCurrency = new Currency();
+        salaryCurrency.setName("RON");
+    }
+
     public int getApplicationsCount() {
         return applicationsCount;
     }
@@ -64,7 +70,7 @@ public class Internship implements Resource, Event {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Internship{");
-        sb.append("company='").append(company).append('\'');
+        sb.append("company=").append(company);
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", city=").append(city);

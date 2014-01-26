@@ -5,6 +5,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import ro.infoiasi.wad.sesi.client.compositewidgets.InternshipEditor;
 import ro.infoiasi.wad.sesi.client.rpc.InternshipsService;
 import ro.infoiasi.wad.sesi.client.rpc.InternshipsServiceAsync;
+import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 /**
@@ -34,7 +35,10 @@ public class Sesi implements EntryPoint {
 //            }
 //        });
 
-        RootLayoutPanel.get().add(new InternshipEditor());
+        InternshipEditor widget = new InternshipEditor();
+        RootLayoutPanel.get().add(widget);
+        widget.edit(new Internship());
+
         freebase();
     }
 
@@ -42,10 +46,11 @@ public class Sesi implements EntryPoint {
     // !!! This has to be called after the elements used inside it are attached to the document !!!
     public static native void freebase() /*-{
 
-        function fbSuggest(suggestBoxId, resultBoxId, topic, append, levelBoxId) {
+        function fbSuggest(suggestBoxId, resultBoxId, topic, append, levelBoxId, includeType) {
             $wnd.$("#" + suggestBoxId)
                 .suggest({"key": "AIzaSyACLiHBsbLdFR5glh1j_rMtBV40R7Yp_0g",
-                           filter:'(all type:' + topic + ')'})
+                           filter:'(any ' + topic + ')'
+                            })
                 .bind("fb-select", function(e, data) {
                     init = $wnd.$("#" + resultBoxId).val();
                     level = "";
@@ -53,7 +58,12 @@ public class Sesi implements EntryPoint {
                         level = ":" + $wnd.$("#" + levelBoxId).find(":selected").text();
                     }
 
-                    var skill = data.name + ":" + data.id + level;
+                    var skill = data.name + ":"
+                    if (includeType) {
+                        var longType = data.notable.name;
+                        skill += longType + ":";
+                    }
+                    skill += data.id + level;
 
                     if (init.length != 0 && append) {
                         $wnd.$("#" + resultBoxId).val(init + "\n"+ skill);
@@ -64,9 +74,11 @@ public class Sesi implements EntryPoint {
             )
         }
 
-        fbSuggest("freebasePreferredTechnicalSkills", "preferredTechnicalSkillId", "/computer/software", true, "preferredLevelList");
-        fbSuggest("freebaseAcquiredTechnicalSkills", "acquiredTechnicalSkillId", "/computer/software", true, "acquiredLevelList");
-        fbSuggest("freebaseCity", "cityId", "/location/citytown", false);
+        fbSuggest("freebasePreferredTechnicalSkills", "preferredTechnicalSkillId",
+            "type:/computer/software type:/computer/programming_language", true, "preferredLevelList", true);
+        fbSuggest("freebaseAcquiredTechnicalSkills", "acquiredTechnicalSkillId",
+            "type:/computer/software type:/computer/programming_language", true, "acquiredLevelList", true);
+        fbSuggest("freebaseCity", "cityId", "type:/location/citytown", false, null, false);
 
 
     }-*/;

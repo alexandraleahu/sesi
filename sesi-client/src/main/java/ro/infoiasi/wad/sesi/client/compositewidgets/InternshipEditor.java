@@ -2,10 +2,11 @@ package ro.infoiasi.wad.sesi.client.compositewidgets;
 
 import com.github.gwtbootstrap.client.ui.*;
 import com.github.gwtbootstrap.datetimepicker.client.ui.DateTimeBox;
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.text.shared.Renderer;
@@ -14,19 +15,16 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.client.widgetinterfaces.ResourceWidgetEditor;
 import ro.infoiasi.wad.sesi.core.model.*;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 public class InternshipEditor extends Composite implements ResourceWidgetEditor<Internship>,
-                                                            ValueChangeHandler<KnowledgeLevel> {
-
-    public static final String multipleSkillSeparator = "\n";
-    public static final String dataSeparator = ":";
+                                                            ValueChangeHandler<KnowledgeLevel>, ClickHandler {
 
     @Override
     public Internship save() {
@@ -41,38 +39,40 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
         internship.setCompany(company);
 
         City city = new City();
-        String[] split = cityIdArea.getText().split(dataSeparator);
+        String[] split = cityIdArea.getText().split(WidgetConstants.dataSeparator);
         OntologyExtraInfo.fillWithOntologyExtraInfo(city, split[0], split[1]);
         internship.setCity(city);
 
-        // acquired & preferred GeneralSkills
-        internship.setAcquiredGeneralSkills(Arrays.asList(acquiredGeneralSkillsArea.getText().split(multipleSkillSeparator)));
-        internship.setPreferredGeneralSkills(Arrays.asList(preferredGeneralSkillsArea.getText().split(multipleSkillSeparator)));
+        // acquired & preferred generalSkills
+        internship.setAcquiredGeneralSkills(Arrays.asList(acquiredGeneralSkillsArea.getText().split(WidgetConstants.multipleSkillSeparator)));
+        internship.setPreferredGeneralSkills(Arrays.asList(preferredGeneralSkillsArea.getText().split(WidgetConstants.multipleSkillSeparator)));
 
          // acquired & preferred technicalSkills
-        List<String> rawAcquiredGeneralSkills = Arrays.asList(acquiredTechnicalSkillIdArea.getText().split(multipleSkillSeparator));
-        List<TechnicalSkill> technicalSkills = Lists.transform(rawAcquiredGeneralSkills, new Function<String, TechnicalSkill>() {
-            @Nullable
-            @Override
-            public TechnicalSkill apply(String input) {
-                String[] rawSkills = input.split(dataSeparator);
-                TechnicalSkill technicalSkill = new TechnicalSkill();
-                KnowledgeLevel level = KnowledgeLevel.valueOf(rawSkills[2]);
-                technicalSkill.setLevel(level);
-                return technicalSkill;
-            }
-        });
-        internship.setAcquiredGeneralSkills(rawAcquiredGeneralSkills);
-        internship.setPreferredGeneralSkills(Arrays.asList(preferredGeneralSkillsArea.getText().split(multipleSkillSeparator)));
+        List<String> rawAcquiredTechnicalSkills = Arrays.asList(acquiredTechnicalSkillIdArea.getText().split(WidgetConstants.multipleSkillSeparator));
+        List<TechnicalSkill> acquiredTechnicalSkills = Lists.transform(rawAcquiredTechnicalSkills, new WidgetConstants.TechnicalSkillFunction());
+        internship.setAcquiredTechnicalSkills(acquiredTechnicalSkills);
+
+        List<String> rawPreferredGeneralSkills = Arrays.asList(preferredTechnicalSkillIdArea.getText().split(WidgetConstants.multipleSkillSeparator));
+        List<TechnicalSkill> preferredTechnicalSkills = Lists.transform(rawPreferredGeneralSkills, new WidgetConstants.TechnicalSkillFunction());
+        internship.setPreferredTechnicalSkills(preferredTechnicalSkills);
+
+        // id and published date will be set on the backend
+
 
         return internship;
     }
 
     @Override
     public void edit(Internship resource) {
-        // not used for editing, just for saving
+        driver.edit(resource);
     }
 
+    @Override
+    public void onClick(ClickEvent event) {
+        Internship save = save();
+        System.out.println(save);
+        System.out.println(2);
+    }
 
 
     interface InternshipEditorUiBinder extends UiBinder<HTMLPanel, InternshipEditor> {
@@ -142,9 +142,20 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
     @Path("salaryValue")
     DoubleEditor salaryValue;
 
-    @UiField
-    @Ignore
-    ListBox currencyBox;
+    @UiField(provided = true)
+    @Path("salaryCurrency.name")
+    ValueListBox<String> currencyBox = new ValueListBox<String>(new Renderer<String>() {
+        @Override
+        public String render(String currency) {
+            return currency == null ? "" : currency;
+        }
+
+        @Override
+        public void render(String currency, Appendable appendable) throws IOException {
+            if (currency != null)
+                appendable.append(currency);
+        }
+    });
 
     @UiField(provided = true)
     @Ignore
@@ -155,9 +166,9 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
         }
 
         @Override
-        public void render(KnowledgeLevel category, Appendable appendable) throws IOException {
-            if (category != null)
-                appendable.append(category.toString());
+        public void render(KnowledgeLevel level, Appendable appendable) throws IOException {
+            if (level != null)
+                appendable.append(level.toString());
         }
     });
 
@@ -178,6 +189,8 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
     @UiField
     @Ignore
     TextArea acquiredTechnicalSkillIdArea;
+    @UiField
+    Button publishBtn;
 
 
     public InternshipEditor() {
@@ -202,9 +215,10 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
         preferredLevelList.addValueChangeHandler(this);
         acquiredLevelList.addValueChangeHandler(this);
 
-        currencyBox.addItem("RON");
-        currencyBox.addItem("USD");
-        currencyBox.addItem("EURO");
+        currencyBox.setValue("RON");
+        currencyBox.setAcceptableValues(Lists.newArrayList("RON", "EURO", "USD"));
+
+        publishBtn.addClickHandler(this);
     }
 
     @Override
@@ -222,8 +236,8 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
 
         String text = technicalSkillsArea.getText();
         if (!(text == null || text.isEmpty())) {
-            int lastIndexOf = text.lastIndexOf(dataSeparator);
-            technicalSkillsArea.setText(text.substring(0, lastIndexOf) + dataSeparator + level.toString());
+            int lastIndexOf = text.lastIndexOf(WidgetConstants.dataSeparator);
+            technicalSkillsArea.setText(text.substring(0, lastIndexOf) + WidgetConstants.dataSeparator + level.toString());
 
         }
     }

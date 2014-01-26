@@ -1942,6 +1942,27 @@
      -->
 
     <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;computer.programming_language"/>
+            <rdf:Description rdf:about="&freebase;computer.software"/>
+            <rdf:Description rdf:about="&freebase;education.educational_degree"/>
+            <rdf:Description rdf:about="&freebase;education.university"/>
+            <rdf:Description rdf:about="&freebase;finance.currency"/>
+            <rdf:Description rdf:about="&freebase;location.citytown"/>
+            <rdf:Description rdf:about="&freebase;time.event"/>
+            <rdf:Description rdf:about="&s;Corporation"/>
+            <rdf:Description rdf:about="&sesiSchema;Faculty"/>
+            <rdf:Description rdf:about="&sesiSchema;InternshipApplicationStatus"/>
+            <rdf:Description rdf:about="&sesiSchema;InternshipProgressStatus"/>
+            <rdf:Description rdf:about="&sesiSchema;KnowledgeLevel"/>
+            <rdf:Description rdf:about="&sesiSchema;Resource"/>
+            <rdf:Description rdf:about="&sesiSchema;SoftwareCategory"/>
+            <rdf:Description rdf:about="&sesiSchema;SoftwareSkill"/>
+            <rdf:Description rdf:about="&foaf;Person"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&sesiSchema;Advanced"/>

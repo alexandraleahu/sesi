@@ -19,7 +19,7 @@ public class OntologyExtraInfo extends BaseExtraInfo implements HasOntologyUri {
     public static <T extends OntologyExtraInfo> void fillWithOntologyExtraInfo(T instance, String name, String freebaseId) {
 
         instance.setName(name);
-        instance.setInfoUrl(Constants.FREEBASE_INFO + freebaseId);
+        instance.setInfoUrl(Constants.FREEBASE_INFO + freebaseId.substring(1));
         instance.setOntologyUri(Constants.FREEBASE_NS + freebaseId.substring(1).replace('/', '.'));
 
     }

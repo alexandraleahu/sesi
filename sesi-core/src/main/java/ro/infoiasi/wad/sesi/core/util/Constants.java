@@ -1,6 +1,8 @@
 package ro.infoiasi.wad.sesi.core.util;
 
-public class Constants {
+import java.io.Serializable;
+
+public class Constants implements Serializable {
 
     private Constants() {}
 
@@ -19,6 +21,7 @@ public class Constants {
     public static final String CURRENCY_CLASS = "finance.currency";
     public static final String SOFTWARE_SKILL_CLASS = "SoftwareSkill";
     public static final String PROGRAMMING_LANG_CLASS = "computer.programming_language";
+    public static final String PROGRAMMING_LANG_TITLE = "Programming Language";
     public static final String SOFTWARE_CLASS = "computer.software";
     public static final String UNIVERSITY_CLASS = "education.university";
     public static final String FACULTY_CLASS = "Faculty";

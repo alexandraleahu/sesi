@@ -4,7 +4,7 @@ public class ProgrammingLanguage extends OntologyExtraInfo {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("City{");
+        final StringBuilder sb = new StringBuilder("ProgrammingLanguage{");
         sb.append("extraInfoUrl='").append(getInfoUrl()).append('\'');
         sb.append(", name='").append(getName()).append('\'');
         sb.append(", ontologyUri='").append(getOntologyUri()).append('\'');

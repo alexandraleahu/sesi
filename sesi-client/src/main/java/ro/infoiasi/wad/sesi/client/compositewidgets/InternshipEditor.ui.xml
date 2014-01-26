@@ -22,7 +22,7 @@
 
             <b:Row>
                 <b:Column size="3">
-                    <b:TextBox ui:field="internshipNameBox" size="3"/>
+                    <b:TextBox ui:field="internshipNameBox" size="3" placeholder="Name of the internship"/>
                 </b:Column>
             </b:Row>
             <b:Row>
@@ -135,7 +135,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="3" >
-                    <c:IntegerEditor ui:field="openingsBox" size="3"/>
+                    <c:IntegerEditor ui:field="openingsBox" size="3" placeholder="Number of positions opened"/>
                 </b:Column>
             </b:Row>
 
@@ -146,12 +146,12 @@
             </b:Row>
             <b:Row>
                 <b:Column size="3">
-                    <c:DoubleEditor ui:field="salaryValue" size="3" />
+                    <c:DoubleEditor ui:field="salaryValue" size="3" placeholder="Compensation sum"/>
                 </b:Column>
             </b:Row>
             <b:Row>
                 <b:Column size="3">
-                    <b:ListBox ui:field="currencyBox" size="3"/>
+                    <b:ValueListBox ui:field="currencyBox" size="3"/>
                 </b:Column>
 
             </b:Row>
@@ -174,7 +174,11 @@
                 </b:Column>
 
             </b:Row>
-
+            <b:Row>
+                <b:Column size="5">
+                    <b:Button type="INFO" block="true" size="LARGE" ui:field="publishBtn">Publish</b:Button>
+                </b:Column>
+            </b:Row>
         </b:WellForm>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -8,7 +8,7 @@ public class City extends OntologyExtraInfo {
         sb.append("extraInfoUrl='").append(getInfoUrl()).append('\'');
         sb.append(", name='").append(getName()).append('\'');
         sb.append(", ontologyUri='").append(getOntologyUri()).append('\'');
-
+        sb.append('}');
         return sb.toString();
     }
 }

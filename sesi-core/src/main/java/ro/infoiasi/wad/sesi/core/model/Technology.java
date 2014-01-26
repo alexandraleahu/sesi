@@ -65,4 +65,20 @@ public class Technology extends OntologyExtraInfo implements HasDescription {
     public void setDevelopedBy(Person developedBy) {
         this.developedBy = developedBy;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Technology{");
+        sb.append("description='").append(description).append('\'');
+        sb.append(", repository='").append(repository).append('\'');
+        sb.append(", programmingLanguages=").append(programmingLanguages);
+        sb.append(", technologies=").append(technologies);
+        sb.append(", version='").append(version).append('\'');
+        sb.append(", developedBy=").append(developedBy);
+        sb.append(", extraInfoUrl='").append(getInfoUrl()).append('\'');
+        sb.append(", name='").append(getName()).append('\'');
+        sb.append(", ontologyUri='").append(getOntologyUri()).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
