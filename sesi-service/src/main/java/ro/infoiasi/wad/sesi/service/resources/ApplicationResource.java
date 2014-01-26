@@ -35,7 +35,7 @@ public class ApplicationResource {
     @GET
     @Path("/{id}")
     @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
-    public Response getAllApplications(@PathParam("id") String applicationId,
+    public Response getApplicationById(@PathParam("id") String applicationId,
                                        @QueryParam("fields") List<String> fields,
                                        @Context HttpHeaders headers) {
 

@@ -7,13 +7,10 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import ro.infoiasi.wad.sesi.client.rpc.CompaniesService;
 import ro.infoiasi.wad.sesi.core.model.*;
-import ro.infoiasi.wad.sesi.server.rpc.StudentServiceImpl;
+import ro.infoiasi.wad.sesi.server.rpc.CompaniesServiceImpl;
 import ro.infoiasi.wad.sesi.server.util.SparqlService;
-import ro.infoiasi.wad.sesi.core.model.City;
-import ro.infoiasi.wad.sesi.core.model.Currency;
-import ro.infoiasi.wad.sesi.core.model.Internship;
-import ro.infoiasi.wad.sesi.server.rpc.OntologyExtraInfoServiceImpl;
 
 import java.util.List;
 
@@ -24,7 +21,8 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
     @Override
     public Internship deserialize(OntModel m, String internshipId) {
         SparqlService sparqlService = new SparqlService();
-        StudentServiceImpl studentService = new StudentServiceImpl();
+        CompaniesService serviceImpl = new CompaniesServiceImpl();
+
         Internship internship = new Internship();
         internship.setId(internshipId);
 
@@ -34,6 +32,14 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
                 ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
 
         internship.setName(statement.getLiteral().getString());
+
+        // company
+        statement = m.getProperty(internshipResource,
+                ResourceFactory.createProperty(SESI_SCHEMA_NS, PUBLISHED_BY_PROP));
+
+        String companyId = statement.getObject().asResource().getLocalName();
+
+        internship.setCompany(serviceImpl.getCompanyById(companyId));
 
         // description
         statement = m.getProperty(internshipResource,

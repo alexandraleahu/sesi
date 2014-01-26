@@ -17,9 +17,9 @@ public class StudentsResource {
     @Path("/")
     @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
     public Response getAllStudents(@QueryParam("q") String searchParam,
-                                      @QueryParam("fields") List<String> fields,
-                                      @QueryParam("matching") String studentId,
-                                      @Context HttpHeaders headers) {
+                                   @QueryParam("fields") List<String> fields,
+                                   @QueryParam("matching") String studentId,
+                                   @Context HttpHeaders headers) {
 
         StudentsDao dao = new StudentsDao();
         try {
@@ -53,12 +53,30 @@ public class StudentsResource {
     }
 
     @GET
-         @Path("/{id}/applications")
-         @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
-         public Response getStudentApplications(@PathParam("id") String studentId,
-                                                   @QueryParam("fields") List<String> fields,
-                                                   @QueryParam("accepted") Boolean accepted,
-                                                   @Context HttpHeaders headers) {
+    @Path("/{id}/recommendedInternships")
+    @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
+    public Response getStudentRecommendedInternships(@PathParam("id") String studentId,
+                                                     @Context HttpHeaders headers) {
+
+        StudentsDao dao = new StudentsDao();
+        try {
+            List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
+            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
+
+            String recommendedInternships = dao.getStudentRecommendedInternships(studentId, returnTypes.getRdfFormat());
+            return Response.ok(recommendedInternships, returnTypes.getMediaType()).build();
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Could not retrieve recommended internships student with id " + studentId, e);
+        }
+    }
+
+    @GET
+    @Path("/{id}/applications")
+    @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
+    public Response getStudentApplications(@PathParam("id") String studentId,
+                                           @QueryParam("fields") List<String> fields,
+                                           @QueryParam("accepted") Boolean accepted,
+                                           @Context HttpHeaders headers) {
 
         StudentsDao dao = new StudentsDao();
         try {

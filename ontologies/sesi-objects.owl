@@ -87,6 +87,17 @@
     
 
 
+    <!-- http://rdf.freebase.com/ns/m.02zsyq -->
+
+    <owl:NamedIndividual rdf:about="&freebase;m.02zsyq">
+        <rdf:type rdf:resource="&freebase;finance.currency"/>
+        <rdfs:label>RON</rdfs:label>
+        <sesiSchema:name rdf:datatype="&xsd;string">EURO</sesiSchema:name>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/02zsyq</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://rdf.freebase.com/ns/m.07657k -->
 
     <owl:NamedIndividual rdf:about="&freebase;m.07657k">
@@ -154,13 +165,13 @@
         <sesiSchema:offersRelocation rdf:datatype="&xsd;boolean">false</sesiSchema:offersRelocation>
         <sesiSchema:sesiUrl>/internships/003</sesiSchema:sesiUrl>
         <sesiSchema:inCity rdf:resource="&freebase;m.01fhg3"/>
+        <sesiSchema:salaryCurrency rdf:resource="&freebase;m.02zsyq"/>
         <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;JavaEEBasic"/>
         <sesiSchema:acquiredTechnicalSkill rdf:resource="&sesi;JavaEEIntermediate"/>
         <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;JavaIntermediate"/>
         <sesiSchema:publishedByCompany rdf:resource="&sesi;virtualcomp"/>
         <sesiSchema:category rdf:resource="&sesiSchema;BusinessSoftware"/>
         <sesiSchema:category rdf:resource="&sesiSchema;WebDev"/>
-        <sesiSchema:salaryCurrency rdf:resource="http:/rdf.freebase.com/ns/m.02zsyq"/>
     </owl:NamedIndividual>
     
 
@@ -289,17 +300,6 @@
     
 
 
-    <!-- http:/rdf.freebase.com/ns/m.02zsyq -->
-
-    <owl:NamedIndividual rdf:about="http:/rdf.freebase.com/ns/m.02zsyq">
-        <rdf:type rdf:resource="&freebase;finance.currency"/>
-        <rdfs:label>RON</rdfs:label>
-        <sesiSchema:name rdf:datatype="&xsd;string">EURO</sesiSchema:name>
-        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/02zsyq</rdfs:seeAlso>
-    </owl:NamedIndividual>
-    
-
-
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -325,13 +325,6 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;JavaEEBasic"/>
-            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
             <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
         </owl:distinctMembers>
@@ -339,8 +332,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;JavaEEBasic"/>
+            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&freebase;m.02l6h"/>
-            <rdf:Description rdf:about="http:/rdf.freebase.com/ns/m.02zsyq"/>
+            <rdf:Description rdf:about="&freebase;m.02zsyq"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>

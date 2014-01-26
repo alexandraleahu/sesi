@@ -1,7 +1,6 @@
 package ro.infoiasi.wad.sesi.server.util;
 
 
-import com.google.common.collect.Lists;
 import com.hp.hpl.jena.query.*;
 import org.apache.jena.atlas.web.auth.ServiceAuthenticator;
 import ro.infoiasi.wad.sesi.core.model.*;
@@ -102,15 +101,7 @@ public class SparqlService {
     private static KnowledgeLevel getLevelFromUri(String leveluri) {
         String[] parts = leveluri.split("/");
         String level = parts[parts.length - 1];
-        if (level.equals("Intermediate"))
-            return KnowledgeLevel.Intermediate;
-        if (level.equals("Advanced"))
-            return KnowledgeLevel.Advanced;
-        if (level.equals("Basic"))
-            return KnowledgeLevel.Basic;
-        if (level.equals("Proficient"))
-            return KnowledgeLevel.Proficient;
-        return null;
+        return KnowledgeLevel.valueOf(level);
 
     }
 
@@ -165,12 +156,13 @@ public class SparqlService {
                 String name = solution.getLiteral("name").getString();
                 String description = solution.getLiteral("description").getString();
                 ProgrammingLanguage programmingLanguage = getProgrammingLanguage(solution.getResource("programmingLanguageUsed").getURI());
-
+                Technology usedTech = getTechnology(solution.getResource("technologyUsed").getURI());
+                technology.addTechnology(usedTech);
                 technology.setOntologyUri(technologyUri);
                 technology.setName(name);
                 technology.setDescription(description);
                 technology.setInfoUrl(seeAlso);
-                technology.setProgrammingLanguages(Lists.newArrayList(programmingLanguage.getName()));
+                technology.addProgrammingLanguage(programmingLanguage);
                 return technology;
             }
         } catch (Exception e) {
@@ -308,9 +300,8 @@ public class SparqlService {
                 ProgrammingLanguage programmingLanguage = getProgrammingLanguage(programmingLanguageUri);
                 StudentProject project = new StudentProject();
                 project.setName(name);
-                project.setLabel(label);
                 project.setDescription(description);
-                project.setProgrammingLanguage(programmingLanguage);
+                project.addProgrammingLanguage(programmingLanguage);
                 return project;
             }
         } catch (Exception e) {

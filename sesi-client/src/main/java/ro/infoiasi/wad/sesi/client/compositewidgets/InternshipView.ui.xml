@@ -3,128 +3,139 @@
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
              xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.compositewidgets'>
 
-    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources" />
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
     <g:HTMLPanel styleName="{resource.style.withScroll}">
-         <g:Label  ui:field="internshipTitleHeader" styleName="{resource.style.bigLabel}" addStyleNames="{resource.style.bigLabel})"/>
-         <b:Row>
-             <b:Column size="1">
-                 <b:Label type="INFO" text="Published by"/>
-             </b:Column>
 
-             <b:Column size="2">
-                 <g:Anchor ui:field="companyLink"/>
-             </b:Column>
-         </b:Row>
+        <b:Hero>
+            <g:Label ui:field="internshipTitleHeader" styleName="{resource.style.bigLabel}"/>
+        </b:Hero>
 
-        <b:Row>
-             <b:Column size="1">
-                 <b:Label type="INFO" text="Start date"/>
-             </b:Column>
+        <b:WellForm>
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Published by"/>
+                </b:Column>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Openings"/>
+                </b:Column>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Applications"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <g:Hyperlink ui:field="companyLink"/>
+                </b:Column>
+                <b:Column size="2">
+                    <c:IntegerView ui:field="openingsLabel"/>
+                </b:Column>
+                <b:Column size="2">
+                    <c:IntegerView ui:field="applicationsLabel"/>
+                </b:Column>
+            </b:Row>
 
-             <b:Column size="2">
-                 <g:Label ui:field="startDateLabel"/>
-             </b:Column>
+            <b:Row>
+                <b:Column size="3">
+                    <b:Label type="INFO" text="Start date"/>
+                </b:Column>
 
-            <b:Column size="1">
-                <b:Label type="INFO" text="Openings"/>
-            </b:Column>
 
-            <b:Column size="2">
-                <c:IntegerView ui:field="openingsLabel"/>
-            </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <g:Label ui:field="startDateLabel"/>
+                </b:Column>
+            </b:Row>
 
-         </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <b:Label type="INFO" text="End date"/>
+                </b:Column>
 
-        <b:Row>
-             <b:Column size="1">
-                 <b:Label type="INFO" text="End date"/>
-             </b:Column>
 
-             <b:Column size="2">
-                 <g:Label ui:field="endDateLabel"/>
-             </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <g:Label ui:field="endDateLabel"/>
+                </b:Column>
 
-            <b:Column size="1">
-                <b:Label type="INFO" text="Applications"/>
-            </b:Column>
 
-            <b:Column size="2">
-                <c:IntegerView ui:field="applicationsLabel"/>
-            </b:Column>
+            </b:Row>
 
-         </b:Row>
+            <b:Row>
+                <b:Column size="1">
+                    <b:Label type="INFO" text="Category"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <g:Label ui:field="categoryLabel"/>
+                </b:Column>
+            </b:Row>
 
-        <b:Row>
-            <b:Column size="1">
-                <b:Label type="INFO" text="Category"/>
-            </b:Column>
-
-            <b:Column size="2">
-                <g:Label ui:field="categoryLabel"/>
-            </b:Column>
-        </b:Row>
-
-        <b:Row>
-            <b:Column size="1">
-                <b:Label type="INFO" text="Description"/>
-            </b:Column>
-
-            <b:Column size="8">
-                <b:Hero>
+            <b:Row>
+                <b:Column size="1">
+                    <b:Label type="INFO" text="Description"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="4">
                     <g:Label ui:field="descriptionLabel"/>
-                </b:Hero>
-            </b:Column>
-        </b:Row>
+                </b:Column>
+            </b:Row>
 
-        <b:Row>
-            <b:Column size="2">
-                <b:Label type="INFO" text="Preferred general skills"/>
-            </b:Column>
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Preferred general skills"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="4">
+                    <g:Label ui:field="preferredGeneralSkillsLabel"/>
+                </b:Column>
+            </b:Row>
 
-            <b:Column size="4">
-                <g:Label ui:field="preferredGeneralSkillsLabel"/>
-            </b:Column>
-        </b:Row>
-
-        <b:Row>
-            <b:Column size="2">
-                <b:Label type="INFO" text="Acquired general skills"/>
-            </b:Column>
-
-            <b:Column size="4">
-                <g:Label ui:field="acquiredGeneralSkillsLabel"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="1">
-                <b:Label type="INFO" text="Salary"/>
-            </b:Column>
-
-            <b:Column size="1">
-                <c:DoubleView ui:field="salaryValueLabel"/>
-            </b:Column>
-
-            <b:Column size="1">
-                <g:Label ui:field="salaryCurrencyLabel"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="1">
-                <b:Label type="INFO" text="City"/>
-            </b:Column>
-
-            <b:Column size="1">
-                <g:Anchor ui:field="cityLink"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="2">
-                <b:Label type="INFO" text="Offers relocation"/>
-            </b:Column>
-
-            <b:Column size="1">
-                <g:Label ui:field="relocationLabel"/>
-            </b:Column>
-        </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Acquired general skills"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="4">
+                    <g:Label ui:field="acquiredGeneralSkillsLabel"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="1">
+                    <b:Label type="INFO" text="Salary"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <c:DoubleView ui:field="salaryValueLabel"/>
+                    <c:OntologyExtraInfoView ui:field="salaryCurrencyLabel"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="1">
+                    <b:Label type="INFO" text="City"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="1">
+                    <c:OntologyExtraInfoView ui:field="cityLink"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Offers relocation"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="1">
+                    <g:Label ui:field="relocationLabel"/>
+                </b:Column>
+            </b:Row>
+        </b:WellForm>
     </g:HTMLPanel>
 </ui:UiBinder>

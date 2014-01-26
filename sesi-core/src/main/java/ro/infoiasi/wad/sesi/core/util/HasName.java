@@ -1,6 +1,8 @@
 package ro.infoiasi.wad.sesi.core.util;
 
-public interface HasName {
+import java.io.Serializable;
+
+public interface HasName extends Serializable {
 
     String getName();
 }

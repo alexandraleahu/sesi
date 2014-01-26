@@ -35,7 +35,7 @@ h1 {
 .smallMarginLeft {
     margin-left: 20px;
 }
-.gwt-Anchor {
+.gwt-Anchor .gwt-Hyperlink {
     cursor: pointer;
 }
 
@@ -46,6 +46,9 @@ h1 {
     float: right;
 }
 
+.smallMarginRight {
+    margin-right: 5pt;
+}
 .withScroll {
 
     overflow: auto;
