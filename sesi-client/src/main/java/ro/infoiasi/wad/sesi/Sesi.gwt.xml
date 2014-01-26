@@ -39,6 +39,9 @@
     <servlet path="/TechnologyService" class="ro.infoiasi.wad.sesi.server.rpc.TechnologyServiceImpl"/>
     <servlet path="/TechnicalSkillsService" class="ro.infoiasi.wad.sesi.server.rpc.TechnicalSkillsServiceImpl"/>
     <servlet path="/StudentService" class="ro.infoiasi.wad.sesi.server.rpc.StudentServiceImpl"/>
+    <servlet path="/InternshipApplicationService"
+             class="ro.infoiasi.wad.sesi.server.rpc.InternshipApplicationServiceImpl"/>
+    <servlet path="/ProgressDetailsService" class="ro.infoiasi.wad.sesi.server.rpc.ProgressDetailsServiceImpl"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>
