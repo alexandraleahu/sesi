@@ -1,10 +1,8 @@
 package ro.infoiasi.wad.sesi.client;
 
-import ro.infoiasi.wad.sesi.client.authentication.users.User;
 import ro.infoiasi.wad.sesi.client.ui.ContentBuilder;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -31,7 +29,4 @@ public class Sesi_client_gwt implements EntryPoint {
         ContentBuilder.buildRootPanelContent();
     }
 
-    public User getCurrentUser() {
-        return User.UNKNOWN_USER;
-    }
 }
