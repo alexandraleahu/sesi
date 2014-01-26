@@ -4,8 +4,10 @@ import static ro.infoiasi.wad.sesi.server.util.ServiceConstants.SESI_BASE_URL;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -20,13 +22,36 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String RESOURCE_PATH = "login";
     
     @Override
-    public boolean login(String username, String password) {
-        return false;
+    public Boolean login(String username, String password) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL)
+                .path(RESOURCE_PATH);
+        Form form = new Form();
+        form.param("username", username);
+        form.param("password", password);
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                    .put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+        if (response.getStatus() == Status.FORBIDDEN.getStatusCode()) {
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public boolean authenticate(String username, String password, String type) {
-        return false;
+    public Boolean authenticate(String username, String password, String type) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL)
+                .path(RESOURCE_PATH);
+        Form form = new Form();
+        form.param("username", username);
+        form.param("password", password);
+        form.param("type", type);
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+        if (response.getStatus() == Status.FORBIDDEN.getStatusCode()) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -35,14 +60,11 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
         WebTarget target = client.target(SESI_BASE_URL)
                 .path(RESOURCE_PATH)
                 .path(username);
-
         Invocation invocation = target.request()
-                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType.TEXT_PLAIN)
                 .buildGet();
-
         Response response = invocation.invoke();
         client.close();
-
         if (response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
             return null;
         }

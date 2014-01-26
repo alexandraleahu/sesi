@@ -13,9 +13,9 @@ public interface LoginService {
         }
     }
 
-    boolean login(String username, String password);
+    Boolean login(String username, String password);
 
-    boolean authenticate(String username, String password, String type);
+    Boolean authenticate(String username, String password, String type);
     
     String getType(String username);
 
