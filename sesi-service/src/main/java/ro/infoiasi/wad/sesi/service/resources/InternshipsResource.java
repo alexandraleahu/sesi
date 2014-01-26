@@ -23,6 +23,7 @@ public class InternshipsResource {
     @Path("/")
     @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
     public Response getAllInternships(@QueryParam("category") Internship.Category category,
+                                      @QueryParam("latest") Boolean latest,
                                       @Context HttpHeaders headers) {
 
         InternshipsDao dao = new InternshipsDao();
@@ -31,7 +32,10 @@ public class InternshipsResource {
 
             MediaTypeConstants.MediaTypeAndRdfFormat returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
             String allInternships = null;
-            if (category != null) {
+            if (latest != null && latest == true) {
+                allInternships = dao.getLatestInternships((RDFFormat) returnTypes.getRdfFormat());
+            }
+            else if (category != null) {
                 allInternships = dao.getInternshipsByCategory(category, (RDFFormat) returnTypes.getRdfFormat());
             } else {
                 allInternships = dao.getAllInternships((RDFFormat) returnTypes.getRdfFormat());

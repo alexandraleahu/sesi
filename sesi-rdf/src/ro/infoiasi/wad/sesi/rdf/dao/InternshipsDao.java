@@ -149,6 +149,19 @@ public class InternshipsDao implements Dao {
         }
     }
 
+
+    public String getLatestInternships(RDFFormat format) throws Exception {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            GraphQuery graphQuery = con.graph("describe ?i where {?i rdf:type sesiSchema:Internship ; sesiSchema:publishedAt ?publishedAt . } order by DESC(?publishedAt)");
+
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
     public String getInternshipsByCategory(Internship.Category category, RDFFormat format) throws Exception {
 
         ReasoningConnection con = connectionPool.getConnection();
