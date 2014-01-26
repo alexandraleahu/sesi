@@ -17,9 +17,12 @@ public class Tab extends VerticalPanel {
 
         mainPanel.setCellWidth(leftPanel, "75%");
         mainPanel.setCellWidth(rightPanel, "25%");
-        
-        add(menuPanel);
+
         setCellHeight(menuPanel, "5 em");
+        menuPanel.setStyleName("menuPanel");
+        menuPanel.setSpacing(5);
+        add(menuPanel);
+
         add(mainPanel);
     }
 }

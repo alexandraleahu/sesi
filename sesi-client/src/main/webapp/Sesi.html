@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!-- The DOCTYPE declaration above will set the     -->
 <!-- browser's rendering engine into                -->
 <!-- "Standards Mode". Replacing this declaration   -->
@@ -11,26 +11,19 @@
     <!--                                                               -->
     <!-- Consider inlining CSS to reduce the number of requested files -->
     <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="Sesi_client_gwt.css">
 
-      <title>Sesi</title>
-      <!-- before your module(*.nocache.js) loading  -->
-      <!--[if IE 7]>
-      <link rel="stylesheet" href="css/font-awesome-ie7.css">
-
-      <![endif]-->
-      <!--                                           -->
-      <!-- This script loads your compiled module.   -->
-      <!-- If you add any GWT meta tags, they must   -->
-      <!-- be added before this line.                -->
-      <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-      <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
-      <![endif]-->
-      <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.css" />
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
-      <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
-
-    <script type="text/javascript" language="javascript" src="sesi/sesi.nocache.js"></script>
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Sesi</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="sesi_client_gwt/sesi_client_gwt.nocache.js"></script>
   </head>
 
   <!--                                           -->
@@ -41,18 +34,18 @@
   <body>
 
     <!-- OPTIONAL: include this if you want history support -->
-    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' ></iframe>
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
     
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
     <noscript>
-      <div id="nojs">
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
         Your web browser must have JavaScript enabled
         in order for this application to display correctly.
       </div>
     </noscript>
 
+    <div id="mainPanel">
+    </div>
 
   </body>
-
-
 </html>
