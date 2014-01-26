@@ -67,16 +67,6 @@ h1 {
   height: 3px;
 }
 
-.gwt-DecoratedTabBar .tabTopLeft {
-  background: url(images/circles.png) no-repeat 0px 0px;
-  -background: url(images/circles_ie6.png) no-repeat 0px 0px;
-}
-
-.gwt-DecoratedTabBar .tabTopRight {
-  background: url(images/circles.png) no-repeat -3px 0px;
-  -background: url(images/circles_ie6.png) no-repeat -3px 0px;
-}
-
 .gwt-DecoratedTabBar .tabMiddleLeft,
 .gwt-DecoratedTabBar .tabMiddleRight {
   width: 3px;
@@ -102,16 +92,6 @@ h1 {
 
 .gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabTopCenter {
   background:#fff;
-}
-
-.gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabTopLeft {
-  background: url(images/circles.png) no-repeat -6px 0px;
-  -background: url(images/circles_ie6.png) no-repeat -6px 0px;
-}
-
-.gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabTopRight {
-  background: url(images/circles.png) no-repeat -9px 0px;
-  -background: url(images/circles_ie6.png) no-repeat -9px 0px;
 }
 
 .gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabMiddleLeft,
@@ -150,4 +130,9 @@ html>body .gwt-DecoratedTabBar {
   border-width: 0px 1px 1px;
   overflow: hidden;
   padding: 6px;
+}
+
+.gwt-TabLayoutPanel {
+  min-height: 500px;
+  height: auto;
 }

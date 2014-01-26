@@ -11,6 +11,7 @@ public class SesiTabPanel extends TabLayoutPanel {
     public SesiTabPanel() {
         // Create a tab panel
         super(2.5, Unit.EM);
+        setAnimationDuration(500);
         getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 
         for (String tab : tabTitles) {

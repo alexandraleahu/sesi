@@ -41,6 +41,12 @@ public class UsersTable {
         return null;
     }
     
+    public String getUserType (String user) {
+        String query = "SELECT TYPE FROM USERS WHERE USER='" + user + "'";
+        String type = executeSelectQuery(query);
+        return type;
+    }
+    
     private boolean exists(DBUser user) {
         String query = "SELECT COUNT(*) FROM USERS WHERE USER='" + user.getUser() + "'";
         String result = executeSelectQuery(query);
@@ -50,16 +56,16 @@ public class UsersTable {
         return false;
     }
     
-//    public static void main(String args[]) {
-//        User user = new User("userrr", "pas", "typ");
-//        UsersTable users = new UsersTable();
-////        users.createTable();
-//        System.out.println(users.addUser(user));
-//        System.out.println(users.login("userrrR", "pas"));
-//        System.out.println(users.login("userrr", "pas"));
-//        System.out.println(users.login("userrr", "pasS"));
-//        System.out.println(users.login("userrrR", "pasS"));
-//    }
+    public static void main(String args[]) {
+        DBUser user = new DBUser("userrr", "pas", "typ");
+        UsersTable users = new UsersTable();
+        users.createTable();
+        System.out.println(users.addUser(user));
+        System.out.println(users.login("userrrR", "pas"));
+        System.out.println(users.login("userrr", "pas"));
+        System.out.println(users.login("userrr", "pasS"));
+        System.out.println(users.login("userrrR", "pasS"));
+    }
     
     private synchronized String executeSelectQuery(String query) {
         Connection connection = null;
@@ -103,10 +109,9 @@ public class UsersTable {
           stmt.executeUpdate(sql);
           stmt.close();
           connection.close();
+        } catch ( SQLException e) {
         } catch ( Exception e ) {
           System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
-
     }
-
 }
