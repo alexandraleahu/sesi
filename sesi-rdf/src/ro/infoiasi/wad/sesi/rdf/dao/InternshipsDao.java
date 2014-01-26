@@ -47,6 +47,27 @@ public class InternshipsDao implements Dao {
         }
     }
 
+    //describe ?internship where {?internship rdf:type sesiSchema:Internship . ?internship sesiSchema:id ?id . FILTER(?id IN ("003"^^xsd:string, "002"^^xsd:string)) . }
+    public String getInternshipByIds(List<String> internshipIds, RDFFormat format) throws Exception {
+
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            StringBuilder idsParam = new StringBuilder();
+            for (String internshipID : internshipIds) {
+                idsParam.append('"').append(internshipID).append('"').append("^^xsd:string, ");
+            }
+            String ids = idsParam.substring(0, idsParam.toString().lastIndexOf(", "));
+            StringBuilder query = new StringBuilder()
+                    .append("describe ?i where {?i rdf:type sesiSchema:Internship . ?i sesiSchema:id ?id . FILTER(?id IN (").append(ids).append(")) . }");
+
+            GraphQuery graphQuery = con.graph(query.toString());
+
+            return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
     public String getInternshipFieldsById(String id, List<String> fields, TupleQueryResultFormat format) throws Exception {
         ReasoningConnection con = connectionPool.getConnection();
         try {

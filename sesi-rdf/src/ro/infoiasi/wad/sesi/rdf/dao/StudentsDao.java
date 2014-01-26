@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.rdf.dao;
 
+import com.complexible.common.iterations.Iteration;
 import com.complexible.common.rdf.model.StardogValueFactory;
 import com.complexible.common.rdf.model.Values;
 import com.complexible.stardog.StardogException;
@@ -7,12 +8,19 @@ import com.complexible.stardog.api.Adder;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.SelectQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
+import com.complexible.stardog.api.search.SearchConnection;
+import com.complexible.stardog.api.search.SearchResult;
+import com.complexible.stardog.api.search.SearchResults;
+import com.complexible.stardog.api.search.Searcher;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
+import org.openrdf.query.BindingSet;
+import org.openrdf.query.QueryEvaluationException;
+import org.openrdf.query.TupleQueryResult;
 import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.*;
@@ -67,6 +75,75 @@ public class StudentsDao implements Dao {
         } finally {
             connectionPool.releaseConnection(con);
         }
+    }
+
+
+    public String getStudentRecommendedInternships(String studentId, RDFFormat format) throws Exception {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            InternshipsDao internshipsDao = new InternshipsDao();
+            List<String> internshipIds = Lists.newArrayList();
+            //first get the student's skills
+            List<String> technicalSkillsUri = getStudentTechnicalSkills(con, studentId);
+            for (String skill : technicalSkillsUri) {
+                SearchConnection aSearchConn = con.as(SearchConnection.class);
+                // then we'll construct a searcher
+                Searcher aSearch = aSearchConn.search().limit(5).query(skill);
+                SearchResults aSearchResults = aSearch.search();
+                Iteration<SearchResult, QueryEvaluationException> resultIt = aSearchResults.iteration();
+
+                while (resultIt.hasNext()) {
+                    SearchResult aHit = resultIt.next();
+                    String[] v = aHit.toString().split("/");
+                    internshipIds.add(v[v.length - 1]);
+                }
+
+                // don't forget to close your iteration!
+                resultIt.close();
+            }
+            return internshipsDao.getInternshipByIds(internshipIds, format);
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
+    private List<String> getStudentTechnicalSkills(ReasoningConnection con, String studentId) throws StardogException {
+        StringBuilder sb = new StringBuilder()
+                .append("select ?skills ")
+                .append("where {")
+                .append("[] rdf:type sesiSchema:Student ; ")
+                .append("sesiSchema:id ?id ; ")
+                .append("sesiSchema:technicalSkill ?skills . ")
+                .append("}");
+
+        SelectQuery selectQuery = con.select(sb.toString());
+        selectQuery.parameter("id", studentId);
+        List<String> technicalSkills = Lists.newArrayList();
+        try {
+            TupleQueryResult tupleQueryResult = selectQuery.execute();
+            while (tupleQueryResult.hasNext()) {
+                BindingSet set = tupleQueryResult.next();
+                String[] result = set.getValue("skills").stringValue().split("/");
+                String skill = result[result.length - 1];
+                if (skill.indexOf("Intermediate") > 0) {
+                    technicalSkills.add(skill.substring(0, skill.indexOf("Intermediate")));
+                }
+                if (skill.indexOf("Basic") > 0) {
+                    technicalSkills.add(skill.substring(0, skill.indexOf("Basic")));
+                }
+                if (skill.indexOf("Advanced") > 0) {
+                    technicalSkills.add(skill.substring(0, skill.indexOf("Advanced")));
+                }
+                if (skill.indexOf("Proficient") > 0) {
+                    technicalSkills.add(skill.substring(0, skill.indexOf("Basic")));
+                }
+                technicalSkills.add(skill);
+            }
+            tupleQueryResult.close();
+        } catch (QueryEvaluationException e) {
+            e.printStackTrace();
+        }
+        return technicalSkills;
     }
 
     public String getStudentApplicationsCount(String id, TupleQueryResultFormat format) throws Exception {
@@ -135,8 +212,8 @@ public class StudentsDao implements Dao {
             adder.statement(newStudent, description, Values.literal(student.getDescription(), StardogValueFactory.XSD.STRING));
 
             //add projects
-            for (StudentProject studentProject: student.getProjects()) {
-                URI projectResource = Values.uri(SESI_OBJECTS_NS,  RandomStringUtils.randomAlphanumeric(ID_LENGTH));
+            for (StudentProject studentProject : student.getProjects()) {
+                URI projectResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
                 adder.statement(projectResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                 adder.statement(projectResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDENT_PROJECT_CLASS));
                 adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getLabel()));
@@ -211,8 +288,8 @@ public class StudentsDao implements Dao {
                 adder.statement(newStudent, generalSkillProp, Values.literal(generalSkill));
             }
             //add technical skills
-            if(student.getTechnicalSkills() != null) {
-                URI technicalSkillsProp =  Values.uri(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP);
+            if (student.getTechnicalSkills() != null) {
+                URI technicalSkillsProp = Values.uri(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP);
                 addTechnicalSkills(student.getTechnicalSkills(), newStudent, adder, technicalSkillsProp);
             }
             con.commit();
@@ -277,15 +354,7 @@ public class StudentsDao implements Dao {
         StudentsDao dao = new StudentsDao();
 
         try {
-//            System.out.println(dao.getStudent("ionpopescu", RDFFormat.TURTLE));
-
-            System.out.println("applications " + dao.getAllStudentApplications("ionpopescu", RDFFormat.JSONLD));
-            System.out.println("\n applications count " + dao.getStudentApplicationsCount("ionpopescu", TupleQueryResultFormat.JSON));
-            //add student
-//            Student student = newStudent("Gigel");
-//            dao.createStudent(student);
-//            System.out.println("\n am inserat + " + student.getId());
-//            System.out.println(dao.getStudent(student.getId(), RDFFormat.TURTLE));
+            System.out.println(dao.getStudentRecommendedInternships("ionpopescu", RDFFormat.JSONLD));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -293,7 +362,7 @@ public class StudentsDao implements Dao {
 
     }
 
-    static Student newStudent(String name)  {
+    static Student newStudent(String name) {
         Student student = new Student();
         student.setId(RandomStringUtils.randomAlphanumeric(4));
         student.setName(name);
@@ -363,4 +432,5 @@ public class StudentsDao implements Dao {
     public String getOntClassName() {
         return STUDENT_CLASS;
     }
+
 }

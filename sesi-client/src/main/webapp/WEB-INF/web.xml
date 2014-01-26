@@ -30,6 +30,14 @@
         <servlet-name>ro.infoiasi.wad.sesi.Sesi StudentService</servlet-name>
         <servlet-class>ro.infoiasi.wad.sesi.server.rpc.StudentServiceImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipApplicationService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.InternshipApplicationServiceImpl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi ProgressDetailsService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.ProgressDetailsServiceImpl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InternshipsServlet</servlet-name>
         <url-pattern>/sesi/InternshipsService</url-pattern>
@@ -54,6 +62,14 @@
     <servlet-mapping>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi StudentService</servlet-name>
         <url-pattern>/sesi/StudentService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipApplicationService</servlet-name>
+        <url-pattern>/sesi/InternshipApplicationService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi ProgressDetailsService</servlet-name>
+        <url-pattern>/sesi/ProgressDetailsService</url-pattern>
     </servlet-mapping>
 
 
