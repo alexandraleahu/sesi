@@ -1,6 +1,7 @@
 package ro.infoiasi.wad.sesi.client.authentication;
 
 import ro.infoiasi.wad.sesi.client.rpc.LoginService;
+import ro.infoiasi.wad.sesi.client.rpc.LoginServiceAsync;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -8,7 +9,8 @@ public class LoginServiceWrapper {
 
     public static boolean login(String username, String password) {
         LoginCallback lc = new LoginCallback();
-        LoginService.App.getInstance().login(username, password, lc);
+        LoginServiceAsync lsa = LoginService.App.getInstance();
+        lsa.login(username, password, lc);
         while(!lc.set);
         return lc.value;
     }
