@@ -110,9 +110,15 @@ public class UserPanel extends HorizontalPanel {
                 public void onClick(ClickEvent arg0) {
                     String u = user.getText();
                     String p = pass.getText();
-                    LoginPopup.this.hide();
+
+                    if(u.length() > 0 && p.length() > 0) {
+                        //if ()
+                        LoginPopup.this.hide();
+                        UserPanel.this.setLogged(true);
+                        
+                    }
+                    
                     // if (login ok)
-                    UserPanel.this.setLogged(true);
                 }
             }
         }
