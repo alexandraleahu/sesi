@@ -15,10 +15,10 @@
                 <b:Column size="2">
                     <b:Label type="INFO" text="Published by"/>
                 </b:Column>
-                <b:Column size="2">
+                <b:Column size="1">
                     <b:Label type="INFO" text="Openings"/>
                 </b:Column>
-                <b:Column size="2">
+                <b:Column size="1">
                     <b:Label type="INFO" text="Applications"/>
                 </b:Column>
             </b:Row>
@@ -26,10 +26,10 @@
                 <b:Column size="2">
                     <g:Hyperlink ui:field="companyLink"/>
                 </b:Column>
-                <b:Column size="2">
+                <b:Column size="1">
                     <c:IntegerView ui:field="openingsLabel"/>
                 </b:Column>
-                <b:Column size="2">
+                <b:Column size="1">
                     <c:IntegerView ui:field="applicationsLabel"/>
                 </b:Column>
             </b:Row>
@@ -103,6 +103,27 @@
             <b:Row>
                 <b:Column size="4">
                     <g:Label ui:field="acquiredGeneralSkillsLabel"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Preferred technical skills"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="8">
+                    <c:TechnicalSkillView ui:field="preferredTechnicalSkillsTable"/>
+                </b:Column>
+            </b:Row>
+
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Acquired technical skills"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="4">
+                    <c:TechnicalSkillView ui:field="acquiredTechnicalSkillsTable"/>
                 </b:Column>
             </b:Row>
             <b:Row>

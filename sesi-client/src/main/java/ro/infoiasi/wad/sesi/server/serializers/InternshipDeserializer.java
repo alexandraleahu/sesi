@@ -148,7 +148,8 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
         while (stmtIterator.hasNext()) {
             Statement nextStatement = stmtIterator.nextStatement();
             TechnicalSkill acquiredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
-            acquiredTechnicalSkills.add(acquiredSkill);
+            if (acquiredSkill != null)
+                acquiredTechnicalSkills.add(acquiredSkill);
         }
         internship.setAcquiredTechnicalSkills(acquiredTechnicalSkills);
 
@@ -158,8 +159,9 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
         stmtIterator = internshipResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, PREFERRED_TECHNICAL_PROP));
         while (stmtIterator.hasNext()) {
             Statement nextStatement = stmtIterator.nextStatement();
-            TechnicalSkill acquiredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
-            prefferedTechnicalSkills.add(acquiredSkill);
+            TechnicalSkill preferredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
+            if (preferredSkill != null)
+                prefferedTechnicalSkills.add(preferredSkill);
         }
         internship.setPreferredTechnicalSkills(prefferedTechnicalSkills);
 

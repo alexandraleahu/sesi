@@ -2,6 +2,7 @@ package ro.infoiasi.wad.sesi.server.util;
 
 
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.rdf.model.Resource;
 import org.apache.jena.atlas.web.auth.ServiceAuthenticator;
 import ro.infoiasi.wad.sesi.core.model.*;
 
@@ -42,8 +43,9 @@ public class SparqlService {
         builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
                 .append("select ?technologyUsed ?level where { ")
-                .append("<").append(uri).append(">").append(" sesiSchema:technologyUsed ?technologyUsed . ")
-                .append("<").append(uri).append(">").append(" sesiSchema:level ?level . }");
+                .append("<").append(uri).append(">").append(" ?prop ?technologyUsed . ")
+                .append("<").append(uri).append(">").append(" sesiSchema:level ?level . ")
+                .append("filter (?prop = sesiSchema:technologyUsed || ?prop = sesiSchema:programmingLanguageUsed) }");
         Query query = QueryFactory.create(builder.toString());
         QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
 
@@ -139,11 +141,12 @@ public class SparqlService {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
-                .append("select ?name ?description ?programmingLanguageUsed ?seeAlso where { ")
+                .append("select ?name ?description ?programmingLanguageUsed ?technologyUsed ?seeAlso where { ")
                 .append("<").append(technologyUri).append(">").append(" sesiSchema:name ?name . ")
                 .append("<").append(technologyUri).append(">").append(" sesiSchema:description ?description . ")
-                .append("<").append(technologyUri).append(">").append(" sesiSchema:programmingLanguageUsed ?programmingLanguageUsed . ")
-                .append("<").append(technologyUri).append(">").append(" rdfs:seeAlso ?seeAlso . }");
+                .append("<").append(technologyUri).append(">").append(" rdfs:seeAlso ?seeAlso . ")
+                .append(" optional {<").append(technologyUri).append(">").append(" sesiSchema:programmingLanguageUsed ?programmingLanguageUsed . ")
+                .append("} optional {<").append(technologyUri).append(">").append(" sesiSchema:technologyUsed ?technologyUsed . } }");
         Query query = QueryFactory.create(builder.toString());
         QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
 
@@ -155,14 +158,23 @@ public class SparqlService {
                 String seeAlso = solution.getLiteral("seeAlso").getString();
                 String name = solution.getLiteral("name").getString();
                 String description = solution.getLiteral("description").getString();
-                ProgrammingLanguage programmingLanguage = getProgrammingLanguage(solution.getResource("programmingLanguageUsed").getURI());
-                Technology usedTech = getTechnology(solution.getResource("technologyUsed").getURI());
-                technology.addTechnology(usedTech);
+                Resource programmingLanguageResource = solution.getResource("programmingLanguageUsed");
+                if (programmingLanguageResource != null) {
+
+                    ProgrammingLanguage programmingLanguage = getProgrammingLanguage(programmingLanguageResource.getURI());
+                    technology.addProgrammingLanguage(programmingLanguage);
+                }
+                Resource technologyUsed = solution.getResource("technologyUsed");
+                if (technologyUsed != null) {
+
+                    Technology usedTech = getTechnology(technologyUsed.getURI());
+                    technology.addTechnology(usedTech);
+                }
                 technology.setOntologyUri(technologyUri);
                 technology.setName(name);
                 technology.setDescription(description);
                 technology.setInfoUrl(seeAlso);
-                technology.addProgrammingLanguage(programmingLanguage);
+
                 return technology;
             }
         } catch (Exception e) {

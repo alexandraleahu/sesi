@@ -293,15 +293,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
             <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
             <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>

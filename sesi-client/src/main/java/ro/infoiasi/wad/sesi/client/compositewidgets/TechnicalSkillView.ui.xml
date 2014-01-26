@@ -2,7 +2,8 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
 
-    <b:DataGrid ui:field="skillsTable">
+    <g:SimpleLayoutPanel>
+            <b:CellTable ui:field="skillsTable" />
+    </g:SimpleLayoutPanel>
 
-    </b:DataGrid>
 </ui:UiBinder>
