@@ -26,4 +26,5 @@ public interface CompaniesService extends RemoteService {
     Company getCompanyById(String companyId);
 
     List<InternshipApplication> getCompanyApplications(String companyApplications);
+    public static final String RESOURCE_PATH = "companies";
 }
