@@ -446,7 +446,7 @@ public class InternshipsDao implements Dao {
                 adder.statement(technologyUri, RDFS.SEEALSO, Values.literal(programmingLanguage.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
                 languageOrSoftwareUri = Values.uri(SESI_SCHEMA_NS, PROGRAMMING_USED_PROP);
-                sb.append(programmingLanguage.getName().replace(' ', '_'));
+                sb.append(programmingLanguage.getName().replaceAll("[\\s,-]", "_"));
 
             } else {
                 Technology software = technicalSkill.getTechnology();
@@ -457,10 +457,10 @@ public class InternshipsDao implements Dao {
                 adder.statement(technologyUri, RDFS.SEEALSO, Values.literal(software.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
                 languageOrSoftwareUri = Values.uri(SESI_SCHEMA_NS, TECHNOLOGY_USED_PROP);
-                sb.append(software.getName().replace(' ', '_'));
+                sb.append(software.getName().replaceAll("[\\s,-]", "_"));
 
             }
-            sb.append(technicalSkill.getLevel().toString());
+            sb.append("-").append(technicalSkill.getLevel().toString());
 
             URI softwareSkillResource = Values.uri(SESI_OBJECTS_NS, sb.toString());
             URI level = Values.uri(SESI_SCHEMA_NS, technicalSkill.getLevel().toString());
@@ -483,7 +483,6 @@ public class InternshipsDao implements Dao {
 
         InternshipsDao dao = new InternshipsDao();
         System.out.println(dao.getInternshipFieldsById("003", Lists.newArrayList("salaryCurrency"), TupleQueryResultFormat.JSON));
-
 //        System.out.println(dao.createInternship(createNewInternship()));
 //        System.out.println(dao.getInternshipApplicationsCount("003", TupleQueryResultFormat.JSON));
 //        System.out.println("WebDev\n" + dao.getInternshipsByCategory(Internship.Category.WebDev, RDFFormat.TURTLE));

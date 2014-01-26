@@ -1,5 +1,7 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
+import com.complexible.stardog.StardogException;
+import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Internship;
@@ -34,8 +36,7 @@ public class InternshipsResource {
             String allInternships = null;
             if (latest != null && latest == true) {
                 allInternships = dao.getLatestInternships((RDFFormat) returnTypes.getRdfFormat());
-            }
-            else if (category != null) {
+            } else if (category != null) {
                 allInternships = dao.getInternshipsByCategory(category, (RDFFormat) returnTypes.getRdfFormat());
             } else {
                 allInternships = dao.getAllInternships((RDFFormat) returnTypes.getRdfFormat());
@@ -142,5 +143,35 @@ public class InternshipsResource {
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internship applications for internship with id" + internshipId, e);
         }
+    }
+
+
+//    @POST
+//    @Path("/")
+//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    public Response createInternship(@Context HttpHeaders headers, Internship internship) {
+//        InternshipsDao dao = new InternshipsDao();
+//        internship.setId(RandomStringUtils.randomAlphanumeric(4));
+//        try {
+//            String uri = dao.createInternship(internship);
+//            System.out.println("i got here");
+//            List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
+//            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
+//            return Response.ok(uri, returnTypes.getMediaType()).build();
+//        } catch (StardogException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response applyToInternship(@PathParam("id") String studentId,
+                                      @FormParam("internshipId") String internshipId) {
+
+        return null;
     }
 }

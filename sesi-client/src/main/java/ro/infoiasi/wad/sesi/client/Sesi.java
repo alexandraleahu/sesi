@@ -35,6 +35,7 @@ public class Sesi implements EntryPoint {
                 InternshipView internshipView = new InternshipView();
                 RootLayoutPanel.get().add(internshipView);
                 internshipView.edit(internship);
+
             }
         });
 

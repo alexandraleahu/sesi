@@ -3,12 +3,15 @@ package ro.infoiasi.wad.sesi.server.serializers;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.datatypes.xsd.XSDDateTime;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import ro.infoiasi.wad.sesi.client.rpc.CompaniesService;
+import com.hp.hpl.jena.rdf.model.Resource;
+import ro.infoiasi.wad.sesi.client.rpc.CompaniesService;
 import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.server.rpc.CompaniesServiceImpl;
 import ro.infoiasi.wad.sesi.server.rpc.CompaniesServiceImpl;
 import ro.infoiasi.wad.sesi.server.util.SparqlService;
 
@@ -49,7 +52,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
 
         // start date
         statement = m.getProperty(internshipResource,
-                    ResourceFactory.createProperty(FREEBASE_NS, START_DATE_PROP));
+                ResourceFactory.createProperty(FREEBASE_NS, START_DATE_PROP));
 
         XSDDateTime startDate = (XSDDateTime) (statement.getLiteral().getValue());
         internship.setStartDate(startDate.asCalendar().getTime());
@@ -63,7 +66,7 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
 
         // published at
         statement = m.getProperty(internshipResource,
-                    ResourceFactory.createProperty(SESI_SCHEMA_NS, PUBLISHED_AT_PROP));
+                ResourceFactory.createProperty(SESI_SCHEMA_NS, PUBLISHED_AT_PROP));
 
         XSDDateTime publishedAt = (XSDDateTime) (statement.getLiteral().getValue());
         internship.setPublishedAt(publishedAt.asCalendar().getTime());
@@ -145,7 +148,8 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
         while (stmtIterator.hasNext()) {
             Statement nextStatement = stmtIterator.nextStatement();
             TechnicalSkill acquiredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
-            acquiredTechnicalSkills.add(acquiredSkill);
+            if (acquiredSkill != null)
+                acquiredTechnicalSkills.add(acquiredSkill);
         }
         internship.setAcquiredTechnicalSkills(acquiredTechnicalSkills);
 
@@ -155,8 +159,9 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
         stmtIterator = internshipResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, PREFERRED_TECHNICAL_PROP));
         while (stmtIterator.hasNext()) {
             Statement nextStatement = stmtIterator.nextStatement();
-            TechnicalSkill acquiredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
-            prefferedTechnicalSkills.add(acquiredSkill);
+            TechnicalSkill preferredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
+            if (preferredSkill != null)
+                prefferedTechnicalSkills.add(preferredSkill);
         }
         internship.setPreferredTechnicalSkills(prefferedTechnicalSkills);
 
@@ -164,4 +169,16 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
     }
 
 
+    public List<Internship> deserialize(OntModel m) {
+        List<Internship> internships = Lists.newArrayList();
+
+        ResIterator resIterator = m.listResourcesWithProperty(ResourceFactory.createProperty(SESI_SCHEMA_NS, ID_PROP));
+        while (resIterator.hasNext()) {
+            Resource resource = resIterator.nextResource();
+            System.out.println(resource.getURI());
+            String[]parts = resource.getURI().split("/");
+            internships.add(deserialize(m, parts[parts.length - 1]));
+        }
+        return internships;
+    }
 }

@@ -40,23 +40,6 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
-    // Annotation properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/acquiredGeneralSkills -->
-
-    <owl:AnnotationProperty rdf:about="&sesiSchema;acquiredGeneralSkills"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
     // Individuals
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -137,9 +120,9 @@
 
     <owl:NamedIndividual rdf:about="&freebase;m.0bs6x">
         <rdf:type rdf:resource="&freebase;computer.software"/>
-        <rdfs:label>JavaEE</rdfs:label>
+        <rdfs:label>Java Platform, Enterprise Edition</rdfs:label>
         <sesiSchema:description rdf:datatype="&xsd;string">A Java platform for building strong web applications</sesiSchema:description>
-        <sesiSchema:name rdf:datatype="&xsd;string">Java Enterprise Edition</sesiSchema:name>
+        <sesiSchema:name rdf:datatype="&xsd;string">Java Platform, Enterprise Edition</sesiSchema:name>
         <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.freebase.com/m/0bs6x</rdfs:seeAlso>
         <sesiSchema:programmingLanguageUsed rdf:resource="&freebase;m.07sbkfb"/>
     </owl:NamedIndividual>
@@ -157,7 +140,6 @@
         <freebase:time.event.end_date rdf:datatype="&xsd;dateTime">2014-09-14T18:00:00</freebase:time.event.end_date>
         <sesiSchema:openingsCount rdf:datatype="&xsd;nonNegativeInteger">5</sesiSchema:openingsCount>
         <sesiSchema:salaryValue rdf:datatype="&xsd;decimal">500</sesiSchema:salaryValue>
-        <sesiSchema:acquiredGeneralSkills rdf:datatype="&xsd;string">Agile Methodology</sesiSchema:acquiredGeneralSkills>
         <sesiSchema:acquiredGeneralSkill rdf:datatype="&xsd;string">Better estimation</sesiSchema:acquiredGeneralSkill>
         <sesiSchema:name rdf:datatype="&xsd;string">Java Internship for Web</sesiSchema:name>
         <sesiSchema:preferredGeneralSkill rdf:datatype="&xsd;string">Team player</sesiSchema:preferredGeneralSkill>
@@ -166,9 +148,9 @@
         <sesiSchema:sesiUrl>/internships/003</sesiSchema:sesiUrl>
         <sesiSchema:inCity rdf:resource="&freebase;m.01fhg3"/>
         <sesiSchema:salaryCurrency rdf:resource="&freebase;m.02zsyq"/>
-        <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;JavaEEBasic"/>
-        <sesiSchema:acquiredTechnicalSkill rdf:resource="&sesi;JavaEEIntermediate"/>
-        <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;JavaIntermediate"/>
+        <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;Java-Intermediate"/>
+        <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+        <sesiSchema:acquiredTechnicalSkill rdf:resource="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         <sesiSchema:publishedByCompany rdf:resource="&sesi;virtualcomp"/>
         <sesiSchema:category rdf:resource="&sesiSchema;BusinessSoftware"/>
         <sesiSchema:category rdf:resource="&sesiSchema;WebDev"/>
@@ -214,9 +196,19 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/objects/sesi/JavaEEBasic -->
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/Java-Intermediate -->
 
-    <owl:NamedIndividual rdf:about="&sesi;JavaEEBasic">
+    <owl:NamedIndividual rdf:about="&sesi;Java-Intermediate">
+        <rdf:type rdf:resource="&sesiSchema;SoftwareSkill"/>
+        <sesiSchema:programmingLanguageUsed rdf:resource="&freebase;m.07sbkfb"/>
+        <sesiSchema:level rdf:resource="&sesiSchema;Intermediate"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/Java_Platform__Enterprise_Edition-Basic -->
+
+    <owl:NamedIndividual rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic">
         <rdf:type rdf:resource="&sesiSchema;SoftwareSkill"/>
         <sesiSchema:technologyUsed rdf:resource="&freebase;m.0bs6x"/>
         <sesiSchema:level rdf:resource="&sesiSchema;Basic"/>
@@ -224,21 +216,11 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/objects/sesi/JavaEEIntermediate -->
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/Java_Platform__Enterprise_Edition-Intermediate -->
 
-    <owl:NamedIndividual rdf:about="&sesi;JavaEEIntermediate">
+    <owl:NamedIndividual rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate">
         <rdf:type rdf:resource="&sesiSchema;SoftwareSkill"/>
         <sesiSchema:technologyUsed rdf:resource="&freebase;m.0bs6x"/>
-        <sesiSchema:level rdf:resource="&sesiSchema;Intermediate"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/objects/sesi/JavaIntermediate -->
-
-    <owl:NamedIndividual rdf:about="&sesi;JavaIntermediate">
-        <rdf:type rdf:resource="&sesiSchema;SoftwareSkill"/>
-        <sesiSchema:programmingLanguageUsed rdf:resource="&freebase;m.07sbkfb"/>
         <sesiSchema:level rdf:resource="&sesiSchema;Intermediate"/>
     </owl:NamedIndividual>
     
@@ -268,7 +250,7 @@
         <sesiSchema:name>Ion Popescu</sesiSchema:name>
         <sesiSchema:description>Ambitious student, looking to work mainly with .NET technologies</sesiSchema:description>
         <sesiSchema:workedOnProject rdf:resource="&sesi;005"/>
-        <sesiSchema:technicalSkill rdf:resource="&sesi;JavaIntermediate"/>
+        <sesiSchema:technicalSkill rdf:resource="&sesi;Java-Intermediate"/>
         <sesiSchema:hasStudies rdf:resource="&sesi;studies007"/>
     </owl:NamedIndividual>
     
@@ -311,8 +293,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;JavaEEBasic"/>
-            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
@@ -325,22 +314,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;JavaEEIntermediate"/>
-            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;JavaEEBasic"/>
-            <rdf:Description rdf:about="&sesi;JavaIntermediate"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&freebase;m.02l6h"/>
             <rdf:Description rdf:about="&freebase;m.02zsyq"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>

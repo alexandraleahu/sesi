@@ -84,6 +84,14 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     @Path("city")
     OntologyExtraInfoView<City> cityLink;
 
+    @UiField (provided = true)
+            @Ignore
+    TechnicalSkillView preferredTechnicalSkillsTable = new TechnicalSkillView();
+
+    @UiField(provided = true)
+            @Ignore
+    TechnicalSkillView acquiredTechnicalSkillsTable = new TechnicalSkillView();
+
     // Create the Driver
 
     public InternshipView() {
@@ -105,6 +113,9 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
         preferredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getPreferredGeneralSkills()));
         acquiredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getAcquiredGeneralSkills()));
         categoryLabel.setText(internship.getCategory().getDescription());
+
+        preferredTechnicalSkillsTable.setValue(internship.getPreferredTechnicalSkills());
+        acquiredTechnicalSkillsTable.setValue(internship.getAcquiredTechnicalSkills());
 
     }
 

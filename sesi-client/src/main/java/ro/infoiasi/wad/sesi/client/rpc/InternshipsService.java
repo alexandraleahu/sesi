@@ -10,6 +10,8 @@ import java.util.List;
 
 @RemoteServiceRelativePath("InternshipsService")
 public interface InternshipsService extends RemoteService {
+
+
     /**
      * Utility/Convenience class.
      * Use InternshipsService.App.getInstance() to access static instance of InternshipsServiceAsync
@@ -26,7 +28,11 @@ public interface InternshipsService extends RemoteService {
 
     int getApplicationsCount(String internshipId);
 
-    List<Internship> getAllinternshipsByCategory(Internship.Category category);
+    List<Internship> getAllInternshipsByCategory(Internship.Category category);
+
+    List<Internship> getAllInternships();
+
+    void save(Internship internship);
 
     public static final String RESOURCE_PATH = "internships";
 }
