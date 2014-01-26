@@ -218,7 +218,7 @@ public class SparqlService {
         return null;
     }
 
-    private Faculty getFaculty(String facultyUri) {
+    public Faculty getFaculty(String facultyUri) {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")

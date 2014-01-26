@@ -72,7 +72,6 @@ public class StudentDeserializer implements ResourceDeserializer<Student> {
         ResIterator resIterator = m.listResourcesWithProperty(ResourceFactory.createProperty(SESI_SCHEMA_NS, ID_PROP));
         while (resIterator.hasNext()) {
             Resource resource = resIterator.nextResource();
-            System.out.println(resource.getURI());
             String[] parts = resource.getURI().split("/");
             students.add(deserialize(m, parts[parts.length - 1]));
         }

@@ -4,7 +4,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import ro.infoiasi.wad.sesi.core.model.Company;
+import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 
 import java.util.List;
 
@@ -26,5 +28,12 @@ public interface CompaniesService extends RemoteService {
     Company getCompanyById(String companyId);
 
     List<InternshipApplication> getCompanyApplications(String companyApplications);
+
+    List<Company> getAllCompanies();
+
+    List<Internship> getCompanyInternships(String companyId);
+
+    List<InternshipProgressDetails> getCompanyProgressDetails(String companyId);
+
     public static final String RESOURCE_PATH = "companies";
 }

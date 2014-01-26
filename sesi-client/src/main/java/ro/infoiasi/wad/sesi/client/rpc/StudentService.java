@@ -1,8 +1,10 @@
 package ro.infoiasi.wad.sesi.client.rpc;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.google.gwt.core.client.GWT;
+import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Student;
 
 import java.util.List;
@@ -24,4 +26,10 @@ public interface StudentService extends RemoteService {
     Student getStudentById(String studentId);
 
     List<Student> getAllStudents();
+
+    List<InternshipApplication> getStudentApplications(String studentId);
+
+    List<InternshipProgressDetails> getStudentInternshipProgressDetails(String studentId);
+
+    String saveStudent(Student student);
 }

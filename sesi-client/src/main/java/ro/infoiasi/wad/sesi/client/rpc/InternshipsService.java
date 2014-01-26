@@ -4,6 +4,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import ro.infoiasi.wad.sesi.core.model.Internship;
+import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 
 import java.util.List;
 
@@ -31,6 +33,10 @@ public interface InternshipsService extends RemoteService {
     List<Internship> getAllInternshipsByCategory(Internship.Category category);
 
     List<Internship> getAllInternships();
+
+    List<InternshipApplication> getInternshipApplications(String internshipId);
+
+    List<InternshipProgressDetails> getInternshipProgressDetails(String internshipId);
 
     void save(Internship internship);
 
