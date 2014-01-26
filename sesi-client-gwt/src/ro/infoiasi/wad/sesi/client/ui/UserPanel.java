@@ -1,12 +1,10 @@
 package ro.infoiasi.wad.sesi.client.ui;
 
 import ro.infoiasi.wad.sesi.client.authentication.LoginServiceWrapper;
-import ro.infoiasi.wad.sesi.client.rpc.LoginService;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;

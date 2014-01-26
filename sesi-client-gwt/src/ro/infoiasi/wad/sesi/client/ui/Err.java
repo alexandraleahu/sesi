@@ -13,7 +13,7 @@ public class Err {
         final PopupPanel pp = new PopupPanel();
         VerticalPanel vp = new VerticalPanel();
         HTML html = new HTML();
-        html.setText("<font color=\"red\">" + message + "</font>");
+        html.setText(message);
         Button ok = new Button("OK");
         ok.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent arg0) {

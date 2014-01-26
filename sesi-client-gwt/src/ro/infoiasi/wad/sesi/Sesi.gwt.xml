@@ -18,6 +18,8 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
+    <inherits name="com.google.common.base.Base"/>
+    <inherits name="com.google.common.collect.Collect"/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='ro.infoiasi.wad.sesi.client.Sesi_client_gwt'/>
