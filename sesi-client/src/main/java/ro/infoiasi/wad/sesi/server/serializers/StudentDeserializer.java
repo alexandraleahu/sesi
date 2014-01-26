@@ -58,7 +58,7 @@ public class StudentDeserializer  implements ResourceDeserializer<Student>  {
         stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, WORKED_ON_PROJECT_PROP));
         while (stmtIterator.hasNext()) {
             Statement nextStatement = stmtIterator.nextStatement();
-            StudentProject project = sparqlService.getStudentProject(statement.getResource().getURI());
+            StudentProject project = sparqlService.getStudentProject(nextStatement.getResource().getURI());
             studentProjects.add(project);
         }
         student.setProjects(studentProjects);
