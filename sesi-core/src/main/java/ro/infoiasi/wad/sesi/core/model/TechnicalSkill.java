@@ -1,6 +1,8 @@
 package ro.infoiasi.wad.sesi.core.model;
 
-public class TechnicalSkill  {
+import java.io.Serializable;
+
+public class TechnicalSkill implements Serializable {
 
     private ProgrammingLanguage programmingLanguage;
 

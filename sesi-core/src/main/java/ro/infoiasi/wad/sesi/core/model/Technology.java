@@ -3,13 +3,14 @@ package ro.infoiasi.wad.sesi.core.model;
 import ro.infoiasi.wad.sesi.core.util.HasDescription;
 import ro.infoiasi.wad.sesi.core.util.HasName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Technology extends OntologyExtraInfo implements HasDescription {
 
     private String description;
     private String repository;
-    private List<String> programmingLanguages;
+    private List<ProgrammingLanguage> programmingLanguages;
 
     private List<Technology> technologies;
 
@@ -34,11 +35,11 @@ public class Technology extends OntologyExtraInfo implements HasDescription {
         this.repository = repository;
     }
 
-    public List<String> getProgrammingLanguages() {
+    public List<ProgrammingLanguage> getProgrammingLanguages() {
         return programmingLanguages;
     }
 
-    public void setProgrammingLanguages(List<String> programmingLanguages) {
+    public void setProgrammingLanguages(List<ProgrammingLanguage> programmingLanguages) {
         this.programmingLanguages = programmingLanguages;
     }
 
@@ -66,6 +67,18 @@ public class Technology extends OntologyExtraInfo implements HasDescription {
         this.developedBy = developedBy;
     }
 
+    public void addProgrammingLanguage(ProgrammingLanguage lang) {
+        if (programmingLanguages == null)
+            programmingLanguages = new ArrayList<ProgrammingLanguage>();
+        if (lang != null)
+            programmingLanguages.add(lang);
+    }
+    public void addTechnology(Technology tech) {
+        if (technologies == null)
+            technologies = new ArrayList<Technology>();
+        if (tech != null)
+            technologies.add(tech);
+    }
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Technology{");

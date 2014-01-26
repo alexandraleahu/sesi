@@ -5,11 +5,13 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import ro.infoiasi.wad.sesi.client.widgetinterfaces.ResourceWidgetViewer;
+import ro.infoiasi.wad.sesi.core.model.City;
+import ro.infoiasi.wad.sesi.core.model.Currency;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 
 
@@ -32,7 +34,7 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     Label internshipTitleHeader;
 
     @UiField
-    Anchor companyLink;
+    Hyperlink companyLink;
 
     @UiField
     @Path("openings")
@@ -67,8 +69,8 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     Label relocationLabel;
 
     @UiField
-    @Path("salaryCurrency.name")
-    Label salaryCurrencyLabel;
+    @Path("salaryCurrency")
+    OntologyExtraInfoView<Currency> salaryCurrencyLabel;
 
     @UiField
     @Path("salaryValue")
@@ -79,7 +81,8 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     Label acquiredGeneralSkillsLabel;
 
     @UiField
-    Anchor cityLink;
+    @Path("city")
+    OntologyExtraInfoView<City> cityLink;
 
     // Create the Driver
 
@@ -91,15 +94,9 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     @Override
     public void edit(Internship internship) {
         driver.edit(internship);
-        if (internship.getCity() != null) {
-            cityLink.setHref(internship.getCity().getInfoUrl());
-            cityLink.setText(internship.getCity().getName());
-        }
+
         if (internship.getCompany() != null)
             companyLink.setText(internship.getCompany().getName());
-
-        companyLink.setText("VirtualComp");
-        companyLink.setHref("http://google.com");
 
         startDateLabel.setText(internship.getStartDate().toString());
         endDateLabel.setText(internship.getEndDate().toString());
@@ -108,6 +105,7 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
         preferredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getPreferredGeneralSkills()));
         acquiredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getAcquiredGeneralSkills()));
         categoryLabel.setText(internship.getCategory().getDescription());
+
     }
 
 

@@ -52,5 +52,10 @@ public interface SesiResources extends ClientBundle {
         String bigTextArea();
 
         String withBottomBorder();
+
+        String smallMarginRight();
+
+        @ClassName("gwt-Hyperlink")
+        String gwtHyperlink();
     }
 }
