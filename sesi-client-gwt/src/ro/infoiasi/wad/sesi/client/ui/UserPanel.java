@@ -1,7 +1,12 @@
 package ro.infoiasi.wad.sesi.client.ui;
 
+import ro.infoiasi.wad.sesi.client.authentication.LoginServiceWrapper;
+import ro.infoiasi.wad.sesi.client.rpc.LoginService;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -112,13 +117,17 @@ public class UserPanel extends HorizontalPanel {
                     String p = pass.getText();
 
                     if(u.length() > 0 && p.length() > 0) {
-                        //if ()
-                        LoginPopup.this.hide();
-                        UserPanel.this.setLogged(true);
-                        
+                        if (LoginServiceWrapper.login(u, p)) {
+                            LoginPopup.this.hide();
+                            UserPanel.this.setLogged(true);
+                            Cookies.setCookie("currentUser", u);
+                            Cookies.setCookie("currentUserRole", LoginServiceWrapper.getUserType(u));
+                        } else {
+                            Err.show("Invalid username or password.");
+                        }
+                    } else {
+                        Err.show("Username and password cannot be blank.");
                     }
-                    
-                    // if (login ok)
                 }
             }
         }
@@ -196,8 +205,19 @@ public class UserPanel extends HorizontalPanel {
                     String c = conf.getText();
                     String m = mail.getText();
                     String t = type.getItemText(type.getSelectedIndex());
-                    if (p.equals(c) && p.length() > 0)
-                        AuthenticationPopup.this.hide();
+                    if (p.length() == 0 || u.length() == 0 || c.length() == 0) {
+                        Err.show("Username, password and password confirmation cannot be blank.");
+                        return;
+                    }
+                    if (!p.equals(c)) {
+                        Err.show("Password does not match password confirmation.");
+                        return;
+                    }
+                    if(!LoginServiceWrapper.authenticate(u, p, t)) {
+                        Err.show("Username '" + u + "' is already taken.");
+                        return;
+                    }
+                    AuthenticationPopup.this.hide();
                 }
             }
         }
@@ -214,6 +234,8 @@ public class UserPanel extends HorizontalPanel {
 
             @Override
             public void onClick(ClickEvent arg0) {
+                Cookies.removeCookie("currentUser");
+                Cookies.removeCookie("currentUserRole");
                 UserPanel.this.setLogged(false);
             }
         }
