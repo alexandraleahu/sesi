@@ -38,6 +38,10 @@
         <servlet-name>ro.infoiasi.wad.sesi.Sesi ProgressDetailsService</servlet-name>
         <servlet-class>ro.infoiasi.wad.sesi.server.rpc.ProgressDetailsServiceImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi LoginService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.LoginServiceImpl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InternshipsServlet</servlet-name>
         <url-pattern>/sesi/InternshipsService</url-pattern>
@@ -70,6 +74,10 @@
     <servlet-mapping>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi ProgressDetailsService</servlet-name>
         <url-pattern>/sesi/ProgressDetailsService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi LoginService</servlet-name>
+        <url-pattern>/sesi/LoginService</url-pattern>
     </servlet-mapping>
 
 

@@ -32,7 +32,7 @@
     <set-property name="bootstrap.responsiveDesign" value="true"/>
 
     <!-- Specify the app entry point class.                         -->
-<!--     <entry-point class='ro.infoiasi.wad.sesi.client.Sesi'/> -->
+     <!--<entry-point class='ro.infoiasi.wad.sesi.client.Sesi'/>-->
   <entry-point class='ro.infoiasi.wad.sesi.client.Sesi_client_gwt'/>
     
     
@@ -45,6 +45,7 @@
     <servlet path="/InternshipApplicationService"
              class="ro.infoiasi.wad.sesi.server.rpc.InternshipApplicationServiceImpl"/>
     <servlet path="/ProgressDetailsService" class="ro.infoiasi.wad.sesi.server.rpc.ProgressDetailsServiceImpl"/>
+    <servlet path="/LoginService" class="ro.infoiasi.wad.sesi.server.rpc.LoginServiceImpl"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>
