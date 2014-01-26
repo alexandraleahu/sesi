@@ -46,7 +46,18 @@ public class InternshipsServiceImpl extends RemoteServiceServlet implements Inte
 
     @Override
     public List<Internship> getAllInternshipsByCategory(Internship.Category category) {
-        return null;
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH).queryParam("category", category);
+        Invocation invocation = target.request().accept(DEFAULT_ACCEPT_RDF_TYPE).buildGet();
+
+        String rdfAnswer = invocation.invoke().readEntity(String.class);
+
+        OntModel m = ModelFactory.createOntologyModel();
+        m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
+
+        List<Internship> internships = new InternshipDeserializer().deserialize(m);
+        client.close();
+        return internships;
     }
 
     @Override
