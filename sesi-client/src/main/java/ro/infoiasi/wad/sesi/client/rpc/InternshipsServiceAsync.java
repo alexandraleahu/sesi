@@ -10,5 +10,9 @@ public interface InternshipsServiceAsync {
 
     void getApplicationsCount(String internshipId, AsyncCallback<Integer> async);
 
-    void getAllinternshipsByCategory(Internship.Category category, AsyncCallback<List<Internship>> async);
+    void getAllInternshipsByCategory(Internship.Category category, AsyncCallback<List<Internship>> async);
+
+    void save(Internship internship, AsyncCallback<Void> async);
+
+    void getAllInternships(AsyncCallback<List<Internship>> async);
 }

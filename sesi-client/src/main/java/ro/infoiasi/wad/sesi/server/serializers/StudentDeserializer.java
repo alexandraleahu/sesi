@@ -2,18 +2,18 @@ package ro.infoiasi.wad.sesi.server.serializers;
 
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import ro.infoiasi.wad.sesi.core.model.*;
+import com.hp.hpl.jena.rdf.model.*;
+import ro.infoiasi.wad.sesi.core.model.Student;
+import ro.infoiasi.wad.sesi.core.model.StudentProject;
+import ro.infoiasi.wad.sesi.core.model.Studies;
+import ro.infoiasi.wad.sesi.core.model.TechnicalSkill;
 import ro.infoiasi.wad.sesi.server.util.SparqlService;
 
 import java.util.List;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class StudentDeserializer  implements ResourceDeserializer<Student>  {
+public class StudentDeserializer implements ResourceDeserializer<Student> {
     @Override
     public Student deserialize(OntModel m, String id) {
         SparqlService sparqlService = new SparqlService();
@@ -49,7 +49,7 @@ public class StudentDeserializer  implements ResourceDeserializer<Student>  {
         student.setTechnicalSkills(preferredTechnicalSkills);
 
         //studies
-        statement  = m.getProperty(studentResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, HAS_STUDIES_PROP));
+        statement = m.getProperty(studentResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, HAS_STUDIES_PROP));
         Studies studies = sparqlService.getStudies(statement.getResource().getURI());
         student.setStudies(studies);
 
@@ -65,5 +65,17 @@ public class StudentDeserializer  implements ResourceDeserializer<Student>  {
 
         return student;
 
+    }
+
+    public List<Student> deserialize(OntModel m) {
+        List<Student> students = Lists.newArrayList();
+        ResIterator resIterator = m.listResourcesWithProperty(ResourceFactory.createProperty(SESI_SCHEMA_NS, ID_PROP));
+        while (resIterator.hasNext()) {
+            Resource resource = resIterator.nextResource();
+            System.out.println(resource.getURI());
+            String[] parts = resource.getURI().split("/");
+            students.add(deserialize(m, parts[parts.length - 1]));
+        }
+        return students;
     }
 }
