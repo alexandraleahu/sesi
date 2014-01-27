@@ -1,9 +1,18 @@
 package ro.infoiasi.wad.sesi.service.authentication;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class UsersTable {
 
+    Log LOG = LogFactory.getLog(getClass())
+            ;
+    
     public boolean addUser(DBUser user) {
         if(exists(user)) {
             return false;
@@ -19,14 +28,14 @@ public class UsersTable {
             statement = connection.createStatement();
             statement.execute(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.warn(e);
             return false;
         } finally {
             try {
                 statement.close();
                 connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                LOG.warn(e);
             }
         }
         return true;
@@ -65,6 +74,8 @@ public class UsersTable {
         boolean b = users.addUser(ion);
         boolean c = users.addUser(virt);
         System.out.println(b + " " + c);
+        System.out.println(users.getUserType("ionpopescu"));
+        System.out.println(users.getUserType("virtualcomp"));
 //        System.out.println(users.login("userrrR", "pas"));
 //        System.out.println(users.login("userrr", "pas"));
 //        System.out.println(users.login("userrr", "pasS"));
@@ -85,13 +96,13 @@ public class UsersTable {
                 result = null;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.warn(e);
         } finally {
             try {
                 statement.close();
                 connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                LOG.warn(e);
             }
         }
         return result;
@@ -113,9 +124,8 @@ public class UsersTable {
           stmt.executeUpdate(sql);
           stmt.close();
           connection.close();
-        } catch ( SQLException e) {
         } catch ( Exception e ) {
-          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            LOG.warn(e);
         }
     }
 }

@@ -46,10 +46,6 @@
         <servlet-name>ro.infoiasi.wad.sesi.Sesi LoginService</servlet-name>
         <servlet-class>ro.infoiasi.wad.sesi.server.rpc.LoginServiceImpl</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>ro.infoiasi.wad.sesi.Sesi LoginService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.LoginServiceImpl</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>InternshipsServlet</servlet-name>
         <url-pattern>/sesi/InternshipsService</url-pattern>
