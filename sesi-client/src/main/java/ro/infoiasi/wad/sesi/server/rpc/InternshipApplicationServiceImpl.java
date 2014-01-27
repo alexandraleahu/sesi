@@ -5,7 +5,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import ro.infoiasi.wad.sesi.client.rpc.InternshipApplicationService;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
-import ro.infoiasi.wad.sesi.server.serializers.ApplicationDeserializer;
+import ro.infoiasi.wad.sesi.server.serializers.InternshipApplicationDeserializer;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -30,7 +30,7 @@ public class InternshipApplicationServiceImpl extends RemoteServiceServlet imple
         OntModel m = ModelFactory.createOntologyModel();
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
 
-        InternshipApplication application = new ApplicationDeserializer().deserialize(m, companyId);
+        InternshipApplication application = new InternshipApplicationDeserializer().deserialize(m, companyId);
         client.close();
         return application;
     }

@@ -48,6 +48,11 @@ public abstract class StudentInternshipRelation implements Resource {
         return status;
     }
 
+    @Override
+    public String getName() {
+        return getStudent().getId() + " - " + getInternship().getId();
+    }
+
     public void setStatus(Status status) {
         if (!getPossibleStatus().contains(status))
             throw new IllegalArgumentException("Can only set the status to " + getPossibleStatus().toString());

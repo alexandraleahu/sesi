@@ -7,9 +7,9 @@ import ro.infoiasi.wad.sesi.client.rpc.InternshipsService;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
-import ro.infoiasi.wad.sesi.server.serializers.ApplicationDeserializer;
+import ro.infoiasi.wad.sesi.server.serializers.InternshipApplicationDeserializer;
 import ro.infoiasi.wad.sesi.server.serializers.InternshipDeserializer;
-import ro.infoiasi.wad.sesi.server.serializers.ProgressDetailsDeserializer;
+import ro.infoiasi.wad.sesi.server.serializers.InternshipProgressDetailsDeserializer;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
@@ -91,7 +91,7 @@ public class InternshipsServiceImpl extends RemoteServiceServlet implements Inte
         OntModel m = ModelFactory.createOntologyModel();
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
 
-        List<InternshipApplication> applications = new ApplicationDeserializer().deserialize(m);
+        List<InternshipApplication> applications = new InternshipApplicationDeserializer().deserialize(m);
         client.close();
         return applications;
     }
@@ -107,7 +107,7 @@ public class InternshipsServiceImpl extends RemoteServiceServlet implements Inte
         OntModel m = ModelFactory.createOntologyModel();
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
 
-        List<InternshipProgressDetails> details = new ProgressDetailsDeserializer().deserialize(m);
+        List<InternshipProgressDetails> details = new InternshipProgressDetailsDeserializer().deserialize(m);
         client.close();
         return details;
     }

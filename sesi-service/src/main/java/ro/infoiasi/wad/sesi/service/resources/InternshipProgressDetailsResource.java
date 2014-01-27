@@ -1,7 +1,7 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.rdf.dao.ProgressDetailsDao;
+import ro.infoiasi.wad.sesi.rdf.dao.InternshipProgressDetailsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
@@ -19,7 +19,7 @@ public class InternshipProgressDetailsResource {
     public Response getAllInternshipProgressDetails(@QueryParam("fields") List<String> fields,
                                                     @Context HttpHeaders headers) {
 
-        ProgressDetailsDao dao = new ProgressDetailsDao();
+        InternshipProgressDetailsDao dao = new InternshipProgressDetailsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
@@ -38,7 +38,7 @@ public class InternshipProgressDetailsResource {
                                                  @QueryParam("fields") List<String> fields,
                                                  @Context HttpHeaders headers) {
 
-        ProgressDetailsDao dao = new ProgressDetailsDao();
+        InternshipProgressDetailsDao dao = new InternshipProgressDetailsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);

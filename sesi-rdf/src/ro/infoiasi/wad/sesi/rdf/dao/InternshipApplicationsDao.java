@@ -17,7 +17,7 @@ import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class ApplicationsDao implements Dao {
+public class InternshipApplicationsDao implements Dao {
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
 
     public String getApplicationById(String id, RDFFormat format) throws Exception {
@@ -68,15 +68,18 @@ public class ApplicationsDao implements Dao {
             URI ID = Values.uri(SESI_SCHEMA_NS, ID_PROP);
             URI sesiUrl = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
 
+
             adder.statement(newApplication, ID, Values.literal(application.getId(), StardogValueFactory.XSD.STRING));
             adder.statement(newApplication, sesiUrl, Values.literal(application.getRelativeUri()));
 
-            // adding the candidate and the internship
+            // adding the candidate and the internship and name
             URI candidate = Values.uri(SESI_SCHEMA_NS, CANDIDATE_PROP);
             URI internship = Values.uri(SESI_SCHEMA_NS, APPLICATION_INTERNSHIP_PROP);
+            URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
 
             adder.statement(newApplication, candidate, Values.uri(SESI_OBJECTS_NS, application.getStudent().getId()));
             adder.statement(newApplication, internship, Values.uri(SESI_OBJECTS_NS, application.getInternship().getId()));
+            adder.statement(newApplication, name, Values.literal(application.getName(), StardogValueFactory.XSD.STRING));
 
             // adding the status and the feedback and the motivation
             URI status = Values.uri(SESI_SCHEMA_NS, STATUS_PROP);
@@ -173,7 +176,7 @@ public class ApplicationsDao implements Dao {
     }
 
     public static void main(String[] args) throws Exception {
-        ApplicationsDao dao = new ApplicationsDao();
+        InternshipApplicationsDao dao = new InternshipApplicationsDao();
 
 //        InternshipApplication application = new InternshipApplication();
 //        String id = RandomStringUtils.randomAlphanumeric(ID_LENGTH);

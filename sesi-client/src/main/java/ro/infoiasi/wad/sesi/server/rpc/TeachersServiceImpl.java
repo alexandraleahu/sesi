@@ -6,7 +6,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import ro.infoiasi.wad.sesi.client.rpc.TeachersService;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
-import ro.infoiasi.wad.sesi.server.serializers.ProgressDetailsDeserializer;
+import ro.infoiasi.wad.sesi.server.serializers.InternshipProgressDetailsDeserializer;
 import ro.infoiasi.wad.sesi.server.serializers.TeacherDeserializer;
 
 import javax.ws.rs.client.Client;
@@ -66,7 +66,7 @@ public class TeachersServiceImpl extends RemoteServiceServlet implements Teacher
         OntModel m = ModelFactory.createOntologyModel();
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
 
-        List<InternshipProgressDetails> progressDetails = new ProgressDetailsDeserializer().deserialize(m);
+        List<InternshipProgressDetails> progressDetails = new InternshipProgressDetailsDeserializer().deserialize(m);
         client.close();
         return progressDetails;
     }

@@ -17,7 +17,7 @@ import java.util.List;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class ProgressDetailsDeserializer implements Deserializer<InternshipProgressDetails> {
+public class InternshipProgressDetailsDeserializer implements Deserializer<InternshipProgressDetails> {
     @Override
     public InternshipProgressDetails deserialize(OntModel m, String id) {
         SparqlService sparqlService = new SparqlService();

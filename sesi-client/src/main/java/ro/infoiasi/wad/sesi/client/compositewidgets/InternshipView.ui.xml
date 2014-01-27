@@ -157,6 +157,12 @@
                     <g:Label ui:field="relocationLabel"/>
                 </b:Column>
             </b:Row>
+
+            <b:Row>
+                <b:Column size="4">
+                    <b:Button type="INFO" size="LARGE" block="true" ui:field="applyBtn">Apply to internship</b:Button>
+                </b:Column>
+            </b:Row>
         </b:WellForm>
     </g:HTMLPanel>
 </ui:UiBinder>

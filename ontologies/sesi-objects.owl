@@ -141,7 +141,7 @@
         <sesiSchema:openingsCount rdf:datatype="&xsd;nonNegativeInteger">5</sesiSchema:openingsCount>
         <sesiSchema:salaryValue rdf:datatype="&xsd;decimal">500</sesiSchema:salaryValue>
         <sesiSchema:acquiredGeneralSkill rdf:datatype="&xsd;string">Better estimation</sesiSchema:acquiredGeneralSkill>
-        <sesiSchema:name rdf:datatype="&xsd;string">Java Internship for Web</sesiSchema:name>
+        <sesiSchema:name rdf:datatype="&xsd;string">Java internship for the Web</sesiSchema:name>
         <sesiSchema:preferredGeneralSkill rdf:datatype="&xsd;string">Team player</sesiSchema:preferredGeneralSkill>
         <sesiSchema:description rdf:datatype="&xsd;string">This internship consists of developing new modules to our existing Java EE web application</sesiSchema:description>
         <sesiSchema:offersRelocation rdf:datatype="&xsd;boolean">false</sesiSchema:offersRelocation>
@@ -165,6 +165,7 @@
         <rdfs:label>004</rdfs:label>
         <sesiSchema:id rdf:datatype="&xsd;string">004</sesiSchema:id>
         <sesiSchema:publishedAt rdf:datatype="&xsd;dateTime">2014-01-24T12:00:00</sesiSchema:publishedAt>
+        <sesiSchema:name rdf:datatype="&xsd;string">ionpopescu - 003</sesiSchema:name>
         <sesiSchema:sesiUrl>/applications/004</sesiSchema:sesiUrl>
         <sesiSchema:applicationInternship rdf:resource="&sesi;003"/>
         <sesiSchema:candidate rdf:resource="&sesi;ionpopescu"/>
@@ -293,8 +294,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
             <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;m.02l6h"/>
+            <rdf:Description rdf:about="&freebase;m.02zsyq"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
@@ -314,14 +322,7 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.02l6h"/>
-            <rdf:Description rdf:about="&freebase;m.02zsyq"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
             <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>

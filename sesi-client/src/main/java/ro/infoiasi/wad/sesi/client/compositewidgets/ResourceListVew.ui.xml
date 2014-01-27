@@ -2,6 +2,5 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
 
-    <b:CellTable ui:field="skillsTable" width="20" bordered="false" striped="false" />
-
+    <b:CellTable ui:field="resourcesTable" width="20" bordered="false" striped="false" />
 </ui:UiBinder>

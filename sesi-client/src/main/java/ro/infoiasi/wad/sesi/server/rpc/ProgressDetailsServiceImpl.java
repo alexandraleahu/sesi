@@ -5,7 +5,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import ro.infoiasi.wad.sesi.client.rpc.ProgressDetailsService;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
-import ro.infoiasi.wad.sesi.server.serializers.ProgressDetailsDeserializer;
+import ro.infoiasi.wad.sesi.server.serializers.InternshipProgressDetailsDeserializer;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -35,7 +35,7 @@ public class ProgressDetailsServiceImpl extends RemoteServiceServlet implements 
         OntModel m = ModelFactory.createOntologyModel();
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
 
-        InternshipProgressDetails progressDetails = new ProgressDetailsDeserializer().deserialize(m, id);
+        InternshipProgressDetails progressDetails = new InternshipProgressDetailsDeserializer().deserialize(m, id);
         client.close();
         return progressDetails;
     }

@@ -13,6 +13,11 @@ public class WidgetConstants implements Serializable {
 
     public static final String multipleSkillSeparator = "\n";
     public static final String dataSeparator = ":";
+    public static final String VIEW_TOKEN = "view";
+    public static final String EDIT_TOKEN = "edit";
+    public static final String LOGIN_TOKEN = "login";
+    public static final String LOGOUT_TOKEN = "logout";
+    public static final String REGISTER_TOKEN = "register";
 
     public static class TechnicalSkillFunction implements Function<String, TechnicalSkill> {
 

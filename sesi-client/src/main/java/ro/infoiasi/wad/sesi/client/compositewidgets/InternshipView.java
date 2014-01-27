@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.client.compositewidgets;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.google.common.base.Joiner;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -91,6 +92,8 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     @UiField
     @Path("acquiredTechnicalSkills")
     TechnicalSkillView acquiredTechnicalSkillsTable;
+    @UiField
+    Button applyBtn;
 
     // Create the Driver
 

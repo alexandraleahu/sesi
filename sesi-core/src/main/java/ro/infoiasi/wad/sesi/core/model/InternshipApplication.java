@@ -43,7 +43,7 @@ public class InternshipApplication extends StudentInternshipRelation {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("City{");
+        final StringBuilder sb = new StringBuilder("InternshipApplication{");
         sb.append("id='").append(getId()).append('\'');
         sb.append(", internship='").append(getInternship()).append('\'');
         sb.append(", student='").append(getStudent()).append('\'');
@@ -59,5 +59,10 @@ public class InternshipApplication extends StudentInternshipRelation {
     @Override
     public String getRelativeUri() {
         return "/applications/" + getId();
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }

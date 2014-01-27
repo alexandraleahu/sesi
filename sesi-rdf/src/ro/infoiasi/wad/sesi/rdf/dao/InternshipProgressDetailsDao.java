@@ -16,7 +16,7 @@ import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class ProgressDetailsDao implements Dao {
+public class InternshipProgressDetailsDao implements Dao {
 
 
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
@@ -75,11 +75,12 @@ public class ProgressDetailsDao implements Dao {
             URI attendeeStudent = Values.uri(SESI_SCHEMA_NS, ATTENDEE_STUDENT_PROP);
             URI internship = Values.uri(SESI_SCHEMA_NS, ATTENDED_INTERNSHIP_PROP);
             URI mentorTeacher = Values.uri(SESI_SCHEMA_NS, TEACHER_MENTOR_PROP);
+            URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
 
             adder.statement(newProgressDetails, attendeeStudent, Values.uri(SESI_OBJECTS_NS, progressDetails.getStudent().getId()));
             adder.statement(newProgressDetails, internship, Values.uri(SESI_OBJECTS_NS, progressDetails.getInternship().getId()));
             adder.statement(newProgressDetails, mentorTeacher, Values.uri(SESI_OBJECTS_NS, progressDetails.getTeacher().getId()));
-
+            adder.statement(newProgressDetails, name, Values.literal(progressDetails.getName(), StardogValueFactory.XSD.STRING));
             // adding the status and the feedback
             URI status = Values.uri(SESI_SCHEMA_NS, STATUS_PROP);
             URI feedback = Values.uri(SESI_SCHEMA_NS, FEEDBACK_PROP);
@@ -172,7 +173,7 @@ public class ProgressDetailsDao implements Dao {
 
     public static void main(String[] args) throws Exception {
 
-        ProgressDetailsDao dao = new ProgressDetailsDao();
+        InternshipProgressDetailsDao dao = new InternshipProgressDetailsDao();
 //        InternshipProgressDetails details = new InternshipProgressDetails();
 //
 //        String id = RandomStringUtils.randomAlphanumeric(ID_LENGTH);

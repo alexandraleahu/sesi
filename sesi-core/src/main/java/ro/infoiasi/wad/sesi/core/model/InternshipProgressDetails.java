@@ -37,7 +37,7 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("City{");
+        final StringBuilder sb = new StringBuilder("InternshipProgressDetails{");
         sb.append("id='").append(getId()).append('\'');
         sb.append(", internship='").append(getInternship()).append('\'');
         sb.append(", student='").append(getStudent()).append('\'');
@@ -53,4 +53,6 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
     public String getRelativeUri() {
         return "/internshipProgressDetails/" + getId();
     }
+
+
 }

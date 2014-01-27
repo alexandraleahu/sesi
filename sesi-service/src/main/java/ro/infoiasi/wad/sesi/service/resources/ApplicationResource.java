@@ -1,7 +1,7 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.rdf.dao.ApplicationsDao;
+import ro.infoiasi.wad.sesi.rdf.dao.InternshipApplicationsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
@@ -20,7 +20,7 @@ public class ApplicationResource {
     public Response getAllApplications(@QueryParam("fields") List<String> fields,
                                        @Context HttpHeaders headers) {
 
-        ApplicationsDao dao = new ApplicationsDao();
+        InternshipApplicationsDao dao = new InternshipApplicationsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
@@ -39,7 +39,7 @@ public class ApplicationResource {
                                        @QueryParam("fields") List<String> fields,
                                        @Context HttpHeaders headers) {
 
-        ApplicationsDao dao = new ApplicationsDao();
+        InternshipApplicationsDao dao = new InternshipApplicationsDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);

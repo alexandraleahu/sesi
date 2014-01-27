@@ -7,5 +7,29 @@
          <b:Hero>
              <g:Label text="Semantic Student Internships" styleName="{resource.style.bigLabel}"/>
          </b:Hero>
+        <b:ControlGroup>
+            <g:InlineHyperlink  ui:field="loginLink" text="Login" visible="true" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+            <g:InlineHyperlink ui:field="registerLink" text="Register" visible="true" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+
+            <g:InlineHyperlink ui:field="logoutLink" text="Logout" visible="false" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+            <g:InlineHyperlink ui:field="profileLink" text="Profile" visible="false" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+        </b:ControlGroup>
+        <b:TabPanel tabPosition="top" ui:field="tabPanel">
+             <b:Tab heading="Home" active="true" ui:field="homeTab">
+                 <g:Label text="Welcome to Semantic Student Internships."/>
+                 <g:SimplePanel ui:field="homePanel"/>
+             </b:Tab>
+
+            <b:Tab heading="Internships" active="false" ui:field="internshipsTab">
+                 <g:SimplePanel ui:field="internshipsPanel"/>
+             </b:Tab>
+            <b:Tab heading="Companies" active="false" ui:field="companiesTab">
+                 <g:SimplePanel ui:field="companiesPanel"/>
+             </b:Tab>
+        </b:TabPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

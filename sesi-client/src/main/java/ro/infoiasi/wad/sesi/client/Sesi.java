@@ -1,7 +1,9 @@
 package ro.infoiasi.wad.sesi.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import ro.infoiasi.wad.sesi.client.ui.ContentBuilder;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
+import ro.infoiasi.wad.sesi.client.compositewidgets.MainView;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 /**
@@ -16,7 +18,9 @@ public class Sesi implements EntryPoint {
     @Override
     public void onModuleLoad() {
         SesiResources.INSTANCE.style().ensureInjected();
-
+        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+        rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
+        rootLayoutPanel.add(new MainView());
 //        InternshipsServiceAsync instance = InternshipsService.App.getInstance();
 //
 //        instance.getInternshipById("003", new AsyncCallback<Internship>() {
@@ -30,12 +34,20 @@ public class Sesi implements EntryPoint {
 //                InternshipView internshipView = new InternshipView();
 //                RootLayoutPanel.get().add(internshipView);
 //                internshipView.edit(internship);
+
 //
 //            }
 //        });
-        ContentBuilder.buildRootPanelContent();
+//
+    }
+    public static String getCurrentUsername() {
+         return Cookies.getCookie("currentUser");
     }
 
+    public static String getCurrentUserType() {
+        return Cookies.getCookie("currentUserRole");
+
+    }
 
     // !!! This has to be called after the elements used inside it are attached to the document !!!
     public static native void freebase() /*-{
