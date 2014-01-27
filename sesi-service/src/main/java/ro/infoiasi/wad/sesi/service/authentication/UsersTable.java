@@ -60,11 +60,15 @@ public class UsersTable {
         DBUser user = new DBUser("userrr", "pas", "typ");
         UsersTable users = new UsersTable();
         users.createTable();
-        System.out.println(users.addUser(user));
-        System.out.println(users.login("userrrR", "pas"));
-        System.out.println(users.login("userrr", "pas"));
-        System.out.println(users.login("userrr", "pasS"));
-        System.out.println(users.login("userrrR", "pasS"));
+        DBUser ion = new DBUser("ionpopescu", "ionpopescu", "student");
+        DBUser virt = new DBUser("virtualcomp", "virtualcomp", "company");
+        boolean b = users.addUser(ion);
+        boolean c = users.addUser(virt);
+        System.out.println(b + " " + c);
+//        System.out.println(users.login("userrrR", "pas"));
+//        System.out.println(users.login("userrr", "pas"));
+//        System.out.println(users.login("userrr", "pasS"));
+//        System.out.println(users.login("userrrR", "pasS"));
     }
     
     private synchronized String executeSelectQuery(String query) {
