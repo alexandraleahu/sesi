@@ -1,0 +1,2 @@
+# Module ro.infoiasi.wad.sesi.SesiJUnit
+# RPC service class, partial path of RPC policy file
