@@ -4,6 +4,8 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import ro.infoiasi.wad.sesi.client.compositewidgets.MainView;
+import ro.infoiasi.wad.sesi.client.rpc.InternshipsService;
+import ro.infoiasi.wad.sesi.client.rpc.InternshipsServiceAsync;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 /**
@@ -18,36 +20,29 @@ public class Sesi implements EntryPoint {
     @Override
     public void onModuleLoad() {
         SesiResources.INSTANCE.style().ensureInjected();
-        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
-        rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
-        rootLayoutPanel.add(new MainView());
-//        InternshipsServiceAsync instance = InternshipsService.App.getInstance();
-//
+        InternshipsServiceAsync instance = InternshipsService.App.getInstance();
+        RootLayoutPanel.get().setStyleName(SesiResources.INSTANCE.style().backgroundColor());
+        RootLayoutPanel.get().add(new MainView());
 //        instance.getInternshipById("003", new AsyncCallback<Internship>() {
 //            @Override
 //            public void onFailure(Throwable caught) {
-//
 //            }
 //
 //            @Override
 //            public void onSuccess(Internship internship) {
-//                InternshipView internshipView = new InternshipView();
-//                RootLayoutPanel.get().add(internshipView);
+//                final InternshipView internshipView = new InternshipView();
 //                internshipView.edit(internship);
-
-//
+//                RootLayoutPanel.get().add(internshipView);
 //            }
 //        });
-//
-    }
-    public static String getCurrentUsername() {
-         return Cookies.getCookie("currentUser");
+
+//        InternshipEditor widget = new InternshipEditor();
+//        RootLayoutPanel.get().add(widget);
+//        widget.edit(new Internship());
+
+//        freebase();
     }
 
-    public static String getCurrentUserType() {
-        return Cookies.getCookie("currentUserRole");
-
-    }
 
     // !!! This has to be called after the elements used inside it are attached to the document !!!
     public static native void freebase() /*-{
@@ -90,4 +85,7 @@ public class Sesi implements EntryPoint {
     }-*/;
 
 
+    public static String getCurrentUserType() {
+
+        return Cookies.getCookie("currentUserRole");    }
 }

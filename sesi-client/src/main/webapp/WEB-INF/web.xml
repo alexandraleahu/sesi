@@ -87,10 +87,7 @@
         <servlet-name>ro.infoiasi.wad.sesi.Sesi LoginService</servlet-name>
         <url-pattern>/sesi/LoginService</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ro.infoiasi.wad.sesi.Sesi LoginService</servlet-name>
-        <url-pattern>/sesi/LoginService</url-pattern>
-    </servlet-mapping>
+
 
 
     <!-- Default page to serve -->
