@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 public class UserPanel extends HorizontalPanel {
 
@@ -60,6 +61,7 @@ public class UserPanel extends HorizontalPanel {
 
         LoginLink() {
             this.setText("Login");
+            this.setStyleName(SesiResources.INSTANCE.style().standardMarginRight());
             addClickHandler(new LoginHandler());
         }
 
@@ -135,6 +137,8 @@ public class UserPanel extends HorizontalPanel {
 
         AuthenticationLink() {
             this.setText("Authenticate");
+            this.setStyleName(SesiResources.INSTANCE.style().standardMarginRight());
+
             addClickHandler(new AuthenticationHandler());
         }
 

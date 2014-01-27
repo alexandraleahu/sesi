@@ -111,7 +111,7 @@
                 </b:Column>
             </b:Row>
             <b:Row>
-                <b:Column size="8">
+                <b:Column size="4">
                     <c:TechnicalSkillView ui:field="preferredTechnicalSkillsTable"/>
                 </b:Column>
             </b:Row>

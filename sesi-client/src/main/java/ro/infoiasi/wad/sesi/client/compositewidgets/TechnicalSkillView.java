@@ -11,7 +11,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import ro.infoiasi.wad.sesi.core.model.OntologyExtraInfo;
 import ro.infoiasi.wad.sesi.core.model.TechnicalSkill;
 
@@ -36,7 +35,7 @@ public class TechnicalSkillView extends Composite implements LeafValueEditor<Lis
 
 
 
-    interface TechnicalSkillViewUiBinder extends UiBinder<SimpleLayoutPanel, TechnicalSkillView> {
+    interface TechnicalSkillViewUiBinder extends UiBinder<CellTable, TechnicalSkillView> {
     }
 
     private static TechnicalSkillViewUiBinder ourUiBinder = GWT.create(TechnicalSkillViewUiBinder.class);
@@ -45,7 +44,7 @@ public class TechnicalSkillView extends Composite implements LeafValueEditor<Lis
     CellTable<TechnicalSkill> skillsTable = new CellTable<TechnicalSkill>(5);
 
     public TechnicalSkillView() {
-        SimpleLayoutPanel root = ourUiBinder.createAndBindUi(this);
+        CellTable root = ourUiBinder.createAndBindUi(this);
         initWidget(root);
         TextColumn<TechnicalSkill> levelCol = new TextColumn<TechnicalSkill>() {
             @Override

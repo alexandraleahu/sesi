@@ -2,8 +2,6 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
 
-    <g:SimpleLayoutPanel>
-            <b:CellTable ui:field="skillsTable" />
-    </g:SimpleLayoutPanel>
+    <b:CellTable ui:field="skillsTable" width="20" striped="false" />
 
 </ui:UiBinder>

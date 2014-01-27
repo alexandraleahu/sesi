@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.client.ui;
 
+import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.compositewidgets.InternshipEditor;
 import ro.infoiasi.wad.sesi.client.compositewidgets.InternshipListView;
 
@@ -12,7 +13,7 @@ public class CompaniesPanel extends Tab {
     
     public CompaniesPanel() {
         this.menuPanel.add(new CreateInternshipLink());
-        this.menuPanel.add(new MyInternshipsLink());;
+        this.menuPanel.add(new MyInternshipsLink());
     }
 
     class MyInternshipsLink extends Hyperlink {
@@ -40,6 +41,7 @@ public class CompaniesPanel extends Tab {
                 public void onClick(ClickEvent arg0) {
                     CompaniesPanel.this.leftPanel.clear();
                     CompaniesPanel.this.leftPanel.add(new InternshipEditor());
+                    Sesi.freebase();
                 }
             });
         }

@@ -21,8 +21,9 @@ public class Sesi implements EntryPoint {
     @Override
     public void onModuleLoad() {
         SesiResources.INSTANCE.style().ensureInjected();
+        final RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+        rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
         InternshipsServiceAsync instance = InternshipsService.App.getInstance();
-        RootLayoutPanel.get().setStyleName(SesiResources.INSTANCE.style().backgroundColor());
 
         instance.getInternshipById("003", new AsyncCallback<Internship>() {
             @Override
@@ -33,13 +34,13 @@ public class Sesi implements EntryPoint {
             @Override
             public void onSuccess(Internship internship) {
                 InternshipView internshipView = new InternshipView();
-                RootLayoutPanel.get().add(internshipView);
+                rootLayoutPanel.add(internshipView);
                 internshipView.edit(internship);
 
             }
         });
-
-        freebase();
+//        ContentBuilder.buildRootPanelContent();
+//        freebase();
     }
 
 

@@ -57,5 +57,59 @@ public interface SesiResources extends ClientBundle {
 
         @ClassName("gwt-Hyperlink")
         String gwtHyperlink();
+
+        String standardMarginRight();
+
+        String tabTopLeft();
+
+        @ClassName("gwt-TabLayoutPanel")
+        String gwtTabLayoutPanel();
+
+        @ClassName("gwt-TabPanel")
+        String gwtTabPanel();
+
+        @ClassName("gwt-TabBarRest")
+        String gwtTabBarRest();
+
+        @ClassName("gwt-TabBarItem")
+        String gwtTabBarItem();
+
+        String tabTopLeftInner();
+
+        @ClassName("gwt-TabBarItem-disabled")
+        String gwtTabBarItemDisabled();
+
+        String tabMiddleLeft();
+
+        String tabTopRightInner();
+
+        @ClassName("gwt-TabBarFirst")
+        String gwtTabBarFirst();
+
+        String tabTopCenter();
+
+        String tabMiddleLeftInner();
+
+        @ClassName("gwt-DecoratedTabBar")
+        String gwtDecoratedTabBar();
+
+        String tabMiddleRight();
+
+        String tabTopRight();
+
+        String tabMiddleRightInner();
+
+        String tabMiddleCenter();
+
+        @ClassName("gwt-TabPanelBottom")
+        String gwtTabPanelBottom();
+
+        @ClassName("gwt-TabLayoutPanelContent")
+        String gwtTabLayoutPanelContent();
+
+        String menuPanel();
+
+        @ClassName("gwt-TabBarItem-selected")
+        String gwtTabBarItemSelected();
     }
 }

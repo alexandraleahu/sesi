@@ -50,6 +50,6 @@ public abstract class StudentInternshipRelation implements Resource {
 
     public void setStatus(Status status) {
         if (!getPossibleStatus().contains(status))
-            throw new IllegalArgumentException("Can only set the status of " + getClass().getSimpleName() + " to " + getPossibleStatus().toString());
+            throw new IllegalArgumentException("Can only set the status to " + getPossibleStatus().toString());
     }
 }

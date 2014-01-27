@@ -23,10 +23,10 @@ public class Student implements Resource, Person {
     private String id;
 
     public Student() {
-        projects = new ArrayList<>();
-        generalSkills = new ArrayList<>();
-        technicalSkills = new ArrayList<>();
-        projects = new ArrayList<>();
+        projects = new ArrayList<StudentProject>();
+        generalSkills = new ArrayList<String>();
+        technicalSkills = new ArrayList<TechnicalSkill>();
+        projects = new ArrayList<StudentProject>();
     }
 
     @Override

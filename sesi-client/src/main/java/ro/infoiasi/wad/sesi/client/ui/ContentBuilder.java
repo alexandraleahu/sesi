@@ -1,27 +1,31 @@
 package ro.infoiasi.wad.sesi.client.ui;
 
+import com.github.gwtbootstrap.client.ui.Hero;
 import com.google.gwt.i18n.client.HasDirection.Direction;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 public class ContentBuilder {
     
     public static void buildRootPanelContent() {
-        RootPanel.get("mainPanel").add(getMainPanel());
+        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+        rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
+        rootLayoutPanel.add(getMainPanel());
     }
 
     private static Widget getMainPanel() {
         VerticalPanel vp = new VerticalPanel();
         vp.setWidth("100%");
+
+        Hero hero = new Hero();
+        Label title = new Label("Semantic Student Internships");
+        title.setStyleName(SesiResources.INSTANCE.style().bigLabel());
+        hero.add(title);
+        vp.add(hero);
         Widget up = getUserPanel();
         vp.add(up);
         vp.setCellHorizontalAlignment(up, HorizontalAlignmentConstant.endOf(Direction.LTR));
-        HTML title = new HTML();
-        title.setHTML("<h1>Semantic Student Internships</h1>");
-        vp.add(title);
         vp.add(getTabPanel());
         return vp;
     }
