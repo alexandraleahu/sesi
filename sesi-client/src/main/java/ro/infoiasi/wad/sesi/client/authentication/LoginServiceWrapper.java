@@ -11,29 +11,26 @@ public class LoginServiceWrapper {
         LoginCallback lc = new LoginCallback();
         LoginServiceAsync lsa = LoginService.App.getInstance();
         lsa.login(username, password, lc);
-        while(!lc.set);
         return lc.value;
     }
 
     public static boolean authenticate(String username, String password, String type) {
         LoginCallback lc = new LoginCallback();
         LoginService.App.getInstance().authenticate(username, password, type, lc);
-        while(!lc.set);
         return lc.value;
     }
 
     public static String getUserType(String username) {
         UserCallback lc = new UserCallback();
         LoginService.App.getInstance().getType(username, lc);
-        while(!lc.set);
         return lc.value;
     }
 }
 
 class LoginCallback implements AsyncCallback<Boolean> {
 
-    public boolean value = false;
-    public boolean set = false;
+    public volatile boolean value = false;
+    public volatile boolean set = false;
 
     @Override
     public void onFailure(Throwable arg0) {
@@ -54,8 +51,8 @@ class LoginCallback implements AsyncCallback<Boolean> {
 
 class UserCallback implements AsyncCallback<String> {
 
-    public String value = null;
-    public boolean set = false;
+    public volatile String value = null;
+    public volatile boolean set = false;
     
     @Override
     public void onFailure(Throwable arg0) {
