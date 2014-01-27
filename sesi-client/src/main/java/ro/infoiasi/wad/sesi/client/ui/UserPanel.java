@@ -61,7 +61,7 @@ public class UserPanel extends HorizontalPanel {
 
         LoginLink() {
             this.setText("Login");
-            this.setStyleName(SesiResources.INSTANCE.style().standardMarginRight());
+            this.addStyleName(SesiResources.INSTANCE.style().standardMarginRight());
             addClickHandler(new LoginHandler());
         }
 
@@ -137,7 +137,7 @@ public class UserPanel extends HorizontalPanel {
 
         AuthenticationLink() {
             this.setText("Authenticate");
-            this.setStyleName(SesiResources.INSTANCE.style().standardMarginRight());
+            this.addStyleName(SesiResources.INSTANCE.style().standardMarginRight());
 
             addClickHandler(new AuthenticationHandler());
         }
@@ -229,6 +229,8 @@ public class UserPanel extends HorizontalPanel {
 
         LogoutLink() {
             this.setText("Logout");
+            this.addStyleName(SesiResources.INSTANCE.style().standardMarginRight());
+
             addClickHandler(new LogoutHandler());
         }
 
@@ -247,6 +249,8 @@ public class UserPanel extends HorizontalPanel {
 
         ProfileLink() {
             this.setText("Profile");
+            this.addStyleName(SesiResources.INSTANCE.style().standardMarginRight());
+
             addClickHandler(new ProfileHandler());
         }
 

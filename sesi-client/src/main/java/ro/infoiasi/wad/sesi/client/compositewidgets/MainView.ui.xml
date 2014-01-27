@@ -1,0 +1,11 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
+
+    <g:HTMLPanel>
+         <b:Hero>
+             <g:Label text="Semantic Student Internships" styleName="{resource.style.bigLabel}"/>
+         </b:Hero>
+    </g:HTMLPanel>
+</ui:UiBinder>

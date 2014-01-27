@@ -1,12 +1,7 @@
 package ro.infoiasi.wad.sesi.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
-import ro.infoiasi.wad.sesi.client.compositewidgets.InternshipView;
-import ro.infoiasi.wad.sesi.client.rpc.InternshipsService;
-import ro.infoiasi.wad.sesi.client.rpc.InternshipsServiceAsync;
-import ro.infoiasi.wad.sesi.core.model.Internship;
+import ro.infoiasi.wad.sesi.client.ui.ContentBuilder;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 /**
@@ -21,26 +16,24 @@ public class Sesi implements EntryPoint {
     @Override
     public void onModuleLoad() {
         SesiResources.INSTANCE.style().ensureInjected();
-        final RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
-        rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
-        InternshipsServiceAsync instance = InternshipsService.App.getInstance();
 
-        instance.getInternshipById("003", new AsyncCallback<Internship>() {
-            @Override
-            public void onFailure(Throwable caught) {
-
-            }
-
-            @Override
-            public void onSuccess(Internship internship) {
-                InternshipView internshipView = new InternshipView();
-                rootLayoutPanel.add(internshipView);
-                internshipView.edit(internship);
-
-            }
-        });
-//        ContentBuilder.buildRootPanelContent();
-//        freebase();
+//        InternshipsServiceAsync instance = InternshipsService.App.getInstance();
+//
+//        instance.getInternshipById("003", new AsyncCallback<Internship>() {
+//            @Override
+//            public void onFailure(Throwable caught) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(Internship internship) {
+//                InternshipView internshipView = new InternshipView();
+//                RootLayoutPanel.get().add(internshipView);
+//                internshipView.edit(internship);
+//
+//            }
+//        });
+        ContentBuilder.buildRootPanelContent();
     }
 
 

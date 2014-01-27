@@ -2,6 +2,7 @@ package ro.infoiasi.wad.sesi.client.ui;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 public class Tab extends VerticalPanel {
 
@@ -19,7 +20,7 @@ public class Tab extends VerticalPanel {
         mainPanel.setCellWidth(rightPanel, "25%");
 
         setCellHeight(menuPanel, "5 em");
-        menuPanel.setStyleName("menuPanel");
+        menuPanel.setStyleName(SesiResources.INSTANCE.style().menuPanel());
         menuPanel.setSpacing(5);
         add(menuPanel);
 
