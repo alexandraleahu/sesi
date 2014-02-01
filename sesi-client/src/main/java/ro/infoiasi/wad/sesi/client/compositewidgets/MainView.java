@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.client.compositewidgets;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.Tab;
 import com.github.gwtbootstrap.client.ui.TabPanel;
 import com.google.gwt.core.client.GWT;
@@ -44,13 +45,13 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
     @UiField
     Tab companiesTab;
     @UiField
-    Hyperlink loginLink;
+    Button loginLink;
     @UiField
-    Hyperlink registerLink;
+    Button registerLink;
     @UiField
-    Hyperlink logoutLink;
+    Button logoutLink;
     @UiField
-    Hyperlink profileLink;
+    Button profileLink;
 
     private HTMLPanel root;
     private SimplePanel currentPanel;
