@@ -1,8 +1,5 @@
 package ro.infoiasi.wad.sesi.client.authentication;
 
-import ro.infoiasi.wad.sesi.client.rpc.LoginService;
-import ro.infoiasi.wad.sesi.client.rpc.LoginServiceAsync;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class LoginServiceWrapper {

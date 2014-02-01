@@ -35,17 +35,17 @@
      <entry-point class='ro.infoiasi.wad.sesi.client.Sesi'/>
 
     
-    <servlet path="/InternshipsService" class="ro.infoiasi.wad.sesi.server.rpc.InternshipsServiceImpl"/>
-    <servlet path="/CompaniesService" class="ro.infoiasi.wad.sesi.server.rpc.CompaniesServiceImpl"/>
-    <servlet path="/OntologyExtraInfoService" class="ro.infoiasi.wad.sesi.server.rpc.OntologyExtraInfoServiceImpl"/>
-    <servlet path="/TechnologyService" class="ro.infoiasi.wad.sesi.server.rpc.TechnologyServiceImpl"/>
-    <servlet path="/TechnicalSkillsService" class="ro.infoiasi.wad.sesi.server.rpc.TechnicalSkillsServiceImpl"/>
-    <servlet path="/StudentService" class="ro.infoiasi.wad.sesi.server.rpc.StudentServiceImpl"/>
+    <servlet path="/InternshipsService" class="ro.infoiasi.wad.sesi.server.internships.InternshipsServiceImpl"/>
+    <servlet path="/CompaniesService" class="ro.infoiasi.wad.sesi.server.companies.CompaniesServiceImpl"/>
+    <servlet path="/OntologyExtraInfoService" class="ro.infoiasi.wad.sesi.server.ontologyextrainfo.OntologyExtraInfoServiceImpl"/>
+    <servlet path="/TechnologyService" class="ro.infoiasi.wad.sesi.server.technologies.TechnologyServiceImpl"/>
+    <servlet path="/TechnicalSkillsService" class="ro.infoiasi.wad.sesi.server.technicalskills.TechnicalSkillsServiceImpl"/>
+    <servlet path="/StudentService" class="ro.infoiasi.wad.sesi.server.students.StudentServiceImpl"/>
     <servlet path="/InternshipApplicationService"
-             class="ro.infoiasi.wad.sesi.server.rpc.InternshipApplicationServiceImpl"/>
-    <servlet path="/ProgressDetailsService" class="ro.infoiasi.wad.sesi.server.rpc.ProgressDetailsServiceImpl"/>
-    <servlet path="/LoginService" class="ro.infoiasi.wad.sesi.server.rpc.LoginServiceImpl"/>
-    <servlet path="/TeachersService" class="ro.infoiasi.wad.sesi.server.rpc.TeachersServiceImpl"/>
+             class="ro.infoiasi.wad.sesi.server.applications.InternshipApplicationServiceImpl"/>
+    <servlet path="/ProgressDetailsService" class="ro.infoiasi.wad.sesi.server.progressdetails.ProgressDetailsServiceImpl"/>
+    <servlet path="/LoginService" class="ro.infoiasi.wad.sesi.server.login.LoginServiceImpl"/>
+    <servlet path="/TeachersService" class="ro.infoiasi.wad.sesi.server.teachers.TeachersServiceImpl"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>

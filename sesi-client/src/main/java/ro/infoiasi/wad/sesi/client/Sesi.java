@@ -5,10 +5,10 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import ro.infoiasi.wad.sesi.client.compositewidgets.MainView;
-import ro.infoiasi.wad.sesi.client.rpc.InternshipsService;
-import ro.infoiasi.wad.sesi.client.rpc.InternshipsServiceAsync;
-import ro.infoiasi.wad.sesi.client.rpc.SigninService;
+import ro.infoiasi.wad.sesi.client.main.MainView;
+import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
+import ro.infoiasi.wad.sesi.client.internships.InternshipsServiceAsync;
+import ro.infoiasi.wad.sesi.client.authentication.SigninService;
 import ro.infoiasi.wad.sesi.core.model.User;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
@@ -19,7 +19,7 @@ public class Sesi implements EntryPoint {
 
 
     /**
-     * Inject the CSS resource, the event bus, the rpc code generator service and load the main view.
+     * Inject the CSS resource, the event bus, the login code generator service and load the main view.
      */
     @Override
     public void onModuleLoad() {

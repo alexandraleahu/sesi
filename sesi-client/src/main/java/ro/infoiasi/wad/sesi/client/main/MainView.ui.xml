@@ -1,0 +1,36 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
+
+    <g:HTMLPanel>
+         <b:Hero>
+             <g:Label  text="Semantic Student Internships" styleName="{resource.style.bigLabel}"/>
+         </b:Hero>
+        <b:ControlGroup>
+            <b:Button type="PRIMARY"  ui:field="loginLink" text="Login" visible="true" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+            <b:Button type="PRIMARY" ui:field="registerLink" text="Register" visible="true" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+            <b:Button type="PRIMARY"  ui:field="loginLinkedinButton" text="Login with LinkedIn" visible="true" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+            <b:Button type="PRIMARY" ui:field="logoutLink" text="Logout" visible="false" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+            <b:Button type="PRIMARY" ui:field="profileLink" text="Profile" visible="false" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
+        </b:ControlGroup>
+        <b:TabPanel tabPosition="top" ui:field="tabPanel">
+             <b:Tab heading="Home" active="true" ui:field="homeTab">
+                 <g:Label text="Welcome to Semantic Student Internships."/>
+                 <g:SimplePanel ui:field="homePanel"/>
+             </b:Tab>
+
+            <b:Tab heading="Internships" active="false" ui:field="internshipsTab">
+                 <g:SimplePanel ui:field="internshipsPanel"/>
+             </b:Tab>
+            <b:Tab heading="Companies" active="false" ui:field="companiesTab">
+                 <g:SimplePanel ui:field="companiesPanel"/>
+             </b:Tab>
+        </b:TabPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>

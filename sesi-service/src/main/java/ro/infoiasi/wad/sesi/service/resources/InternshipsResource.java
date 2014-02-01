@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
- * Internships Resource (exposed at "/api/internships" path)
+ * internships Resource (exposed at "/api/internships" path)
  */
 @Path("/internships")
 public class InternshipsResource {

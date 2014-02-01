@@ -8,47 +8,47 @@
   <!-- Servlets -->
     <servlet>
         <servlet-name>InternshipsServlet</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.InternshipsServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.internships.InternshipsServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi CompaniesService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.CompaniesServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.companies.CompaniesServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi OntologyExtraInfoService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.OntologyExtraInfoServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.ontologyextrainfo.OntologyExtraInfoServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi TechnologyService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.TechnologyServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.technologies.TechnologyServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi TechnicalSkillsService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.TechnicalSkillsServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.technicalskills.TechnicalSkillsServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi StudentService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.StudentServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.students.StudentServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipApplicationService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.InternshipApplicationServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.applications.InternshipApplicationServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi ProgressDetailsService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.ProgressDetailsServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.progressdetails.ProgressDetailsServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi TeachersService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.TeachersServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.teachers.TeachersServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi LoginService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.rpc.LoginServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.login.LoginServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi SigninService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.client.rpc.SigninServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.client.authentication.SigninServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>InternshipsServlet</servlet-name>
