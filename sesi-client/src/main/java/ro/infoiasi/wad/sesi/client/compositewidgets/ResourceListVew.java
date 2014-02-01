@@ -80,7 +80,7 @@ public class ResourceListVew<T extends Resource> extends Composite implements Le
             hyperlink.setText(value.getName());
 
             hyperlink.setTargetHistoryToken(Joiner.on(WidgetConstants.dataSeparator)
-                                                  .join(WidgetConstants.VIEW_TOKEN, value.getId(), value.getClass().getName()));
+                                                  .join(WidgetConstants.VIEW_TOKEN, value.getRelativeUri()));
 
             sb.appendHtmlConstant(hyperlink.getElement().getString());
         }
