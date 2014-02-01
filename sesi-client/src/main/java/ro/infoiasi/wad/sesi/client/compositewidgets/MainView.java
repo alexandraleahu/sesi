@@ -11,8 +11,11 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import ro.infoiasi.wad.sesi.client.Sesi;
+import ro.infoiasi.wad.sesi.client.rpc.SigninService;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 
 
@@ -27,6 +30,7 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
     interface MainViewUiBinder extends UiBinder<HTMLPanel, MainView> {
 
     }
+
     private static MainViewUiBinder ourUiBinder = GWT.create(MainViewUiBinder.class);
 
     @UiField
@@ -52,6 +56,8 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
     Button logoutLink;
     @UiField
     Button profileLink;
+    @UiField
+    Button loginLinkedinButton;
 
     private HTMLPanel root;
     private SimplePanel currentPanel;
@@ -61,10 +67,12 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
         wireUiElements();
         fillHomeTab();
     }
+
     private void wireUiElements() {
         homeTab.addClickHandler(this);
         internshipsTab.addClickHandler(this);
         companiesTab.addClickHandler(this);
+        loginLinkedinButton.addClickHandler(this);
 
         History.addValueChangeHandler(this);
     }
@@ -86,6 +94,8 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
             System.out.println("company");
 
             currentPanel = companiesPanel;
+        } else if (event.getSource().equals(loginLinkedinButton)) {
+            toSignin("Linkedin");
         }
     }
 
@@ -100,7 +110,7 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
         } else if ("teacher".equals(currentUserType)) {
             // afisam chestiile de grafice
         } else if ("company".equals(currentUserType)) {
-             // afisam aplicarile
+            // afisam aplicarile
 
             // afisam progress details
 
@@ -115,6 +125,22 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
         if (historyToken[0].equals(WidgetConstants.VIEW_TOKEN)) {
 
         }
+    }
+
+    private void toSignin(String provider) {
+        SigninService.Util.getInstance().getAuthenticateUrl(provider, Window.Location.getHref(), new AsyncCallback<String>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+                // TODO Auto-generated method stub
+                Window.alert(caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                Window.Location.replace(result);
+            }
+        });
     }
 
 }

@@ -2,10 +2,14 @@ package ro.infoiasi.wad.sesi.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import ro.infoiasi.wad.sesi.client.compositewidgets.MainView;
 import ro.infoiasi.wad.sesi.client.rpc.InternshipsService;
 import ro.infoiasi.wad.sesi.client.rpc.InternshipsServiceAsync;
+import ro.infoiasi.wad.sesi.client.rpc.SigninService;
+import ro.infoiasi.wad.sesi.core.model.User;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 /**
@@ -21,7 +25,14 @@ public class Sesi implements EntryPoint {
     public void onModuleLoad() {
         SesiResources.INSTANCE.style().ensureInjected();
         InternshipsServiceAsync instance = InternshipsService.App.getInstance();
-        RootLayoutPanel.get().setStyleName(SesiResources.INSTANCE.style().backgroundColor());
+        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+        rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
+        String v = Window.Location.getParameter("oauth_verifier");
+        if (v != null) {
+            verifyOAuth(v);
+            return;
+        }
+
         RootLayoutPanel.get().add(new MainView());
 //        instance.getInternshipById("003", new AsyncCallback<Internship>() {
 //            @Override
@@ -43,6 +54,28 @@ public class Sesi implements EntryPoint {
 //        freebase();
     }
 
+    public void verifyOAuth(String v) {
+        final MainView home = new MainView();
+        RootLayoutPanel.get().clear();
+        RootLayoutPanel.get().add(home);
+
+        SigninService.Util.getInstance().verify(v, new AsyncCallback<User>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+//                home.error("Sign in verification failed: "+caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(User result) {
+                System.out.println("user: " + result);
+//                home.initialize(result);
+
+            }
+
+        });
+    }
+
 
     // !!! This has to be called after the elements used inside it are attached to the document !!!
     public static native void freebase() /*-{
@@ -50,9 +83,9 @@ public class Sesi implements EntryPoint {
         function fbSuggest(suggestBoxId, resultBoxId, topic, append, levelBoxId, includeType) {
             $wnd.$("#" + suggestBoxId)
                 .suggest({"key": "AIzaSyACLiHBsbLdFR5glh1j_rMtBV40R7Yp_0g",
-                           filter:'(any ' + topic + ')'
-                            })
-                .bind("fb-select", function(e, data) {
+                    filter: '(any ' + topic + ')'
+                })
+                .bind("fb-select", function (e, data) {
                     init = $wnd.$("#" + resultBoxId).val();
                     level = "";
                     if (levelBoxId != null && levelBoxId != undefined) {
@@ -67,7 +100,7 @@ public class Sesi implements EntryPoint {
                     skill += data.id + level;
 
                     if (init.length != 0 && append) {
-                        $wnd.$("#" + resultBoxId).val(init + "\n"+ skill);
+                        $wnd.$("#" + resultBoxId).val(init + "\n" + skill);
                     } else {
                         $wnd.$("#" + resultBoxId).val(skill);
                     }
@@ -87,5 +120,6 @@ public class Sesi implements EntryPoint {
 
     public static String getCurrentUserType() {
 
-        return Cookies.getCookie("currentUserRole");    }
+        return Cookies.getCookie("currentUserRole");
+    }
 }

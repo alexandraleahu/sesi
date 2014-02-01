@@ -255,4 +255,5 @@ public class Internship implements Resource, Event {
         }
     }
 
+
 }

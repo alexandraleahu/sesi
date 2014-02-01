@@ -12,7 +12,8 @@
                                                                             {resource.style.standardMarginRight}"/>
             <b:Button type="PRIMARY" ui:field="registerLink" text="Register" visible="true" addStyleNames="{resource.style.floatRight}
                                                                             {resource.style.standardMarginRight}"/>
-
+            <b:Button  ui:field="loginLinkedinButton" text="Login with LinkedIn" visible="true" addStyleNames="{resource.style.floatRight}
+                                                                            {resource.style.standardMarginRight}"/>
             <b:Button type="PRIMARY" ui:field="logoutLink" text="Logout" visible="false" addStyleNames="{resource.style.floatRight}
                                                                             {resource.style.standardMarginRight}"/>
             <b:Button type="PRIMARY" ui:field="profileLink" text="Profile" visible="false" addStyleNames="{resource.style.floatRight}
