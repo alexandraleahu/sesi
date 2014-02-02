@@ -89,7 +89,7 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
         } else if (event.getSource().equals(internshipsTab.asTabLink().getAnchor())) {
             System.out.println("internship");
             currentPanel = internshipsPanel;
-            internshipsPanel.add(new InternshipsByCategoryView());
+            internshipsPanel.setWidget(new InternshipsByCategoryView());
 
         } else if (event.getSource().equals(companiesTab.asTabLink().getAnchor())) {
             System.out.println("company");

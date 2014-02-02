@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/internshipProgressDetails")
+@Path("/internshipsProgressDetails")
 public class InternshipProgressDetailsResource {
     @GET
     @Path("/")

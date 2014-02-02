@@ -17,6 +17,7 @@ public abstract class StudentInternshipRelation implements Resource {
     private Student student;
     private String id;
     private Status status;
+    private String feedback;
 
     public Internship getInternship() {
         return internship;
@@ -46,6 +47,14 @@ public abstract class StudentInternshipRelation implements Resource {
 
     public Status getStatus() {
         return status;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 
     @Override

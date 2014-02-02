@@ -63,8 +63,6 @@ public interface SesiResources extends ClientBundle {
         @ClassName("gwt-InlineHyperlink")
         String gwtInlineHyperlink();
 
-        String menuPanel();
-
 //
 
     }

@@ -5,7 +5,6 @@ import java.util.EnumSet;
 public class InternshipProgressDetails extends StudentInternshipRelation {
 
     private Teacher teacher;
-    private String companyFeedback;
 
     @Override
     public EnumSet<Status> getPossibleStatus() {
@@ -14,7 +13,7 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
 
     @Override
     public String getDescription() {
-        return getCompanyFeedback();
+        return getFeedback();
     }
 
     public Teacher getTeacher() {
@@ -24,15 +23,6 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
-
-    public String getCompanyFeedback() {
-        return companyFeedback;
-    }
-
-    public void setCompanyFeedback(String companyFeedback) {
-        this.companyFeedback = companyFeedback;
-    }
-
 
 
     @Override
@@ -44,14 +34,14 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
         sb.append(", status='").append(getStatus()).append('\'');
         sb.append(", description='").append(getDescription()).append('\'');
         sb.append(", teacher='").append(getTeacher()).append('\'');
-        sb.append(", feedback='").append(getCompanyFeedback()).append('\'');
+        sb.append(", feedback='").append(getFeedback()).append('\'');
 
         return sb.toString();
     }
 
     @Override
     public String getRelativeUri() {
-        return "/internshipProgressDetails/" + getId();
+        return "/internshipsProgressDetails/" + getId();
     }
 
 

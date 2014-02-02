@@ -7,7 +7,6 @@ import java.util.EnumSet;
 @XmlRootElement
 public class InternshipApplication extends StudentInternshipRelation {
 
-    private String description;
     private String motivation;
     private Date publishedAt;
 
@@ -34,12 +33,9 @@ public class InternshipApplication extends StudentInternshipRelation {
 
     @Override
     public String getDescription() {
-        return description;
+        return getFeedback();
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @Override
     public String toString() {
