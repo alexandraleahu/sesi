@@ -50,7 +50,7 @@ public class InternshipProgressDetailsDeserializer implements Deserializer<Inter
 
         //company feedback
         statement = m.getProperty(detailsResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, FEEDBACK_PROP));
-        details.setCompanyFeedback(statement.getLiteral().getString());
+        details.setFeedback(statement.getLiteral().getString());
 
         return details;
     }

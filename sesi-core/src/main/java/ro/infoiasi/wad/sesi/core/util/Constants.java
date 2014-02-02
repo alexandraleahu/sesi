@@ -61,6 +61,7 @@ public class Constants implements Serializable {
     public static final String PUBLISHED_BY_PROP = "publishedByCompany";
     public static final String PUBLISHED_AT_PROP = "publishedAt";
     public static final String HAS_INTERNSHIP_APPLICATION_PROP = "hasInternshipApplication";
+    public static final String SUBMITTED_APPLICATION_PROP = "submittedApplication";
 
     public static final String WORKED_ON_PROJECT_PROP = "workedOnProject";
     public static final String TECHNICAL_SKILL_PROP = "technicalSkill";
@@ -85,6 +86,7 @@ public class Constants implements Serializable {
 
     public static final String TEACHER_MENTOR_PROP = "associateInternshipTeacher";
     public static final String ATTENDED_INTERNSHIP_PROP = "attendedInternship";
+    public static final String ATTENDED_INTERNSHIP_PROGRESS_PROP = "attendedInternshipProgress";
     public static final String ATTENDEE_STUDENT_PROP = "attendeeStudent";
 
     public static final String INITIAL_FEEDBACK = "Your application was submitted into the system.";

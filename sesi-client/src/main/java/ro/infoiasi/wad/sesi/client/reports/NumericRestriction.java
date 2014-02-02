@@ -1,4 +1,4 @@
-package ro.infoiasi.wad.sesi.client.teachers.reports;
+package ro.infoiasi.wad.sesi.client.reports;
 
 import ro.infoiasi.wad.sesi.shared.ComparisonOperator;
 

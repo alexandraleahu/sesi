@@ -28,7 +28,7 @@ public class InternshipApplicationDeserializer implements ResourceDeserializer<I
         Resource applicationResource = m.getOntResource(SESI_OBJECTS_NS + id);
         //description
         Statement statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
-        application.setDescription(statement.getLiteral().getString());
+        application.setFeedback(statement.getLiteral().getString());
 
         //published at
         statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, PUBLISHED_AT_PROP));
@@ -42,7 +42,7 @@ public class InternshipApplicationDeserializer implements ResourceDeserializer<I
         //status
         statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, STATUS_PROP));
         Object[] res = sparqlService.getStatus(statement.getResource().getURI());
-        application.setDescription((String) res[0]);
+        application.setFeedback((String) res[0]);
         application.setStatus((StudentInternshipRelation.Status) res[1]);
 
         //internship
