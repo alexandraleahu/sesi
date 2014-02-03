@@ -1,4 +1,4 @@
-package ro.infoiasi.wad.sesi.server.util;
+package ro.infoiasi.wad.sesi.server.sparqlservice;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ArrayListMultimap;

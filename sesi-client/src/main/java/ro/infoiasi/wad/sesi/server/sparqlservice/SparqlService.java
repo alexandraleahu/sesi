@@ -6,7 +6,6 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.apache.jena.atlas.web.auth.ServiceAuthenticator;
 import ro.infoiasi.wad.sesi.core.model.*;
-import ro.infoiasi.wad.sesi.server.util.ResultSetToMultimap;
 
 public class SparqlService {
     final static String serviceEndpoint = "http://localhost:5820/sesi/query/";
