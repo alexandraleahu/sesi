@@ -12,7 +12,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import ro.infoiasi.wad.sesi.core.model.*;
 import ro.infoiasi.wad.sesi.server.companies.CompaniesServiceImpl;
 import ro.infoiasi.wad.sesi.server.deserializerinterfaces.ResourceDeserializer;
-import ro.infoiasi.wad.sesi.server.util.SparqlService;
+import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
 
 import java.util.List;
 

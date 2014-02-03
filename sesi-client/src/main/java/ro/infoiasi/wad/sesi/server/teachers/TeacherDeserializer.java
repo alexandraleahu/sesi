@@ -9,7 +9,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import ro.infoiasi.wad.sesi.core.model.Faculty;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
 import ro.infoiasi.wad.sesi.server.deserializerinterfaces.Deserializer;
-import ro.infoiasi.wad.sesi.server.util.SparqlService;
+import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
 
 import java.util.List;
 

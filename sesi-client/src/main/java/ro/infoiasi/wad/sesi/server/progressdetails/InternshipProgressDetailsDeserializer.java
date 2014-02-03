@@ -12,7 +12,7 @@ import ro.infoiasi.wad.sesi.core.model.Teacher;
 import ro.infoiasi.wad.sesi.server.internships.InternshipsServiceImpl;
 import ro.infoiasi.wad.sesi.server.deserializerinterfaces.Deserializer;
 import ro.infoiasi.wad.sesi.server.students.StudentServiceImpl;
-import ro.infoiasi.wad.sesi.server.util.SparqlService;
+import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
 
 import java.util.List;
 

@@ -40,6 +40,23 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/schemas/sesi/enrolledStudent -->
+
+    <owl:ObjectProperty rdf:about="&sesiSchema;enrolledStudent"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Individuals
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -165,6 +182,8 @@
         <rdfs:label>004</rdfs:label>
         <sesiSchema:id rdf:datatype="&xsd;string">004</sesiSchema:id>
         <sesiSchema:publishedAt rdf:datatype="&xsd;dateTime">2014-01-24T12:00:00</sesiSchema:publishedAt>
+        <sesiSchema:motivation rdf:datatype="&xsd;string">I am very eager to work with Java web technologies.</sesiSchema:motivation>
+        <sesiSchema:feedback rdf:datatype="&xsd;string">Your application has been entered into our system.</sesiSchema:feedback>
         <sesiSchema:name rdf:datatype="&xsd;string">ionpopescu - 003</sesiSchema:name>
         <sesiSchema:sesiUrl>/applications/004</sesiSchema:sesiUrl>
         <sesiSchema:applicationInternship rdf:resource="&sesi;003"/>
@@ -192,6 +211,7 @@
     <owl:NamedIndividual rdf:about="&sesi;Faculty_Of_Computer_Science">
         <rdf:type rdf:resource="&sesiSchema;Faculty"/>
         <sesiSchema:name rdf:datatype="&xsd;string">Faculty Of Computer Science</sesiSchema:name>
+        <rdfs:seeAlso rdf:datatype="&xsd;anyURI">http://www.info.uaic.ro/bin/Main/</rdfs:seeAlso>
         <sesiSchema:university rdf:resource="&freebase;m.0945q0"/>
     </owl:NamedIndividual>
     
@@ -247,9 +267,9 @@
         <rdf:type rdf:resource="&sesiSchema;Student"/>
         <sesiSchema:generalSkill rdf:datatype="&xsd;string">Team player</sesiSchema:generalSkill>
         <sesiSchema:id rdf:datatype="&xsd;string">ionpopescu</sesiSchema:id>
+        <sesiSchema:description>Ambitious student, looking to work mainly with Java technologies</sesiSchema:description>
         <sesiSchema:sesiUrl>/students/ionpopescu</sesiSchema:sesiUrl>
         <sesiSchema:name>Ion Popescu</sesiSchema:name>
-        <sesiSchema:description>Ambitious student, looking to work mainly with .NET technologies</sesiSchema:description>
         <sesiSchema:workedOnProject rdf:resource="&sesi;005"/>
         <sesiSchema:technicalSkill rdf:resource="&sesi;Java-Intermediate"/>
         <sesiSchema:hasStudies rdf:resource="&sesi;studies007"/>
@@ -295,6 +315,13 @@
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
             <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
@@ -308,8 +335,8 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
             <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
@@ -317,13 +344,6 @@
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&freebase;m.07657k"/>
             <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>

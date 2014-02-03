@@ -8,7 +8,7 @@ import ro.infoiasi.wad.sesi.core.model.StudentProject;
 import ro.infoiasi.wad.sesi.core.model.Studies;
 import ro.infoiasi.wad.sesi.core.model.TechnicalSkill;
 import ro.infoiasi.wad.sesi.server.deserializerinterfaces.ResourceDeserializer;
-import ro.infoiasi.wad.sesi.server.util.SparqlService;
+import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
 
 import java.util.List;
 

@@ -1,15 +1,31 @@
-package ro.infoiasi.wad.sesi.server.util;
+package ro.infoiasi.wad.sesi.server.sparqlservice;
 
 
+import com.google.common.collect.ListMultimap;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.apache.jena.atlas.web.auth.ServiceAuthenticator;
 import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.server.util.ResultSetToMultimap;
 
 public class SparqlService {
     final static String serviceEndpoint = "http://localhost:5820/sesi/query/";
     private static String programmingLanguage = "http://rdf.freebase.com/ns/computer.programming_language";
     private static String technology = "http://rdf.freebase.com/ns/computer.software";
+
+    public ListMultimap<String, String> getReportResults(String sparqlQuery) {
+
+        Query query = QueryFactory.create(sparqlQuery);
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+
+
+
+        ResultSet resultSet = qe.execSelect();
+        ListMultimap<String,String> resultMultimap = new ResultSetToMultimap().apply(resultSet);
+        qe.close();
+
+        return resultMultimap;
+    }
 
     public OntologyExtraInfo getOntologyExtraInfo(String uri) {
         StringBuilder builder = new StringBuilder();

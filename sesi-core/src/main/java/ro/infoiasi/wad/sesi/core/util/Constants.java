@@ -11,6 +11,8 @@ public class Constants implements Serializable {
     public static final String SESI_OBJECTS_NS = "http://www.infoiasi.ro/wad/objects/sesi/";
     public static final String FREEBASE_NS = "http://rdf.freebase.com/ns/";
     public static final String FREEBASE_INFO = "http://freebase.com/";
+    public static final String SESI_SCHEMA_SHORT = "sesiSchema:";
+    public static final String SESI_OBJECTS_SHORT = "sesi:";
 
     public static final String INTERNSHIP_CLASS = "Internship";
     public static final String APPLICATION_CLASS = "InternshipApplication";
@@ -68,6 +70,7 @@ public class Constants implements Serializable {
     public static final String HAS_STUDIES_PROP = "hasStudies";
     public static final String GENERAL_SKILL_PROP = "generalSkill";
     public static final String UNIVERSITY_PROP = "university";
+    public static final String IS_STUDENT_OF_PROP = "isStudentOf";
     public static final String FACULTY_PROP = "studyFaculty";
     public static final String YEAR_OF_STUDY_PROP = "yearOfStudy";
     public static final String ENROLLED_STUDENT_PROP = "enrolledStudent";
