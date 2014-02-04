@@ -1,0 +1,15 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
+             xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.commonwidgets'>
+    <g:HTMLPanel>
+        <b:Row>
+            <b:Column size="1">
+                <b:ValueListBox ui:field="comparisonOperatorBox" size="1"/>
+            </b:Column>
+            <b:Column size="1">
+                <c:IntegerEditor ui:field="numericalValueEditor" size="1"/>
+            </b:Column>
+        </b:Row>
+    </g:HTMLPanel>
+</ui:UiBinder>

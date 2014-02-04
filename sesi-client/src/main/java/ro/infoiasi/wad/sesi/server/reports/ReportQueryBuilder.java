@@ -1,19 +1,19 @@
 package ro.infoiasi.wad.sesi.server.reports;
 
-import ro.infoiasi.wad.sesi.client.reports.QueryBean;
+import ro.infoiasi.wad.sesi.client.reports.ReportBean;
 
 public class ReportQueryBuilder {
 
 
    private ReportQueryBuilder(){}
 
-   public static String buildQuery(QueryBean queryBean) {
+   public static String buildQuery(ReportBean reportBean) {
 
-       switch (queryBean.getResourceType()) {
+       switch (reportBean.getResourceType()) {
            case Internships:
-               return new InternshipsReportQueryBuilder().buildQuery(queryBean);
+               return new InternshipsReportQueryBuilder().buildQuery(reportBean);
            case Students:
-               return new StudentsReportQueryBuilder().buildQuery(queryBean);
+               return new StudentsReportQueryBuilder().buildQuery(reportBean);
            default:
                return null;
 

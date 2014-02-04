@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import ro.infoiasi.wad.sesi.client.reports.NumericRestriction;
-import ro.infoiasi.wad.sesi.client.reports.QueryBean;
+import ro.infoiasi.wad.sesi.client.reports.ReportBean;
 import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
 import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.shared.ComparisonOperator;
@@ -373,9 +373,9 @@ abstract class AbstractReportQueryBuilder {
 
         return this;
     }
-    public String buildQuery(QueryBean queryBean) {
+    public String buildQuery(ReportBean reportBean) {
 
-        boolean applications = queryBean.isApplications();
+        boolean applications = reportBean.isApplications();
         AbstractReportQueryBuilder queryBuilder = withPrefixes()
                                                 .startSelect()
                                                 .withBasicSelectFields(applications)
@@ -386,18 +386,18 @@ abstract class AbstractReportQueryBuilder {
                                                     .withBasicWhereFields();
 
 
-        if (queryBean.getStatuses() != null ||
-                queryBean.getCompanyNames() != null ||
-                queryBean.getFacultyNames() != null ||
-                queryBean.getStartDate() != null ||
-                queryBean.getEndDate() != null) {
+        if (reportBean.getStatuses() != null ||
+                reportBean.getCompanyNames() != null ||
+                reportBean.getFacultyNames() != null ||
+                reportBean.getStartDate() != null ||
+                reportBean.getEndDate() != null) {
 
             queryBuilder.startFilter()
                         .openBracket()
-                            .withStatusFilter(queryBean.getStatuses())
-                            .withNameFilter(queryBean.getCompanyNames(), "?cname")
-                            .withNameFilter(queryBean.getFacultyNames(), "?schoolName")
-                            .withPeriodFilter(queryBean.getStartDate(), queryBean.getEndDate(), applications)
+                            .withStatusFilter(reportBean.getStatuses())
+                            .withNameFilter(reportBean.getCompanyNames(), "?cname")
+                            .withNameFilter(reportBean.getFacultyNames(), "?schoolName")
+                            .withPeriodFilter(reportBean.getStartDate(), reportBean.getEndDate(), applications)
                         .closeBracket();
 
 
@@ -410,11 +410,11 @@ abstract class AbstractReportQueryBuilder {
                                                         .startGroupBy()
                                                         .withGroupByFields(applications);
 
-        if (queryBean.getNumericRestriction() != null) {
+        if (reportBean.getNumericRestriction() != null) {
 
             builder.startHaving()
                     .openBracket()
-                    .withHavingClause(queryBean.getNumericRestriction())
+                    .withHavingClause(reportBean.getNumericRestriction())
                     .closeBracket();
         }
 
@@ -424,14 +424,14 @@ abstract class AbstractReportQueryBuilder {
 
     public static void main(String[] args) {
 
-        QueryBean bean = new QueryBean();
+        ReportBean bean = new ReportBean();
 
         bean.setApplications(true);
 
         bean.setCompanyNames(Lists.newArrayList("VirtualComp", "comp2"));
         bean.setFacultyNames(Lists.newArrayList("Faculty Of Computer Science"));
         bean.setStatuses(Lists.newArrayList(StudentInternshipRelation.Status.accepted, StudentInternshipRelation.Status.pending));
-        bean.setResourceType(QueryBean.MainResourceType.Students);
+        bean.setResourceType(ReportBean.MainResourceType.Students);
 
         NumericRestriction numericRestriction = new NumericRestriction();
         numericRestriction.setLimit(1);

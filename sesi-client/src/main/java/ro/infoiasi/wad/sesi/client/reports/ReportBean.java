@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class QueryBean implements Serializable {
+public class ReportBean implements Serializable {
 
     private List<String> companyNames;
     private List<String> facultyNames;
