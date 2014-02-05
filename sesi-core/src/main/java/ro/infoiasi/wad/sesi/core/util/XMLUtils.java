@@ -55,20 +55,20 @@ public class XMLUtils {
         //city
         ns1 = root.getElementsByTagName("location");
         String location = ns1.item(0).getTextContent();
-        profile.location = location;
+        profile.location = location.replace("\n", "").replaceAll("[0-9]","").trim();
 
         //get skills
         ns1 = root.getElementsByTagName("skill");
         for (int i = 0; i < ns1.getLength(); i++) {
             String skill = ns1.item(i).getTextContent();
-            profile.addSkill(skill);
+            profile.addSkill(skill.replace("\n", "").replaceAll("[0-9]","").trim());
         }
 
         //get education
-        ns1 = root.getElementsByTagName("education");
+        ns1 = root.getElementsByTagName("school-name");
         for (int i = 0; i < ns1.getLength(); i++) {
             String school = ns1.item(i).getTextContent();
-            profile.addSchool(school);
+            profile.addSchool(school.trim());
         }
 
         is.close();
