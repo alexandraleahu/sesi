@@ -3,6 +3,7 @@ package ro.infoiasi.wad.sesi.server.students;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import ro.infoiasi.wad.sesi.client.authentication.SigninRecord;
 import ro.infoiasi.wad.sesi.client.students.StudentService;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
@@ -10,10 +11,11 @@ import ro.infoiasi.wad.sesi.core.model.Student;
 import ro.infoiasi.wad.sesi.server.applications.InternshipApplicationDeserializer;
 import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDeserializer;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.StringReader;
 import java.util.List;
 
@@ -96,9 +98,33 @@ public class StudentServiceImpl extends RemoteServiceServlet implements StudentS
     }
 
     @Override
-    public String saveStudent(Student student) {
+    public String updateStudent(Student student) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public boolean registerStudent(String username, String password) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
+        Form form = new Form();
+        form.param("username", username);
+        form.param("password", password);
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+        if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Student getStudentProfile(String studentId) {
+        HttpSession session = this.getThreadLocalRequest().getSession(true);
+        SigninRecord signingRecord = (SigninRecord) session.getAttribute("SigninRecord");
+
+        return StudentLinkedInProfileService.getStudentProfile(studentId, signingRecord);
+    }
+
 
     public static final String RESOURCE_PATH = "students";
 }

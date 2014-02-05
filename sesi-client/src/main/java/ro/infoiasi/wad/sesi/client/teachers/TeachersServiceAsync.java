@@ -12,4 +12,6 @@ public interface TeachersServiceAsync {
     void getAllTeachers(AsyncCallback<List<Teacher>> async);
 
     void getTeacherByID(String teacherID, AsyncCallback<Teacher> async);
+
+    void registerStudent(String username, String password, AsyncCallback<Boolean> async);
 }

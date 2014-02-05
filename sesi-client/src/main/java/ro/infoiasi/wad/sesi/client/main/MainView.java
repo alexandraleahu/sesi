@@ -15,8 +15,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import ro.infoiasi.wad.sesi.client.Sesi;
-import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.authentication.SigninService;
+import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 
 
@@ -139,7 +139,9 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
 
             @Override
             public void onSuccess(String result) {
+                System.out.println("result " + result);
                 Window.Location.replace(result);
+
             }
         });
     }

@@ -5,10 +5,11 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import ro.infoiasi.wad.sesi.client.main.MainView;
+import ro.infoiasi.wad.sesi.client.authentication.SigninService;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsServiceAsync;
-import ro.infoiasi.wad.sesi.client.authentication.SigninService;
+import ro.infoiasi.wad.sesi.client.main.MainView;
+import ro.infoiasi.wad.sesi.core.model.StudentLinkedinProfile;
 import ro.infoiasi.wad.sesi.core.model.User;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
@@ -34,6 +35,7 @@ public class Sesi implements EntryPoint {
         }
 
         RootLayoutPanel.get().add(new MainView());
+
 //        instance.getInternshipById("003", new AsyncCallback<Internship>() {
 //            @Override
 //            public void onFailure(Throwable caught) {
@@ -63,16 +65,28 @@ public class Sesi implements EntryPoint {
 
             @Override
             public void onFailure(Throwable caught) {
+                System.out.println(caught.toString());
 //                home.error("Sign in verification failed: "+caught.getMessage());
             }
 
             @Override
             public void onSuccess(User result) {
                 System.out.println("user: " + result);
-//                home.initialize(result);
+            }
+        });
 
+        SigninService.Util.getInstance().getProfile(v, new AsyncCallback<StudentLinkedinProfile>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+                System.out.println(caught.toString());
+//                home.error("Sign in verification failed: "+caught.getMessage());
             }
 
+            @Override
+            public void onSuccess(StudentLinkedinProfile result) {
+                System.out.println("user: " + result);
+            }
         });
     }
 

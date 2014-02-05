@@ -8,10 +8,10 @@ import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
 import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDeserializer;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.StringReader;
 import java.util.List;
 
@@ -68,6 +68,22 @@ public class TeachersServiceImpl extends RemoteServiceServlet implements Teacher
         List<InternshipProgressDetails> progressDetails = new InternshipProgressDetailsDeserializer().deserialize(m);
         client.close();
         return progressDetails;
+    }
+
+
+    @Override
+    public boolean registerStudent(String username, String password) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
+        Form form = new Form();
+        form.param("username", username);
+        form.param("password", password);
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+        if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
+            return false;
+        }
+        return true;
     }
 
     public static final String RESOURCE_PATH = "teachers";

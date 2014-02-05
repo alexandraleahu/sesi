@@ -1,8 +1,10 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.core.model.Company;
+import ro.infoiasi.wad.sesi.core.model.UserAccount;
 import ro.infoiasi.wad.sesi.rdf.dao.CompanyDao;
+import ro.infoiasi.wad.sesi.service.authentication.DBUser;
+import ro.infoiasi.wad.sesi.service.authentication.UsersTable;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.annotation.security.PermitAll;
@@ -12,12 +14,18 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBElement;
 import java.util.List;
 
 @PermitAll
 @Path("/companies")
 public class CompaniesResource {
+
+    private static final UsersTable usersTable = new UsersTable();
+
+    static {
+        usersTable.createTable();
+    }
+
 
     @GET
     @Path("/{id}")
@@ -124,12 +132,15 @@ public class CompaniesResource {
         return null;
     }
 
-    @RolesAllowed("company")
     @POST
-    @Path("id")
-    @Produces(MediaType.APPLICATION_XML)
-    public Response addCompany(@PathParam("id") String companyId, JAXBElement<Company> company) {
-        return null;
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response register(@FormParam("username") String username, @FormParam("pass") String password) {
+        if (usersTable.addUser(new DBUser(username, password, UserAccount.COMPANY_ACCOUNT))) {
+            return Response.ok().build();
+        }
+        return Response.status(Response.Status.FORBIDDEN).build();
+
     }
-   
 }

@@ -11,6 +11,10 @@ import java.util.List;
 
 @RemoteServiceRelativePath("StudentService")
 public interface StudentService extends RemoteService {
+    Student getStudentProfile(String studentId);
+
+    boolean registerStudent(String username, String password);
+
     /**
      * Utility/Convenience class.
      * Use StudentService.App.getInstance() to access static instance of StudentServiceAsync
@@ -31,5 +35,5 @@ public interface StudentService extends RemoteService {
 
     List<InternshipProgressDetails> getStudentInternshipProgressDetails(String studentId);
 
-    String saveStudent(Student student);
+    String updateStudent(Student student);
 }

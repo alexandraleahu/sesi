@@ -16,5 +16,9 @@ public interface StudentServiceAsync {
 
     void getStudentInternshipProgressDetails(String studentId, AsyncCallback<List<InternshipProgressDetails>> async);
 
-    void saveStudent(Student student, AsyncCallback<String> async);
+    void updateStudent(Student student, AsyncCallback<String> async);
+
+    void getStudentProfile(String studentId, AsyncCallback<Student> async);
+
+    void registerStudent(String username, String password, AsyncCallback<Boolean> async);
 }

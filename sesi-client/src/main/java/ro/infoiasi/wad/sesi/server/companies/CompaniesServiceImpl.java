@@ -12,10 +12,10 @@ import ro.infoiasi.wad.sesi.server.applications.InternshipApplicationDeserialize
 import ro.infoiasi.wad.sesi.server.internships.InternshipDeserializer;
 import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDeserializer;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.StringReader;
 import java.util.List;
 
@@ -112,4 +112,21 @@ public class CompaniesServiceImpl extends RemoteServiceServlet implements Compan
         client.close();
         return details;
     }
+
+
+    @Override
+    public boolean registerStudent(String username, String password) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
+        Form form = new Form();
+        form.param("username", username);
+        form.param("password", password);
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+        if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -1,7 +1,10 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
 import org.openrdf.rio.RDFFormat;
+import ro.infoiasi.wad.sesi.core.model.UserAccount;
 import ro.infoiasi.wad.sesi.rdf.dao.StudentsDao;
+import ro.infoiasi.wad.sesi.service.authentication.DBUser;
+import ro.infoiasi.wad.sesi.service.authentication.UsersTable;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
@@ -13,6 +16,12 @@ import java.util.List;
 
 @Path("/students")
 public class StudentsResource {
+    private static final UsersTable usersTable = new UsersTable();
+
+    static {
+        usersTable.createTable();
+    }
+
     @GET
     @Path("/")
     @Produces({MediaTypeConstants.JSON_LD_STRING, MediaTypeConstants.RDFXML_STRING, MediaTypeConstants.TURTLE_STRING})
@@ -118,4 +127,16 @@ public class StudentsResource {
 
         return null;
     }
+
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response register(@FormParam("username") String username, @FormParam("pass") String password) {
+        if (usersTable.addUser(new DBUser(username, password, UserAccount.STUDENT_ACCOUNT))) {
+            return Response.ok().build();
+        }
+        return Response.status(Response.Status.FORBIDDEN).build();
+    }
+
 }

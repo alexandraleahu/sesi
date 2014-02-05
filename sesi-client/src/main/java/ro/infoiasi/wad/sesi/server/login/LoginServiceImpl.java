@@ -35,8 +35,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     @Override
     public Boolean authenticate(String username, String password, String type) {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(SESI_BASE_URL)
-                .path(RESOURCE_PATH);
+        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
         Form form = new Form();
         form.param("username", username);
         form.param("password", password);

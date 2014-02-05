@@ -10,6 +10,8 @@ import java.util.List;
 
 @RemoteServiceRelativePath("TeachersService")
 public interface TeachersService extends RemoteService {
+    boolean registerStudent(String username, String password);
+
     /**
      * Utility/Convenience class.
      * Use TeachersService.App.getInstance() to access static instance of TeachersServiceAsync

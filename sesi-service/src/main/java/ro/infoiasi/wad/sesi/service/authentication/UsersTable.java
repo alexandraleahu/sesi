@@ -10,8 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class UsersTable {
 
-    Log LOG = LogFactory.getLog(getClass())
-            ;
+    Log LOG = LogFactory.getLog(getClass());
     
     public boolean addUser(DBUser user) {
         if(exists(user)) {
@@ -119,7 +118,7 @@ public class UsersTable {
           stmt = connection.createStatement();
           String sql = "CREATE TABLE USERS " +
                        "(USER CHAR(20) PRIMARY KEY     NOT NULL," +
-                       " PASS           CHAR(200)    NOT NULL, " + 
+                       " PASS           CHAR(200), " +
                        " TYPE         CHAR(10) NOT NULL)"; 
           stmt.executeUpdate(sql);
           stmt.close();
