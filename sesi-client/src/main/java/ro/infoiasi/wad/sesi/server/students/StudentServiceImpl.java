@@ -117,14 +117,5 @@ public class StudentServiceImpl extends RemoteServiceServlet implements StudentS
         return true;
     }
 
-    @Override
-    public Student getStudentProfile(String studentId) {
-        HttpSession session = this.getThreadLocalRequest().getSession(true);
-        SigninRecord signingRecord = (SigninRecord) session.getAttribute("SigninRecord");
-
-        return StudentLinkedInProfileService.getStudentProfile(studentId, signingRecord);
-    }
-
-
     public static final String RESOURCE_PATH = "students";
 }

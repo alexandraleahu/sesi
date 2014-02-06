@@ -11,8 +11,6 @@ import java.util.List;
 
 @RemoteServiceRelativePath("StudentService")
 public interface StudentService extends RemoteService {
-    Student getStudentProfile(String studentId);
-
     boolean registerStudent(String username, String password);
 
     /**
