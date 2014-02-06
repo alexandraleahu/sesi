@@ -1,11 +1,13 @@
 package ro.infoiasi.wad.sesi.server.reports;
 
+import ro.infoiasi.wad.sesi.client.reports.ReportBean;
+
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
 class InternshipsReportQueryBuilder extends AbstractReportQueryBuilder {
 
        @Override
-       protected AbstractReportQueryBuilder withMainResourceWhereFields(boolean applications) {
+       protected AbstractReportQueryBuilder withMainResourceWhereFields(ReportBean.StudentInternshipRelationType applications) {
            finalQueryBuilder.append(" ?i ")
                    .append(" rdf:type ")
                    .append(" ")
@@ -14,7 +16,7 @@ class InternshipsReportQueryBuilder extends AbstractReportQueryBuilder {
                    .append("; ");
 
 
-           if (applications) {
+           if (applications == ReportBean.StudentInternshipRelationType.Applications) {
                finalQueryBuilder.append(SESI_SCHEMA_SHORT)
                        .append(HAS_INTERNSHIP_APPLICATION_PROP)
                        .append(" ")

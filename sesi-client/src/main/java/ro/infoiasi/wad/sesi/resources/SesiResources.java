@@ -63,6 +63,12 @@ public interface SesiResources extends ClientBundle {
         @ClassName("gwt-InlineHyperlink")
         String gwtInlineHyperlink();
 
+
+        @ClassName("no-flickering")
+        String noFlickering();
+
+        String displayInline();
+
 //
 
     }

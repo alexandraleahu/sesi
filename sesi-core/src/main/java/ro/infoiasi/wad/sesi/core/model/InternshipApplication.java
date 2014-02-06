@@ -1,11 +1,15 @@
 package ro.infoiasi.wad.sesi.core.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.List;
 
 @XmlRootElement
 public class InternshipApplication extends StudentInternshipRelation {
+
+    public static final List<Status> POSSIBLE_STATUSES = Arrays.asList(Status.accepted, Status.pending, Status.rejected);
 
     private String motivation;
     private Date publishedAt;
@@ -28,7 +32,7 @@ public class InternshipApplication extends StudentInternshipRelation {
 
     @Override
     public EnumSet<Status> getPossibleStatus() {
-        return EnumSet.of(Status.accepted, Status.rejected, Status.pending);
+        return EnumSet.copyOf(POSSIBLE_STATUSES);
     }
 
     @Override

@@ -1,22 +1,83 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
-             xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.commonwidgets'>
+             xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.commonwidgets'
+             xmlns:r='urn:import:ro.infoiasi.wad.sesi.client.reports'
+             xmlns:bdate="urn:import:com.github.gwtbootstrap.datepicker.client.ui">
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources" />
+
     <g:HTMLPanel>
-        <b:ControlGroup>
-            <b:ControlLabel for="mainResourceBox">Main resource:</b:ControlLabel>
-            <b:Controls>
-                <b:ValueListBox ui:field="mainResourceBox" b:id="mainResourceBox"/>
-            </b:Controls>
-        </b:ControlGroup>
-        <b:Icon type="ROTATE_RIGHT" size="THREE_TIMES" spin="true" ui:field="loadingIcon" visible="false"/>
-        <b:WellForm type="HORIZONTAL" visible="false" ui:field="mainForm">
+        <b:WellForm type="HORIZONTAL">
             <b:Fieldset>
                 <b:ControlGroup>
-                    <b:ControlLabel ui:field="relatedLabel"/>
-                    <c:NamesListEditor ui:field="specificNamesList"/>
+                    <b:ControlLabel for="mainResourceBox">Main resource:</b:ControlLabel>
+                    <b:Controls>
+                        <b:ValueListBox ui:field="mainResourceBox" size="2" b:id="mainResourceBox"/>
+                        <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingIcon" visible="false"
+                                addStyleNames="{resource.style.noFlickering}" />
+                        <g:SimplePanel ui:field="errorPanel" visible="false" addStyleNames="{resource.style.standardMarginTop}">
+                            <b:Label type="IMPORTANT" text="Could not load data!"/>
+                        </g:SimplePanel>
+                    </b:Controls>
                 </b:ControlGroup>
             </b:Fieldset>
+        </b:WellForm>
+        <b:WellForm type="HORIZONTAL" visible="false" ui:field="mainForm">
+
+                <b:ControlGroup>
+                    <b:Controls controlsRow="true">
+                        <b:Row>
+                            <b:Column size="3">
+                                <g:Label ui:field="firstFilterLabel"/>
+                                <g:SimplePanel ui:field="firstFilterNamesPanel"/>
+                            </b:Column>
+                            <b:Column size="2">
+                                <g:Label text="with"/>
+                                <r:NumericRestrictionEditor ui:field="numericRestrictionEditor"/>
+                            </b:Column>
+                            <b:Column size="3">
+                                <g:Label text="applications or internships in progress"/>
+                                <b:ValueListBox ui:field="relationBox" size="2"/>
+                            </b:Column>
+                            <b:Column size="3">
+                                <g:Label text="with status"/>
+                                <c:NamesListEditor ui:field="statusList"/>
+                            </b:Column>
+
+                            <b:Column size="4">
+                                <g:Label ui:field="secondFilterLabel"/>
+                                <g:SimplePanel ui:field="secondFilterNamesPanel"/>
+                            </b:Column>
+
+                            <b:Column size="8">
+                                <g:Label text="during"/>
+                                <bdate:DateBox format="dd/mm/yyyy" autoClose="true" ui:field="startDateBox"/>
+                                <g:Label text="and" addStyleNames="{resource.style.displayInline}
+                                                                    {resource.style.smallMarginLeft}
+                                                                    {resource.style.smallMarginRight}"/>
+                                <bdate:DateBox format="dd/mm/yyyy" autoClose="true" ui:field="endDateBox"/>
+
+                            </b:Column>
+
+                        </b:Row>
+                       <b:Row>
+                           <b:Column size = "1">
+                               <b:Button type="PRIMARY" addStyleNames="btn {resource.style.standardMarginTop}" text="Submit" ui:field="submitBtn" />
+                           </b:Column>
+                       </b:Row>
+
+
+
+                    </b:Controls>
+                </b:ControlGroup>
+
+            <b:ControlGroup>
+                <b:Controls>
+                    <b:CellTable ui:field="resultsTable" width="20" bordered="false" striped="false" />
+                </b:Controls>
+            </b:ControlGroup>
+
+
         </b:WellForm>
     </g:HTMLPanel>
 </ui:UiBinder>

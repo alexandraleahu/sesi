@@ -19,5 +19,7 @@ public interface CompaniesServiceAsync {
 
     void getCompanyProgressDetails(String companyId, AsyncCallback<List<InternshipProgressDetails>> async);
 
+    void getAllCompaniesNames(AsyncCallback<List<String>> async);
+
     void registerStudent(String username, String password, AsyncCallback<Boolean> async);
 }

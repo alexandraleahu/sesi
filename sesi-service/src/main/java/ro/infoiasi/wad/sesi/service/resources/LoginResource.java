@@ -24,7 +24,7 @@ public class LoginResource {
     }
 
 
-    @PUT
+    @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

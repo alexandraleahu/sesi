@@ -2,10 +2,13 @@ package ro.infoiasi.wad.sesi.server.sparqlservice;
 
 
 import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Lists;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.apache.jena.atlas.web.auth.ServiceAuthenticator;
 import ro.infoiasi.wad.sesi.core.model.*;
+
+import java.util.List;
 
 public class SparqlService {
     final static String serviceEndpoint = "http://localhost:5820/sesi/query/";
@@ -262,6 +265,35 @@ public class SparqlService {
         }
         return null;
     }
+
+    public List<String> getAllNamesOfType(String uri) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ")
+                .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
+                .append("select ?name  where { ")
+                .append(" [] rdf:type ")
+                .append(String.format("<%s> ;", uri))
+                .append(" sesiSchema:name ?name . }");
+        Query query = QueryFactory.create(builder.toString());
+        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+
+        List<String> names = Lists.newArrayList();
+        try {
+            ResultSet rs = qe.execSelect();
+            if (rs.hasNext()) {
+                QuerySolution solution = rs.nextSolution();
+                String name = solution.getLiteral("name").getString();
+                names.add(name);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            qe.close();
+        }
+        return names;
+    }
+
+
 
     private University getUniversity(String universityUri) {
         StringBuilder builder = new StringBuilder();

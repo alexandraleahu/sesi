@@ -13,13 +13,23 @@ import com.google.gwt.user.client.ui.Composite;
 public class IntegerEditor extends Composite implements LeafValueEditor<Integer>, HasSize, HasPlaceholder {
     @Override
     public void setValue(Integer value) {
-        numberBox.setText(value.toString());
+
+        if (value != null) {
+            numberBox.setText(value.toString());
+
+        } else {
+            numberBox.setText("");
+        }
 
     }
 
     @Override
     public Integer getValue() {
-        return Integer.parseInt(numberBox.getText());
+        String text = numberBox.getText();
+        if (text.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(text);
     }
 
     @Override

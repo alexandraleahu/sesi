@@ -8,9 +8,11 @@ import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
+import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.server.applications.InternshipApplicationDeserializer;
 import ro.infoiasi.wad.sesi.server.internships.InternshipDeserializer;
 import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDeserializer;
+import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.Form;
@@ -127,6 +129,13 @@ public class CompaniesServiceImpl extends RemoteServiceServlet implements Compan
             return false;
         }
         return true;
+    }
+
+
+    @Override
+    public List<String> getAllCompaniesNames() {
+        final SparqlService sparqlService = new SparqlService();
+        return sparqlService.getAllNamesOfType(Constants.SESI_SCHEMA_NS + Constants.COMPANY_CLASS);
     }
 
 }

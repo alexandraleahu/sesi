@@ -46,6 +46,7 @@
     <servlet path="/ProgressDetailsService" class="ro.infoiasi.wad.sesi.server.progressdetails.ProgressDetailsServiceImpl"/>
     <servlet path="/LoginService" class="ro.infoiasi.wad.sesi.server.login.LoginServiceImpl"/>
     <servlet path="/TeachersService" class="ro.infoiasi.wad.sesi.server.teachers.TeachersServiceImpl"/>
+    <servlet path="/SchoolsService" class="ro.infoiasi.wad.sesi.server.schools.SchoolsServiceImpl"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>

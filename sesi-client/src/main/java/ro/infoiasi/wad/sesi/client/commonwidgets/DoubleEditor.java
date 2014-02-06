@@ -12,12 +12,21 @@ import com.google.gwt.user.client.ui.Composite;
 public class DoubleEditor extends Composite implements LeafValueEditor<Double>, HasSize, HasPlaceholder {
     @Override
     public void setValue(Double value) {
-       numberBox.setText(value.toString());
+        if (value != null) {
+            numberBox.setText(value.toString());
+
+        } else {
+            numberBox.setText("");
+        }
     }
 
     @Override
     public Double getValue() {
-        return Double.parseDouble(numberBox.getText());
+        String text = numberBox.getText();
+        if (text.isEmpty()) {
+            return 0D;
+        }
+        return Double.parseDouble(text);
     }
 
     @Override

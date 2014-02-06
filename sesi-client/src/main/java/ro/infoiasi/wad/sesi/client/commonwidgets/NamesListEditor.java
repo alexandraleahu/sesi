@@ -1,6 +1,7 @@
 package ro.infoiasi.wad.sesi.client.commonwidgets;
 
 import com.github.gwtbootstrap.client.ui.ListBox;
+import com.github.gwtbootstrap.client.ui.base.HasId;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.LeafValueEditor;
@@ -11,14 +12,17 @@ import com.google.gwt.user.client.ui.Composite;
 import java.util.List;
 
 
-public class NamesListEditor extends Composite implements LeafValueEditor<List<String>> {
+public class NamesListEditor extends Composite implements LeafValueEditor<List<String>>, HasId {
     @Override
     public void setValue(List<String> names) {
         namesList.clear();
-        for (String name : names) {
+        if (names != null) {
+            for (String name : names) {
 
-            namesList.addItem(name);
+                namesList.addItem(name);
+            }
         }
+
     }
 
     @Override
@@ -34,6 +38,16 @@ public class NamesListEditor extends Composite implements LeafValueEditor<List<S
         return names;
     }
 
+    @Override
+    public String getId() {
+        return namesList.getId();
+    }
+
+    @Override
+    public void setId(String id) {
+        namesList.setId(id);
+    }
+
     interface NamesListEditorUiBinder extends UiBinder<ListBox, NamesListEditor> {
     }
 
@@ -44,5 +58,6 @@ public class NamesListEditor extends Composite implements LeafValueEditor<List<S
     public NamesListEditor() {
         initWidget(ourUiBinder.createAndBindUi(this));
 
+        namesList.setVisibleItemCount(4);
     }
 }

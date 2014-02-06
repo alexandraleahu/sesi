@@ -2,13 +2,12 @@ package ro.infoiasi.wad.sesi.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import ro.infoiasi.wad.sesi.client.authentication.SigninService;
-import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
-import ro.infoiasi.wad.sesi.client.internships.InternshipsServiceAsync;
 import ro.infoiasi.wad.sesi.client.main.MainView;
+import ro.infoiasi.wad.sesi.client.reports.ReportBean;
+import ro.infoiasi.wad.sesi.client.reports.ReportEditor;
 import ro.infoiasi.wad.sesi.core.model.StudentLinkedinProfile;
 import ro.infoiasi.wad.sesi.core.model.User;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
@@ -25,17 +24,20 @@ public class Sesi implements EntryPoint {
     @Override
     public void onModuleLoad() {
         SesiResources.INSTANCE.style().ensureInjected();
-        InternshipsServiceAsync instance = InternshipsService.App.getInstance();
-        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
-        rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
-        String v = Window.Location.getParameter("oauth_verifier");
-        if (v != null) {
-            verifyOAuth(v);
-            return;
-        }
+//        InternshipsServiceAsync instance = InternshipsService.App.getInstance();
+//        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+//        rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
+//        String v = Window.Location.getParameter("oauth_verifier");
+//        if (v != null) {
+//            verifyOAuth(v);
+//            return;
+//        }
+//
+//        RootLayoutPanel.get().add(new MainView());
 
-        RootLayoutPanel.get().add(new MainView());
-
+        ReportEditor reportEditor = new ReportEditor();
+        RootLayoutPanel.get().add(reportEditor);
+        reportEditor.edit(new ReportBean());
 //        instance.getInternshipById("003", new AsyncCallback<Internship>() {
 //            @Override
 //            public void onFailure(Throwable caught) {

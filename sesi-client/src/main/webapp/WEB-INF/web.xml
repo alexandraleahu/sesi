@@ -50,6 +50,11 @@
         <servlet-name>ro.infoiasi.wad.sesi.Sesi SigninService</servlet-name>
         <servlet-class>ro.infoiasi.wad.sesi.client.authentication.SigninServiceImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi SchoolsService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.schools.SchoolsServiceImpl</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>InternshipsServlet</servlet-name>
         <url-pattern>/sesi/InternshipsService</url-pattern>
@@ -94,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi SigninService</servlet-name>
         <url-pattern>/sesi/SigninService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi SchoolsService</servlet-name>
+        <url-pattern>/sesi/SchoolsService</url-pattern>
     </servlet-mapping>
 
 

@@ -6,7 +6,7 @@ h1 {
   font-size: 2em;
   font-weight: bold;
   color: #777777;
-  margin: 40px 0px 70px;
+  margin: 40pt 0pt 70pt;
   text-align: center;
 }
 
@@ -17,7 +17,7 @@ h1 {
 
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
-  width: 400px;
+  width: 400pt;
 }
 
 
@@ -26,24 +26,24 @@ h1 {
     font-size: 30pt;
     font-family: Monospaced;
 
-    margin: 20px;
+    margin: 20pt;
 }
 .dialogVPanel {
-  margin: 5px;
+  margin: 5pt;
 }
 
-.smallMarginLeft {
-    margin-left: 20px;
-}
 .gwt-Anchor .gwt-Hyperlink .gwt-InlineHyperlink {
     cursor: pointer;
 }
-
 .floatLeft {
     float: left;
 }
+
 .floatRight {
     float: right;
+}
+.smallMarginLeft {
+    margin-left: 5pt;
 }
 
 .smallMarginRight {
@@ -57,9 +57,13 @@ h1 {
 
     overflow: auto;
 }
+
+.displayInline {
+    display: inline;
+}
 .withBottomBorder {
     border-bottom-style: ridge;
-    border-bottom: 1px;
+    border-bottom: 1pt;
     border-bottom-color: #3f3f3f;
 }
 .standardMarginTop {
@@ -83,9 +87,16 @@ h1 {
   color: red;
 }
 
+.no-flickering {
+
+    -webkit-backface-visibility: hidden;
+}
+
+
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
-  margin: 15px 6px 6px;
+  margin: 15pt 6pt 6pt;
 }
 
 #nojs {
@@ -95,8 +106,8 @@ h1 {
     margin-left: -11em;
     color: red;
     background-color: white;
-    border: 1px solid red;
-    padding: 4px;
+    border: 1pt solid red;
+    padding: 4pt;
     font-family: sans-serif
 }
 
@@ -109,11 +120,11 @@ h1 {
 
 /*.gwt-DecoratedTabBar {*/
     /*background: #ccc;*/
-    /*padding-top: 6px;*/
+    /*padding-top: 6pt;*/
 /*}*/
 
 /*.gwt-DecoratedTabBar .gwt-TabBarFirst {*/
-    /*width: 5px;  *//* first tab distance from the left */
+    /*width: 5pt;  *//* first tab distance from the left */
 /*}*/
 
 /*.gwt-DecoratedTabBar .gwt-TabBarRest {*/
@@ -121,41 +132,41 @@ h1 {
 
 /*.gwt-DecoratedTabBar .gwt-TabBarItem {*/
     /*border-collapse: collapse;*/
-    /*margin-left: 4px;*/
+    /*margin-left: 4pt;*/
 /*}*/
 
 /*.gwt-DecoratedTabBar .tabTopCenter {*/
-    /*padding: 0px;*/
+    /*padding: 0pt;*/
     /*background: #8E8E8E;*/
 /*}*/
 
 /*.gwt-DecoratedTabBar .tabTopLeft,*/
 /*.gwt-DecoratedTabBar .tabTopRight {*/
-    /*padding: 0px;*/
+    /*padding: 0pt;*/
     /*zoom: 1;*/
 /*}*/
 
 /*.gwt-DecoratedTabBar .tabTopLeftInner,*/
 /*.gwt-DecoratedTabBar .tabTopRightInner {*/
-    /*width: 3px;*/
-    /*height: 3px;*/
+    /*width: 3pt;*/
+    /*height: 3pt;*/
 /*}*/
 
 /*.gwt-DecoratedTabBar .tabMiddleLeft,*/
 /*.gwt-DecoratedTabBar .tabMiddleRight {*/
-    /*width: 3px;*/
-    /*padding: 0px;*/
+    /*width: 3pt;*/
+    /*padding: 0pt;*/
     /*background: #8E8E8E;*/
 /*}*/
 
 /*.gwt-DecoratedTabBar .tabMiddleLeftInner,*/
 /*.gwt-DecoratedTabBar .tabMiddleRightInner {*/
-    /*width: 1px;*/
-    /*height: 1px;*/
+    /*width: 1pt;*/
+    /*height: 1pt;*/
 /*}*/
 
 /*.gwt-DecoratedTabBar .tabMiddleCenter {*/
-    /*padding: 0px 5px 4px 5px;*/
+    /*padding: 0pt 5pt 4pt 5pt;*/
     /*cursor: pointer;*/
     /*cursor: hand;*/
     /*color: #fff;*/
@@ -191,8 +202,8 @@ h1 {
 
 /** html .gwt-DecoratedTabBar .tabTopLeftInner,*/
 /** html .gwt-DecoratedTabBar .tabTopRightInner {*/
-    /*width: 3px;*/
-    /*height: 3px;*/
+    /*width: 3pt;*/
+    /*height: 3pt;*/
     /*overflow: hidden;*/
 /*}*/
 
@@ -202,7 +213,7 @@ h1 {
 /*.gwt-TabLayoutPanelContent {*/
     /*min-width: 100%;*/
     /*overflow: auto;*/
-    /*min-height: 1000px;*/
+    /*min-height: 1000pt;*/
     /*height: auto;*/
 /*}*/
 
@@ -210,15 +221,15 @@ h1 {
 /*.gwt-TabPanelBottom {*/
     /*border-color: #ccc;*/
     /*border-style: solid;*/
-    /*border-width: 0px 1px 1px;*/
+    /*border-width: 0pt 1pt 1pt;*/
     /*overflow: hidden;*/
-    /*padding: 6px;*/
+    /*padding: 6pt;*/
 /*}*/
 
 /*.gwt-TabLayoutPanel {*/
-    /*min-height: 1500px;*/
+    /*min-height: 1500pt;*/
     /*overflow: auto;*/
     /*height: auto;*/
-    /*padding-top: 10px;*/
+    /*padding-top: 10pt;*/
 /*}*/
 

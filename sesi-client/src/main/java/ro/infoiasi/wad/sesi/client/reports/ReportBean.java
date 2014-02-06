@@ -1,6 +1,7 @@
 package ro.infoiasi.wad.sesi.client.reports;
 
-import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
+import ro.infoiasi.wad.sesi.core.util.HasDescription;
+import ro.infoiasi.wad.sesi.shared.ComparisonOperator;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,14 +14,27 @@ public class ReportBean implements Serializable {
 
     private NumericRestriction numericRestriction;
 
-    private List<StudentInternshipRelation.Status> statuses;
+    private List<String> statuses;
 
     private Date startDate;
     private Date endDate;
 
-    private boolean applications; // whether applications or progress details
+    private StudentInternshipRelationType studentInternshipRelation; // whether applications or progress details
 
     private MainResourceType resourceType;
+
+    public ReportBean() {
+        // initializing with default values
+        //resourceType = MainResourceType.Internships;
+        //studentInternshipRelation = StudentInternshipRelationType.Applications;
+        numericRestriction = new NumericRestriction();
+        numericRestriction.setOp(ComparisonOperator.eq);
+        numericRestriction.setLimit(1);
+    }
+
+    public StudentInternshipRelationType getStudentInternshipRelation() {
+        return studentInternshipRelation;
+    }
 
     public List<String> getCompanyNames() {
         return companyNames;
@@ -46,11 +60,11 @@ public class ReportBean implements Serializable {
         this.numericRestriction = numericRestriction;
     }
 
-    public List<StudentInternshipRelation.Status> getStatuses() {
+    public List<String> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(List<StudentInternshipRelation.Status> statuses) {
+    public void setStatuses(List<String> statuses) {
         this.statuses = statuses;
     }
 
@@ -70,12 +84,12 @@ public class ReportBean implements Serializable {
         this.endDate = endDate;
     }
 
-    public boolean isApplications() {
-        return applications;
+    public StudentInternshipRelationType isApplications() {
+        return studentInternshipRelation;
     }
 
-    public void setApplications(boolean applications) {
-        this.applications = applications;
+    public void setStudentInternshipRelation(StudentInternshipRelationType studentInternshipRelation) {
+        this.studentInternshipRelation = studentInternshipRelation;
     }
 
     public MainResourceType getResourceType() {
@@ -91,5 +105,36 @@ public class ReportBean implements Serializable {
         Internships,
         Students
     }
+    public static enum StudentInternshipRelationType implements HasDescription {
 
+        Applications ("Applications"),
+        InProgressInternships("In Progress Internships");
+
+        private final String description;
+
+        StudentInternshipRelationType(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public String getDescription() {
+            return description;
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("ReportBean{");
+        sb.append("companyNames=").append(companyNames);
+        sb.append(", facultyNames=").append(facultyNames);
+        sb.append(", numericRestriction=").append(numericRestriction);
+        sb.append(", statuses=").append(statuses);
+        sb.append(", startDate=").append(startDate);
+        sb.append(", endDate=").append(endDate);
+        sb.append(", studentInternshipRelation=").append(studentInternshipRelation);
+        sb.append(", resourceType=").append(resourceType);
+        sb.append('}');
+        return sb.toString();
+    }
 }

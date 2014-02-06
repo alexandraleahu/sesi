@@ -37,12 +37,12 @@ abstract class AbstractReportQueryBuilder {
     protected static final List<String> PERIOD = Lists.newArrayList("?startDate", "?endDate");
     protected boolean filterAdded = false;
 
-    protected AbstractReportQueryBuilder withBasicSelectFields(boolean applications) {
+    protected AbstractReportQueryBuilder withBasicSelectFields(ReportBean.StudentInternshipRelationType applications) {
 
         finalQueryBuilder
                 .append(Joiner.on(" ")
                         .join(FIELD_NAMES));
-        if (applications) {
+        if (applications == ReportBean.StudentInternshipRelationType.Applications) {
             finalQueryBuilder.append(" ")
                     .append(PUBLISHED_AT_SPARQL_PROP);
         } else {
@@ -56,7 +56,7 @@ abstract class AbstractReportQueryBuilder {
 
     }
 
-    protected AbstractReportQueryBuilder withApplicationOrProgressDetailsFields(boolean applications) {
+    protected AbstractReportQueryBuilder withApplicationOrProgressDetailsFields(ReportBean.StudentInternshipRelationType applications) {
 
         finalQueryBuilder.append(" ")
                 .append(APP_OR_PROGRESS_DETAILS)
@@ -68,7 +68,7 @@ abstract class AbstractReportQueryBuilder {
                 .append(FEEDBACK_PROP)
                 .append(" ?feedback ");
 
-        if (applications) {
+        if (applications == ReportBean.StudentInternshipRelationType.Applications) {
 
             finalQueryBuilder.append("; ")
                     .append(SESI_SCHEMA_SHORT)
@@ -153,10 +153,11 @@ abstract class AbstractReportQueryBuilder {
         return this;
     }
 
-    protected AbstractReportQueryBuilder withGroupByFields(boolean applications) {
+    protected AbstractReportQueryBuilder withGroupByFields(ReportBean.StudentInternshipRelationType applications) {
 
-        Iterable<String> fields = Iterables.concat(FIELD_NAMES, applications ? Lists.newArrayList(PUBLISHED_AT_SPARQL_PROP)
-                                                                             : PERIOD);
+        Iterable<String> fields = Iterables.concat(FIELD_NAMES, applications == ReportBean.StudentInternshipRelationType.Applications ?
+                                                    Lists.newArrayList(PUBLISHED_AT_SPARQL_PROP)
+                                                    : PERIOD);
         finalQueryBuilder.append(Joiner.on(" ")
                                        .join(fields));
         return this;
@@ -216,7 +217,7 @@ abstract class AbstractReportQueryBuilder {
         return this;
     }
 
-    protected AbstractReportQueryBuilder withStatusFilter(List<StudentInternshipRelation.Status> statuses) {
+    protected AbstractReportQueryBuilder withStatusFilter(List<String> statuses) {
 
         if (statuses != null) {
 
@@ -228,10 +229,10 @@ abstract class AbstractReportQueryBuilder {
             }
 
             finalQueryBuilder.append(" (?status = ");
-            List<String> uriStatuses = Lists.transform(statuses, new Function<StudentInternshipRelation.Status, String>() {
+            List<String> uriStatuses = Lists.transform(statuses, new Function<String, String>() {
                 @Nullable
                 @Override
-                public String apply(@Nullable StudentInternshipRelation.Status input) {
+                public String apply(@Nullable String input) {
                     return "<" + SESI_SCHEMA_NS + input.toString() + ">";
                 }
             });
@@ -279,7 +280,7 @@ abstract class AbstractReportQueryBuilder {
         finalQueryBuilder.append(" || ");
         return this;
     }
-    protected  AbstractReportQueryBuilder withPeriodFilter(Date startDate, Date endDate, boolean applications) {
+    protected  AbstractReportQueryBuilder withPeriodFilter(Date startDate, Date endDate, ReportBean.StudentInternshipRelationType applications) {
         boolean isStartDate = false;
         if(startDate != null || endDate != null) {
 
@@ -295,7 +296,7 @@ abstract class AbstractReportQueryBuilder {
 
         if (startDate != null) {
             isStartDate = true;
-            if (applications) {
+            if (applications == ReportBean.StudentInternshipRelationType.Applications) {
                 addDateFilter(PUBLISHED_AT_SPARQL_PROP, ComparisonOperator.ge, startDate);
 
 
@@ -307,7 +308,7 @@ abstract class AbstractReportQueryBuilder {
         if (endDate != null) {
 
            finalQueryBuilder.append(isStartDate ? " && " : "");
-           if (applications) {
+           if (applications == ReportBean.StudentInternshipRelationType.Applications) {
                addDateFilter(PUBLISHED_AT_SPARQL_PROP, ComparisonOperator.le, endDate);
 
            } else {
@@ -338,7 +339,7 @@ abstract class AbstractReportQueryBuilder {
 
     protected AbstractReportQueryBuilder withHavingClause(NumericRestriction numericRestriction) {
 
-        if (numericRestriction != null) {
+        if (numericRestriction != null && numericRestriction.getOp() != null) {
 
              finalQueryBuilder.append(" count (")
                               .append(APP_OR_PROGRESS_DETAILS)
@@ -350,7 +351,7 @@ abstract class AbstractReportQueryBuilder {
 
         return this;
     }
-    protected abstract AbstractReportQueryBuilder withMainResourceWhereFields(boolean applications);
+    protected abstract AbstractReportQueryBuilder withMainResourceWhereFields(ReportBean.StudentInternshipRelationType applications);
 
     protected String build() {
         return finalQueryBuilder.toString();
@@ -375,7 +376,7 @@ abstract class AbstractReportQueryBuilder {
     }
     public String buildQuery(ReportBean reportBean) {
 
-        boolean applications = reportBean.isApplications();
+        ReportBean.StudentInternshipRelationType applications = reportBean.isApplications();
         AbstractReportQueryBuilder queryBuilder = withPrefixes()
                                                 .startSelect()
                                                 .withBasicSelectFields(applications)
@@ -426,11 +427,12 @@ abstract class AbstractReportQueryBuilder {
 
         ReportBean bean = new ReportBean();
 
-        bean.setApplications(true);
+        bean.setStudentInternshipRelation(ReportBean.StudentInternshipRelationType.Applications);
 
         bean.setCompanyNames(Lists.newArrayList("VirtualComp", "comp2"));
         bean.setFacultyNames(Lists.newArrayList("Faculty Of Computer Science"));
-        bean.setStatuses(Lists.newArrayList(StudentInternshipRelation.Status.accepted, StudentInternshipRelation.Status.pending));
+        bean.setStatuses(Lists.newArrayList(StudentInternshipRelation.Status.accepted.toString(),
+                                            StudentInternshipRelation.Status.pending.toString()));
         bean.setResourceType(ReportBean.MainResourceType.Students);
 
         NumericRestriction numericRestriction = new NumericRestriction();

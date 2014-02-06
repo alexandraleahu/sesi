@@ -26,4 +26,13 @@ public class NumericRestriction implements Serializable {
     public void setLimit(int limit) {
         this.limit = limit;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("NumericRestriction{");
+        sb.append("op=").append(op);
+        sb.append(", limit=").append(limit);
+        sb.append('}');
+        return sb.toString();
+    }
 }

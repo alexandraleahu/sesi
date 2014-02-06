@@ -1,14 +1,17 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 
 public class InternshipProgressDetails extends StudentInternshipRelation {
 
+    public static final List<Status> POSSIBLE_STATUSES = Arrays.asList(Status.inProgress, Status.finished);
     private Teacher teacher;
 
     @Override
     public EnumSet<Status> getPossibleStatus() {
-        return EnumSet.of(Status.inProgress, Status.finished);
+        return EnumSet.copyOf(POSSIBLE_STATUSES);
     }
 
     @Override
