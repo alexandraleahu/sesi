@@ -209,10 +209,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
     public void onValueChange(ValueChangeEvent<ReportBean.MainResourceType> event) {
         failure = false;
         if (event.getValue() != null) {
-            loadingIcon.setVisible(true);
 
-            errorPanel.setVisible(false);
-            mainForm.setVisible(false);
 
             displayAllCompaniesNames(event.getValue());
             displayAllFacultiesNames(event.getValue());
@@ -223,6 +220,10 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
     private void displayAllFacultiesNames(final ReportBean.MainResourceType resourceType) {
 
         // work with schools async service
+        loadingIcon.setVisible(true);
+
+        errorPanel.setVisible(false);
+        mainForm.setVisible(false);
 
         SchoolsServiceAsync schoolsServiceAsync = SchoolsService.App.getInstance();
 
@@ -264,6 +265,11 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
     }
 
     private void displayAllCompaniesNames(final ReportBean.MainResourceType resourceType) {
+
+        loadingIcon.setVisible(true);
+
+        errorPanel.setVisible(false);
+        mainForm.setVisible(false);
 
         // work with companies async service
 
