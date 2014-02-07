@@ -1,13 +1,15 @@
 package ro.infoiasi.wad.sesi.server.sparqlservice;
 
 
+import com.complexible.stardog.StardogException;
+import com.complexible.stardog.api.Connection;
+import com.complexible.stardog.api.ConnectionConfiguration;
+import com.complexible.stardog.jena.SDJenaFactory;
+import com.complexible.stardog.reasoning.api.ReasoningType;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.sparql.util.Context;
 import org.apache.jena.atlas.web.auth.ServiceAuthenticator;
 import ro.infoiasi.wad.sesi.client.reports.NumericRestriction;
 import ro.infoiasi.wad.sesi.client.reports.ReportBean;
@@ -20,7 +22,6 @@ import ro.infoiasi.wad.sesi.shared.ReportResult;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
 public class SparqlService {
     private static final  String serviceEndpoint = "http://localhost:5820/sesi/query/";
@@ -28,37 +29,43 @@ public class SparqlService {
     private static final  String technology = "http://rdf.freebase.com/ns/computer.software";
 
     public List<ReportResult> getReportResults(String sparqlQuery) {
-
+        List<ReportResult> resultMultimap = null;
         Query query = QueryFactory.create(sparqlQuery);
+        // setting the reasoning
+        try {
+            Connection con = ConnectionConfiguration
+                    .to("sesi")
+                    .server("http://localhost:5820")
+                    .credentials("admin", "admin")
+                    .reasoning(ReasoningType.SL)
+                    .connect();
 
-        QueryExecution qe = getQueryExecution(query);
+            Model model = SDJenaFactory.createModel(con);
+            QueryExecution qe  = QueryExecutionFactory.create(query, model);
 
-        ResultSet resultSet = qe.execSelect();
+            if (qe != null) {
 
-        List<ReportResult> resultMultimap = new ResultSetToReportResultList().apply(resultSet);
-        qe.close();
+                ResultSet resultSet = qe.execSelect();
+
+                resultMultimap = new ResultSetToReportResultList().apply(resultSet);
+                qe.close();
+                model.close();
+
+
+            }
+        } catch (StardogException e1) {
+                e1.printStackTrace();
+        }
 
         return resultMultimap;
     }
 
-    private  QueryExecution getQueryExecution(Query query) {
-        // setting the reasoning
+    private QueryExecution getQueryExecution(Query query) {
 
-        Model defaultModel = ModelFactory.createDefaultModel();
 
-        Map<String, Map<String, List<String>>> headers = Maps.newHashMap();
-        Map<String, List<String>> actualValues = Maps.newHashMap();
+        return QueryExecutionFactory.sparqlService(serviceEndpoint, query,
+                                    new ServiceAuthenticator("admin", "admin".toCharArray()));
 
-        actualValues.put("SD-Connection-String", Lists.newArrayList("reasoning=SL"));
-
-        headers.put(serviceEndpoint, actualValues);
-
-        Context context = ARQ.getContext();
-
-        context.put(ARQ.serviceParams, headers);
-
-        return QueryExecutionFactory.createServiceRequest(serviceEndpoint, query,
-                new ServiceAuthenticator(context, "admin", "admin".toCharArray()));
     }
 
     public OntologyExtraInfo getOntologyExtraInfo(String uri) {

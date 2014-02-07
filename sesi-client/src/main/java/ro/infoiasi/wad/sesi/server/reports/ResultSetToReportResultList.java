@@ -9,6 +9,7 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import ro.infoiasi.wad.sesi.core.model.OntologyExtraInfo;
 import ro.infoiasi.wad.sesi.core.model.Resource;
 import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
+import ro.infoiasi.wad.sesi.shared.BasicResource;
 import ro.infoiasi.wad.sesi.shared.ReportResult;
 
 import javax.annotation.Nullable;
@@ -102,27 +103,7 @@ public class ResultSetToReportResultList implements Function<ResultSet, List<Rep
     private Resource getBasicResource(final String id, final String relativeUri,
                                       final String description, final String name) {
 
-        return new Resource() {
-            @Override
-            public String getId() {
-                return id;
-            }
-
-            @Override
-            public String getRelativeUri() {
-                return relativeUri;
-            }
-
-            @Override
-            public String getDescription() {
-                return description;
-            }
-
-            @Override
-            public String getName() {
-                return name;
-            }
-        };
+        return new BasicResource(id, relativeUri, description, name);
     }
 
 
@@ -133,4 +114,7 @@ public class ResultSetToReportResultList implements Function<ResultSet, List<Rep
         ontologyExtraInfo.setName(name);
         return ontologyExtraInfo;
     }
+
+
+
 }

@@ -78,7 +78,7 @@
 
             <b:ControlGroup>
                 <b:Controls>
-                    <r:ReportResultsView ui:field="resultsTable" visible="false"/>
+                    <r:ReportResultsView ui:field="resultsView" visible="false"/>
                 </b:Controls>
             </b:ControlGroup>
 

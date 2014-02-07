@@ -1,7 +1,13 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources" />
 
 
-<b:CellTable ui:field="resultsTable" width="20" bordered="true" striped="true" condensed="true" pageSize="5" pageStart="0"/>
+    <g:HTMLPanel>
+        <b:CellTable ui:field="resultsTable" width="20" bordered="true" striped="true" condensed="true" pageSize="5" pageStart="0"/>
+        <b:SimplePager display="{resultsTable}" location="CENTER"
+                   fastForwardRows="5" />
+
+    </g:HTMLPanel>
 </ui:UiBinder>

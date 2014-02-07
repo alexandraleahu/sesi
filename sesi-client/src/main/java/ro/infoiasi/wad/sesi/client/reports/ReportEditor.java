@@ -17,10 +17,7 @@ import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.*;
 import ro.infoiasi.wad.sesi.client.commonwidgets.NamesListEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.WidgetEditor;
 import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
@@ -150,15 +147,13 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
 
     @UiField
     @Ignore
-    ReportResultsView resultsTable;
+    ReportResultsView resultsView;
     @UiField
     Icon loadingResultsIcon;
 
     @UiField
     SimplePanel errorResultsPanel;
 
-
-    private volatile boolean failure;
 
     public ReportEditor() {
 
@@ -225,20 +220,84 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
             @Override
             public void onSuccess(List<ReportResult> result) {
                 loadingResultsIcon.setVisible(false);
-                resultsTable.setVisible(true);
-                resultsTable.setValue(result, bean.getStudentInternshipRelation());
+                resultsView.setVisible(true);
+                resultsView.setValue(result, bean.getStudentInternshipRelation());
+
             }
         });
     }
 
     @Override
     public void onValueChange(ValueChangeEvent<ReportBean.MainResourceType> event) {
-        failure = false;
         if (event.getValue() != null) {
 
-            resultsTable.setVisible(false);
-            displayAllCompaniesNames(event.getValue());
-            displayAllFacultiesNames(event.getValue());
+            resultsView.setVisible(false);
+            loadingIcon.setVisible(true);
+
+            errorPanel.setVisible(false);
+            mainForm.setVisible(false);
+
+            switch (event.getValue()) {
+                case Internships:
+                    CompaniesServiceAsync companiesServiceAsync = CompaniesService.App.getInstance();
+
+                    companiesServiceAsync.getAllCompaniesNames(new AsyncCallback<List<String>>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            loadingIcon.setVisible(false);
+                            errorPanel.setVisible(true);
+                            mainForm.setVisible(false);
+                        }
+
+                        @Override
+                        public void onSuccess(List<String> result) {
+
+                            loadingIcon.setVisible(false);
+                            mainForm.setVisible(true);
+                            companyNamesList.setValue(result);
+
+                            firstFilterNamesPanel.setWidget(companyNamesList);
+                            firstFilterLabel.setText("From companies");
+
+
+                            displayAllFacultiesNames(ReportBean.MainResourceType.Internships);
+
+
+
+                        }
+                    });
+                    break;
+                case Students:
+
+                    SchoolsServiceAsync schoolsServiceAsync = SchoolsService.App.getInstance();
+
+                    schoolsServiceAsync.getAllFacultyNames(new AsyncCallback<List<String>>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            loadingIcon.setVisible(false);
+                            errorPanel.setVisible(true);
+                            mainForm.setVisible(false);
+
+                        }
+
+                        @Override
+                        public void onSuccess(List<String> result) {
+
+                            loadingIcon.setVisible(false);
+                            mainForm.setVisible(true);
+                            facultyNamesList.setValue(result);
+
+                            firstFilterNamesPanel.setWidget(facultyNamesList);
+                            firstFilterLabel.setText("From schools");
+
+                            displayAllCompaniesNames(ReportBean.MainResourceType.Students);
+
+                        }
+                    });
+
+                    break;
+            }
+
         }
 
     }
@@ -246,10 +305,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
     private void displayAllFacultiesNames(final ReportBean.MainResourceType resourceType) {
 
         // work with schools async service
-        loadingIcon.setVisible(true);
 
-        errorPanel.setVisible(false);
-        mainForm.setVisible(false);
 
         SchoolsServiceAsync schoolsServiceAsync = SchoolsService.App.getInstance();
 
@@ -259,15 +315,12 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                 loadingIcon.setVisible(false);
                 errorPanel.setVisible(true);
                 mainForm.setVisible(false);
-                failure = true;
 
             }
 
             @Override
             public void onSuccess(List<String> result) {
-                if (failure) {
-                    return;
-                }
+
                 loadingIcon.setVisible(false);
                 mainForm.setVisible(true);
                 facultyNamesList.setValue(result);
@@ -282,9 +335,10 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                 }   else {
 
                     secondFilterNamesPanel.setWidget(facultyNamesList);
-                    secondFilterLabel.setText("of students from schools");
-                }
+                    secondFilterLabel.setText("from students of schools");
 
+
+            }
 
             }
         });
@@ -292,12 +346,9 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
 
     private void displayAllCompaniesNames(final ReportBean.MainResourceType resourceType) {
 
-        loadingIcon.setVisible(true);
-
-        errorPanel.setVisible(false);
-        mainForm.setVisible(false);
 
         // work with companies async service
+
 
         CompaniesServiceAsync companiesServiceAsync = CompaniesService.App.getInstance();
 
@@ -307,14 +358,11 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                 loadingIcon.setVisible(false);
                 errorPanel.setVisible(true);
                 mainForm.setVisible(false);
-                failure = true;
             }
 
             @Override
             public void onSuccess(List<String> result) {
-                if (failure) {
-                    return;
-                }
+
                 loadingIcon.setVisible(false);
                 mainForm.setVisible(true);
                 companyNamesList.setValue(result);
@@ -323,18 +371,17 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
 
                     firstFilterNamesPanel.setWidget(companyNamesList);
                     firstFilterLabel.setText("From companies");
-
-
-                }   else {
+                } else {
 
                     secondFilterNamesPanel.setWidget(companyNamesList);
                     secondFilterLabel.setText("to companies");
-
-
                 }
+
 
             }
         });
+
+
     }
 
 }

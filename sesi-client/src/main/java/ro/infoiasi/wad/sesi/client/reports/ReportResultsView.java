@@ -7,6 +7,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import ro.infoiasi.wad.sesi.client.commonwidgets.ResourceColumn;
 import ro.infoiasi.wad.sesi.client.commonwidgets.ResourceViewCell;
 import ro.infoiasi.wad.sesi.core.model.Resource;
@@ -82,7 +83,9 @@ public class ReportResultsView extends Composite implements LeafValueEditor<List
         return value;
     }
 
-    interface ReportResultsViewUiBinder extends UiBinder<CellTable, ReportResultsView> {
+
+
+    interface ReportResultsViewUiBinder extends UiBinder<HTMLPanel, ReportResultsView> {
     }
 
     private static ReportResultsViewUiBinder ourUiBinder = GWT.create(ReportResultsViewUiBinder.class);
