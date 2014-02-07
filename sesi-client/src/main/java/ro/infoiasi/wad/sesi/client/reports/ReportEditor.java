@@ -207,6 +207,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
     public void onClick(ClickEvent event) {
         loadingResultsIcon.setVisible(true);
         errorResultsPanel.setVisible(false);
+        resultsView.setVisible(false);
 
         final ReportBean bean = save();
 
