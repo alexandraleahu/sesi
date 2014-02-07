@@ -63,6 +63,11 @@
                        <b:Row>
                            <b:Column size = "1">
                                <b:Button type="PRIMARY" addStyleNames="btn {resource.style.standardMarginTop}" text="Submit" ui:field="submitBtn" />
+                               <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
+                                       addStyleNames="{resource.style.noFlickering}" />
+                               <g:SimplePanel ui:field="errorResultsPanel" visible="false" addStyleNames="{resource.style.standardMarginTop}">
+                                   <b:Label type="IMPORTANT" text="Could not process the query!"/>
+                               </g:SimplePanel>
                            </b:Column>
                        </b:Row>
 
@@ -73,7 +78,7 @@
 
             <b:ControlGroup>
                 <b:Controls>
-                    <b:CellTable ui:field="resultsTable" width="20" bordered="false" striped="false" />
+                    <r:ReportResultsView ui:field="resultsTable" visible="false"/>
                 </b:Controls>
             </b:ControlGroup>
 

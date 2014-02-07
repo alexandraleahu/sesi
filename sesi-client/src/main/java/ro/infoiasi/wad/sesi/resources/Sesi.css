@@ -53,6 +53,10 @@ h1 {
 .standardMarginRight {
     margin-right: 10pt;
 }
+
+.standardMarginBottom {
+    margin-right: 10pt;
+}
 .withScroll {
 
     overflow: auto;

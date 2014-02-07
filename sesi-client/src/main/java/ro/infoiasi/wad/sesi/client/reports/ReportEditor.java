@@ -1,6 +1,9 @@
 package ro.infoiasi.wad.sesi.client.reports;
 
-import com.github.gwtbootstrap.client.ui.*;
+import com.github.gwtbootstrap.client.ui.Button;
+import com.github.gwtbootstrap.client.ui.Icon;
+import com.github.gwtbootstrap.client.ui.ValueListBox;
+import com.github.gwtbootstrap.client.ui.WellForm;
 import com.github.gwtbootstrap.datepicker.client.ui.DateBox;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -27,6 +30,7 @@ import ro.infoiasi.wad.sesi.client.schools.SchoolsServiceAsync;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
+import ro.infoiasi.wad.sesi.shared.ReportResult;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -144,20 +148,26 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
     @UiField
     SimplePanel secondFilterNamesPanel;
 
-    @UiField (provided = true)
-    CellTable resultsTable = new CellTable(5);
+    @UiField
+    @Ignore
+    ReportResultsView resultsTable;
+    @UiField
+    Icon loadingResultsIcon;
 
-    public ReportEditor() {
-        initWidget(ourUiBinder.createAndBindUi(this));
-        driver.initialize(this);
+    @UiField
+    SimplePanel errorResultsPanel;
 
-        wireUiElements();
-
-
-    }
 
     private volatile boolean failure;
 
+    public ReportEditor() {
+
+        initWidget(ourUiBinder.createAndBindUi(this));
+
+        driver.initialize(this);
+
+        wireUiElements();
+    }
     private void wireUiElements() {
         mainResourceBox.addValueChangeHandler(this);
         mainResourceBox.setAcceptableValues(Arrays.asList(ReportBean.MainResourceType.values()));
@@ -200,9 +210,25 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
 
     @Override
     public void onClick(ClickEvent event) {
+        loadingResultsIcon.setVisible(true);
+        errorResultsPanel.setVisible(false);
 
-        ReportBean bean = save();
-        System.out.println(bean);
+        final ReportBean bean = save();
+
+        ReportsService.App.getInstance().getReportResult(bean, new AsyncCallback<List<ReportResult>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                errorResultsPanel.setVisible(true);
+                loadingResultsIcon.setVisible(false);
+            }
+
+            @Override
+            public void onSuccess(List<ReportResult> result) {
+                loadingResultsIcon.setVisible(false);
+                resultsTable.setVisible(true);
+                resultsTable.setValue(result, bean.getStudentInternshipRelation());
+            }
+        });
     }
 
     @Override
@@ -210,7 +236,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
         failure = false;
         if (event.getValue() != null) {
 
-
+            resultsTable.setVisible(false);
             displayAllCompaniesNames(event.getValue());
             displayAllFacultiesNames(event.getValue());
         }

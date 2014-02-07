@@ -40,23 +40,6 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/enrolledStudent -->
-
-    <owl:ObjectProperty rdf:about="&sesiSchema;enrolledStudent"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
     // Individuals
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -283,7 +266,7 @@
         <rdf:type rdf:resource="&sesiSchema;AcademicStudies"/>
         <sesiSchema:yearOfStudy rdf:datatype="&xsd;nonNegativeInteger">2</sesiSchema:yearOfStudy>
         <sesiSchema:studyFaculty rdf:resource="&sesi;Faculty_Of_Computer_Science"/>
-        <sesiSchema:enrolledStudent rdf:resource="&sesi;ionpopescu"/>
+        <sesiSchema:hasEnrolledStudent rdf:resource="&sesi;ionpopescu"/>
         <sesiSchema:degree rdf:resource="https://rdf.freebase.com/ns/m.019v9k"/>
     </owl:NamedIndividual>
     
@@ -314,14 +297,14 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+            <rdf:Description rdf:about="&freebase;m.07657k"/>
+            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
             <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
@@ -335,15 +318,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
             <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.07657k"/>
-            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
+            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
         </owl:distinctMembers>
     </rdf:Description>
 </rdf:RDF>

@@ -31,7 +31,7 @@ abstract class AbstractReportQueryBuilder {
         finalQueryBuilder = new StringBuilder();
     }
     protected static final List<String> FIELD_NAMES = Lists.newArrayList("?iname", "?iSesiUrl", "?cname", "?cSesiUrl",
-            "?sname", "?sSesiUrl", "?schoolName", "?schoolUri", "?status", "?feedback");
+            "?sname", "?sSesiUrl", "?schoolName", "?status", "?feedback");
     protected static final String PUBLISHED_AT_SPARQL_PROP = "?" + Constants.PUBLISHED_AT_PROP;
     protected static final String APP_OR_PROGRESS_DETAILS = "?app";
     protected static final List<String> PERIOD = Lists.newArrayList("?startDate", "?endDate");
@@ -341,7 +341,7 @@ abstract class AbstractReportQueryBuilder {
 
         if (numericRestriction != null && numericRestriction.getOp() != null) {
 
-             finalQueryBuilder.append(" count (")
+             finalQueryBuilder.append(" count (distinct ")
                               .append(APP_OR_PROGRESS_DETAILS)
                               .append(") ")
                               .append(numericRestriction.getOp().getDescription())
@@ -433,7 +433,7 @@ abstract class AbstractReportQueryBuilder {
         bean.setFacultyNames(Lists.newArrayList("Faculty Of Computer Science"));
         bean.setStatuses(Lists.newArrayList(StudentInternshipRelation.Status.accepted.toString(),
                                             StudentInternshipRelation.Status.pending.toString()));
-        bean.setResourceType(ReportBean.MainResourceType.Students);
+        bean.setResourceType(ReportBean.MainResourceType.Internships);
 
         NumericRestriction numericRestriction = new NumericRestriction();
         numericRestriction.setLimit(1);

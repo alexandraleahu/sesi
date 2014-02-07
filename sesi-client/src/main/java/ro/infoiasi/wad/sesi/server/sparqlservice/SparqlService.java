@@ -1,32 +1,64 @@
 package ro.infoiasi.wad.sesi.server.sparqlservice;
 
 
-import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.sparql.util.Context;
 import org.apache.jena.atlas.web.auth.ServiceAuthenticator;
+import ro.infoiasi.wad.sesi.client.reports.NumericRestriction;
+import ro.infoiasi.wad.sesi.client.reports.ReportBean;
 import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.server.reports.ReportQueryBuilder;
+import ro.infoiasi.wad.sesi.server.reports.ResultSetToReportResultList;
+import ro.infoiasi.wad.sesi.shared.ComparisonOperator;
+import ro.infoiasi.wad.sesi.shared.ReportResult;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 public class SparqlService {
-    final static String serviceEndpoint = "http://localhost:5820/sesi/query/";
-    private static String programmingLanguage = "http://rdf.freebase.com/ns/computer.programming_language";
-    private static String technology = "http://rdf.freebase.com/ns/computer.software";
+    private static final  String serviceEndpoint = "http://localhost:5820/sesi/query/";
+    private static final  String programmingLanguage = "http://rdf.freebase.com/ns/computer.programming_language";
+    private static final  String technology = "http://rdf.freebase.com/ns/computer.software";
 
-    public ListMultimap<String, String> getReportResults(String sparqlQuery) {
+    public List<ReportResult> getReportResults(String sparqlQuery) {
 
         Query query = QueryFactory.create(sparqlQuery);
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
 
-
+        QueryExecution qe = getQueryExecution(query);
 
         ResultSet resultSet = qe.execSelect();
-        ListMultimap<String,String> resultMultimap = new ResultSetToMultimap().apply(resultSet);
+
+        List<ReportResult> resultMultimap = new ResultSetToReportResultList().apply(resultSet);
         qe.close();
 
         return resultMultimap;
+    }
+
+    private  QueryExecution getQueryExecution(Query query) {
+        // setting the reasoning
+
+        Model defaultModel = ModelFactory.createDefaultModel();
+
+        Map<String, Map<String, List<String>>> headers = Maps.newHashMap();
+        Map<String, List<String>> actualValues = Maps.newHashMap();
+
+        actualValues.put("SD-Connection-String", Lists.newArrayList("reasoning=SL"));
+
+        headers.put(serviceEndpoint, actualValues);
+
+        Context context = ARQ.getContext();
+
+        context.put(ARQ.serviceParams, headers);
+
+        return QueryExecutionFactory.createServiceRequest(serviceEndpoint, query,
+                new ServiceAuthenticator(context, "admin", "admin".toCharArray()));
     }
 
     public OntologyExtraInfo getOntologyExtraInfo(String uri) {
@@ -37,7 +69,7 @@ public class SparqlService {
                 .append("<").append(uri).append(">").append(" sesiSchema:name ?name . ")
                 .append("<").append(uri).append(">").append(" rdfs:seeAlso ?seeAlso . }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         OntologyExtraInfo extraInfo = new OntologyExtraInfo();
         try {
@@ -56,7 +88,7 @@ public class SparqlService {
         return extraInfo;
     }
 
-    public static TechnicalSkill getTechnicalSkill(String uri) {
+    public  TechnicalSkill getTechnicalSkill(String uri) {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
@@ -65,7 +97,7 @@ public class SparqlService {
                 .append("<").append(uri).append(">").append(" sesiSchema:level ?level . ")
                 .append("filter (?prop = sesiSchema:technologyUsed || ?prop = sesiSchema:programmingLanguageUsed) }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -95,14 +127,14 @@ public class SparqlService {
         return null;
     }
 
-    private static String getTechnologyType(String technologyUri) {
+    private  String getTechnologyType(String technologyUri) {
         StringBuilder typeQuery = new StringBuilder()
                 .append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
                 .append("select ?type where {<").append(technologyUri).append("> rdf:type ?type .}");
         Query query = QueryFactory.create(typeQuery.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
         try {
             ResultSet rs = qe.execSelect();
             while (rs.hasNext()) {
@@ -118,14 +150,14 @@ public class SparqlService {
         return null;
     }
 
-    private static KnowledgeLevel getLevelFromUri(String leveluri) {
+    private  KnowledgeLevel getLevelFromUri(String leveluri) {
         String[] parts = leveluri.split("/");
         String level = parts[parts.length - 1];
         return KnowledgeLevel.valueOf(level);
 
     }
 
-    private static ProgrammingLanguage getProgrammingLanguage(String programmingLanguageUri) {
+    private  ProgrammingLanguage getProgrammingLanguage(String programmingLanguageUri) {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
@@ -133,7 +165,7 @@ public class SparqlService {
                 .append("<").append(programmingLanguageUri).append(">").append(" sesiSchema:name ?name . ")
                 .append("<").append(programmingLanguageUri).append(">").append(" rdfs:seeAlso ?seeAlso . }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -155,7 +187,7 @@ public class SparqlService {
         return null;
     }
 
-    private static Technology getTechnology(String technologyUri) {
+    private  Technology getTechnology(String technologyUri) {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
@@ -166,7 +198,7 @@ public class SparqlService {
                 .append(" optional {<").append(technologyUri).append(">").append(" sesiSchema:programmingLanguageUsed ?programmingLanguageUsed . ")
                 .append("} optional {<").append(technologyUri).append(">").append(" sesiSchema:technologyUsed ?technologyUsed . } }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -211,7 +243,7 @@ public class SparqlService {
                 .append("<").append(studiesUri).append(">").append(" sesiSchema:degree ?degree . ")
                 .append("<").append(studiesUri).append(">").append(" sesiSchema:studyFaculty ?studyFaculty . }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -244,7 +276,7 @@ public class SparqlService {
                 .append("<").append(facultyUri).append(">").append(" sesiSchema:name ?name . ")
                 .append("<").append(facultyUri).append(">").append(" sesiSchema:university ?university . }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -275,7 +307,7 @@ public class SparqlService {
                 .append(String.format("<%s> ;", uri))
                 .append(" sesiSchema:name ?name . }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         List<String> names = Lists.newArrayList();
         try {
@@ -306,7 +338,7 @@ public class SparqlService {
                 .append("<").append(universityUri).append(">").append(" rdfs:seeAlso ?seeAlso . ")
                 .append("<").append(universityUri).append(">").append(" sesiSchema:inCity ?city . }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -346,7 +378,7 @@ public class SparqlService {
                 .append("<").append(projectUri).append(">").append(" sesiSchema:description ?description . ")
                 .append("<").append(projectUri).append(">").append(" sesiSchema:programmingLanguageUsed ?programmingLanguageUsed . }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -390,7 +422,33 @@ public class SparqlService {
     }
 
     public static void main(String[] args) {
+        ReportBean bean = new ReportBean();
 
+        bean.setStudentInternshipRelation(ReportBean.StudentInternshipRelationType.Applications);
+
+        bean.setCompanyNames(Lists.newArrayList("VirtualComp", "comp2"));
+        bean.setFacultyNames(Lists.newArrayList("Faculty Of Computer Science"));
+        bean.setStatuses(Lists.newArrayList(StudentInternshipRelation.Status.accepted.toString(),
+                StudentInternshipRelation.Status.pending.toString()));
+        bean.setResourceType(ReportBean.MainResourceType.Internships);
+
+        NumericRestriction numericRestriction = new NumericRestriction();
+        numericRestriction.setLimit(1);
+        numericRestriction.setOp(ComparisonOperator.ge);
+
+        bean.setNumericRestriction(numericRestriction);
+
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.set(2013, Calendar.MARCH, 13, 19, 0, 0);
+        bean.setStartDate(calendar.getTime());
+
+        calendar.set(2014, Calendar.DECEMBER, 13, 19, 0, 0);
+        bean.setEndDate(calendar.getTime());
+
+        String query = ReportQueryBuilder.buildQuery(bean);
+
+        System.out.println(query);
+        System.out.println(new SparqlService().getReportResults(query));
     }
 
     public Object[] getStatus(String uri) {
@@ -400,7 +458,7 @@ public class SparqlService {
                 .append("select ?comment where { ")
                 .append("<").append(uri).append(">").append(" rdfs:comment ?comment . } ");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -433,7 +491,7 @@ public class SparqlService {
                 .append("select ?id where { ")
                 .append("<").append(uri).append(">").append(" sesiSchema:id ?id . } ");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();
@@ -459,7 +517,7 @@ public class SparqlService {
                 .append("<").append(uri).append(">").append(" sesiSchema:siteUrl ?siteUrl . ")
                 .append("<").append(uri).append(">").append(" sesiSchema:isTeacherOf ?faculty . }");
         Query query = QueryFactory.create(builder.toString());
-        QueryExecution qe = QueryExecutionFactory.sparqlService(serviceEndpoint, query, new ServiceAuthenticator("admin", "admin".toCharArray()));
+        QueryExecution qe = getQueryExecution(query);
 
         try {
             ResultSet rs = qe.execSelect();

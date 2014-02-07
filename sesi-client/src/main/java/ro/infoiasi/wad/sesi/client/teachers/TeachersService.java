@@ -29,4 +29,6 @@ public interface TeachersService extends RemoteService {
     List<Teacher> getAllTeachers();
 
     List<InternshipProgressDetails> getProgressDetailsForTeacher(String teacherId);
+
+
 }

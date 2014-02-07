@@ -69,6 +69,8 @@ public interface SesiResources extends ClientBundle {
 
         String displayInline();
 
+        String standardMarginBottom();
+
 //
 
     }
