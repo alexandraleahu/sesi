@@ -8,6 +8,7 @@ import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -86,7 +87,7 @@ public class LoginForm extends Composite implements HasEventBus {
     public void onClickLinkedin(ClickEvent event) {
         loadingLinkedinResultsIcon.setVisible(true);
         errorLinkedinLabel.setVisible(false);
-
+        loginWithLinkedin();
     }
 
     @UiHandler("loginBtn")
@@ -112,6 +113,23 @@ public class LoginForm extends Composite implements HasEventBus {
                 errorLabel.setVisible(false);
 
                 eventBus.fireEvent(new LoginSuccessfulEvent(username, null, accountType));
+            }
+        });
+    }
+
+
+    private void loginWithLinkedin() {
+        //set cookie user type
+        SigninService.App.getInstance().getAuthenticateUrl("Linkedin", Window.Location.getHref(), new AsyncCallback<String>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.alert(caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                Window.Location.replace(result);
             }
         });
     }

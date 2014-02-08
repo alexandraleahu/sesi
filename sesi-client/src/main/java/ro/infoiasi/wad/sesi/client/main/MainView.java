@@ -18,10 +18,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.authentication.*;
-import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
+import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
+import ro.infoiasi.wad.sesi.client.students.StudentsService;
 import ro.infoiasi.wad.sesi.client.teachers.TeacherView;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
+import ro.infoiasi.wad.sesi.core.model.User;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 
@@ -39,7 +41,6 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
     public HandlerManager getEventBus() {
         return eventBus;
     }
-
 
 
     interface MainViewUiBinder extends UiBinder<HTMLPanel, MainView> {
@@ -74,13 +75,55 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
 
 
     private final HandlerManager eventBus;
+
     public MainView(HandlerManager eventBus) {
         root = ourUiBinder.createAndBindUi(this);
         this.eventBus = eventBus;
+        verifyOauth();
 
         wireUiElements();
 
         fillHomeLink();
+    }
+
+    private void verifyOauth() {
+
+        String v = Window.Location.getParameter("oauth_verifier");
+        if (v != null) {
+            SigninService.App.getInstance().verify(v, new AsyncCallback<User>() {
+
+                @Override
+                public void onFailure(Throwable caught) {
+                    //to be decided what to do
+                }
+
+                @Override
+                public void onSuccess(final User user) {
+                    LoginService.App.getInstance().login(user.id, null, new AsyncCallback<UserAccountType>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            StudentsService.App.getInstance().registerStudent(user.userName, null, user.firstName, new AsyncCallback<Boolean>() {
+                                @Override
+                                public void onFailure(Throwable throwable) {
+                                    //
+                                }
+
+                                @Override
+                                public void onSuccess(Boolean aBoolean) {
+                                    eventBus.fireEvent(new LoginSuccessfulEvent(user.id, user.firstName + " " + user.lastName, UserAccountType.STUDENT_ACCOUNT));
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onSuccess(UserAccountType accountType) {
+                            eventBus.fireEvent(new LoginSuccessfulEvent(user.id, user.firstName + " " + user.lastName, accountType));
+                        }
+                    });
+                }
+            });
+            return;
+        }
     }
 
     private void wireUiElements() {
@@ -236,25 +279,6 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         if (historyToken[0].equals(WidgetConstants.VIEW_TOKEN)) {
 
         }
-    }
-
-    // toSignin("Linkedin")
-    private void toSignin(String provider) {
-        SigninService.App.getInstance().getAuthenticateUrl(provider, Window.Location.getHref(), new AsyncCallback<String>() {
-
-            @Override
-            public void onFailure(Throwable caught) {
-                // TODO Auto-generated method stub
-                Window.alert(caught.getMessage());
-            }
-
-            @Override
-            public void onSuccess(String result) {
-                System.out.println("result " + result);
-                Window.Location.replace(result);
-
-            }
-        });
     }
 
 }

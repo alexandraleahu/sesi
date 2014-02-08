@@ -172,7 +172,6 @@
                     <b:CheckBox ui:field="offersRelocationCheckbox" text="Offers relocation"/>
 
                 </b:Column>
-
             </b:Row>
             <b:Row>
                 <b:Column size="5">
