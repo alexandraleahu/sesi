@@ -222,7 +222,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 case COMPANY_ACCOUNT:
                     break;
                 case TEACHER_ACCOUNT:
-                     mainPanel.setWidget(new TeacherView());
+//                     mainPanel.setWidget(new TeacherView());
                     break;
                 case STUDENT_ACCOUNT:
                     break;
