@@ -3,6 +3,7 @@ package ro.infoiasi.wad.sesi.server.login;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import ro.infoiasi.wad.sesi.client.authentication.LoginService;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
+import ro.infoiasi.wad.sesi.shared.UnsuccessfulLoginException;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.Form;
@@ -18,7 +19,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String RESOURCE_PATH = "login";
 
     @Override
-    public UserAccountType login(String username, String password) {
+    public UserAccountType login(String username, String password) throws UnsuccessfulLoginException {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL)
                 .path(RESOURCE_PATH);
@@ -30,7 +31,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
         Response response = invocation.invoke();
         if (response.getStatus() == Status.FORBIDDEN.getStatusCode()) {
-            return null;
+            throw new UnsuccessfulLoginException("Wrong username or password");
         }
 
         return UserAccountType.fromDescription(response.readEntity(String.class));

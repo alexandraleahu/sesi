@@ -1,4 +1,4 @@
-package ro.infoiasi.wad.sesi.client.main;
+package ro.infoiasi.wad.sesi.client.authentication;
 
 import com.github.gwtbootstrap.client.ui.*;
 import com.google.gwt.core.client.GWT;
@@ -11,7 +11,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import ro.infoiasi.wad.sesi.client.authentication.LoginService;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.client.util.HasEventBus;
 
@@ -83,6 +82,7 @@ public class LoginForm extends Composite implements HasEventBus {
             @Override
             public void onSuccess(UserAccountType accountType) {
                 loadingResultsIcon.setVisible(false);
+
                 errorResultsPanel.setVisible(false);
 
                 eventBus.fireEvent(new LoginSuccessfulEvent(username, null, accountType));

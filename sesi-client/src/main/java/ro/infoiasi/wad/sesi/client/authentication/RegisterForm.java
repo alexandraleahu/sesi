@@ -1,4 +1,4 @@
-package ro.infoiasi.wad.sesi.client.main;
+package ro.infoiasi.wad.sesi.client.authentication;
 
 import com.github.gwtbootstrap.client.ui.*;
 import com.github.gwtbootstrap.client.ui.constants.ControlGroupType;

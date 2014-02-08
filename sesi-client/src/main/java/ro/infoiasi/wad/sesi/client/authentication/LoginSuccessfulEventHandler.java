@@ -1,4 +1,4 @@
-package ro.infoiasi.wad.sesi.client.main;
+package ro.infoiasi.wad.sesi.client.authentication;
 
 import com.google.gwt.event.shared.EventHandler;
 

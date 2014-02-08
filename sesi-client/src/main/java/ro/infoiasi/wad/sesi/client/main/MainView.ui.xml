@@ -7,27 +7,39 @@
          <b:Heading size="3" addStyleNames="{resource.style.bigLabel}">
              Semantic Student Internships
          </b:Heading>
-        <b:ControlGroup>
-            <b:Button type="PRIMARY" ui:field="logoutBtn" text="Logout" visible="false" addStyleNames="{resource.style.floatRight}
-                                                                            {resource.style.standardMarginRight}"/>
-            <b:Button type="PRIMARY" ui:field="profileBtn" text="Profile" visible="false" addStyleNames="{resource.style.floatRight}
-                                                                            {resource.style.standardMarginRight}"/>
-        </b:ControlGroup>
-        <b:TabPanel tabPosition="top" ui:field="tabPanel">
-             <b:Tab heading="Home" active="true" ui:field="homeTab">
-                 <g:Label text="Welcome to Semantic Student Internships!" />
-                 <g:SimplePanel ui:field="homePanel" />
-             </b:Tab>
 
-            <b:Tab heading="Browse Internships" active="false" ui:field="internshipsTab">
-                 <g:SimplePanel ui:field="internshipsPanel" />
-             </b:Tab>
-            <b:Tab heading="Browse Companies" active="false" ui:field="companiesTab">
-                 <g:SimplePanel ui:field="companiesPanel" />
-             </b:Tab>
+        <b:ResponsiveNavbar ui:field="navBar">
+            <b:Brand>Main menu</b:Brand>
+            <b:Nav>
+                 <b:NavLink text="Home" ui:field="homeLink" icon="HOME" />
+            </b:Nav>
+
+            <b:Nav>
+                 <b:NavLink text="Browse internships" ui:field="internshipsLink" icon="LIST" />
+            </b:Nav>
+
+            <b:Nav>
+                 <b:NavLink text="Browse companies" ui:field="companiesLink" icon="BUILDING" />
+            </b:Nav>
 
 
+            <b:Nav alignment="RIGHT">
+                <b:Button type="PRIMARY"  ui:field="logoutBtn" text="Logout" visible="false" addStyleNames="{resource.style.standardMarginRight}"/>
+            </b:Nav>
 
-        </b:TabPanel>
+            <b:Nav alignment="RIGHT">
+                <b:Button type="PRIMARY"  ui:field="profileBtn" text="Profile" visible="false" addStyleNames="{resource.style.standardMarginRight}"/>
+            </b:Nav>
+
+            <b:Nav alignment="RIGHT">
+                <b:Button type="PRIMARY"  ui:field="registerBtn" text="Register" visible="false" addStyleNames="{resource.style.standardMarginRight}"/>
+            </b:Nav>
+
+            <b:Nav alignment="RIGHT">
+                <b:Button type="PRIMARY"  ui:field="loginBtn" text="Login" visible="false" addStyleNames="{resource.style.standardMarginRight}"/>
+            </b:Nav>
+
+        </b:ResponsiveNavbar>
+        <g:SimplePanel ui:field="mainPanel"/>
     </g:HTMLPanel>
 </ui:UiBinder>

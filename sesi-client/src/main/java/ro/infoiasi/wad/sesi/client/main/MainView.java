@@ -1,30 +1,31 @@
 package ro.infoiasi.wad.sesi.client.main;
 
 import com.github.gwtbootstrap.client.ui.Button;
-import com.github.gwtbootstrap.client.ui.Tab;
-import com.github.gwtbootstrap.client.ui.TabPanel;
+import com.github.gwtbootstrap.client.ui.Hero;
+import com.github.gwtbootstrap.client.ui.NavLink;
+import com.github.gwtbootstrap.client.ui.ResponsiveNavbar;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import ro.infoiasi.wad.sesi.client.Sesi;
-import ro.infoiasi.wad.sesi.client.authentication.SigninService;
+import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.util.HasEventBus;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 
-public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<String>, HasEventBus,
-                                LoginSuccessfulEventHandler {
+public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventBus,
+        LoginSuccessfulEventHandler {
     @Override
     public Widget asWidget() {
         return root;
@@ -43,30 +44,29 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
     private static MainViewUiBinder ourUiBinder = GWT.create(MainViewUiBinder.class);
 
     @UiField
-    TabPanel tabPanel;
+    ResponsiveNavbar navBar;
 
-    @UiField
-    SimplePanel homePanel;
-    @UiField
-    SimplePanel internshipsPanel;
-    @UiField
-    SimplePanel companiesPanel;
 
-    @UiField
-    Tab homeTab;
-    @UiField
-    Tab internshipsTab;
-    @UiField
-    Tab companiesTab;
     @UiField
     Button logoutBtn;
 
     @UiField
     Button profileBtn;
+    @UiField
+    Button loginBtn;
+    @UiField
+    Button registerBtn;
+    @UiField
+    SimplePanel mainPanel;
+    @UiField
+    NavLink homeLink;
+    @UiField
+    NavLink internshipsLink;
+    @UiField
+    NavLink companiesLink;
     private HTMLPanel root;
 
 
-    private SimplePanel currentPanel;
     private final HandlerManager eventBus;
     public MainView(HandlerManager eventBus) {
         root = ourUiBinder.createAndBindUi(this);
@@ -74,15 +74,10 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
 
         wireUiElements();
 
-        currentPanel = homePanel;
-        fillHomeTab();
+        fillHomeLink();
     }
 
     private void wireUiElements() {
-        homeTab.addClickHandler(this);
-        internshipsTab.addClickHandler(this);
-        companiesTab.addClickHandler(this);
-        logoutBtn.addClickHandler(this);
 
         eventBus.addHandler(LoginSuccessfulEvent.TYPE, this);
 
@@ -103,48 +98,81 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
 
         logoutBtn.setVisible(true);
         profileBtn.setVisible(true);
+        loginBtn.setVisible(false);
+        registerBtn.setVisible(false);
+    }
+
+    private void showNotLoggedInMessage() {
+
+        Hero hero = new Hero();
+        hero.setWidth("50%");
+        hero.add(new Label("You are not logged in. Click on the buttons above to Login or create a new account using the Register button"));
+        mainPanel.setWidget(hero);
     }
 
     private void showWelcomeMessage() {
+
+        Hero hero = new Hero();
+        hero.setWidth("50%");
         Label welcome = new Label();
 
         welcome.setText("You are logged in as " + Sesi.getCurrentUserId());
-        currentPanel.setWidget(welcome);
+        hero.add(welcome);
+        mainPanel.setWidget(hero);
     }
 
-    @Override
-    public void onClick(ClickEvent event) {
-
-        if (event.getSource().equals(homeTab.asTabLink().getAnchor())) {
-            currentPanel = homePanel;
-            fillHomeTab();
-
-        } else if (event.getSource().equals(internshipsTab.asTabLink().getAnchor())) {
-            currentPanel = internshipsPanel;
-            internshipsPanel.setWidget(new InternshipsByCategoryView());
-
-        } else if (event.getSource().equals(companiesTab.asTabLink().getAnchor())) {
-            currentPanel = companiesPanel;
-        } else if (event.getSource().equals(logoutBtn)) {
-
-            Sesi.removeAllCookies();
-            logoutBtn.setVisible(false);
-            profileBtn.setVisible(false);
-            homeTab.setActive(true);
-
-            currentPanel = homePanel;
-            showLoginAndRegisterForms();
-        }
+    @UiHandler("homeLink")
+    public void homeLinkClicked(ClickEvent event) {
+        fillHomeLink();
     }
 
-    private void fillHomeTab() {
+    @UiHandler("internshipsLink")
+    public void internshipsLinkClicked(ClickEvent event) {
+        mainPanel.setWidget(new InternshipsByCategoryView());
+    }
+
+    @UiHandler("companiesLink")
+    public void companiesLinkClicked(ClickEvent event) {
+
+    }
+
+    @UiHandler("loginBtn")
+    public void loginBtnClicked(ClickEvent event) {
+        mainPanel.setWidget(new LoginForm(eventBus));
+
+    }
+
+    @UiHandler("registerBtn")
+    public void registerBtnClicked(ClickEvent event) {
+        mainPanel.setWidget(new RegisterForm(eventBus));
+
+    }
+
+
+    @UiHandler("logoutBtn")
+    public void logoutBtnClicked(ClickEvent event) {
+        Sesi.removeAllCookies();
+        logoutBtn.setVisible(false);
+        profileBtn.setVisible(false);
+        loginBtn.setVisible(true);
+        registerBtn.setVisible(true);
+        showNotLoggedInMessage();
+    }
+
+    private void fillHomeLink() {
         UserAccountType currentAccountType = Sesi.getCurrentUserType();
         if (currentAccountType == null) {
             // not logged in
-            showLoginAndRegisterForms();
+            showNotLoggedInMessage();
+            loginBtn.setVisible(true);
+            registerBtn.setVisible(true);
+            logoutBtn.setVisible(false);
+            profileBtn.setVisible(false);
         } else {
             logoutBtn.setVisible(true);
             profileBtn.setVisible(true);
+            loginBtn.setVisible(false);
+            registerBtn.setVisible(false);
             showWelcomeMessage();
 
             switch(currentAccountType) {
@@ -170,11 +198,6 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
             }
         }
 
-    }
-
-    private void showLoginAndRegisterForms() {
-
-        currentPanel.setWidget(new HomePanel(eventBus));
     }
 
 
