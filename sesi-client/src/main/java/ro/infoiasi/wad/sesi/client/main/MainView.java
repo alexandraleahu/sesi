@@ -20,6 +20,7 @@ import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
+import ro.infoiasi.wad.sesi.client.teachers.TeacherView;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
@@ -97,7 +98,6 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
 
     @Override
     public void onLoginSuccessful(LoginSuccessfulEvent event) {
-        System.out.println(event.getAccountType().getDescription());
         Sesi.setCurrentUserType(event.getAccountType());
         Sesi.setCurrentUserId(event.getId());
         if (event.getName() != null) {
@@ -170,9 +170,26 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         showNotLoggedInMessage(NOT_LOGGED_IN);
     }
 
+    @UiHandler("profileBtn")
+    public void profileBtnClicked(ClickEvent event) {
+        UserAccountType currentUserType = Sesi.getCurrentUserType();
+        if (currentUserType != null) {
+
+            switch (currentUserType) {
+                case COMPANY_ACCOUNT:
+                    break;
+                case TEACHER_ACCOUNT:
+                     mainPanel.setWidget(new TeacherView());
+                    break;
+                case STUDENT_ACCOUNT:
+                    break;
+            }
+        }
+    }
+
     private void fillHomeLink() {
-        UserAccountType currentAccountType = Sesi.getCurrentUserType();
-        if (currentAccountType == null) {
+        String currentAccountId = Sesi.getCurrentUserId();
+        if (currentAccountId == null) {
             // not logged in
             showNotLoggedInMessage(NOT_LOGGED_IN);
             loginBtn.setVisible(true);
@@ -186,7 +203,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
             registerBtn.setVisible(false);
             showWelcomeMessage();
 
-            switch(currentAccountType) {
+            switch(Sesi.getCurrentUserType()) {
                 case STUDENT_ACCOUNT:
                     // afisam internshipuri recomandate
 
