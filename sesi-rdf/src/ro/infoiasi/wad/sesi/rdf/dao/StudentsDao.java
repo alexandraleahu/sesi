@@ -220,7 +220,6 @@ public class StudentsDao implements Dao {
 
         try {
             Resource newStudent = Values.uri(SESI_OBJECTS_NS, student.getId());
-            URI studentClass = Values.uri(SESI_SCHEMA_NS, STUDENT_CLASS);
 
             con.begin();
 

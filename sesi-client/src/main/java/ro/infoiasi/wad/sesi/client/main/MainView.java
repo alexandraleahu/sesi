@@ -19,13 +19,16 @@ import com.google.gwt.user.client.ui.*;
 import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
-import ro.infoiasi.wad.sesi.client.util.HasEventBus;
+import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 
 public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventBus,
-        LoginSuccessfulEventHandler {
+        LoginSuccessfulEventHandler, RegisterSuccessfulEventHandler {
+
+    public static final String NOT_LOGGED_IN = "You are not logged in. Click on the buttons above to Login or create a new account using the Register button";
+
     @Override
     public Widget asWidget() {
         return root;
@@ -35,6 +38,8 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
     public HandlerManager getEventBus() {
         return eventBus;
     }
+
+
 
     interface MainViewUiBinder extends UiBinder<HTMLPanel, MainView> {
 
@@ -80,12 +85,18 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
     private void wireUiElements() {
 
         eventBus.addHandler(LoginSuccessfulEvent.TYPE, this);
+        eventBus.addHandler(RegisterSuccessfulEvent.TYPE, this);
 
         History.addValueChangeHandler(this);
     }
 
     @Override
-    public void onLogin(LoginSuccessfulEvent event) {
+    public void onRegisterSuccessful(RegisterSuccessfulEvent event) {
+        showNotLoggedInMessage("Your account was successfully created! Press the Login button above to login into the application.");
+    }
+
+    @Override
+    public void onLoginSuccessful(LoginSuccessfulEvent event) {
         System.out.println(event.getAccountType().getDescription());
         Sesi.setCurrentUserType(event.getAccountType());
         Sesi.setCurrentUserId(event.getId());
@@ -102,11 +113,11 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         registerBtn.setVisible(false);
     }
 
-    private void showNotLoggedInMessage() {
+    private void showNotLoggedInMessage(String msg) {
 
         Hero hero = new Hero();
         hero.setWidth("50%");
-        hero.add(new Label("You are not logged in. Click on the buttons above to Login or create a new account using the Register button"));
+        hero.add(new Label(msg));
         mainPanel.setWidget(hero);
     }
 
@@ -156,14 +167,14 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         profileBtn.setVisible(false);
         loginBtn.setVisible(true);
         registerBtn.setVisible(true);
-        showNotLoggedInMessage();
+        showNotLoggedInMessage(NOT_LOGGED_IN);
     }
 
     private void fillHomeLink() {
         UserAccountType currentAccountType = Sesi.getCurrentUserType();
         if (currentAccountType == null) {
             // not logged in
-            showNotLoggedInMessage();
+            showNotLoggedInMessage(NOT_LOGGED_IN);
             loginBtn.setVisible(true);
             registerBtn.setVisible(true);
             logoutBtn.setVisible(false);

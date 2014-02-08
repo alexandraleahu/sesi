@@ -7,7 +7,7 @@ import ro.infoiasi.wad.sesi.core.model.Student;
 
 import java.util.List;
 
-public interface StudentServiceAsync {
+public interface StudentsServiceAsync {
     void getStudentById(String studentId, AsyncCallback<Student> async);
 
     void getAllStudents(AsyncCallback<List<Student>> async);
@@ -18,5 +18,5 @@ public interface StudentServiceAsync {
 
     void updateStudent(Student student, AsyncCallback<String> async);
 
-    void registerStudent(String username, String password, AsyncCallback<Boolean> async);
+    void registerStudent(String username, String password, String name, AsyncCallback<Boolean> async);
 }

@@ -70,34 +70,53 @@ public class TeachersDao implements Dao {
             connectionPool.releaseConnection(con);
         }
     }
+    public String createMinimalTeacher(String teacherName, String teacherId) throws StardogException {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            Resource newTeacher = Values.uri(SESI_OBJECTS_NS, teacherId);
+            URI studentClass = Values.uri(SESI_SCHEMA_NS, TEACHER_CLASS);
 
-    public String createTeacher(Teacher teacher) throws StardogException {
+            con.begin();
+
+            Adder adder = con.add();
+            adder.statement(newTeacher, RDF.TYPE, studentClass);
+            adder.statement(newTeacher, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+
+            URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
+            URI id = Values.uri(SESI_SCHEMA_NS, ID_PROP);
+            URI uri = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
+
+            adder.statement(newTeacher, RDFS.LABEL, Values.literal(teacherName));
+            adder.statement(newTeacher, name, Values.literal(teacherName, StardogValueFactory.XSD.STRING));
+            adder.statement(newTeacher, id, Values.literal(teacherId, StardogValueFactory.XSD.STRING));
+            adder.statement(newTeacher, uri, Values.literal("/teachers/" + teacherId, StardogValueFactory.XSD.STRING));
+
+            con.commit();
+            return "/teachers/" + teacherId;
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+
+
+    }
+    public String updateTeacher(Teacher teacher) throws StardogException {
 
         ReasoningConnection con = connectionPool.getConnection();
 
         try {
 
             Resource newTeacher = Values.uri(SESI_OBJECTS_NS, teacher.getId());
-            URI progressDetailsClass = Values.uri(SESI_SCHEMA_NS, getOntClassName());
 
             con.begin();
 
             Adder adder = con.add();
 
-            // adding the class and the owl:namedIndividual type
-            adder.statement(newTeacher, RDF.TYPE, progressDetailsClass);
-            adder.statement(newTeacher, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
-
             // then, the id, sesiUrl and name
-            URI ID = Values.uri(SESI_SCHEMA_NS, ID_PROP);
-            URI sesiUrl = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
             URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI title = Values.uri(SESI_SCHEMA_NS, TITLE_PROP);
 
-            adder.statement(newTeacher, ID, Values.literal(teacher.getId(), StardogValueFactory.XSD.STRING));
             adder.statement(newTeacher, name, Values.literal(teacher.getName(), StardogValueFactory.XSD.STRING));
-            adder.statement(newTeacher, sesiUrl, Values.literal(teacher.getRelativeUri()));
             adder.statement(newTeacher, title, Values.literal(teacher.getTitle(), StardogValueFactory.XSD.STRING));
             if (teacher.getSiteUrl() != null) {
                 adder.statement(newTeacher, siteUrl, Values.literal(teacher.getSiteUrl(), StardogValueFactory.XSD.ANYURI));
@@ -207,7 +226,7 @@ public class TeachersDao implements Dao {
 //
 //        teacher.setFaculty(faculty);
 //
-//        System.out.println(dao.createTeacher(teacher));
+//        System.out.println(dao.updateTeacher(teacher));
 
         System.out.println(dao.getTeacherById("ionbarbu", RDFFormat.TURTLE));
 

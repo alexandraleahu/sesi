@@ -11,8 +11,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import ro.infoiasi.wad.sesi.client.util.HasEventBus;
+import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 import java.io.IOException;
@@ -53,8 +52,7 @@ public class LoginForm extends Composite implements HasEventBus {
 
     @UiField
     Icon loadingResultsIcon;
-    @UiField
-    SimplePanel errorResultsPanel;
+   
     @UiField(provided = true)
     ValueListBox<UserAccountType> accountList = new ValueListBox<UserAccountType>(new Renderer<UserAccountType>() {
         @Override
@@ -68,6 +66,12 @@ public class LoginForm extends Composite implements HasEventBus {
                 appendable.append(account.getDescription());
         }
     });
+    @UiField
+    Label errorLabel;
+    @UiField
+    Label errorLinkedinLabel;
+    @UiField
+    Icon loadingLinkedinResultsIcon;
 
     public LoginForm(HandlerManager eventBus) {
         initWidget(ourUiBinder.createAndBindUi(this));
@@ -80,8 +84,8 @@ public class LoginForm extends Composite implements HasEventBus {
 
     @UiHandler("loginLinkedinButton")
     public void onClickLinkedin(ClickEvent event) {
-        loadingResultsIcon.setVisible(true);
-        errorResultsPanel.setVisible(false);
+        loadingLinkedinResultsIcon.setVisible(true);
+        errorLinkedinLabel.setVisible(false);
 
     }
 
@@ -92,20 +96,20 @@ public class LoginForm extends Composite implements HasEventBus {
         final String passwd = password.getText();
 
         loadingResultsIcon.setVisible(true);
-        errorResultsPanel.setVisible(false);
+        errorLabel.setVisible(false);
 
         LoginService.App.getInstance().login(username, passwd, new AsyncCallback<UserAccountType>() {
             @Override
             public void onFailure(Throwable caught) {
                 loadingResultsIcon.setVisible(false);
-                errorResultsPanel.setVisible(true);
+                errorLabel.setVisible(true);
             }
 
             @Override
             public void onSuccess(UserAccountType accountType) {
                 loadingResultsIcon.setVisible(false);
 
-                errorResultsPanel.setVisible(false);
+                errorLabel.setVisible(false);
 
                 eventBus.fireEvent(new LoginSuccessfulEvent(username, null, accountType));
             }

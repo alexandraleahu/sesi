@@ -133,7 +133,7 @@ public class StudentsResource {
     @Path("/")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response register(@FormParam("username") String username, @FormParam("pass") String password,
+    public Response register(@FormParam("username") String username, @FormParam("password") String password,
                              @FormParam("name") String studentName) {
         if (usersTable.addUser(new DBUser(username, password, UserAccountType.STUDENT_ACCOUNT.getDescription()))) {
             try {

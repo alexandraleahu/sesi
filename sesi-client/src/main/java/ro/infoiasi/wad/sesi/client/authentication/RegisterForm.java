@@ -11,10 +11,14 @@ import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
+import ro.infoiasi.wad.sesi.client.students.StudentsService;
+import ro.infoiasi.wad.sesi.client.teachers.TeachersService;
+import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
-import ro.infoiasi.wad.sesi.client.util.HasEventBus;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -54,7 +58,7 @@ public class RegisterForm extends Composite implements HasEventBus {
     @UiField
     HelpInline emailHelpInline;
     @UiField
-    PasswordTextBox email;
+    TextBox email;
     @UiField
     Button registerBtn;
     @UiField
@@ -81,8 +85,10 @@ public class RegisterForm extends Composite implements HasEventBus {
     });
     @UiField
     ControlGroup retypePasswordControlGroup;
-
-    private UserAccountType account;
+    @UiField
+    Icon loadingResultsIcon;
+    @UiField
+    Label errorLabel;
 
     public RegisterForm(HandlerManager eventBus) {
         initWidget(ourUiBinder.createAndBindUi(this));
@@ -99,9 +105,12 @@ public class RegisterForm extends Composite implements HasEventBus {
         if (!password.getText().equals(retypePassword.getText())) {
             retypePasswordControlGroup.setType(ControlGroupType.ERROR);
             retypePasswordHelpInline.setText("Passwords do not match!");
+            registerBtn.setEnabled(false);
         } else {
             retypePasswordControlGroup.setType(ControlGroupType.SUCCESS);
             retypePasswordHelpInline.setText("Passwords match!");
+            registerBtn.setEnabled(true);
+
         }
     }
 
@@ -111,20 +120,80 @@ public class RegisterForm extends Composite implements HasEventBus {
         if (password.getText().length() < 6) {
             passwordControlGroup.setType(ControlGroupType.ERROR);
             passwordHelpInline.setText("Password must have at least 6 characters!");
+            registerBtn.setEnabled(false);
+
         } else {
             passwordControlGroup.setType(ControlGroupType.NONE);
             passwordHelpInline.setText("");
+            registerBtn.setEnabled(true);
+
+        }
+    }
+
+    @UiHandler("userName")
+    public void onUsernameLostFocus(BlurEvent event) {
+
+        if (userName.getText().indexOf(' ') != -1) {
+            userNameControlGroup.setType(ControlGroupType.ERROR);
+            userNameHelpInline.setText("Username must not contain spaces!");
+            registerBtn.setEnabled(false);
+
+        } else {
+            userNameControlGroup.setType(ControlGroupType.NONE);
+            userNameHelpInline.setText("");
+            registerBtn.setEnabled(true);
+
         }
     }
 
     @UiHandler("accountList")
     public void onChangeValue(ValueChangeEvent<UserAccountType> event) {
-        account = event.getValue();
 
     }
 
     @UiHandler("registerBtn")
     public void onClickRegister(ClickEvent event) {
 
+        String username = userName.getText();
+        String name = fullName.getText();
+        String passwd = password.getText();
+
+        loadingResultsIcon.setVisible(true);
+        errorLabel.setVisible(false);
+
+        UserAccountType accountType = accountList.getValue();
+
+        switch (accountType) {
+            case COMPANY_ACCOUNT:
+                CompaniesService.App.getInstance().registerCompany(username, passwd, name, new RegisterAsyncCallback());
+                break;
+            case STUDENT_ACCOUNT:
+                StudentsService.App.getInstance().registerStudent(username, passwd, name, new RegisterAsyncCallback());
+                break;
+            case TEACHER_ACCOUNT:
+                TeachersService.App.getInstance().registerTeacher(username, passwd, name, new RegisterAsyncCallback());
+                break;
+        }
+    }
+
+    private class RegisterAsyncCallback implements AsyncCallback<Boolean> {
+        @Override
+        public void onFailure(Throwable caught) {
+            loadingResultsIcon.setVisible(false);
+            errorLabel.setVisible(true);
+        }
+
+        @Override
+        public void onSuccess(Boolean result) {
+            loadingResultsIcon.setVisible(false);
+            if (Boolean.TRUE.equals(result)) {
+                errorLabel.setVisible(false);
+                eventBus.fireEvent(new RegisterSuccessfulEvent());
+            } else {
+
+                errorLabel.setVisible(true);
+                errorLabel.setText("Username already exists!");
+            }
+        }
     }
 }

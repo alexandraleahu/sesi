@@ -4,5 +4,5 @@ import com.google.gwt.event.shared.EventHandler;
 
 
 public interface LoginSuccessfulEventHandler extends EventHandler {
-    void onLogin(LoginSuccessfulEvent event);
+    void onLoginSuccessful(LoginSuccessfulEvent event);
 }

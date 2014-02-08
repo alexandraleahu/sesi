@@ -28,7 +28,7 @@
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi StudentService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.students.StudentServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.students.StudentsServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipApplicationService</servlet-name>

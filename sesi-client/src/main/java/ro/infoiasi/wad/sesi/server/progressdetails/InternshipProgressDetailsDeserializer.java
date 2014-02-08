@@ -11,7 +11,7 @@ import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
 import ro.infoiasi.wad.sesi.server.internships.InternshipsServiceImpl;
 import ro.infoiasi.wad.sesi.server.deserializerinterfaces.Deserializer;
-import ro.infoiasi.wad.sesi.server.students.StudentServiceImpl;
+import ro.infoiasi.wad.sesi.server.students.StudentsServiceImpl;
 import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class InternshipProgressDetailsDeserializer implements Deserializer<Inter
         // student
         Statement statement = m.getProperty(detailsResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, ATTENDEE_STUDENT_PROP));
         String studentId = sparqlService.getIDFromURI(statement.getResource().getURI());
-        StudentServiceImpl studentService = new StudentServiceImpl();
+        StudentsServiceImpl studentService = new StudentsServiceImpl();
         details.setStudent(studentService.getStudentById(studentId));
 
         //internship

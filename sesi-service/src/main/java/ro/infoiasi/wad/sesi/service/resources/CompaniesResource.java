@@ -1,8 +1,9 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
+import com.complexible.stardog.StardogException;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
-import ro.infoiasi.wad.sesi.rdf.dao.CompanyDao;
+import ro.infoiasi.wad.sesi.rdf.dao.CompaniesDao;
 import ro.infoiasi.wad.sesi.service.authentication.DBUser;
 import ro.infoiasi.wad.sesi.service.authentication.UsersTable;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
@@ -34,7 +35,7 @@ public class CompaniesResource {
                                @QueryParam("fields") List<String> fields,
                                @Context HttpHeaders headers) {
 
-        CompanyDao dao = new CompanyDao();
+        CompaniesDao dao = new CompaniesDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
@@ -54,7 +55,7 @@ public class CompaniesResource {
                                     @QueryParam("fields") List<String> fields,
                                     @Context HttpHeaders headers) {
 
-        CompanyDao dao = new CompanyDao();
+        CompaniesDao dao = new CompaniesDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
@@ -73,7 +74,7 @@ public class CompaniesResource {
                                              @QueryParam("fields") List<String> fields,
                                              @Context HttpHeaders headers) {
 
-        CompanyDao dao = new CompanyDao();
+        CompaniesDao dao = new CompaniesDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
@@ -92,7 +93,7 @@ public class CompaniesResource {
                                               @QueryParam("fields") List<String> fields,
                                               @Context HttpHeaders headers) {
 
-        CompanyDao dao = new CompanyDao();
+        CompaniesDao dao = new CompaniesDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
@@ -111,7 +112,7 @@ public class CompaniesResource {
                                                            @QueryParam("fields") List<String> fields,
                                                            @Context HttpHeaders headers) {
 
-        CompanyDao dao = new CompanyDao();
+        CompaniesDao dao = new CompaniesDao();
         try {
             List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
@@ -136,11 +137,20 @@ public class CompaniesResource {
     @Path("/")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response register(@FormParam("username") String username, @FormParam("pass") String password) {
+    public Response register(@FormParam("username") String username, @FormParam("password") String password,
+                             @FormParam("name") String companyName) {
         if (usersTable.addUser(new DBUser(username, password, UserAccountType.COMPANY_ACCOUNT.getDescription()))) {
-            return Response.ok().build();
+            try {
+                new CompaniesDao().createMinimalCompany(companyName, username);
+                return Response.ok().build();
+
+            } catch (StardogException e) {
+                throw new InternalServerErrorException(e.getMessage());
+            }
+        } else {
+
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
-        return Response.status(Response.Status.FORBIDDEN).build();
 
     }
 }

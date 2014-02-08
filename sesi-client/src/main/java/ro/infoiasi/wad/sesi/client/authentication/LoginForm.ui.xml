@@ -31,27 +31,30 @@
                                                    ui:field="password" placeholder="Enter your password" />
                                 <b:HelpInline ui:field="passwordHelpInline" />
                             </b:Controls>
-                            <b:ControlGroup>
-                                <b:Controls>
-                                    <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
-                                            addStyleNames="{resource.style.noFlickering}"  />
-                                    <g:SimplePanel ui:field="errorResultsPanel" visible="false" addStyleNames="{resource.style.standardMarginTop}">
-                                        <b:Label type="IMPORTANT" text="Wrong username or password"/>
-                                    </g:SimplePanel>
-                                </b:Controls>
-                            </b:ControlGroup>
+
                         </b:ControlGroup>
 
                         <b:FormActions>
                             <b:Button type="PRIMARY"
                                       ui:field="loginBtn">Login</b:Button>
+                            <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
+                                        addStyleNames="{resource.style.noFlickering}"  />
+                            <b:Label type="IMPORTANT" addStyleNames="{resource.style.smallMarginLeft}"
+                                     visible="false" ui:field="errorLabel" text="Wrong username or password"/>
                         </b:FormActions>
                         <b:FormActions>
                             <b:Button type="INFO" icon="LINKEDIN" ui:field="loginLinkedinButton" text="Login with LinkedIn"
                                       />
                             <g:Label text="as" addStyleNames="{resource.style.smallMarginTop} {resource.style.smallMarginBottom}"/>
                             <b:ValueListBox ui:field="accountList" b:id="accountList" />
+
+                            <b:Controls>
+                                <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingLinkedinResultsIcon" visible="false"
+                                        addStyleNames="{resource.style.noFlickering}"  />
+                                <b:Label type="IMPORTANT" visible="false" ui:field="errorLinkedinLabel" text="Wrong username or password"/>
+                            </b:Controls>
                         </b:FormActions>
+
                     </b:Fieldset>
                 </b:WellForm>
             </b:Column>

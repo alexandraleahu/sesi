@@ -10,7 +10,7 @@ import java.util.List;
 
 @RemoteServiceRelativePath("TeachersService")
 public interface TeachersService extends RemoteService {
-    boolean registerStudent(String username, String password);
+    boolean registerTeacher(String username, String password, String name);
 
     /**
      * Utility/Convenience class.
@@ -29,6 +29,8 @@ public interface TeachersService extends RemoteService {
     List<Teacher> getAllTeachers();
 
     List<InternshipProgressDetails> getProgressDetailsForTeacher(String teacherId);
+
+    public static final String RESOURCE_PATH = "teachers";
 
 
 }

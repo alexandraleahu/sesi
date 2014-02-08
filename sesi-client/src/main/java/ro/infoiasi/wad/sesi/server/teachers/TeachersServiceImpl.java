@@ -72,12 +72,13 @@ public class TeachersServiceImpl extends RemoteServiceServlet implements Teacher
 
 
     @Override
-    public boolean registerStudent(String username, String password) {
+    public boolean registerTeacher(String username, String password, String name) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
         Form form = new Form();
         form.param("username", username);
         form.param("password", password);
+        form.param("name", name);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
         if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
@@ -86,5 +87,4 @@ public class TeachersServiceImpl extends RemoteServiceServlet implements Teacher
         return true;
     }
 
-    public static final String RESOURCE_PATH = "teachers";
 }

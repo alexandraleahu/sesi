@@ -3,15 +3,13 @@ package ro.infoiasi.wad.sesi.server.students;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import ro.infoiasi.wad.sesi.client.authentication.SigninRecord;
-import ro.infoiasi.wad.sesi.client.students.StudentService;
+import ro.infoiasi.wad.sesi.client.students.StudentsService;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Student;
 import ro.infoiasi.wad.sesi.server.applications.InternshipApplicationDeserializer;
 import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDeserializer;
 
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
@@ -22,7 +20,7 @@ import java.util.List;
 import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_SCHEMA_NS;
 import static ro.infoiasi.wad.sesi.server.util.ServiceConstants.*;
 
-public class StudentServiceImpl extends RemoteServiceServlet implements StudentService {
+public class StudentsServiceImpl extends RemoteServiceServlet implements StudentsService {
     @Override
     public Student getStudentById(String studentId) {
 
@@ -103,12 +101,13 @@ public class StudentServiceImpl extends RemoteServiceServlet implements StudentS
     }
 
     @Override
-    public boolean registerStudent(String username, String password) {
+    public boolean registerStudent(String username, String password, String name) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
         Form form = new Form();
         form.param("username", username);
         form.param("password", password);
+        form.param("name", name);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
         if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
@@ -117,5 +116,4 @@ public class StudentServiceImpl extends RemoteServiceServlet implements StudentS
         return true;
     }
 
-    public static final String RESOURCE_PATH = "students";
 }

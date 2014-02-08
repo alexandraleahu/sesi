@@ -13,7 +13,7 @@ public class LoginSuccessfulEvent extends GwtEvent<LoginSuccessfulEventHandler> 
     }
 
     protected void dispatch(LoginSuccessfulEventHandler handler) {
-        handler.onLogin(this);
+        handler.onLoginSuccessful(this);
     }
 
     private String id;

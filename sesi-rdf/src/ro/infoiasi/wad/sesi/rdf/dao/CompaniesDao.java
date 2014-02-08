@@ -10,6 +10,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.model.vocabulary.RDFS;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
@@ -17,7 +18,7 @@ import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class CompanyDao implements Dao {
+public class CompaniesDao implements Dao {
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
 
     public String getAllCompanies(RDFFormat format) throws Exception {
@@ -107,28 +108,52 @@ public class CompanyDao implements Dao {
             connectionPool.releaseConnection(con);
         }
     }
+    public String createMinimalCompany(String companyName, String companyId) throws StardogException {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            Resource newCompany = Values.uri(SESI_OBJECTS_NS, companyId);
+            URI studentClass = Values.uri(SESI_SCHEMA_NS, COMPANY_CLASS);
 
+            con.begin();
+
+            Adder adder = con.add();
+            adder.statement(newCompany, RDF.TYPE, studentClass);
+            adder.statement(newCompany, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+
+            URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
+            URI id = Values.uri(SESI_SCHEMA_NS, ID_PROP);
+            URI uri = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
+
+            adder.statement(newCompany, RDFS.LABEL, Values.literal(companyName));
+            adder.statement(newCompany, name, Values.literal(companyName, StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, id, Values.literal(companyId, StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, uri, Values.literal("/companies/" + companyId, StardogValueFactory.XSD.STRING));
+
+            con.commit();
+            return "/companies/" + companyId;
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+
+
+    }
     public String createCompany(Company company) throws StardogException {
 
         ReasoningConnection con = connectionPool.getConnection();
 
         try {
             Resource newCompany = Values.uri(SESI_OBJECTS_NS, company.getId());
-            URI companyClass = Values.uri(SESI_SCHEMA_NS, COMPANY_CLASS);
 
             con.begin();
 
             Adder adder = con.add();
-            adder.statement(newCompany, RDF.TYPE, companyClass);
-            adder.statement(newCompany, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
 
-            URI id = Values.uri(SESI_SCHEMA_NS, ID_PROP);
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
             URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
             URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE_PROP);
 
-            adder.statement(newCompany, id, Values.literal(company.getId(), StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, RDFS.LABEL, Values.literal(company.getName()));
             adder.statement(newCompany, name, Values.literal(company.getName(), StardogValueFactory.XSD.STRING));
             adder.statement(newCompany, description, Values.literal(company.getDescription(), StardogValueFactory.XSD.STRING));
             adder.statement(newCompany, siteUrl, Values.literal(company.getSiteUrl()));
@@ -143,22 +168,22 @@ public class CompanyDao implements Dao {
 
 
     public static void main(String[] args) {
-        CompanyDao companyDao = new CompanyDao();
+        CompaniesDao companiesDao = new CompaniesDao();
         try {
             System.out.println("ALL COMPANIES");
-            System.out.println(companyDao.getAllCompanies(RDFFormat.TURTLE));
+            System.out.println(companiesDao.getAllCompanies(RDFFormat.TURTLE));
 
             System.out.println("Company id 2");
-            System.out.println(companyDao.getCompany("virtualcomp", RDFFormat.TURTLE));
+            System.out.println(companiesDao.getCompany("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company internships");
-            System.out.println(companyDao.getAllCompanyInternships("virtualcomp", RDFFormat.TURTLE));
+            System.out.println(companiesDao.getAllCompanyInternships("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company applications");
-            System.out.println(companyDao.getAllCompanyApplications("virtualcomp", RDFFormat.TURTLE));
+            System.out.println(companiesDao.getAllCompanyApplications("virtualcomp", RDFFormat.TURTLE));
 
             System.out.println("\n\n company internships progress details");
-            System.out.println(companyDao.getAllCompanyInternshipProgressDetails("virtualcomp", RDFFormat.TURTLE));
+            System.out.println(companiesDao.getAllCompanyInternshipProgressDetails("virtualcomp", RDFFormat.TURTLE));
 
             //adding a company
             Company company = new Company();
@@ -168,8 +193,8 @@ public class CompanyDao implements Dao {
             company.setSiteUrl("www.Company1.com");
             company.setActive(true);
 
-            companyDao.createCompany(company);
-            System.out.println(companyDao.getCompany(company.getId(), RDFFormat.TURTLE));
+            companiesDao.createCompany(company);
+            System.out.println(companiesDao.getCompany(company.getId(), RDFFormat.TURTLE));
         } catch (Exception e) {
             e.printStackTrace();
         }

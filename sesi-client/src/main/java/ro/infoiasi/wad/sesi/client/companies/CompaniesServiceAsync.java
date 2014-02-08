@@ -21,5 +21,6 @@ public interface CompaniesServiceAsync {
 
     void getAllCompaniesNames(AsyncCallback<List<String>> async);
 
-    void registerStudent(String username, String password, AsyncCallback<Boolean> async);
+    void registerCompany(String username, String password, String name, AsyncCallback<Boolean> async);
+
 }

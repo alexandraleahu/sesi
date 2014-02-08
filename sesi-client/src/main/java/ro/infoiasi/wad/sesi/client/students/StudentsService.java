@@ -10,17 +10,17 @@ import ro.infoiasi.wad.sesi.core.model.Student;
 import java.util.List;
 
 @RemoteServiceRelativePath("StudentService")
-public interface StudentService extends RemoteService {
-    boolean registerStudent(String username, String password);
+public interface StudentsService extends RemoteService {
+    boolean registerStudent(String username, String password, String name);
 
     /**
      * Utility/Convenience class.
-     * Use StudentService.App.getInstance() to access static instance of StudentServiceAsync
+     * Use StudentsService.App.getInstance() to access static instance of StudentServiceAsync
      */
     public static class App {
-        private static final StudentServiceAsync ourInstance = (StudentServiceAsync) GWT.create(StudentService.class);
+        private static final StudentsServiceAsync ourInstance = (StudentsServiceAsync) GWT.create(StudentsService.class);
 
-        public static StudentServiceAsync getInstance() {
+        public static StudentsServiceAsync getInstance() {
             return ourInstance;
         }
     }
@@ -34,4 +34,7 @@ public interface StudentService extends RemoteService {
     List<InternshipProgressDetails> getStudentInternshipProgressDetails(String studentId);
 
     String updateStudent(Student student);
+
+    public static final String RESOURCE_PATH = "students";
+
 }

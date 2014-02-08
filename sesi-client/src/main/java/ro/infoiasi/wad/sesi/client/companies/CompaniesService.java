@@ -13,7 +13,7 @@ import java.util.List;
 
 @RemoteServiceRelativePath("CompaniesService")
 public interface CompaniesService extends RemoteService {
-    boolean registerStudent(String username, String password);
+    boolean registerCompany(String username, String password, String name);
 
     /**
      * Utility/Convenience class.

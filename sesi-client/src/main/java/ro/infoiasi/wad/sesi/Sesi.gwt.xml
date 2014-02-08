@@ -40,7 +40,7 @@
     <servlet path="/OntologyExtraInfoService" class="ro.infoiasi.wad.sesi.server.ontologyextrainfo.OntologyExtraInfoServiceImpl"/>
     <servlet path="/TechnologyService" class="ro.infoiasi.wad.sesi.server.technologies.TechnologyServiceImpl"/>
     <servlet path="/TechnicalSkillsService" class="ro.infoiasi.wad.sesi.server.technicalskills.TechnicalSkillsServiceImpl"/>
-    <servlet path="/StudentService" class="ro.infoiasi.wad.sesi.server.students.StudentServiceImpl"/>
+    <servlet path="/StudentService" class="ro.infoiasi.wad.sesi.server.students.StudentsServiceImpl"/>
     <servlet path="/InternshipApplicationService"
              class="ro.infoiasi.wad.sesi.server.applications.InternshipApplicationServiceImpl"/>
     <servlet path="/ProgressDetailsService" class="ro.infoiasi.wad.sesi.server.progressdetails.ProgressDetailsServiceImpl"/>

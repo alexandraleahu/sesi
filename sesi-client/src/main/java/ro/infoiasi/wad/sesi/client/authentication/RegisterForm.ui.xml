@@ -68,20 +68,25 @@
 
                           <b:ControlGroup ui:field="emailControlGroup">
                               <b:ControlLabel for="email">
-                                  <font color="red">*</font>
+                                  <!--<font color="red">*</font>-->
                                   Email address
                               </b:ControlLabel>
                               <b:Controls>
-                                  <b:PasswordTextBox b:id="email"
+                                  <b:TextBox b:id="email"
                                                      ui:field="email" placeholder="valid email address" />
                                   <b:HelpInline ui:field="emailHelpInline" />
                               </b:Controls>
+
                           </b:ControlGroup>
                           <b:FormActions>
                               <b:Button type="PRIMARY"
                                         ui:field="registerBtn">Register</b:Button>
-
                           </b:FormActions>
+                          <b:Controls>
+                              <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
+                                      addStyleNames="{resource.style.noFlickering}"  />
+                              <b:Label type="IMPORTANT" visible="false" text="Wrong username or password" ui:field="errorLabel"/>
+                          </b:Controls>
                       </b:Fieldset>
                   </b:WellForm>
               </b:Column>

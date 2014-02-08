@@ -11,7 +11,7 @@ import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
 import ro.infoiasi.wad.sesi.server.internships.InternshipsServiceImpl;
 import ro.infoiasi.wad.sesi.server.deserializerinterfaces.ResourceDeserializer;
-import ro.infoiasi.wad.sesi.server.students.StudentServiceImpl;
+import ro.infoiasi.wad.sesi.server.students.StudentsServiceImpl;
 import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class InternshipApplicationDeserializer implements ResourceDeserializer<I
         //student
         statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CANDIDATE_PROP));
         String studentID = sparqlService.getIDFromURI(statement.getResource().getURI());
-        StudentServiceImpl studentService = new StudentServiceImpl();
+        StudentsServiceImpl studentService = new StudentsServiceImpl();
         application.setStudent(studentService.getStudentById(studentID));
 
         return application;
