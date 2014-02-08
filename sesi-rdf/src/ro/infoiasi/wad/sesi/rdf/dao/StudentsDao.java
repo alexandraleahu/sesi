@@ -186,11 +186,10 @@ public class StudentsDao implements Dao {
         }
     }
 
-    public String createStudent(Student student) throws StardogException {
+    public String createMinimalStudent(String studentName, String studentId) throws StardogException {
         ReasoningConnection con = connectionPool.getConnection();
-
         try {
-            Resource newStudent = Values.uri(SESI_OBJECTS_NS, student.getId());
+            Resource newStudent = Values.uri(SESI_OBJECTS_NS, studentId);
             URI studentClass = Values.uri(SESI_SCHEMA_NS, STUDENT_CLASS);
 
             con.begin();
@@ -202,13 +201,37 @@ public class StudentsDao implements Dao {
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI id = Values.uri(SESI_SCHEMA_NS, ID_PROP);
             URI uri = Values.uri(SESI_SCHEMA_NS, SESI_URL_PROP);
+
+            adder.statement(newStudent, RDFS.LABEL, Values.literal(studentName));
+            adder.statement(newStudent, name, Values.literal(studentName, StardogValueFactory.XSD.STRING));
+            adder.statement(newStudent, id, Values.literal(studentId, StardogValueFactory.XSD.STRING));
+            adder.statement(newStudent, uri, Values.literal("/students/" + studentId, StardogValueFactory.XSD.STRING));
+
+            con.commit();
+            return "/students/" + studentId;
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+
+
+    }
+    public String updateStudent(Student student) throws StardogException {
+        ReasoningConnection con = connectionPool.getConnection();
+
+        try {
+            Resource newStudent = Values.uri(SESI_OBJECTS_NS, student.getId());
+            URI studentClass = Values.uri(SESI_SCHEMA_NS, STUDENT_CLASS);
+
+            con.begin();
+
+            Adder adder = con.add();
+
+            URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI cityProp = Values.uri(SESI_SCHEMA_NS, CITY_PROP);
             URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
 
             adder.statement(newStudent, RDFS.LABEL, Values.literal(student.getName()));
             adder.statement(newStudent, name, Values.literal(student.getName(), StardogValueFactory.XSD.STRING));
-            adder.statement(newStudent, id, Values.literal(student.getId(), StardogValueFactory.XSD.STRING));
-            adder.statement(newStudent, uri, Values.literal(student.getRelativeUri(), StardogValueFactory.XSD.STRING));
             adder.statement(newStudent, description, Values.literal(student.getDescription(), StardogValueFactory.XSD.STRING));
 
             //add projects

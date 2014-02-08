@@ -5,6 +5,8 @@ import com.github.gwtbootstrap.client.ui.Tab;
 import com.github.gwtbootstrap.client.ui.TabPanel;
 import com.github.gwtbootstrap.client.ui.constants.LabelType;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -21,6 +23,8 @@ public class InternshipsByCategoryView implements IsWidget {
     public Widget asWidget() {
         return root;
     }
+
+
 
     interface InternshipsByCategoryViewUiBinder extends UiBinder<TabPanel, InternshipsByCategoryView> {
     }
@@ -41,6 +45,12 @@ public class InternshipsByCategoryView implements IsWidget {
             final Tab tab = new Tab();
             tab.setHeading(category.getDescription());
             categoriesTabPanel.add(tab);
+            tab.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    tab.asTabLink().setTargetHistoryToken("");
+                }
+            });
 
             service.getAllInternshipsByCategory(category, new AsyncCallback<List<Internship>>() {
                 @Override
@@ -60,4 +70,6 @@ public class InternshipsByCategoryView implements IsWidget {
             });
         }
     }
+
+
 }

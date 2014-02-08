@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
+import com.complexible.stardog.StardogException;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.rdf.dao.StudentsDao;
@@ -132,11 +133,20 @@ public class StudentsResource {
     @Path("/")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response register(@FormParam("username") String username, @FormParam("pass") String password) {
+    public Response register(@FormParam("username") String username, @FormParam("pass") String password,
+                             @FormParam("name") String studentName) {
         if (usersTable.addUser(new DBUser(username, password, UserAccountType.STUDENT_ACCOUNT.getDescription()))) {
-            return Response.ok().build();
+            try {
+                new StudentsDao().createMinimalStudent(studentName, username);
+                return Response.ok().build();
+
+            } catch (StardogException e) {
+                throw new InternalServerErrorException(e.getMessage());
+            }
+        } else {
+
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
-        return Response.status(Response.Status.FORBIDDEN).build();
     }
 
 }
