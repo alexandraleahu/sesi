@@ -1,13 +1,17 @@
 package ro.infoiasi.wad.sesi.client;
 
+import com.google.common.base.Strings;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import ro.infoiasi.wad.sesi.client.authentication.SigninService;
 import ro.infoiasi.wad.sesi.client.main.MainView;
+import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.StudentLinkedinProfile;
 import ro.infoiasi.wad.sesi.core.model.User;
+import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 /**
@@ -19,9 +23,11 @@ public class Sesi implements EntryPoint {
     /**
      * Inject the CSS resource, the event bus, the login code generator service and load the main view.
      */
+    private  HandlerManager eventBus;
     @Override
     public void onModuleLoad() {
         SesiResources.INSTANCE.style().ensureInjected();
+        eventBus = new HandlerManager(null);
 //        InternshipsServiceAsync instance = InternshipsService.App.getInstance();
 //
 //        String v = Window.Location.getParameter("oauth_verifier");
@@ -32,7 +38,7 @@ public class Sesi implements EntryPoint {
 //
         RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
         rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
-        rootLayoutPanel.add(new MainView());
+        rootLayoutPanel.add(new MainView(eventBus));
 
 
 //        instance.getInternshipById("003", new AsyncCallback<Internship>() {
@@ -56,7 +62,7 @@ public class Sesi implements EntryPoint {
     }
 
     public void verifyOAuth(String v) {
-        final MainView home = new MainView();
+        final MainView home = new MainView(eventBus);
         RootLayoutPanel.get().clear();
         RootLayoutPanel.get().add(home);
 
@@ -131,8 +137,56 @@ public class Sesi implements EntryPoint {
     }-*/;
 
 
-    public static String getCurrentUserType() {
+    public static UserAccountType getCurrentUserType() {
 
-        return Cookies.getCookie("currentUserRole");
+        return UserAccountType.fromDescription(Strings.nullToEmpty(Cookies.getCookie(WidgetConstants.CURRENT_ROLE_COOKIE)));
+    }
+
+    public static String getCurrentUserId() {
+
+        return Cookies.getCookie(WidgetConstants.CURRENT_USER_ID_COOKIE);
+    }
+
+    public static String getCurrentUsername() {
+
+        return Cookies.getCookie(WidgetConstants.CURRENT_USER_NAME_COOKIE);
+    }
+
+    public static void setCurrentUserType(UserAccountType account) {
+
+        Cookies.setCookie(WidgetConstants.CURRENT_ROLE_COOKIE, account.getDescription());
+    }
+
+    public static void setCurrentUserId(String id) {
+
+        Cookies.setCookie(WidgetConstants.CURRENT_USER_ID_COOKIE, id);
+    }
+
+    public static void setCurrentUsername(String name) {
+
+        Cookies.setCookie(WidgetConstants.CURRENT_USER_NAME_COOKIE, name);
+    }
+
+    public static void removeCurrentUserType() {
+
+        Cookies.removeCookie(WidgetConstants.CURRENT_ROLE_COOKIE);
+    }
+
+    public static void removeCurrentUserId() {
+
+         Cookies.removeCookie(WidgetConstants.CURRENT_USER_ID_COOKIE);
+    }
+
+    public static void removeCurrentUsername() {
+
+        Cookies.removeCookie(WidgetConstants.CURRENT_USER_NAME_COOKIE);
+    }
+
+
+    public static void removeAllCookies() {
+
+        removeCurrentUserId();
+        removeCurrentUsername();
+        removeCurrentUserType();
     }
 }

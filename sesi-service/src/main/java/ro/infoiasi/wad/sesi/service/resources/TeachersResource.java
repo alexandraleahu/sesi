@@ -1,7 +1,7 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.core.model.UserAccount;
+import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.rdf.dao.TeachersDao;
 import ro.infoiasi.wad.sesi.service.authentication.DBUser;
 import ro.infoiasi.wad.sesi.service.authentication.UsersTable;
@@ -84,7 +84,7 @@ public class TeachersResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response register(@FormParam("username") String username, @FormParam("pass") String password) {
-        if (usersTable.addUser(new DBUser(username, password, UserAccount.TEACHER_ACCOUNT))) {
+        if (usersTable.addUser(new DBUser(username, password, UserAccountType.TEACHER_ACCOUNT.getDescription()))) {
             return Response.ok().build();
         }
         return Response.status(Response.Status.FORBIDDEN).build();

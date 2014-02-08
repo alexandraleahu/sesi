@@ -2,6 +2,7 @@ package ro.infoiasi.wad.sesi.server.login;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import ro.infoiasi.wad.sesi.client.authentication.LoginService;
+import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.Form;
@@ -17,35 +18,22 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String RESOURCE_PATH = "login";
 
     @Override
-    public Boolean login(String username, String password) {
+    public UserAccountType login(String username, String password) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL)
                 .path(RESOURCE_PATH);
         Form form = new Form();
         form.param("username", username);
         form.param("password", password);
-        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
-        if (response.getStatus() == Status.FORBIDDEN.getStatusCode()) {
-            return false;
-        }
-        return true;
-    }
+        Invocation invocation = target.request(MediaType.APPLICATION_JSON_TYPE)
+                .buildPost(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
-    @Override
-    public Boolean authenticate(String username, String password, String type) {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
-        Form form = new Form();
-        form.param("username", username);
-        form.param("password", password);
-        form.param("type", type);
-        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+        Response response = invocation.invoke();
         if (response.getStatus() == Status.FORBIDDEN.getStatusCode()) {
-            return false;
+            return null;
         }
-        return true;
+
+        return UserAccountType.fromDescription(response.readEntity(String.class));
     }
 
     @Override

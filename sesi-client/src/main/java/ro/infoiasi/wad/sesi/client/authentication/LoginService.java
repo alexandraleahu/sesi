@@ -3,6 +3,7 @@ package ro.infoiasi.wad.sesi.client.authentication;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 @RemoteServiceRelativePath("LoginService")
 public interface LoginService extends RemoteService{
@@ -14,10 +15,8 @@ public interface LoginService extends RemoteService{
         }
     }
 
-    Boolean login(String username, String password);
+    UserAccountType login(String username, String password);
 
-    Boolean authenticate(String username, String password, String type);
-    
     String getType(String username);
 
 }

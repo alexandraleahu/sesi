@@ -1,0 +1,16 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
+             xmlns:c="urn:import:ro.infoiasi.wad.sesi.client.main">
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
+    <g:HTMLPanel>
+          <b:Row>
+             <b:Column size="7">
+                 <c:LoginForm  ui:field="loginForm"/>
+             </b:Column>
+              <b:Column size="7">
+                  <c:RegisterForm ui:field="registerForm"/>
+             </b:Column>
+          </b:Row>
+    </g:HTMLPanel>
+</ui:UiBinder>

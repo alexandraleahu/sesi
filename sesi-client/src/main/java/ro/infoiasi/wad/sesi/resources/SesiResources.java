@@ -53,6 +53,8 @@ public interface SesiResources extends ClientBundle {
 
         String withBottomBorder();
 
+        String withRightBorder();
+
         String smallMarginRight();
 
         @ClassName("gwt-Hyperlink")
@@ -70,6 +72,8 @@ public interface SesiResources extends ClientBundle {
         String displayInline();
 
         String standardMarginBottom();
+
+        String bigFont();
 
 //
 

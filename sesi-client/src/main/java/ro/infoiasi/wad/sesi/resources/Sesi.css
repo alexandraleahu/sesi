@@ -27,6 +27,7 @@ h1 {
     font-family: Monospaced;
 
     margin: 20pt;
+    margin-bottom: 50pt;
 }
 .dialogVPanel {
   margin: 5pt;
@@ -70,6 +71,13 @@ h1 {
     border-bottom: 1pt;
     border-bottom-color: #3f3f3f;
 }
+
+.withRightBorder {
+    border-right-style: ridge;
+    border-right: 1pt;
+    border-right-color: #3f3f3f;
+}
+
 .standardMarginTop {
     margin-top: 10pt;
 }
@@ -85,7 +93,7 @@ h1 {
     height: 150pt;
 }
 .backgroundColor {
-    background-color: #e6e6e6;
+    background-color: #FFFFFF;
 }
 .serverResponseLabelError {
   color: red;
@@ -95,8 +103,10 @@ h1 {
 
     -webkit-backface-visibility: hidden;
 }
+.bigFont {
 
-
+    font-size: 200%;
+}
 
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
@@ -121,6 +131,8 @@ h1 {
     height:0;
     border:0
 }
+
+
 
 /*.gwt-DecoratedTabBar {*/
     /*background: #ccc;*/

@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.History;
@@ -17,18 +18,25 @@ import com.google.gwt.user.client.ui.*;
 import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.authentication.SigninService;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
+import ro.infoiasi.wad.sesi.client.util.HasEventBus;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
+import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 
-public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<String> {
+public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<String>, HasEventBus,
+                                LoginSuccessfulEventHandler {
     @Override
     public Widget asWidget() {
         return root;
     }
 
-
+    @Override
+    public HandlerManager getEventBus() {
+        return eventBus;
+    }
 
     interface MainViewUiBinder extends UiBinder<HTMLPanel, MainView> {
+
 
     }
 
@@ -36,13 +44,14 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
 
     @UiField
     TabPanel tabPanel;
+
     @UiField
     SimplePanel homePanel;
     @UiField
     SimplePanel internshipsPanel;
-
     @UiField
     SimplePanel companiesPanel;
+
     @UiField
     Tab homeTab;
     @UiField
@@ -50,22 +59,22 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
     @UiField
     Tab companiesTab;
     @UiField
-    Button loginLink;
-    @UiField
-    Button registerLink;
-    @UiField
-    Button logoutLink;
-    @UiField
-    Button profileLink;
-    @UiField
-    Button loginLinkedinButton;
+    Button logoutBtn;
 
+    @UiField
+    Button profileBtn;
     private HTMLPanel root;
-    private SimplePanel currentPanel;
 
-    public MainView() {
+
+    private SimplePanel currentPanel;
+    private final HandlerManager eventBus;
+    public MainView(HandlerManager eventBus) {
         root = ourUiBinder.createAndBindUi(this);
+        this.eventBus = eventBus;
+
         wireUiElements();
+
+        currentPanel = homePanel;
         fillHomeTab();
     }
 
@@ -73,51 +82,101 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
         homeTab.addClickHandler(this);
         internshipsTab.addClickHandler(this);
         companiesTab.addClickHandler(this);
-        loginLinkedinButton.addClickHandler(this);
+        logoutBtn.addClickHandler(this);
+
+        eventBus.addHandler(LoginSuccessfulEvent.TYPE, this);
 
         History.addValueChangeHandler(this);
+    }
+
+    @Override
+    public void onLogin(LoginSuccessfulEvent event) {
+        System.out.println(event.getAccountType().getDescription());
+        Sesi.setCurrentUserType(event.getAccountType());
+        Sesi.setCurrentUserId(event.getId());
+        if (event.getName() != null) {
+
+            Sesi.setCurrentUsername(event.getName());
+        }
+
+        showWelcomeMessage();
+
+        logoutBtn.setVisible(true);
+        profileBtn.setVisible(true);
+    }
+
+    private void showWelcomeMessage() {
+        Label welcome = new Label();
+
+        welcome.setText("You are logged in as " + Sesi.getCurrentUserId());
+        currentPanel.setWidget(welcome);
     }
 
     @Override
     public void onClick(ClickEvent event) {
 
         if (event.getSource().equals(homeTab.asTabLink().getAnchor())) {
-            System.out.println("home");
             currentPanel = homePanel;
             fillHomeTab();
 
         } else if (event.getSource().equals(internshipsTab.asTabLink().getAnchor())) {
-            System.out.println("internship");
             currentPanel = internshipsPanel;
             internshipsPanel.setWidget(new InternshipsByCategoryView());
 
         } else if (event.getSource().equals(companiesTab.asTabLink().getAnchor())) {
-            System.out.println("company");
-
             currentPanel = companiesPanel;
-        } else if (event.getSource().equals(loginLinkedinButton)) {
-            toSignin("Linkedin");
+        } else if (event.getSource().equals(logoutBtn)) {
+
+            Sesi.removeAllCookies();
+            logoutBtn.setVisible(false);
+            profileBtn.setVisible(false);
+            homeTab.setActive(true);
+
+            currentPanel = homePanel;
+            showLoginAndRegisterForms();
         }
     }
 
     private void fillHomeTab() {
-        String currentUserType = Sesi.getCurrentUserType();
-        if ("student".equals(currentUserType)) {
-            // afisam internshipuri recomandate
+        UserAccountType currentAccountType = Sesi.getCurrentUserType();
+        if (currentAccountType == null) {
+            // not logged in
+            showLoginAndRegisterForms();
+        } else {
+            logoutBtn.setVisible(true);
+            profileBtn.setVisible(true);
+            showWelcomeMessage();
 
-            // afisam aplicarile
+            switch(currentAccountType) {
+                case STUDENT_ACCOUNT:
+                    // afisam internshipuri recomandate
 
-            // afisam progress details
-        } else if ("teacher".equals(currentUserType)) {
-            // afisam chestiile de grafice
-        } else if ("company".equals(currentUserType)) {
-            // afisam aplicarile
+                    // afisam aplicarile
 
-            // afisam progress details
+                    // afisam progress details
+                    break;
+                case COMPANY_ACCOUNT:
+                    // afisam aplicarile
 
-            // afisam internshipurile mele
+                    // afisam progress details
+
+                    // afisam internshipurile companiei
+                    break;
+                case TEACHER_ACCOUNT:
+                    // afisam chestiile de grafice
+                    break;
+                default:
+                    break;
+            }
         }
+
     }
+
+    private void showLoginAndRegisterForms() {
+
+        currentPanel.setWidget(new HomePanel(eventBus));
+    }
+
 
     @Override
     public void onValueChange(ValueChangeEvent<String> event) {
@@ -128,6 +187,7 @@ public class MainView implements IsWidget, ClickHandler, ValueChangeHandler<Stri
         }
     }
 
+    // toSignin("Linkedin")
     private void toSignin(String provider) {
         SigninService.Util.getInstance().getAuthenticateUrl(provider, Window.Location.getHref(), new AsyncCallback<String>() {
 
