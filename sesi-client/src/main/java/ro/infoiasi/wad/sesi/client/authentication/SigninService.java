@@ -14,7 +14,7 @@ public interface SigninService extends RemoteService {
     /**
 	 * Utility class for simplifying access to the instance of async service.
 	 */
-	public static class Util {
+	public static class App {
 		private static SigninServiceAsync instance;
 		public static SigninServiceAsync getInstance(){
 			if (instance == null) {

@@ -80,9 +80,6 @@
                           <b:FormActions>
                               <b:Button type="PRIMARY"
                                         ui:field="registerBtn">Register</b:Button>
-                              <g:Label text="OR"   addStyleNames="{resource.style.standardMarginTop} {resource.style.standardMarginBottom} "/>
-                              <b:Button type="INFO" icon="LINKEDIN" ui:field="loginLinkedinButton" text="Register with LinkedIn"
-                                        addStyleNames="{resource.style.standardMarginTop}"/>
 
                           </b:FormActions>
                       </b:Fieldset>

@@ -4,6 +4,7 @@ import com.github.gwtbootstrap.client.ui.*;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -11,8 +12,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.client.util.HasEventBus;
+import ro.infoiasi.wad.sesi.core.model.UserAccountType;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 
 public class LoginForm extends Composite implements HasEventBus {
@@ -51,18 +55,36 @@ public class LoginForm extends Composite implements HasEventBus {
     Icon loadingResultsIcon;
     @UiField
     SimplePanel errorResultsPanel;
+    @UiField(provided = true)
+    ValueListBox<UserAccountType> accountList = new ValueListBox<UserAccountType>(new Renderer<UserAccountType>() {
+        @Override
+        public String render(UserAccountType account) {
+            return account == null ? "" : account.getDescription();
+        }
+
+        @Override
+        public void render(UserAccountType account, Appendable appendable) throws IOException {
+            if (account != null)
+                appendable.append(account.getDescription());
+        }
+    });
 
     public LoginForm(HandlerManager eventBus) {
         initWidget(ourUiBinder.createAndBindUi(this));
         this.eventBus = eventBus;
 
+        accountList.setValue(UserAccountType.STUDENT_ACCOUNT);
+        accountList.setAcceptableValues(Arrays.asList(UserAccountType.values()));
     }
 
 
     @UiHandler("loginLinkedinButton")
     public void onClickLinkedin(ClickEvent event) {
+        loadingResultsIcon.setVisible(true);
+        errorResultsPanel.setVisible(false);
 
     }
+
     @UiHandler("loginBtn")
     public void onClickLogin(ClickEvent event) {
 

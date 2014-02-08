@@ -5,7 +5,7 @@
 
     <g:HTMLPanel>
         <b:Row>
-            <b:Column size="5">
+            <b:Column size="6">
                 <b:WellForm type="HORIZONTAL" ui:field="loginForm">
                     <b:Fieldset>
                         <b:Legend>
@@ -45,10 +45,12 @@
                         <b:FormActions>
                             <b:Button type="PRIMARY"
                                       ui:field="loginBtn">Login</b:Button>
-                            <g:Label text="OR"   addStyleNames="{resource.style.standardMarginTop} {resource.style.standardMarginBottom} "/>
+                        </b:FormActions>
+                        <b:FormActions>
                             <b:Button type="INFO" icon="LINKEDIN" ui:field="loginLinkedinButton" text="Login with LinkedIn"
-                                      addStyleNames="{resource.style.standardMarginTop}"/>
-
+                                      />
+                            <g:Label text="as" addStyleNames="{resource.style.smallMarginTop} {resource.style.smallMarginBottom}"/>
+                            <b:ValueListBox ui:field="accountList" b:id="accountList" />
                         </b:FormActions>
                     </b:Fieldset>
                 </b:WellForm>

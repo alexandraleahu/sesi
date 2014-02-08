@@ -212,7 +212,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
 
     // toSignin("Linkedin")
     private void toSignin(String provider) {
-        SigninService.Util.getInstance().getAuthenticateUrl(provider, Window.Location.getHref(), new AsyncCallback<String>() {
+        SigninService.App.getInstance().getAuthenticateUrl(provider, Window.Location.getHref(), new AsyncCallback<String>() {
 
             @Override
             public void onFailure(Throwable caught) {

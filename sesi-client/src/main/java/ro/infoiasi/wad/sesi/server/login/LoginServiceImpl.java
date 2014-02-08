@@ -19,7 +19,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String RESOURCE_PATH = "login";
 
     @Override
-    public UserAccountType login(String username, String password) throws UnsuccessfulLoginException {
+    public UserAccountType login(String username, String password) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL)
                 .path(RESOURCE_PATH);

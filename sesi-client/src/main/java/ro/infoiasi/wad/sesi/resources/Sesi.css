@@ -50,6 +50,13 @@ h1 {
 .smallMarginRight {
     margin-right: 5pt;
 }
+.smallMarginTop {
+    margin-top: 5pt;
+}
+
+.smallMarginBottom {
+    margin-bottom: 5pt;
+}
 
 .standardMarginRight {
     margin-right: 10pt;

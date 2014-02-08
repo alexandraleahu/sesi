@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import ro.infoiasi.wad.sesi.client.authentication.SigninService;
 import ro.infoiasi.wad.sesi.client.main.MainView;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
-import ro.infoiasi.wad.sesi.core.model.StudentLinkedinProfile;
 import ro.infoiasi.wad.sesi.core.model.User;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
@@ -62,11 +61,8 @@ public class Sesi implements EntryPoint {
     }
 
     public void verifyOAuth(String v) {
-        final MainView home = new MainView(eventBus);
-        RootLayoutPanel.get().clear();
-        RootLayoutPanel.get().add(home);
 
-        SigninService.Util.getInstance().verify(v, new AsyncCallback<User>() {
+        SigninService.App.getInstance().verify(v, new AsyncCallback<User>() {
 
             @Override
             public void onFailure(Throwable caught) {
@@ -80,19 +76,7 @@ public class Sesi implements EntryPoint {
             }
         });
 
-        SigninService.Util.getInstance().getProfile(v, new AsyncCallback<StudentLinkedinProfile>() {
 
-            @Override
-            public void onFailure(Throwable caught) {
-                System.out.println(caught.toString());
-//                home.error("Sign in verification failed: "+caught.getMessage());
-            }
-
-            @Override
-            public void onSuccess(StudentLinkedinProfile result) {
-                System.out.println("user: " + result);
-            }
-        });
     }
 
 

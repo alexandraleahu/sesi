@@ -75,6 +75,10 @@ public interface SesiResources extends ClientBundle {
 
         String bigFont();
 
+        String smallMarginBottom();
+
+        String smallMarginTop();
+
 //
 
     }

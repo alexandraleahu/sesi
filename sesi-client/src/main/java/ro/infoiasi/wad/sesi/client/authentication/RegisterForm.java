@@ -66,8 +66,6 @@ public class RegisterForm extends Composite implements HasEventBus {
     @UiField
     ControlGroup nameControlGroup;
 
-    @UiField
-    Button loginLinkedinButton;
     @UiField(provided = true)
     ValueListBox<UserAccountType> accountList = new ValueListBox<UserAccountType>(new Renderer<UserAccountType>() {
         @Override
@@ -122,11 +120,6 @@ public class RegisterForm extends Composite implements HasEventBus {
     @UiHandler("accountList")
     public void onChangeValue(ValueChangeEvent<UserAccountType> event) {
         account = event.getValue();
-
-    }
-
-    @UiHandler("loginLinkedinButton")
-    public void onClickLinkedin(ClickEvent event) {
 
     }
 
