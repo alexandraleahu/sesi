@@ -1,7 +1,6 @@
 package ro.infoiasi.wad.sesi.client.teachers;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -52,7 +51,7 @@ public class TeacherProfileView extends Composite implements ResourceWidgetViewe
     @Path("faculty.university")
     OntologyExtraInfoView<University> universityLink;
     @UiField
-    @Editor.Ignore
+    @Ignore
     Anchor siteLabel;
     @UiField
     @Path("courses")

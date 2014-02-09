@@ -4,6 +4,7 @@ import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.Hero;
 import com.github.gwtbootstrap.client.ui.NavLink;
 import com.github.gwtbootstrap.client.ui.ResponsiveNavbar;
+import com.github.gwtbootstrap.client.ui.constants.LabelType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -17,14 +18,20 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import ro.infoiasi.wad.sesi.client.Sesi;
+import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationService;
 import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
+import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
+import ro.infoiasi.wad.sesi.client.internships.InternshipView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
+import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
+import ro.infoiasi.wad.sesi.client.progressdetails.InternshipsProgressDetailsService;
+import ro.infoiasi.wad.sesi.client.students.StudentView;
 import ro.infoiasi.wad.sesi.client.students.StudentsService;
 import ro.infoiasi.wad.sesi.client.teachers.TeacherMainView;
-import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
-import ro.infoiasi.wad.sesi.core.model.User;
-import ro.infoiasi.wad.sesi.core.model.UserAccountType;
+import ro.infoiasi.wad.sesi.client.teachers.TeacherProfileView;
+import ro.infoiasi.wad.sesi.client.teachers.TeachersService;
+import ro.infoiasi.wad.sesi.core.model.*;
 
 
 public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventBus,
@@ -253,11 +260,152 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
 
     @Override
     public void onValueChange(ValueChangeEvent<String> event) {
-        String[] historyToken = event.getValue().split(WidgetConstants.dataSeparator);
-
-        if (historyToken[0].equals(WidgetConstants.VIEW_TOKEN)) {
-
+        if (!event.getValue().matches("/\\w+/\\w+")) {
+            return;
         }
+
+        String[] resourceUrl = event.getValue().split("/");
+        String resourceType = resourceUrl[1];
+        String id = resourceUrl[2];
+
+        if (resourceType.equals(InternshipsService.RESOURCE_PATH)) {
+
+            InternshipsService.App.getInstance().getInternshipById(id, new AsyncCallback<Internship>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    showGeneralError();
+                }
+
+                @Override
+                public void onSuccess(Internship result) {
+                    if (result != null) {
+
+                        InternshipView view = new InternshipView();
+                        mainPanel.add(view);
+                        view.edit(result);
+                    } else {
+                        showResourceNotFoundError();
+                    }
+                }
+            });
+
+        } else if (resourceType.equals(TeachersService.RESOURCE_PATH))  {
+
+            TeachersService.App.getInstance().getTeacherById(id, new AsyncCallback<Teacher>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    showGeneralError();
+                }
+
+                @Override
+                public void onSuccess(Teacher result) {
+                    if (result != null) {
+
+                        TeacherProfileView view = new TeacherProfileView();
+                        mainPanel.add(view);
+                        view.edit(result);
+                    } else {
+                        showResourceNotFoundError();
+                    }
+                }
+            });
+
+        } else if (resourceType.equals(StudentsService.RESOURCE_PATH))  {
+
+            StudentsService.App.getInstance().getStudentById(id, new AsyncCallback<Student>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    showGeneralError();
+                }
+
+                @Override
+                public void onSuccess(Student result) {
+                    if (result != null) {
+
+                        StudentView view = new StudentView();
+                        mainPanel.add(view);
+                        view.edit(result);
+                    } else {
+                        showResourceNotFoundError();
+                    }
+                }
+            });
+
+        }  else if (resourceType.equals(CompaniesService.RESOURCE_PATH))  {
+
+            CompaniesService.App.getInstance().getCompanyById(id, new AsyncCallback<Company>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    showGeneralError();
+                }
+
+                @Override
+                public void onSuccess(Company result) {
+                    if (result != null) {
+
+                        // TODO
+                    } else {
+                        showResourceNotFoundError();
+                    }
+                }
+            });
+
+        } else if (resourceType.equals(InternshipApplicationService.RESOURCE_PATH))  {
+
+            InternshipApplicationService.App.getInstance().getApplicationById(id, new AsyncCallback<InternshipApplication>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    showGeneralError();
+                }
+
+                @Override
+                public void onSuccess(InternshipApplication result) {
+                    if (result != null) {
+
+                        // TODO
+                    } else {
+                        showResourceNotFoundError();
+                    }
+                }
+            });
+
+
+        } else if (resourceType.equals(InternshipsProgressDetailsService.RESOURCE_PATH))  {
+            InternshipsProgressDetailsService.App.getInstance().getProgressDetailsById(id, new AsyncCallback<InternshipProgressDetails>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    showGeneralError();
+                }
+
+                @Override
+                public void onSuccess(InternshipProgressDetails result) {
+                    if (result != null) {
+
+                        // TODO
+                    } else {
+                        showResourceNotFoundError();
+                    }
+                }
+            });
+        }
+
+    }
+
+    private void showGeneralError() {
+        showError("Error! Could not load the selected resource!");
+    }
+
+    private void showResourceNotFoundError() {
+        showError("Error! Resource not found!");
+    }
+
+    private void showError(String msg) {
+        com.github.gwtbootstrap.client.ui.Label errorLabel = new com.github.gwtbootstrap.client.ui.Label();
+        errorLabel.setType(LabelType.IMPORTANT);
+        errorLabel.setText(msg);
+        Hero hero = new Hero();
+        hero.add(errorLabel);
+        mainPanel.setWidget(hero);
     }
 
 }

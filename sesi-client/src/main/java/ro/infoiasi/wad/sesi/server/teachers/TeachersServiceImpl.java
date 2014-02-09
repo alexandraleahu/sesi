@@ -22,7 +22,7 @@ import static ro.infoiasi.wad.sesi.server.util.ServiceConstants.*;
 
 public class TeachersServiceImpl extends RemoteServiceServlet implements TeachersService {
     @Override
-    public Teacher getTeacherByID(String teacherID) {
+    public Teacher getTeacherById(String teacherID) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH).path(teacherID);
 

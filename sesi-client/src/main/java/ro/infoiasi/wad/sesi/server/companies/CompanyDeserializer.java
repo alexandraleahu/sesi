@@ -16,27 +16,33 @@ import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 public class CompanyDeserializer implements ResourceDeserializer<Company> {
     @Override
     public Company deserialize(OntModel m, String id) {
-        Company company = new Company();
-        company.setId(id);
+
 
         Resource companyResource = m.getOntResource(SESI_OBJECTS_NS + id);
-        // name
-        Statement statement = m.getProperty(companyResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
-        company.setName(statement.getLiteral().getString());
+        if (companyResource != null) {
+            Company company = new Company();
+            company.setId(id);
+            // name
+            Statement statement = m.getProperty(companyResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
+            company.setName(statement.getLiteral().getString());
 
-        //description
-        statement = m.getProperty(companyResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
-        company.setDescription(statement.getLiteral().getString());
+            //description
+            statement = m.getProperty(companyResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
+            company.setDescription(statement.getLiteral().getString());
 
-        //site url
-        statement = m.getProperty(companyResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, SITE_URL_PROP));
-        company.setSiteUrl(statement.getLiteral().getString());
+            //site url
+            statement = m.getProperty(companyResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, SITE_URL_PROP));
+            company.setSiteUrl(statement.getLiteral().getString());
 
-        //is active
-        statement = m.getProperty(companyResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, IS_ACTIVE_PROP));
-        company.setActive(statement.getLiteral().getBoolean());
+            //is active
+            statement = m.getProperty(companyResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, IS_ACTIVE_PROP));
+            company.setActive(statement.getLiteral().getBoolean());
 
-        return company;
+            return company;
+        }
+
+        return null;
+
     }
 
     public List<Company> deserialize(OntModel m) {

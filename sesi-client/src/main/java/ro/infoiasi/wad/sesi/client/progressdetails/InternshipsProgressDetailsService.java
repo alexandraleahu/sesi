@@ -8,15 +8,15 @@ import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import java.util.List;
 
 @RemoteServiceRelativePath("ProgressDetailsService")
-public interface ProgressDetailsService extends RemoteService {
+public interface InternshipsProgressDetailsService extends RemoteService {
     /**
      * Utility/Convenience class.
-     * Use ProgressDetailsService.App.getInstance() to access static instance of ProgressDetailsServiceAsync
+     * Use InternshipsProgressDetailsService.App.getInstance() to access static instance of ProgressDetailsServiceAsync
      */
     public static class App {
-        private static final ProgressDetailsServiceAsync ourInstance = (ProgressDetailsServiceAsync) GWT.create(ProgressDetailsService.class);
+        private static final InternshipsProgressDetailsServiceAsync ourInstance = (InternshipsProgressDetailsServiceAsync) GWT.create(InternshipsProgressDetailsService.class);
 
-        public static ProgressDetailsServiceAsync getInstance() {
+        public static InternshipsProgressDetailsServiceAsync getInstance() {
             return ourInstance;
         }
     }

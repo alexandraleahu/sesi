@@ -24,7 +24,7 @@ public interface TeachersService extends RemoteService {
         }
     }
 
-    Teacher getTeacherByID(String teacherID);
+    Teacher getTeacherById(String teacherID);
 
     Teacher importTeacherProfile(String url);
 

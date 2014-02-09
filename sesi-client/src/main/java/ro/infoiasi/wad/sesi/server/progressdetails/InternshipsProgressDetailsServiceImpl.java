@@ -3,7 +3,7 @@ package ro.infoiasi.wad.sesi.server.progressdetails;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import ro.infoiasi.wad.sesi.client.progressdetails.ProgressDetailsService;
+import ro.infoiasi.wad.sesi.client.progressdetails.InternshipsProgressDetailsService;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 
 import javax.ws.rs.client.Client;
@@ -16,7 +16,7 @@ import java.util.List;
 import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_SCHEMA_NS;
 import static ro.infoiasi.wad.sesi.server.util.ServiceConstants.*;
 
-public class ProgressDetailsServiceImpl extends RemoteServiceServlet implements ProgressDetailsService {
+public class InternshipsProgressDetailsServiceImpl extends RemoteServiceServlet implements InternshipsProgressDetailsService {
     @Override
     public InternshipProgressDetails getProgressDetailsById(String id) {
         Client client = ClientBuilder.newClient();
