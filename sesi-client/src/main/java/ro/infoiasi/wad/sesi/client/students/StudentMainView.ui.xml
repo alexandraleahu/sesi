@@ -1,0 +1,14 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
+        >
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
+    <b:TabPanel tabPosition="left">
+        <b:Tab heading="Profile" icon="PENCIL" active="true">
+            <g:HTMLPanel ui:field="profilePanel">
+                <b:Button type="INFO" text="Edit profile" ui:field="editProfileBtn"/>
+                <b:Button type="INFO" text="Save profile" ui:field="saveProfileBtn"/>
+            </g:HTMLPanel>
+        </b:Tab>
+    </b:TabPanel>
+</ui:UiBinder>
