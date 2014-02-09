@@ -419,6 +419,10 @@ public class StudentsDao implements Dao {
             //add projects
             for (StudentProject studentProject : student.getProjects()) {
                 URI projectResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
+                remover.statements(projectResource, RDF.TYPE, null);
+                remover.statements(projectResource, RDFS.LABEL, null);
+                remover.statements(projectResource, name, null);
+                remover.statements(projectResource, Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP), null);
                 adder.statement(projectResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                 adder.statement(projectResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDENT_PROJECT_CLASS));
                 adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getName().replace(' ', '_')));
@@ -427,8 +431,15 @@ public class StudentsDao implements Dao {
 
                 URI programmingLanguageProperty = Values.uri(SESI_SCHEMA_NS, PROGRAMMING_USED_PROP);
                 URI technologyProperty = Values.uri(SESI_SCHEMA_NS, TECHNOLOGY_USED_PROP);
+                remover.statements(projectResource, programmingLanguageProperty, null);
+
                 for (ProgrammingLanguage lang : studentProject.getProgrammingLanguages()) {
                     URI programmingLanguageURI = Values.uri(lang.getOntologyUri());
+                    remover.statements(programmingLanguageURI, RDF.TYPE,null);
+                    remover.statements(programmingLanguageURI, RDFS.LABEL, null);
+                    remover.statements(programmingLanguageURI, name, null);
+                    remover.statements(programmingLanguageURI, RDFS.SEEALSO, null);
+
                     adder.statement(programmingLanguageURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                     adder.statement(programmingLanguageURI, RDF.TYPE, Values.uri(FREEBASE_NS, PROGRAMMING_LANG_CLASS));
                     adder.statement(programmingLanguageURI, RDFS.LABEL, Values.literal(lang.getName().replace(' ', '_')));
@@ -437,8 +448,13 @@ public class StudentsDao implements Dao {
                     adder.statement(projectResource, programmingLanguageProperty, programmingLanguageURI);
                 }
 
+                remover.statements(projectResource, technologyProperty, null);
                 for (Technology tech : studentProject.getTechnologies()) {
                     URI techURI = Values.uri(tech.getOntologyUri());
+                    remover.statements(techURI, RDF.TYPE, null);
+                    remover.statements(techURI, RDFS.LABEL, null);
+                    remover.statements(techURI, name, null);
+                    remover.statements(techURI, RDFS.SEEALSO, null);
                     adder.statement(techURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                     adder.statement(techURI, RDF.TYPE, Values.uri(FREEBASE_NS, SOFTWARE_CLASS));
                     adder.statement(techURI, RDFS.LABEL, Values.literal(tech.getName().replace(' ', '_')));
@@ -448,6 +464,7 @@ public class StudentsDao implements Dao {
                     adder.statement(projectResource, Values.uri(SESI_SCHEMA_NS, DEVELOPED_BY_PROP), newStudent);
                 }
 
+                remover.statements(newStudent, Values.uri(SESI_SCHEMA_NS, WORKED_ON_PROJECT_PROP), null);
                 adder.statement(newStudent, Values.uri(SESI_SCHEMA_NS, WORKED_ON_PROJECT_PROP), projectResource);
 
             }
@@ -459,6 +476,9 @@ public class StudentsDao implements Dao {
             City universityCity = university.getCity();
 
             URI cityResource = Values.uri(universityCity.getOntologyUri());
+            remover.statements(cityResource, RDF.TYPE, null);
+            remover.statements(cityResource, RDFS.LABEL, null);
+            remover.statements(cityResource, RDFS.SEEALSO, null);
             adder.statement(cityResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(cityResource, RDF.TYPE, Values.uri(FREEBASE_NS, CITY_CLASS));
             adder.statement(cityResource, RDFS.LABEL, Values.literal(universityCity.getName()));
@@ -468,6 +488,13 @@ public class StudentsDao implements Dao {
             URI universityResource = Values.uri(university.getOntologyUri());
             URI site = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
 
+            remover.statements(universityResource, RDF.TYPE, null);
+            remover.statements(universityResource, RDFS.LABEL, null);
+            remover.statements(universityResource, name, null);
+            remover.statements(universityResource, site, null);
+            remover.statements(universityResource, RDFS.LITERAL, null);
+            remover.statements(universityResource, RDFS.SEEALSO, null);
+            remover.statements(universityResource, cityProp, null);
             adder.statement(universityResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(universityResource, RDF.TYPE, Values.uri(FREEBASE_NS, UNIVERSITY_CLASS));
             adder.statement(universityResource, RDFS.LABEL, Values.literal(university.getName()));
@@ -480,6 +507,10 @@ public class StudentsDao implements Dao {
 
             //add the faculty
             URI facultyResource = Values.uri(SESI_OBJECTS_NS, faculty.getName().replace(' ', '_'));
+            remover.statements(facultyResource, RDF.TYPE, null);
+            remover.statements(facultyResource, Values.uri(SESI_SCHEMA_NS, UNIVERSITY_PROP), null);
+            remover.statements(facultyResource, RDFS.LABEL, null);
+            remover.statements(facultyResource, name, null);
             adder.statement(facultyResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(facultyResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, FACULTY_CLASS));
             adder.statement(facultyResource, Values.uri(SESI_SCHEMA_NS, UNIVERSITY_PROP), Values.uri(university.getOntologyUri()));
@@ -489,6 +520,10 @@ public class StudentsDao implements Dao {
 
             //add the studies resource
             URI studiesResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
+            remover.statements(studiesResource, RDF.TYPE, null);
+            remover.statements(facultyResource, Values.uri(SESI_SCHEMA_NS, FACULTY_PROP), null);
+            remover.statements(facultyResource, Values.uri(SESI_SCHEMA_NS, YEAR_OF_STUDY_PROP), null);
+            remover.statements(facultyResource, Values.uri(SESI_SCHEMA_NS, ENROLLED_STUDENT_PROP), null);
             adder.statement(studiesResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(studiesResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDIES_CLASS));
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, FACULTY_PROP), facultyResource);
@@ -496,17 +531,23 @@ public class StudentsDao implements Dao {
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, ENROLLED_STUDENT_PROP), newStudent);
             //add studies degree
             URI degreeURI = Values.uri(studies.getDegree().getOntologyUri());
+            remover.statements(degreeURI, RDF.TYPE, null);
+            remover.statements(degreeURI, RDFS.LABEL, null);
+            remover.statements(degreeURI, RDFS.SEEALSO, null);
+            remover.statements(degreeURI, Values.uri(SESI_SCHEMA_NS, DEGREE_PROP), null);
             adder.statement(degreeURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(degreeURI, RDF.TYPE, Values.uri(FREEBASE_NS, DEGREE_CLASS));
             adder.statement(degreeURI, RDFS.LABEL, Values.literal(studies.getDegree().getName()));
             adder.statement(degreeURI, RDFS.SEEALSO, Values.literal(studies.getDegree().getInfoUrl(), StardogValueFactory.XSD.ANYURI));
             adder.statement(studiesResource, Values.uri(SESI_SCHEMA_NS, DEGREE_PROP), degreeURI);
 
+            remover.statements(newStudent, Values.uri(SESI_SCHEMA_NS, HAS_STUDIES_PROP), null);
             adder.statement(newStudent, Values.uri(SESI_SCHEMA_NS, HAS_STUDIES_PROP), studiesResource);
 
             //add general skills
             for (String generalSkill : student.getGeneralSkills()) {
                 URI generalSkillProp = Values.uri(SESI_SCHEMA_NS, GENERAL_SKILL_PROP);
+                remover.statements(newStudent, generalSkillProp, null);
                 adder.statement(newStudent, generalSkillProp, Values.literal(generalSkill));
             }
             //add technical skills
