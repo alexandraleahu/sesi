@@ -6,6 +6,7 @@ import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import ro.infoiasi.wad.sesi.core.model.Resource;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class ResourceListVew<T extends Resource> extends Composite implements Le
         return value;
     }
 
-    interface ResourceListVewUiBinder extends UiBinder<CellTable, ResourceListVew> {
+    interface ResourceListVewUiBinder extends UiBinder<HTMLPanel, ResourceListVew> {
     }
 
     private static ResourceListVewUiBinder ourUiBinder = GWT.create(ResourceListVewUiBinder.class);

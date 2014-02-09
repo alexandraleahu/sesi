@@ -16,8 +16,12 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import ro.infoiasi.wad.sesi.client.commonwidgets.NamesListEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.WidgetEditor;
 import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
@@ -36,7 +40,6 @@ import java.util.List;
 
 
 public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
-        ValueChangeHandler<ReportBean.MainResourceType>,
         ClickHandler {
 
     @Override
@@ -164,7 +167,6 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
         wireUiElements();
     }
     private void wireUiElements() {
-        mainResourceBox.addValueChangeHandler(this);
         mainResourceBox.setAcceptableValues(Arrays.asList(ReportBean.MainResourceType.values()));
 
         relationBox.setAcceptableValues(Arrays.asList(ReportBean.StudentInternshipRelationType.values()));
@@ -228,7 +230,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
         });
     }
 
-    @Override
+    @UiHandler("mainResourceBox")
     public void onValueChange(ValueChangeEvent<ReportBean.MainResourceType> event) {
         if (event.getValue() != null) {
 
@@ -248,6 +250,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                             loadingIcon.setVisible(false);
                             errorPanel.setVisible(true);
                             mainForm.setVisible(false);
+                            System.out.println(caught);
                         }
 
                         @Override

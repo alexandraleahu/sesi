@@ -3,9 +3,10 @@
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
 
     <g:HTMLPanel>
-        <b:CellTable ui:field="resourcesTable" width="20" bordered="false" striped="false" condensed="true" pageSize="5" pageStart="0"/>
-        <b:SimplePager display="{resourcesTable}" location="CENTER"
+        <b:SimplePager display="{resTable}" location="CENTER"
                        fastForwardRows="5" />
+        <b:CellTable ui:field="resTable" width="20" bordered="false" striped="false" condensed="true" pageSize="5" pageStart="0"/>
 
     </g:HTMLPanel>
+
 </ui:UiBinder>

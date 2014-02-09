@@ -1,5 +1,6 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Teacher implements Resource, Person {
@@ -10,7 +11,19 @@ public class Teacher implements Resource, Person {
     private List<InternshipProgressDetails> monitoringInternships;
     private String name;
     private String siteUrl;
+    private List<Course> courses;
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public Teacher() {
+        courses = new ArrayList<Course>() ;
+    }
 
     public Faculty getFaculty() {
         return faculty;
@@ -78,6 +91,7 @@ public class Teacher implements Resource, Person {
         sb.append(", title='").append(title).append('\'');
         sb.append(", monitoringInternships=").append(monitoringInternships);
         sb.append(", name='").append(name).append('\'');
+        sb.append(", courses='").append(courses).append('\'');
         sb.append(", siteUrl='").append(siteUrl).append('\'');
         sb.append('}');
         return sb.toString();

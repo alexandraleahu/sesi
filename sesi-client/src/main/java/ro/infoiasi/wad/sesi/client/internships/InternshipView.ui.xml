@@ -1,10 +1,12 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
-             xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.compositewidgets'>
+             xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.commonwidgets'
+             xmlns:t='urn:import:ro.infoiasi.wad.sesi.client.technicalskills'
+             xmlns:o='urn:import:ro.infoiasi.wad.sesi.client.ontologyextrainfo'>
 
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
-    <g:HTMLPanel styleName="{resource.style.withScroll}">
+    <g:HTMLPanel>
 
         <b:Hero>
             <g:Label ui:field="internshipTitleHeader" styleName="{resource.style.bigLabel}"/>
@@ -112,7 +114,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <c:TechnicalSkillView ui:field="preferredTechnicalSkillsTable"/>
+                    <t:TechnicalSkillView ui:field="preferredTechnicalSkillsTable"/>
                 </b:Column>
             </b:Row>
 
@@ -123,7 +125,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <c:TechnicalSkillView ui:field="acquiredTechnicalSkillsTable"/>
+                    <t:TechnicalSkillView ui:field="acquiredTechnicalSkillsTable"/>
                 </b:Column>
             </b:Row>
             <b:Row>
@@ -134,7 +136,7 @@
             <b:Row>
                 <b:Column size="3">
                     <c:DoubleView ui:field="salaryValueLabel"/>
-                    <c:OntologyExtraInfoView ui:field="salaryCurrencyLabel"/>
+                    <o:OntologyExtraInfoView ui:field="salaryCurrencyLabel"/>
                 </b:Column>
             </b:Row>
             <b:Row>
@@ -144,7 +146,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="1">
-                    <c:OntologyExtraInfoView ui:field="cityLink"/>
+                    <o:OntologyExtraInfoView ui:field="cityLink"/>
                 </b:Column>
             </b:Row>
             <b:Row>

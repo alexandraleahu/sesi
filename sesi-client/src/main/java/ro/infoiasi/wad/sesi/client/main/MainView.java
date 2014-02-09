@@ -21,7 +21,7 @@ import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.students.StudentsService;
-import ro.infoiasi.wad.sesi.client.teachers.TeacherView;
+import ro.infoiasi.wad.sesi.client.teachers.TeacherMainView;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.User;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
@@ -222,7 +222,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 case COMPANY_ACCOUNT:
                     break;
                 case TEACHER_ACCOUNT:
-//                     mainPanel.setWidget(new TeacherView());
+                     mainPanel.setWidget(new TeacherMainView());
                     break;
                 case STUDENT_ACCOUNT:
                     break;
@@ -246,27 +246,6 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
             registerBtn.setVisible(false);
             showWelcomeMessage();
 
-            switch(Sesi.getCurrentUserType()) {
-                case STUDENT_ACCOUNT:
-                    // afisam internshipuri recomandate
-
-                    // afisam aplicarile
-
-                    // afisam progress details
-                    break;
-                case COMPANY_ACCOUNT:
-                    // afisam aplicarile
-
-                    // afisam progress details
-
-                    // afisam internshipurile companiei
-                    break;
-                case TEACHER_ACCOUNT:
-                    // afisam chestiile de grafice
-                    break;
-                default:
-                    break;
-            }
         }
 
     }

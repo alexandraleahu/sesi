@@ -58,6 +58,10 @@
         <servlet-name>ro.infoiasi.wad.sesi.Sesi ReportsService</servlet-name>
         <servlet-class>ro.infoiasi.wad.sesi.server.reports.ReportsServiceImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi CoursesService</servlet-name>
+        <servlet-class>ro.infoiasi.wad.sesi.server.teachers.CoursesServiceImpl</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>InternshipsServlet</servlet-name>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi ReportsService</servlet-name>
         <url-pattern>/sesi/ReportsService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ro.infoiasi.wad.sesi.Sesi CoursesService</servlet-name>
+        <url-pattern>/sesi/CoursesService</url-pattern>
     </servlet-mapping>
 
 

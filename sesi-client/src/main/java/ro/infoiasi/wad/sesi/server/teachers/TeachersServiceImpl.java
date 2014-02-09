@@ -2,10 +2,12 @@ package ro.infoiasi.wad.sesi.server.teachers;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import ro.infoiasi.wad.sesi.client.teachers.TeachersService;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
+import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDeserializer;
 
 import javax.ws.rs.client.*;
@@ -34,6 +36,32 @@ public class TeachersServiceImpl extends RemoteServiceServlet implements Teacher
         Teacher teacher = new TeacherDeserializer().deserialize(m, teacherID);
         client.close();
         return teacher;
+    }
+
+    @Override
+    public Teacher importTeacherProfile(String url) {
+
+        // reading structured content from the site and parsing
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(Constants.ANY23_URL)
+                                 .path("ttl")
+                                 .path(url);
+
+        Invocation invocation = target.request()
+                                    .accept(TURTLE)
+                                    .buildGet();
+
+
+        String rdfAnswer = invocation.invoke().readEntity(String.class);
+
+        Model m = ModelFactory.createDefaultModel();
+        m.read(new StringReader(rdfAnswer), null,  DEFAULT_JENA_LANG);
+
+        Teacher teacher = new TeacherDeserializer().deserializeFromInfoiasiSite(m, url);
+        client.close();
+
+        return teacher;
+
     }
 
     @Override
@@ -86,5 +114,7 @@ public class TeachersServiceImpl extends RemoteServiceServlet implements Teacher
         }
         return true;
     }
+
+
 
 }

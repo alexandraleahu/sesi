@@ -7,8 +7,10 @@ public class Constants implements Serializable {
     private Constants() {}
 
     public static final int ID_LENGTH = 4;
+    public static final String ANY23_URL = "http://any23.org/any23";
     public static final String SESI_SCHEMA_NS = "http://www.infoiasi.ro/wad/schemas/sesi/";
     public static final String SESI_OBJECTS_NS = "http://www.infoiasi.ro/wad/objects/sesi/";
+    public static final String VCARD_NS = "http://www.w3.org/2006/vcard/ns#";
     public static final String FREEBASE_NS = "http://rdf.freebase.com/ns/";
     public static final String FREEBASE_INFO = "http://freebase.com/";
     public static final String SESI_SCHEMA_SHORT = "sesiSchema:";
