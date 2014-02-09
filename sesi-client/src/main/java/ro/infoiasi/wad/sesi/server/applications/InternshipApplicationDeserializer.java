@@ -27,7 +27,7 @@ public class InternshipApplicationDeserializer implements ResourceDeserializer<I
 
         Resource applicationResource = m.getOntResource(SESI_OBJECTS_NS + id);
         //description
-        Statement statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
+        Statement statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, FEEDBACK_PROP));
         application.setFeedback(statement.getLiteral().getString());
 
         //published at

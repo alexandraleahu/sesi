@@ -1,0 +1,59 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
+    <g:HTMLPanel>
+        <b:Row>
+        <b:Column size="6">
+         <b:WellForm type="HORIZONTAL">
+             <b:Fieldset>
+                 <b:Legend>Internship Application</b:Legend>
+
+                 <b:ControlGroup>
+                     <b:ControlLabel for="publishedAt">Published at:</b:ControlLabel>
+                     <b:Controls >
+                         <g:Label ui:field="publishedAtLabel" b:id="publishedAt"/>
+                     </b:Controls>
+                 </b:ControlGroup>
+                 <b:ControlGroup>
+                     <b:ControlLabel for="candidateLink">Candidate:</b:ControlLabel>
+                     <b:Controls >
+                         <g:Hyperlink ui:field="candidateLink" b:id="candidateLink"/>
+                     </b:Controls>
+                 </b:ControlGroup>
+                 <b:ControlGroup>
+                     <b:ControlLabel for="internshipLink">Internship:</b:ControlLabel>
+                     <b:Controls >
+                         <g:Hyperlink ui:field="internshipLink" b:id="internshipLink"/>
+                     </b:Controls>
+                 </b:ControlGroup>
+                 <b:ControlGroup>
+                     <b:ControlLabel for="motivationView">Motivation:</b:ControlLabel>
+                     <b:Controls >
+                         <g:Label ui:field="motivationView" b:id="motivationView"/>
+                     </b:Controls>
+                 </b:ControlGroup>
+                 <b:ControlGroup>
+                     <b:ControlLabel for="feedbackView">Feedback:</b:ControlLabel>
+                     <b:Controls >
+                         <g:Label ui:field="feedbackView" b:id="feedbackView"/>
+                         <b:TextBox ui:field="feedbackEdit" visible="false"/>
+                         <b:Button type="INFO" text="Edit feedback" block="true" ui:field="editFeedbackBtn"/>
+                         <b:Button type="INFO" text="Save feedback" block="true" visible="false" ui:field="saveFeedbackBtn"/>
+                     </b:Controls>
+                 </b:ControlGroup>
+                 <b:ControlGroup>
+                     <b:ControlLabel for="statusView">Status:</b:ControlLabel>
+                     <b:Controls>
+                         <g:Label ui:field="statusView" b:id="statusView"/>
+                         <b:ValueListBox ui:field="statusBox" visible="false"/>
+                         <b:Button type="INFO" text="Edit status" block="true" ui:field="editStatusBtn"/>
+                         <b:Button type="INFO" text="Save status" block="true" visible="false" ui:field="saveStatusBtn"/>
+                     </b:Controls>
+                 </b:ControlGroup>
+             </b:Fieldset>
+         </b:WellForm>
+      </b:Column>
+    </b:Row>
+  </g:HTMLPanel>
+</ui:UiBinder>

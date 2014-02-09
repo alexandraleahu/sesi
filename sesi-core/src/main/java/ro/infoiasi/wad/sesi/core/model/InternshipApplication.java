@@ -30,6 +30,10 @@ public class InternshipApplication extends StudentInternshipRelation {
         this.motivation = motivation;
     }
 
+    public InternshipApplication() {
+        setStatus(Status.pending);
+    }
+
     @Override
     public EnumSet<Status> getPossibleStatus() {
         return EnumSet.copyOf(POSSIBLE_STATUSES);
