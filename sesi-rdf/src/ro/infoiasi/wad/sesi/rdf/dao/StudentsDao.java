@@ -414,6 +414,8 @@ public class StudentsDao implements Dao {
             remover.statements(newStudent, description, null);
             adder.statement(newStudent, description, Values.literal(student.getDescription(), StardogValueFactory.XSD.STRING));
 
+            remover.statements(newStudent, Values.uri(SESI_SCHEMA_NS, WORKED_ON_PROJECT_PROP), null);
+
             //add projects
             for (StudentProject studentProject : student.getProjects()) {
                 URI projectResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
@@ -510,6 +512,7 @@ public class StudentsDao implements Dao {
             //add technical skills
             if (student.getTechnicalSkills() != null) {
                 URI technicalSkillsProp = Values.uri(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP);
+                remover.statements(newStudent, technicalSkillsProp, null);
                 addTechnicalSkills(student.getTechnicalSkills(), newStudent, adder, technicalSkillsProp);
             }
             con.commit();
@@ -519,7 +522,7 @@ public class StudentsDao implements Dao {
         }
     }
 
-    private void addTechnicalSkills(List<TechnicalSkill> technicalSkills, Resource newStudent, Adder adder, URI technicalSkillsProp) throws StardogException {
+    private void addTechnicalSkills(List<TechnicalSkill> technicalSkills, final Resource newStudent, final Adder adder, final URI technicalSkillsProp) throws StardogException {
 
         for (TechnicalSkill technicalSkill : technicalSkills) {
 
