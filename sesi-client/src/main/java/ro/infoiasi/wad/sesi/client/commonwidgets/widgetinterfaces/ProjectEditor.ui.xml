@@ -1,58 +1,55 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
-             xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.commonwidgets'>
+        >
     <g:HTMLPanel>
-        <b:Row>
-            <b:Column size="1">
-                <b:Label type="INFO" text="Name"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="4">
-                <b:TextBox ui:field="projectName" size="3" placeholder="Name"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="1">
-                <b:Label type="INFO" text="Description"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="4">
-                <b:TextBox ui:field="projectDescription" size="3" placeholder="Description"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="1">
-                <b:Label type="INFO" text="Project url"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="4">
-                <b:TextBox ui:field="projectUrl" size="3" placeholder="Project url"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="1">
-                <b:Label type="INFO" text="Repository"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="4">
-                <b:TextBox ui:field="repository" size="3" placeholder="Repository"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="4">
-                <g:Button ui:field="addProject" size="3"/>
-                <g:Button ui:field="deleteProject" size="3" text="Delete"/>
-            </b:Column>
-        </b:Row>
-        <b:Row>
-            <b:Column size="4">
-                <c:ProjectsView ui:field="projects"/>
-            </b:Column>
-        </b:Row>
+        <b:WellForm>
+            <b:Row>
+                <b:Column size="1">
+                    <b:Label type="INFO" text="Name"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:TextBox ui:field="projectName" size="2" placeholder="Name"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="1">
+                    <b:Label type="INFO" text="Description"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:TextBox ui:field="projectDescription" size="2" placeholder="Description"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="1">
+                    <b:Label type="INFO" text="Project url"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:TextBox ui:field="projectUrl" size="2" placeholder="Project url"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="1">
+                    <b:Label type="INFO" text="Repository"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:TextBox ui:field="repository" size="2" placeholder="Repository"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:Button ui:field="deleteProject" text="Remove"/>
+                </b:Column>
+            </b:Row>
+        </b:WellForm>
+
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -2,6 +2,7 @@ package ro.infoiasi.wad.sesi.client.students;
 
 import com.github.gwtbootstrap.client.ui.TextArea;
 import com.github.gwtbootstrap.client.ui.TextBox;
+import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -11,12 +12,18 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import ro.infoiasi.wad.sesi.client.commonwidgets.DoubleEditor;
+import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ProjectEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetEditor;
-import ro.infoiasi.wad.sesi.core.model.KnowledgeLevel;
-import ro.infoiasi.wad.sesi.core.model.Student;
+import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
+import ro.infoiasi.wad.sesi.core.model.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class StudentEditor extends Composite implements ResourceWidgetEditor<Student>,
         ValueChangeHandler<KnowledgeLevel>, ClickHandler {
@@ -32,12 +39,55 @@ public class StudentEditor extends Composite implements ResourceWidgetEditor<Stu
 
     @Override
     public Student save() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Student student = driver.flush();
+        String studentId = Cookies.getCookie("currentUser");
+        student.setId(studentId);
+        //general skills
+        student.setGeneralSkills(Arrays.asList(generalSkillsArea.getText().split(WidgetConstants.multipleSkillSeparator)));
+
+        //technical skills
+        List<String> rawTechnicalSkills = Arrays.asList(freebaseTechnicalSkillsBox.getText().split(WidgetConstants.multipleSkillSeparator));
+        List<TechnicalSkill> technicalSkills = Lists.transform(rawTechnicalSkills, new WidgetConstants.TechnicalSkillFunction());
+        student.setTechnicalSkills(technicalSkills);
+
+        //studies
+        University university = new University();
+        String[] split = universityId.getText().split(WidgetConstants.dataSeparator);
+        OntologyExtraInfo.fillWithOntologyExtraInfo(university, split[0], split[1]);
+        Faculty faculty = new Faculty();
+        split = facultyId.getText().split(WidgetConstants.dataSeparator);
+        OntologyExtraInfo.fillWithOntologyExtraInfo(faculty, split[0], split[1]);
+        faculty.setUniversity(university);
+        Degree degree = new Degree();
+        split = degreeId.getText().split(WidgetConstants.dataSeparator);
+        OntologyExtraInfo.fillWithOntologyExtraInfo(degree, split[0], split[1]);
+        Studies studies = new Studies();
+        studies.setFaculty(faculty);
+        studies.setDegree(degree);
+        studies.setYearOfStudy(yearOfStudy.getValue().intValue());
+        student.setStudies(studies);
+
+        // taking the projects
+        List<StudentProject> projects = Lists.newArrayList();
+        for (int i = 0; i < projectsPanel.getWidgetCount(); i++) {
+            ProjectEditor editor = (ProjectEditor) projectsPanel.getWidget(i);
+            projects.add(editor.getValue());
+        }
+        student.setProjects(projects);
+
+        return student;
     }
 
     @Override
     public void edit(Student bean) {
         driver.edit(bean);
+        if (bean != null && bean.getProjects() != null && projectsPanel.getWidgetCount() == 0) {
+
+            for (StudentProject project : bean.getProjects()) {
+                ProjectEditor projectEditor = addProject(null);
+                projectEditor.setValue(project);
+            }
+        }
     }
 
     interface StudentEditorUiBinder extends UiBinder<HTMLPanel, StudentEditor> {
@@ -69,7 +119,7 @@ public class StudentEditor extends Composite implements ResourceWidgetEditor<Stu
     TextBox name;
     @UiField
     @Ignore
-    Object yearOfStudy;
+    DoubleEditor yearOfStudy;
     @UiField
     @Ignore
     TextArea degreeId;
@@ -83,27 +133,25 @@ public class StudentEditor extends Composite implements ResourceWidgetEditor<Stu
     @Ignore
     TextBox university;
     @UiField
-    @Ignore
-    TextBox repository;
+    com.github.gwtbootstrap.client.ui.Button addProjectButton;
     @UiField
     @Ignore
-    TextBox projectUrl;
+    HTMLPanel projectsPanel;
     @UiField
     @Ignore
-    TextBox projectDescription;
-    @UiField
-    @Ignore
-    TextBox projectName;
-//    @UiField
-//    @Ignore
-//    Button addProject;
-//    @UiField
-//    Button deleteProject;
-//    @UiField
-//    ProjectsView projects;
+    TextArea facultyId;
 
     public StudentEditor() {
         initWidget(ourUiBinder.createAndBindUi(this));
         driver.initialize(this);
+    }
+
+    @UiHandler("addProjectButton")
+    public ProjectEditor addProject(ClickEvent e) {
+        ProjectEditor projectEditor = new ProjectEditor();
+        projectEditor.setValue(new StudentProject());
+        projectsPanel.add(projectEditor);
+
+        return projectEditor;
     }
 }

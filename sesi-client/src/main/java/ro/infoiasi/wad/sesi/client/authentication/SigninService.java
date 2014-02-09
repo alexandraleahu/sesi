@@ -23,7 +23,7 @@ public interface SigninService extends RemoteService {
 			return instance;
 		}
 	}
-	
+
 	public String getAuthenticateUrl(String provider, String callbackUrl) throws Exception;
 	public User verify(String verifier) throws Exception;
 }

@@ -6,7 +6,7 @@ public class SigninRecord {
 	public String requestToken;
 	public String requestSecret;
 	public String verifier;
-	
+
 	public String provider;
 	public String authenticateUrl;
 	public Token token;

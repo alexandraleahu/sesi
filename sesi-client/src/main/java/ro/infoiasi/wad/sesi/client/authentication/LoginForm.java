@@ -53,7 +53,7 @@ public class LoginForm extends Composite implements HasEventBus {
 
     @UiField
     Icon loadingResultsIcon;
-   
+
     @UiField(provided = true)
     ValueListBox<UserAccountType> accountList = new ValueListBox<UserAccountType>(new Renderer<UserAccountType>() {
         @Override
