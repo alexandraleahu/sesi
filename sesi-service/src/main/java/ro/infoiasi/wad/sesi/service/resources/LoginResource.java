@@ -51,18 +51,6 @@ public class LoginResource {
         return Response.status(Status.NOT_FOUND).build();
     }
 
-    @DELETE
-    @Path("/{username}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response deleteUser(@PathParam("username") String username) {
-        boolean removeUser = usersTable.removeUser(new DBUser(username, null, null));
 
-        if (removeUser) {
-            return Response.ok().build();
-        }
-
-        return Response.status(Status.NOT_FOUND).build();
-
-    }
 
 }

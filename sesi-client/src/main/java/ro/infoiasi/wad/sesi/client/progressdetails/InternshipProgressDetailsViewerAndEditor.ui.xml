@@ -1,0 +1,96 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
+    <g:HTMLPanel>
+        <b:Row>
+            <b:Column size="6">
+                <b:WellForm type="HORIZONTAL">
+                    <b:Fieldset>
+                        <b:Legend>Internship Application</b:Legend>
+
+                        <b:Row>
+                            <b:Column size="2">
+                                <b:Label type="INFO">Start date</b:Label>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <g:Label ui:field="startDateLabel"/>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="2">
+                                <b:Label type="INFO">End date</b:Label>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <g:Label ui:field="endDateLabel"/>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="2">
+                                <b:Label type="INFO">Attendee</b:Label>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <g:Hyperlink ui:field="attendeeLink" />
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="2">
+                                <b:Label type="INFO">Internship</b:Label>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <g:Hyperlink ui:field="internshipLink"/>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="2">
+                                <b:Label type="INFO">Associate teacher</b:Label>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <g:Hyperlink ui:field="teacherLink"/>
+                            </b:Column>
+                        </b:Row>
+
+                        <b:Row>
+                            <b:Column size="2">
+                                <b:Label type="INFO">Feedback</b:Label>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <g:Label ui:field="feedbackView"/>
+                                <b:TextArea ui:field="feedbackEdit" size="5" />
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="2">
+                                <b:Label type="INFO">Status</b:Label>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <g:Label ui:field="statusView" />
+                                <b:ValueListBox ui:field="statusBox"/>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <b:Button type="INFO" block="true" ui:field="saveBtn">Save</b:Button>
+                            </b:Column>
+                        </b:Row>
+
+                    </b:Fieldset>
+                </b:WellForm>
+            </b:Column>
+        </b:Row>
+    </g:HTMLPanel>
+</ui:UiBinder>

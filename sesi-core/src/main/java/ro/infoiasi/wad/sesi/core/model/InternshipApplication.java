@@ -52,7 +52,7 @@ public class InternshipApplication extends StudentInternshipRelation {
         sb.append(", internship='").append(getInternship()).append('\'');
         sb.append(", student='").append(getStudent()).append('\'');
         sb.append(", status='").append(getStatus()).append('\'');
-        sb.append(", description='").append(getDescription()).append('\'');
+        sb.append(", feedback='").append(getFeedback()).append('\'');
         sb.append(", motivation='").append(getMotivation()).append('\'');
         sb.append(", publishedAt='").append(getPublishedAt()).append('\'');
 
@@ -67,6 +67,11 @@ public class InternshipApplication extends StudentInternshipRelation {
 
     @Override
     public String getName() {
-        return null;
+        if (getInternship() != null && getStudent() != null) {
+
+            return getStudent().getId() + " - " + getInternship().getId();
+        }
+
+        return getRelativeUri();
     }
 }

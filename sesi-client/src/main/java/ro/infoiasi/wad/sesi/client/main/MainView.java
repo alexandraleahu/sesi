@@ -1,7 +1,7 @@
 package ro.infoiasi.wad.sesi.client.main;
 
-import com.github.gwtbootstrap.client.ui.*;
 import com.github.gwtbootstrap.client.ui.Button;
+import com.github.gwtbootstrap.client.ui.*;
 import com.github.gwtbootstrap.client.ui.constants.IconSize;
 import com.github.gwtbootstrap.client.ui.constants.IconType;
 import com.github.gwtbootstrap.client.ui.constants.LabelType;
@@ -27,6 +27,7 @@ import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
 import ro.infoiasi.wad.sesi.client.internships.InternshipView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
+import ro.infoiasi.wad.sesi.client.progressdetails.InternshipProgressDetailsViewerAndEditor;
 import ro.infoiasi.wad.sesi.client.progressdetails.InternshipsProgressDetailsService;
 import ro.infoiasi.wad.sesi.client.students.StudentView;
 import ro.infoiasi.wad.sesi.client.students.StudentsService;
@@ -188,7 +189,13 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         hero.setWidth("50%");
         Label welcome = new Label();
 
-        welcome.setText("You are logged in as " + Sesi.getCurrentUserId());
+        String user = null;
+        if (Sesi.getCurrentUsername() != null) {
+            user = Sesi.getCurrentUsername();
+        } else {
+            user = Sesi.getCurrentUserId();
+        }
+        welcome.setText("You are logged in as " + user);
         hero.add(welcome);
         mainPanel.setWidget(hero);
     }
@@ -384,6 +391,9 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
 
 
         } else if (resourceType.equals(InternshipsProgressDetailsService.RESOURCE_PATH))  {
+
+
+
             InternshipsProgressDetailsService.App.getInstance().getProgressDetailsById(id, new AsyncCallback<InternshipProgressDetails>() {
                 @Override
                 public void onFailure(Throwable caught) {
@@ -393,8 +403,11 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 @Override
                 public void onSuccess(InternshipProgressDetails result) {
                     if (result != null) {
+                        InternshipProgressDetailsViewerAndEditor view = new InternshipProgressDetailsViewerAndEditor();
 
-                        // TODO
+                        mainPanel.setWidget(view);
+                        view.edit(result);
+
                     } else {
                         showResourceNotFoundError();
                     }
