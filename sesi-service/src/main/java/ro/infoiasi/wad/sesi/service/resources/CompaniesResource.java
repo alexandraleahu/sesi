@@ -1,21 +1,35 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
-import com.complexible.stardog.StardogException;
+import java.util.List;
+
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.openrdf.rio.RDFFormat;
+
+import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.rdf.dao.CompaniesDao;
 import ro.infoiasi.wad.sesi.service.authentication.DBUser;
 import ro.infoiasi.wad.sesi.service.authentication.UsersTable;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
+import com.complexible.stardog.StardogException;
 
 @PermitAll
 @Path("/companies")
@@ -129,8 +143,28 @@ public class CompaniesResource {
     @PUT
     @Path("id")
     @Produces(MediaType.APPLICATION_XML)
-    public Response editCompany(@PathParam("id") String companyId) {
-        return null;
+    public Response editCompany(@PathParam("id") String companyId,
+            @FormParam("active") Boolean active,
+            @FormParam("communityRating") Integer communityRating,
+            @FormParam("description") String description,
+            @FormParam("infoUrl") String infoUrl,
+            @FormParam("name") String name,
+            @FormParam("siteUrl") String siteUrl) {
+        Company company = new Company();
+        company.setId(companyId);
+        company.setActive(active);
+        company.setCommunityRating(communityRating);
+        company.setDescription(description);
+        company.setInfoUrl(infoUrl);
+        company.setName(name);
+        company.setSiteUrl(siteUrl);
+        try {
+            CompaniesDao dao = new CompaniesDao();
+            dao.updateCompany(company);
+        } catch (StardogException e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
+        }
+        return Response.ok().build();
     }
 
     @POST

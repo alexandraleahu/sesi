@@ -1,8 +1,10 @@
 package ro.infoiasi.wad.sesi.server.students;
 
+import com.google.common.base.Joiner;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+
 import ro.infoiasi.wad.sesi.client.students.StudentsService;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
@@ -14,6 +16,7 @@ import javax.ws.rs.client.*;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.io.StringReader;
 import java.util.List;
 
@@ -97,7 +100,23 @@ public class StudentsServiceImpl extends RemoteServiceServlet implements Student
 
     @Override
     public String updateStudent(Student student) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
+        Form form = new Form();
+        form.param("id", student.getId());
+        form.param("description", student.getDescription());
+        form.param("name", student.getName());
+        form.param("relativeUri", student.getRelativeUri());
+        form.param("generalSkills", Joiner.on(',').join(student.getGeneralSkills()));
+        form.param("projects", Joiner.on(',').join(student.getProjects()));
+        form.param("studies", student.getStudies().toString());
+        form.param("technicalSkills", Joiner.on(',').join(student.getTechnicalSkills()));
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+        if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
+            return null;
+        }
+        return response.getEntity().toString();
     }
 
     @Override

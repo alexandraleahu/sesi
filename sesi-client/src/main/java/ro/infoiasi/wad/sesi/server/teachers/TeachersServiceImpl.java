@@ -1,11 +1,14 @@
 package ro.infoiasi.wad.sesi.server.teachers;
 
+import com.google.common.base.Joiner;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+
 import ro.infoiasi.wad.sesi.client.teachers.TeachersService;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
+import ro.infoiasi.wad.sesi.core.model.Student;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
 import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDeserializer;
@@ -14,6 +17,7 @@ import javax.ws.rs.client.*;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.io.StringReader;
 import java.util.List;
 
@@ -98,6 +102,23 @@ public class TeachersServiceImpl extends RemoteServiceServlet implements Teacher
         return progressDetails;
     }
 
+
+    public String updateTeacher(Teacher teacher) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH).path(teacher.getId());
+        Form form = new Form();
+        form.param("name", teacher.getName());
+        form.param("monitoringInternships", Joiner.on(',').join(teacher.getMonitoringInternships()));
+        form.param("faculty", teacher.getFaculty().toString());
+        form.param("siteUrl", teacher.getSiteUrl());
+        form.param("courses", Joiner.on(",").join(teacher.getCourses()));
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+        if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
+            return null;
+        }
+        return response.getEntity().toString();
+    }
 
     @Override
     public boolean registerTeacher(String username, String password, String name) {

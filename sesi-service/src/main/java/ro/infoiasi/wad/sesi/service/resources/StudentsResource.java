@@ -1,19 +1,38 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
-import com.complexible.stardog.StardogException;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.openrdf.rio.RDFFormat;
+
+import ro.infoiasi.wad.sesi.core.model.Student;
+import ro.infoiasi.wad.sesi.core.model.StudentProject;
+import ro.infoiasi.wad.sesi.core.model.Studies;
+import ro.infoiasi.wad.sesi.core.model.TechnicalSkill;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.rdf.dao.StudentsDao;
 import ro.infoiasi.wad.sesi.service.authentication.DBUser;
 import ro.infoiasi.wad.sesi.service.authentication.UsersTable;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
+import com.complexible.stardog.StardogException;
 
 @Path("/students")
 public class StudentsResource {
@@ -147,6 +166,44 @@ public class StudentsResource {
 
             return Response.status(Response.Status.FORBIDDEN).build();
         }
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updateStudent(@PathParam("id") String id,
+            @FormParam("name") String name,
+            @FormParam("description") String description,
+            @FormParam("relativeUri") String relativeUri,
+            @FormParam("generalSkills") String generalSkills,
+            @FormParam("projects") String projects,
+            @FormParam("studies") String studies,
+            @FormParam("technicalSkills") String technicalSkills) {
+        Student student = new Student();
+        student.setDescription(description);
+        student.setGeneralSkills(Arrays.asList(generalSkills.split(",")));
+        student.setId(id);
+        List<StudentProject> proj = new LinkedList<StudentProject>();
+        for (String project : projects.split(",")) {
+            StudentProject e = new StudentProject();
+            proj.add(e);
+        }
+        student.setProjects(proj);
+        student.setName(name);
+        student.setStudies(new Studies());
+        List<TechnicalSkill> tech = new LinkedList<TechnicalSkill>();
+        for (String t : technicalSkills.split(",")) {
+            TechnicalSkill ts = new TechnicalSkill();
+            tech.add(ts);
+        }
+        student.setTechnicalSkills(tech);
+        try {
+            new StudentsDao().updateStudent(student);
+        } catch (StardogException e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
+        }
+        return Response.ok().build();
     }
 
     @DELETE
