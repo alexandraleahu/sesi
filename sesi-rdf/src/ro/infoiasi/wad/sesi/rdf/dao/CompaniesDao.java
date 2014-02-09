@@ -112,12 +112,12 @@ public class CompaniesDao implements Dao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             Resource newCompany = Values.uri(SESI_OBJECTS_NS, companyId);
-            URI studentClass = Values.uri(SESI_SCHEMA_NS, COMPANY_CLASS);
+            URI companyClass = Values.uri(SESI_SCHEMA_NS, COMPANY_CLASS);
 
             con.begin();
 
             Adder adder = con.add();
-            adder.statement(newCompany, RDF.TYPE, studentClass);
+            adder.statement(newCompany, RDF.TYPE, companyClass);
             adder.statement(newCompany, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
 
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
@@ -137,7 +137,42 @@ public class CompaniesDao implements Dao {
 
 
     }
-    public String createCompany(Company company) throws StardogException {
+
+    public String createFullCompany(Company company) throws StardogException {
+
+        ReasoningConnection con = connectionPool.getConnection();
+
+        try {
+            Resource newCompany = Values.uri(SESI_OBJECTS_NS, company.getId());
+            URI companyClass = Values.uri(SESI_SCHEMA_NS, COMPANY_CLASS);
+
+            con.begin();
+
+            Adder adder = con.add();
+            adder.statement(newCompany, RDF.TYPE, companyClass);
+            adder.statement(newCompany, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+
+            URI id = Values.uri(SESI_SCHEMA_NS, ID_PROP);
+            URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
+            URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
+            URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
+            URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE_PROP);
+
+            adder.statement(newCompany, id, Values.literal(company.getId(), StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, RDFS.LABEL, Values.literal(company.getName()));
+            adder.statement(newCompany, name, Values.literal(company.getName(), StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, description, Values.literal(company.getDescription(), StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, siteUrl, Values.literal(company.getSiteUrl()));
+            adder.statement(newCompany, isActive, Values.literal(company.isActive()));
+
+            con.commit();
+            return company.getRelativeUri();
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
+    public String updateCompany(Company company) throws StardogException {
 
         ReasoningConnection con = connectionPool.getConnection();
 
@@ -193,7 +228,7 @@ public class CompaniesDao implements Dao {
             company.setSiteUrl("www.Company1.com");
             company.setActive(true);
 
-            companiesDao.createCompany(company);
+            companiesDao.createFullCompany(company);
             System.out.println(companiesDao.getCompany(company.getId(), RDFFormat.TURTLE));
         } catch (Exception e) {
             e.printStackTrace();
