@@ -72,8 +72,7 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
     @Override
     public void onClick(ClickEvent event) {
         Internship save = save();
-        System.out.println(save);
-        System.out.println(2);
+
     }
 
 

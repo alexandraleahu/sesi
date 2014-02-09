@@ -35,9 +35,9 @@ public class StudentDeserializer implements ResourceDeserializer<Student> {
                 student.setDescription(statement.getLiteral().getString());
             }
     
-            //general skkills
+            //general skills
             List<String> generalSkills = Lists.newArrayList();
-            StmtIterator stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP));
+            StmtIterator stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, GENERAL_SKILL_PROP));
             while (stmtIterator.hasNext()) {
                 Statement nextStatement = stmtIterator.nextStatement();
                 if (nextStatement != null) {

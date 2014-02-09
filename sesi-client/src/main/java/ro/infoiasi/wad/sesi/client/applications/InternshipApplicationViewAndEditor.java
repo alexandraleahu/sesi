@@ -15,35 +15,62 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetEditor;
+import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.core.model.Student;
 import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
 
 import java.io.IOException;
+import java.util.Date;
 
 
 public class InternshipApplicationViewAndEditor extends Composite implements ResourceWidgetEditor<InternshipApplication> {
     @Override
     public InternshipApplication save() {
 
-        InternshipApplication flush = driver.flush();
-        statusView.setText(flush.getStatus().toString());
-        return flush;
+        ourBean = driver.flush();
+        if (ourBean != null) {
+
+            statusView.setText(ourBean.getStatus().toString());
+        }
+        return ourBean;
     }
 
     @Override
     public void edit(InternshipApplication bean) {
+        this.ourBean = bean;
         if (bean != null) {
-            driver.edit(bean);
-            publishedAtLabel.setText(bean.getPublishedAt().toString());
+            driver.edit(ourBean);
+            Student student = ourBean.getStudent();
+            if (student != null) {
+
+                candidateLink.setText(student.getName());
+                candidateLink.setTargetHistoryToken(student.getRelativeUri());
+            }
+
+            Internship internship = ourBean.getInternship();
+            if (internship != null) {
+
+                internshipLink.setText(internship.getName());
+                internshipLink.setTargetHistoryToken(internship.getRelativeUri());
+            }
+
+
+            Date publishedAt = bean.getPublishedAt();
+            if (publishedAt != null) {
+
+                publishedAtLabel.setText(publishedAt.toString());
+            }
+
         }
 
 
     }
 
-    interface ApplicationViewAndEditorUiBinder extends UiBinder<HTMLPanel, InternshipApplicationViewAndEditor> {
+    interface InternshipApplicationViewAndEditorUiBinder extends UiBinder<HTMLPanel, InternshipApplicationViewAndEditor> {
     }
 
-    private static ApplicationViewAndEditorUiBinder ourUiBinder = GWT.create(ApplicationViewAndEditorUiBinder.class);
+    private static InternshipApplicationViewAndEditorUiBinder ourUiBinder = GWT.create(InternshipApplicationViewAndEditorUiBinder.class);
 
     // Empty interface declaration, similar to UiBinder
     interface Driver extends SimpleBeanEditorDriver<InternshipApplication, InternshipApplicationViewAndEditor> {}
@@ -95,30 +122,21 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
     @UiField
     Hyperlink internshipLink;
 
-    private InternshipApplication bean;
+    private InternshipApplication ourBean;
 
-    public InternshipApplicationViewAndEditor(String id) {
+    public InternshipApplicationViewAndEditor() {
         initWidget(ourUiBinder.createAndBindUi(this));
         driver.initialize(this);
 
-        // TODO call the service
-        bean = new InternshipApplication();
-        bean.setId(id);
-
         wireUiElements();
 
-        edit(bean);
     }
 
     private void wireUiElements() {
         statusBox.setValue(StudentInternshipRelation.Status.pending);
         statusBox.setAcceptableValues(InternshipApplication.POSSIBLE_STATUSES);
 
-        candidateLink.setText(bean.getStudent().getName());
-        candidateLink.setTargetHistoryToken(bean.getStudent().getRelativeUri());
 
-        internshipLink.setText(bean.getInternship().getName());
-        internshipLink.setTargetHistoryToken(bean.getInternship().getRelativeUri());
     }
 
     @UiHandler("editFeedbackBtn")
@@ -135,14 +153,14 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
 
     @UiHandler("saveFeedbackBtn")
     public void saveFeedback(ClickEvent e) {
-        bean = save();
+        ourBean = save();
         feedbackView.setVisible(true);
         feedbackEdit.setVisible(false);
 
         editFeedbackBtn.setVisible(false);
         saveFeedbackBtn.setVisible(true);
 
-        edit(bean);
+        edit(ourBean);
 
 
     }
@@ -161,14 +179,14 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
 
     @UiHandler("saveStatusBtn")
     public void saveStatus(ClickEvent e) {
-        bean = save();
+        ourBean = save();
         statusView.setVisible(true);
         statusBox.setVisible(false);
 
         editStatusBtn.setVisible(false);
         saveStatusBtn.setVisible(true);
 
-        edit(bean);
+        edit(ourBean);
 
 
     }

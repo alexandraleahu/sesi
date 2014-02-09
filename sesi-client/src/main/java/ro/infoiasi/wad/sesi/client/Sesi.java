@@ -66,13 +66,11 @@ public class Sesi implements EntryPoint {
 
             @Override
             public void onFailure(Throwable caught) {
-                System.out.println(caught.toString());
 //                home.error("Sign in verification failed: "+caught.getMessage());
             }
 
             @Override
             public void onSuccess(User result) {
-                System.out.println("user: " + result);
             }
         });
 

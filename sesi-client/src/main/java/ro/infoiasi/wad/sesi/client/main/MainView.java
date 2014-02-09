@@ -1,9 +1,9 @@
 package ro.infoiasi.wad.sesi.client.main;
 
+import com.github.gwtbootstrap.client.ui.*;
 import com.github.gwtbootstrap.client.ui.Button;
-import com.github.gwtbootstrap.client.ui.Hero;
-import com.github.gwtbootstrap.client.ui.NavLink;
-import com.github.gwtbootstrap.client.ui.ResponsiveNavbar;
+import com.github.gwtbootstrap.client.ui.constants.IconSize;
+import com.github.gwtbootstrap.client.ui.constants.IconType;
 import com.github.gwtbootstrap.client.ui.constants.LabelType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,8 +17,10 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Label;
 import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationService;
+import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationViewAndEditor;
 import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
 import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
@@ -32,6 +34,7 @@ import ro.infoiasi.wad.sesi.client.teachers.TeacherMainView;
 import ro.infoiasi.wad.sesi.client.teachers.TeacherProfileView;
 import ro.infoiasi.wad.sesi.client.teachers.TeachersService;
 import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.resources.SesiResources;
 
 
 public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventBus,
@@ -78,6 +81,9 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
     NavLink internshipsLink;
     @UiField
     NavLink companiesLink;
+
+    private Icon loadingIcon;
+
     private HTMLPanel root;
 
 
@@ -139,6 +145,11 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         eventBus.addHandler(RegisterSuccessfulEvent.TYPE, this);
 
         History.addValueChangeHandler(this);
+
+        loadingIcon = new Icon(IconType.SPINNER);
+        loadingIcon.setSize(IconSize.TWO_TIMES);
+        loadingIcon.setSpin(true);
+        loadingIcon.addStyleName(SesiResources.INSTANCE.style().noFlickering());
     }
 
     @Override
@@ -263,10 +274,10 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         if (!event.getValue().matches("/\\w+/\\w+")) {
             return;
         }
-
         String[] resourceUrl = event.getValue().split("/");
         String resourceType = resourceUrl[1];
         String id = resourceUrl[2];
+        showLoadingIcon();
 
         if (resourceType.equals(InternshipsService.RESOURCE_PATH)) {
 
@@ -281,7 +292,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                     if (result != null) {
 
                         InternshipView view = new InternshipView();
-                        mainPanel.add(view);
+                        mainPanel.setWidget(view);
                         view.edit(result);
                     } else {
                         showResourceNotFoundError();
@@ -302,7 +313,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                     if (result != null) {
 
                         TeacherProfileView view = new TeacherProfileView();
-                        mainPanel.add(view);
+                        mainPanel.setWidget(view);
                         view.edit(result);
                     } else {
                         showResourceNotFoundError();
@@ -323,7 +334,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                     if (result != null) {
 
                         StudentView view = new StudentView();
-                        mainPanel.add(view);
+                        mainPanel.setWidget(view);
                         view.edit(result);
                     } else {
                         showResourceNotFoundError();
@@ -362,7 +373,9 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 public void onSuccess(InternshipApplication result) {
                     if (result != null) {
 
-                        // TODO
+                        InternshipApplicationViewAndEditor view = new InternshipApplicationViewAndEditor();
+                        mainPanel.setWidget(view);
+                        view.edit(result);
                     } else {
                         showResourceNotFoundError();
                     }
@@ -406,6 +419,10 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         Hero hero = new Hero();
         hero.add(errorLabel);
         mainPanel.setWidget(hero);
+    }
+
+    private void showLoadingIcon() {
+         mainPanel.setWidget(loadingIcon);
     }
 
 }

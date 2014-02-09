@@ -9,10 +9,10 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
-import ro.infoiasi.wad.sesi.server.internships.InternshipsServiceImpl;
 import ro.infoiasi.wad.sesi.server.deserializerinterfaces.ResourceDeserializer;
-import ro.infoiasi.wad.sesi.server.students.StudentsServiceImpl;
+import ro.infoiasi.wad.sesi.server.internships.InternshipsServiceImpl;
 import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
+import ro.infoiasi.wad.sesi.server.students.StudentsServiceImpl;
 
 import java.util.List;
 
@@ -49,13 +49,20 @@ public class InternshipApplicationDeserializer implements ResourceDeserializer<I
             //status
             statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, STATUS_PROP));
             if (statement != null) {
-                Object[] res = sparqlService.getStatus(statement.getResource().getURI());
-                application.setFeedback((String) res[0]);
-                application.setStatus((StudentInternshipRelation.Status) res[1]);
+                String statusUri = statement.getResource().getURI();
+                application.setStatus(StudentInternshipRelation.Status.valueOf(
+                        statusUri.substring(statusUri.lastIndexOf("/") + 1)
+                ));
             }
-    
+
+            // feedback
+            statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, FEEDBACK_PROP));
+            if (statement != null) {
+                application.setFeedback(statement.getLiteral().getString());
+            }
+
             //internship
-            statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CANDIDATE_PROP));
+            statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, APPLICATION_INTERNSHIP_PROP));
             if (statement != null) {
                 String internshipID = sparqlService.getIDFromURI(statement.getResource().getURI());
                 InternshipsServiceImpl internshipsService = new InternshipsServiceImpl();

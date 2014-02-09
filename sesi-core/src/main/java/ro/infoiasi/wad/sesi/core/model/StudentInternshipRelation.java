@@ -19,6 +19,7 @@ public abstract class StudentInternshipRelation implements Resource {
     private Status status;
     private String feedback;
 
+
     public Internship getInternship() {
         return internship;
     }
