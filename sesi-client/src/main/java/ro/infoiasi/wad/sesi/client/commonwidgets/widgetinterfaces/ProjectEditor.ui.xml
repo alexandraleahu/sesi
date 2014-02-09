@@ -2,6 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
         >
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources" />
     <g:HTMLPanel>
         <b:WellForm>
             <b:Row>
@@ -46,9 +47,47 @@
             </b:Row>
             <b:Row>
                 <b:Column size="2">
+                    <b:Label type="INFO" text="Used programming languages"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <b:TextBox ui:field="programmingLanguage" b:id="freebaseProgrammingLanguages" size="3"
+                               placeholder="Freebase search programming languages"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="5">
+                    <b:TextArea ui:field="programmingLanguagesIdArea" b:id="programmingLanguagesId"
+                                styleName="{resource.style.standardTextArea}" size="5"
+                                placeholder="Selected programming languages will go here"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
+                    <b:Label type="INFO" text="Used technologies"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="3">
+                    <b:TextBox ui:field="technologies" b:id="freebaseTeechnologies" size="3"
+                               placeholder="Freebase search technologies"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="5">
+                    <b:TextArea ui:field="technologiesIdArea" b:id="technologiesId"
+                                styleName="{resource.style.standardTextArea}" size="5"
+                                placeholder="Selected technologies will go here"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
+                <b:Column size="2">
                     <b:Button ui:field="deleteProject" text="Remove"/>
                 </b:Column>
             </b:Row>
+
+
         </b:WellForm>
 
     </g:HTMLPanel>

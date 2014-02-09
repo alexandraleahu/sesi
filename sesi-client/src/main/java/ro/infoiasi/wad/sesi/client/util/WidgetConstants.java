@@ -9,7 +9,8 @@ import java.io.Serializable;
 
 public class WidgetConstants implements Serializable {
 
-    private WidgetConstants() {}
+    private WidgetConstants() {
+    }
 
     public static final String multipleSkillSeparator = "\n";
     public static final String dataSeparator = ":";
@@ -21,7 +22,6 @@ public class WidgetConstants implements Serializable {
     public static final String CURRENT_ROLE_COOKIE = "currentUserRole";
     public static final String CURRENT_USER_NAME_COOKIE = "currentUsername";
     public static final String CURRENT_USER_ID_COOKIE = "currentUserId";
-
 
 
     public static class TechnicalSkillFunction implements Function<String, TechnicalSkill> {
@@ -50,4 +50,25 @@ public class WidgetConstants implements Serializable {
     }
 
 
+    public static class ProgrammingLanguageFunction implements Function<String, ProgrammingLanguage> {
+        @Nullable
+        @Override
+        public ProgrammingLanguage apply(String input) {
+            String[] raw = input.split(dataSeparator);
+            ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
+            OntologyExtraInfo.fillWithOntologyExtraInfo(programmingLanguage, raw[0], raw[1]);
+            return programmingLanguage;
+        }
+    }
+
+    public static class TechnologyFunction implements Function<String, Technology> {
+        @Nullable
+        @Override
+        public Technology apply(String input) {
+            String[] raw = input.split(dataSeparator);
+            Technology technology = new Technology();
+            OntologyExtraInfo.fillWithOntologyExtraInfo(technology, raw[0], raw[1]);
+            return technology;
+        }
+    }
 }
