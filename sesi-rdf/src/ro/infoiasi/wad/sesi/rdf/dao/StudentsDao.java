@@ -1,18 +1,42 @@
 package ro.infoiasi.wad.sesi.rdf.dao;
 
-import com.complexible.common.iterations.Iteration;
-import com.complexible.common.rdf.model.StardogValueFactory;
-import com.complexible.common.rdf.model.Values;
-import com.complexible.stardog.StardogException;
-import com.complexible.stardog.api.Adder;
-import com.complexible.stardog.api.GraphQuery;
-import com.complexible.stardog.api.SelectQuery;
-import com.complexible.stardog.api.reasoning.ReasoningConnection;
-import com.complexible.stardog.api.search.SearchConnection;
-import com.complexible.stardog.api.search.SearchResult;
-import com.complexible.stardog.api.search.SearchResults;
-import com.complexible.stardog.api.search.Searcher;
-import com.google.common.collect.Lists;
+import static ro.infoiasi.wad.sesi.core.util.Constants.CITY_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.CITY_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.DEGREE_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.DEGREE_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.DESCRIPTION_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.DEVELOPED_BY_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.ENROLLED_STUDENT_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.FACULTY_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.FACULTY_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.FREEBASE_NS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.GENERAL_SKILL_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.HAS_STUDIES_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.ID_LENGTH;
+import static ro.infoiasi.wad.sesi.core.util.Constants.ID_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.LEVEL_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.NAME_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.PROGRAMMING_LANG_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.PROGRAMMING_USED_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_OBJECTS_NS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_SCHEMA_NS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_URL_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SITE_URL_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SOFTWARE_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SOFTWARE_SKILL_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.STUDENT_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.STUDENT_PROJECT_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.STUDIES_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.TECHNICAL_SKILL_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.TECHNOLOGY_USED_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.UNIVERSITY_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.UNIVERSITY_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.WORKED_ON_PROJECT_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.YEAR_OF_STUDY_PROP;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
@@ -23,14 +47,35 @@ import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.query.TupleQueryResult;
 import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.core.model.*;
+
+import ro.infoiasi.wad.sesi.core.model.City;
+import ro.infoiasi.wad.sesi.core.model.Degree;
+import ro.infoiasi.wad.sesi.core.model.Faculty;
+import ro.infoiasi.wad.sesi.core.model.KnowledgeLevel;
+import ro.infoiasi.wad.sesi.core.model.ProgrammingLanguage;
+import ro.infoiasi.wad.sesi.core.model.Student;
+import ro.infoiasi.wad.sesi.core.model.StudentProject;
+import ro.infoiasi.wad.sesi.core.model.Studies;
+import ro.infoiasi.wad.sesi.core.model.TechnicalSkill;
+import ro.infoiasi.wad.sesi.core.model.Technology;
+import ro.infoiasi.wad.sesi.core.model.University;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static ro.infoiasi.wad.sesi.core.util.Constants.*;
+import com.complexible.common.iterations.Iteration;
+import com.complexible.common.rdf.model.StardogValueFactory;
+import com.complexible.common.rdf.model.Values;
+import com.complexible.stardog.StardogException;
+import com.complexible.stardog.api.Adder;
+import com.complexible.stardog.api.GraphQuery;
+import com.complexible.stardog.api.Remover;
+import com.complexible.stardog.api.SelectQuery;
+import com.complexible.stardog.api.reasoning.ReasoningConnection;
+import com.complexible.stardog.api.search.SearchConnection;
+import com.complexible.stardog.api.search.SearchResult;
+import com.complexible.stardog.api.search.SearchResults;
+import com.complexible.stardog.api.search.Searcher;
+import com.google.common.collect.Lists;
 
 public class StudentsDao implements Dao {
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
@@ -356,13 +401,17 @@ public class StudentsDao implements Dao {
             con.begin();
 
             Adder adder = con.add();
+            Remover remover = con.remove();
 
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI cityProp = Values.uri(SESI_SCHEMA_NS, CITY_PROP);
             URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
 
+            remover.statements(newStudent, RDFS.LABEL, null);
             adder.statement(newStudent, RDFS.LABEL, Values.literal(student.getName()));
+            remover.statements(newStudent, name, null);
             adder.statement(newStudent, name, Values.literal(student.getName(), StardogValueFactory.XSD.STRING));
+            remover.statements(newStudent, description, null);
             adder.statement(newStudent, description, Values.literal(student.getDescription(), StardogValueFactory.XSD.STRING));
 
             //add projects

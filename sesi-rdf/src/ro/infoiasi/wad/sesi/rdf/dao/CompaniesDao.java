@@ -1,22 +1,33 @@
 package ro.infoiasi.wad.sesi.rdf.dao;
 
-import com.complexible.common.rdf.model.StardogValueFactory;
-import com.complexible.common.rdf.model.Values;
-import com.complexible.stardog.StardogException;
-import com.complexible.stardog.api.Adder;
-import com.complexible.stardog.api.GraphQuery;
-import com.complexible.stardog.api.reasoning.ReasoningConnection;
+import static ro.infoiasi.wad.sesi.core.util.Constants.COMPANY_CLASS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.DESCRIPTION_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.ID_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.IS_ACTIVE_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.NAME_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_OBJECTS_NS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_SCHEMA_NS;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_URL_PROP;
+import static ro.infoiasi.wad.sesi.core.util.Constants.SITE_URL_PROP;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
 import org.openrdf.rio.RDFFormat;
+
 import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
-import static ro.infoiasi.wad.sesi.core.util.Constants.*;
+import com.complexible.common.rdf.model.StardogValueFactory;
+import com.complexible.common.rdf.model.Values;
+import com.complexible.stardog.StardogException;
+import com.complexible.stardog.api.Adder;
+import com.complexible.stardog.api.GraphQuery;
+import com.complexible.stardog.api.Remover;
+import com.complexible.stardog.api.reasoning.ReasoningConnection;
 
 public class CompaniesDao implements Dao {
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
@@ -182,16 +193,26 @@ public class CompaniesDao implements Dao {
             con.begin();
 
             Adder adder = con.add();
+            Remover remover = con.remove();
 
             URI name = Values.uri(SESI_SCHEMA_NS, NAME_PROP);
             URI description = Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP);
             URI siteUrl = Values.uri(SESI_SCHEMA_NS, SITE_URL_PROP);
             URI isActive = Values.uri(SESI_SCHEMA_NS, IS_ACTIVE_PROP);
 
+            remover.statements(newCompany, RDFS.LABEL, null);
             adder.statement(newCompany, RDFS.LABEL, Values.literal(company.getName()));
+
+            remover.statements(newCompany, name, null);
             adder.statement(newCompany, name, Values.literal(company.getName(), StardogValueFactory.XSD.STRING));
+
+            remover.statements(newCompany, description, null);
             adder.statement(newCompany, description, Values.literal(company.getDescription(), StardogValueFactory.XSD.STRING));
+
+            remover.statements(newCompany, siteUrl, null);
             adder.statement(newCompany, siteUrl, Values.literal(company.getSiteUrl()));
+
+            remover.statements(newCompany, isActive, null);
             adder.statement(newCompany, isActive, Values.literal(company.isActive()));
 
             con.commit();
