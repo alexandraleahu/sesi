@@ -22,48 +22,61 @@ public class StudentDeserializer implements ResourceDeserializer<Student> {
         student.setId(id);
 
         Resource studentResource = m.getOntResource(SESI_OBJECTS_NS + id);
-        // name
-        Statement statement = m.getProperty(studentResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
-        student.setName(statement.getLiteral().getString());
-
-        //description
-        statement = m.getProperty(studentResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
-        student.setDescription(statement.getLiteral().getString());
-
-        //general skkills
-        List<String> generalSkills = Lists.newArrayList();
-        StmtIterator stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP));
-        while (stmtIterator.hasNext()) {
-            Statement nextStatement = stmtIterator.nextStatement();
-            generalSkills.add(nextStatement.getLiteral().getString());
+        if (studentResource != null) {
+            // name
+            Statement statement = m.getProperty(studentResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
+            if (statement != null) {
+                student.setName(statement.getLiteral().getString());
+            }
+    
+            //description
+            statement = m.getProperty(studentResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
+            if (statement != null) {
+                student.setDescription(statement.getLiteral().getString());
+            }
+    
+            //general skkills
+            List<String> generalSkills = Lists.newArrayList();
+            StmtIterator stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP));
+            while (stmtIterator.hasNext()) {
+                Statement nextStatement = stmtIterator.nextStatement();
+                if (nextStatement != null) {
+                    generalSkills.add(nextStatement.getLiteral().getString());
+                }
+            }
+            student.setGeneralSkills(generalSkills);
+    
+            //technical skills
+            List<TechnicalSkill> preferredTechnicalSkills = Lists.newArrayList();
+            stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP));
+            while (stmtIterator.hasNext()) {
+                Statement nextStatement = stmtIterator.nextStatement();
+                if (nextStatement != null) {
+                    TechnicalSkill acquiredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
+                    preferredTechnicalSkills.add(acquiredSkill);
+                }
+            }
+            student.setTechnicalSkills(preferredTechnicalSkills);
+    
+            //studies
+            statement = m.getProperty(studentResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, HAS_STUDIES_PROP));
+            if (statement != null) {
+                Studies studies = sparqlService.getStudies(statement.getResource().getURI());
+                student.setStudies(studies);
+            }
+    
+            //worked on project
+            List<StudentProject> studentProjects = Lists.newArrayList();
+            stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, WORKED_ON_PROJECT_PROP));
+            while (stmtIterator.hasNext()) {
+                Statement nextStatement = stmtIterator.nextStatement();
+                if (nextStatement != null) {
+                    StudentProject project = sparqlService.getStudentProject(nextStatement.getResource().getURI());
+                    studentProjects.add(project);
+                }
+            }
+            student.setProjects(studentProjects);
         }
-        student.setGeneralSkills(generalSkills);
-
-        //technical skills
-        List<TechnicalSkill> preferredTechnicalSkills = Lists.newArrayList();
-        stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, TECHNICAL_SKILL_PROP));
-        while (stmtIterator.hasNext()) {
-            Statement nextStatement = stmtIterator.nextStatement();
-            TechnicalSkill acquiredSkill = sparqlService.getTechnicalSkill(nextStatement.getResource().getURI());
-            preferredTechnicalSkills.add(acquiredSkill);
-        }
-        student.setTechnicalSkills(preferredTechnicalSkills);
-
-        //studies
-        statement = m.getProperty(studentResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, HAS_STUDIES_PROP));
-        Studies studies = sparqlService.getStudies(statement.getResource().getURI());
-        student.setStudies(studies);
-
-        //worked on project
-        List<StudentProject> studentProjects = Lists.newArrayList();
-        stmtIterator = studentResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, WORKED_ON_PROJECT_PROP));
-        while (stmtIterator.hasNext()) {
-            Statement nextStatement = stmtIterator.nextStatement();
-            StudentProject project = sparqlService.getStudentProject(nextStatement.getResource().getURI());
-            studentProjects.add(project);
-        }
-        student.setProjects(studentProjects);
-
         return student;
 
     }

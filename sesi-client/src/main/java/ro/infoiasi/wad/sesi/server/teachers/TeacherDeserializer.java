@@ -25,23 +25,34 @@ public class TeacherDeserializer implements Deserializer<Teacher> {
         teacher.setId(id);
 
         Resource teacherResource = m.getOntResource(SESI_OBJECTS_NS + id);
-        // name
-        Statement statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
-        teacher.setName(statement.getLiteral().getString());
-
-        //title
-        statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, TITLE_PROP));
-        teacher.setTitle(statement.getLiteral().getString());
-
-        //siteurl
-        statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, SITE_URL_PROP));
-        teacher.setSiteUrl(statement.getLiteral().getString());
-
-        //faculty
-        statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, IS_TEACHER_OF_PROP));
-        String facultyUri = statement.getResource().getURI();
-        Faculty faculty = sparqlService.getFaculty(facultyUri);
-        teacher.setFaculty(faculty);
+        
+        if (teacherResource != null) {
+            // name
+            Statement statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
+            if (statement != null) {
+                teacher.setName(statement.getLiteral().getString());
+            }
+    
+            //title
+            statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, TITLE_PROP));
+            if (statement != null) {
+                teacher.setTitle(statement.getLiteral().getString());
+            }
+    
+            //siteurl
+            statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, SITE_URL_PROP));
+            if (statement != null) {
+                teacher.setSiteUrl(statement.getLiteral().getString());
+            }
+    
+            //faculty
+            statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, IS_TEACHER_OF_PROP));
+            if (statement != null) {
+                String facultyUri = statement.getResource().getURI();
+                Faculty faculty = sparqlService.getFaculty(facultyUri);
+                teacher.setFaculty(faculty);
+            }
+        }
 
         return teacher;
     }

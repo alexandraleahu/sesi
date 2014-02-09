@@ -17,10 +17,12 @@ public class OntologyExtraInfoDeserializer implements Deserializer<OntologyExtra
 
         Resource resource = m.getOntResource(uri);
 
-        Statement statement = m.getProperty(resource, ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
-        ontologyExtraInfo.setName(statement.getLiteral().getString());
-
-
+        if (resource != null) {
+            Statement statement = m.getProperty(resource, ResourceFactory.createProperty(SESI_SCHEMA_NS, NAME_PROP));
+            if (statement != null) {
+                ontologyExtraInfo.setName(statement.getLiteral().getString());
+            }
+        }
         return ontologyExtraInfo;
     }
 }

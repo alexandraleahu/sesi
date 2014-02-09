@@ -26,37 +26,50 @@ public class InternshipApplicationDeserializer implements ResourceDeserializer<I
         application.setId(id);
 
         Resource applicationResource = m.getOntResource(SESI_OBJECTS_NS + id);
-        //description
-        Statement statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, FEEDBACK_PROP));
-        application.setFeedback(statement.getLiteral().getString());
-
-        //published at
-        statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, PUBLISHED_AT_PROP));
-        XSDDateTime startDate = (XSDDateTime) (statement.getLiteral().getValue());
-        application.setPublishedAt(startDate.asCalendar().getTime());
-
-        //motivation
-        statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, MOTIVATION_PROP));
-        application.setMotivation(statement.getLiteral().getString());
-
-        //status
-        statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, STATUS_PROP));
-        Object[] res = sparqlService.getStatus(statement.getResource().getURI());
-        application.setFeedback((String) res[0]);
-        application.setStatus((StudentInternshipRelation.Status) res[1]);
-
-        //internship
-        statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CANDIDATE_PROP));
-        String internshipID = sparqlService.getIDFromURI(statement.getResource().getURI());
-        InternshipsServiceImpl internshipsService = new InternshipsServiceImpl();
-        application.setInternship(internshipsService.getInternshipById(internshipID));
-
-        //student
-        statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CANDIDATE_PROP));
-        String studentID = sparqlService.getIDFromURI(statement.getResource().getURI());
-        StudentsServiceImpl studentService = new StudentsServiceImpl();
-        application.setStudent(studentService.getStudentById(studentID));
-
+        if (applicationResource != null) {
+            //description
+            Statement statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, DESCRIPTION_PROP));
+            if (statement != null) {
+                application.setFeedback(statement.getLiteral().getString());
+            }
+    
+            //published at
+            statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, PUBLISHED_AT_PROP));
+            if (statement != null) {
+                XSDDateTime startDate = (XSDDateTime) (statement.getLiteral().getValue());
+                application.setPublishedAt(startDate.asCalendar().getTime());
+            }
+    
+            //motivation
+            statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, MOTIVATION_PROP));
+            if (statement != null) {
+                application.setMotivation(statement.getLiteral().getString());
+            }
+    
+            //status
+            statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, STATUS_PROP));
+            if (statement != null) {
+                Object[] res = sparqlService.getStatus(statement.getResource().getURI());
+                application.setFeedback((String) res[0]);
+                application.setStatus((StudentInternshipRelation.Status) res[1]);
+            }
+    
+            //internship
+            statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CANDIDATE_PROP));
+            if (statement != null) {
+                String internshipID = sparqlService.getIDFromURI(statement.getResource().getURI());
+                InternshipsServiceImpl internshipsService = new InternshipsServiceImpl();
+                application.setInternship(internshipsService.getInternshipById(internshipID));
+            }
+    
+            //student
+            statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CANDIDATE_PROP));
+            if (statement != null) {
+                String studentID = sparqlService.getIDFromURI(statement.getResource().getURI());
+                StudentsServiceImpl studentService = new StudentsServiceImpl();
+                application.setStudent(studentService.getStudentById(studentID));
+            }
+        }
         return application;
     }
 
