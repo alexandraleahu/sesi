@@ -1,4 +1,4 @@
-package ro.infoiasi.wad.sesi.client.applications;
+package ro.infoiasi.wad.sesi.client.progressdetails;
 
 import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.TextArea;
@@ -22,22 +22,21 @@ import java.io.IOException;
 import java.util.Date;
 
 
-public class InternshipApplicationViewAndEditor extends Composite implements ResourceWidgetEditor<InternshipApplication> {
+public class InternshipProgressDetailsViewerAndEditor extends Composite implements ResourceWidgetEditor<InternshipProgressDetails> {
     @Override
-    public InternshipApplication save() {
-
-       return driver.flush();
+    public InternshipProgressDetails save() {
+        return driver.flush();
     }
 
     @Override
-    public void edit(InternshipApplication bean) {
+    public void edit(InternshipProgressDetails bean) {
         if (bean != null) {
             driver.edit(bean);
             Student student = bean.getStudent();
             if (student != null) {
 
-                candidateLink.setText(student.getName());
-                candidateLink.setTargetHistoryToken(student.getRelativeUri());
+                attendeeLink.setText(student.getName());
+                attendeeLink.setTargetHistoryToken(student.getRelativeUri());
             }
 
             Internship internship = bean.getInternship();
@@ -45,14 +44,29 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
 
                 internshipLink.setText(internship.getName());
                 internshipLink.setTargetHistoryToken(internship.getRelativeUri());
+
+                Date startDate = internship.getStartDate();
+                Date endDate = internship.getEndDate();
+
+                if (startDate != null) {
+                    startDateLabel.setText(startDate.toString());
+                }
+
+                if (endDate != null) {
+                    endDateLabel.setText(endDate.toString());
+
+                }
+            }
+
+            Teacher teacher = bean.getTeacher();
+            if (teacher != null) {
+
+                teacherLink.setText(teacher.getName());
+                teacherLink.setTargetHistoryToken(teacher.getRelativeUri());
             }
 
 
-            Date publishedAt = bean.getPublishedAt();
-            if (publishedAt != null) {
 
-                publishedAtLabel.setText(publishedAt.toString());
-            }
 
             StudentInternshipRelation.Status status = bean.getStatus();
 
@@ -67,22 +81,34 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
 
         }
 
-
     }
 
-    interface InternshipApplicationViewAndEditorUiBinder extends UiBinder<HTMLPanel, InternshipApplicationViewAndEditor> {
+    interface InternshipProgressDetailsViewerAndEditorUiBinder extends UiBinder<HTMLPanel, InternshipProgressDetailsViewerAndEditor> {
     }
 
-    private static InternshipApplicationViewAndEditorUiBinder ourUiBinder = GWT.create(InternshipApplicationViewAndEditorUiBinder.class);
+    private static InternshipProgressDetailsViewerAndEditorUiBinder ourUiBinder = GWT.create(InternshipProgressDetailsViewerAndEditorUiBinder.class);
 
     // Empty interface declaration, similar to UiBinder
-    interface Driver extends SimpleBeanEditorDriver<InternshipApplication, InternshipApplicationViewAndEditor> {}
+    interface Driver extends SimpleBeanEditorDriver<InternshipProgressDetails, InternshipProgressDetailsViewerAndEditor> {}
 
     // Create the Driver
     Driver driver = GWT.create(Driver.class);
 
     @UiField
-    Hyperlink candidateLink;
+    @Ignore
+    Label startDateLabel;
+    @UiField
+    @Ignore
+    Label endDateLabel;
+    @UiField
+    Hyperlink attendeeLink;
+    @UiField
+    Hyperlink internshipLink;
+    @UiField
+    Hyperlink teacherLink;
+    @UiField
+    @Ignore
+    Label feedbackView;
     @UiField
     @Path("feedback")
     TextArea feedbackEdit;
@@ -91,36 +117,24 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
     @Path("status")
     ValueListBox<StudentInternshipRelation.Status> statusBox =
             new ValueListBox<StudentInternshipRelation.Status>(new Renderer<StudentInternshipRelation.Status>() {
-        @Override
-        public String render(StudentInternshipRelation.Status account) {
-            return account == null ? "" : account.toString();
-        }
+                @Override
+                public String render(StudentInternshipRelation.Status account) {
+                    return account == null ? "" : account.toString();
+                }
 
-        @Override
-        public void render(StudentInternshipRelation.Status account, Appendable appendable) throws IOException {
-            if (account != null)
-                appendable.append(account.toString());
-        }
-    });
-    
+                @Override
+                public void render(StudentInternshipRelation.Status account, Appendable appendable) throws IOException {
+                    if (account != null)
+                        appendable.append(account.toString());
+                }
+            });
     @UiField
     @Ignore
     Label statusView;
     @UiField
-    @Ignore
-    Label feedbackView;
-    @UiField
-    @Path("motivation")
-    Label motivationView;
-    @UiField
-    @Ignore
-    Label publishedAtLabel;
-    @UiField
-    Hyperlink internshipLink;
-    @UiField
     Button saveBtn;
 
-    public InternshipApplicationViewAndEditor() {
+    public InternshipProgressDetailsViewerAndEditor() {
         initWidget(ourUiBinder.createAndBindUi(this));
         driver.initialize(this);
 
@@ -129,11 +143,13 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
     }
 
     private void wireUiElements() {
-        statusBox.setValue(StudentInternshipRelation.Status.pending);
-        statusBox.setAcceptableValues(InternshipApplication.POSSIBLE_STATUSES);
+        statusBox.setValue(StudentInternshipRelation.Status.inProgress);
+        statusBox.setAcceptableValues(InternshipProgressDetails.POSSIBLE_STATUSES);
 
 
-        if (UserAccountType.COMPANY_ACCOUNT.equals(Sesi.getCurrentUserType())) {
+        if (UserAccountType.COMPANY_ACCOUNT.equals(Sesi.getCurrentUserType()) ||
+            UserAccountType.TEACHER_ACCOUNT.equals(Sesi.getCurrentUserType())) {
+
             statusBox.setVisible(true);
             statusView.removeFromParent();
 
@@ -160,6 +176,4 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
 
         System.out.println(save());
     }
-
-    
 }

@@ -48,7 +48,7 @@
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi SigninService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.client.authentication.SigninServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.login.SigninServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi SchoolsService</servlet-name>

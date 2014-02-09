@@ -9,48 +9,74 @@
                  <b:Fieldset>
                      <b:Legend>Internship Application</b:Legend>
 
-                     <b:ControlGroup>
-                         <b:Label type="INFO">Published at</b:Label>
-                         <b:Controls >
-                             <g:Label ui:field="publishedAtLabel"/>
-                         </b:Controls>
-                     </b:ControlGroup>
-                     <b:ControlGroup>
-                         <b:Label type="INFO">Candidate</b:Label>
-                         <b:Controls >
-                             <g:Hyperlink ui:field="candidateLink" />
-                         </b:Controls>
-                     </b:ControlGroup>
-                     <b:ControlGroup>
-                         <b:Label type="INFO">Internship</b:Label>
-                         <b:Controls >
-                             <g:Hyperlink ui:field="internshipLink"/>
-                         </b:Controls>
-                     </b:ControlGroup>
-                     <b:ControlGroup>
-                         <b:Label type="INFO">Motivation</b:Label>
-                         <b:Controls >
-                             <g:Label ui:field="motivationView"/>
-                         </b:Controls>
-                     </b:ControlGroup>
-                     <b:ControlGroup>
-                         <b:Label type="INFO">Feedback</b:Label>
-                         <b:Controls >
-                             <g:Label ui:field="feedbackView"/>
-                             <b:TextBox ui:field="feedbackEdit" visible="false"/>
-                             <b:Button type="INFO" text="Edit feedback" block="true" ui:field="editFeedbackBtn"/>
-                             <b:Button type="INFO" text="Save feedback" block="true" visible="false" ui:field="saveFeedbackBtn"/>
-                         </b:Controls>
-                     </b:ControlGroup>
-                     <b:ControlGroup>
-                         <b:Label type="INFO">Status</b:Label>
-                         <b:Controls>
-                             <g:Label ui:field="statusView" />
-                             <b:ValueListBox ui:field="statusBox" visible="false"/>
-                             <b:Button type="INFO" text="Edit status" block="true" ui:field="editStatusBtn"/>
-                             <b:Button type="INFO" text="Save status" block="true" visible="false" ui:field="saveStatusBtn"/>
-                         </b:Controls>
-                     </b:ControlGroup>
+                          <b:Row>
+                              <b:Column size="2">
+                                  <b:Label type="INFO">Published at</b:Label>
+                              </b:Column>
+                          </b:Row>
+                          <b:Row>
+                              <b:Column size="5">
+                                  <g:Label ui:field="publishedAtLabel"/>
+                              </b:Column>
+                          </b:Row>
+                        <b:Row>
+                              <b:Column size="2">
+                                  <b:Label type="INFO">Candidate</b:Label>
+                              </b:Column>
+                         </b:Row>
+                          <b:Row>
+                              <b:Column size="5">
+                                  <g:Hyperlink ui:field="candidateLink" />
+                              </b:Column>
+                          </b:Row>
+                           <b:Row>
+                              <b:Column size="2">
+                                  <b:Label type="INFO">Internship</b:Label>
+                              </b:Column>
+                          </b:Row>
+                          <b:Row>
+                              <b:Column size="5">
+                                  <g:Hyperlink ui:field="internshipLink"/>
+                              </b:Column>
+                          </b:Row>
+                         <b:Row>
+                              <b:Column size="2">
+                                  <b:Label type="INFO">Motivation</b:Label>
+                              </b:Column>
+                          </b:Row>
+                          <b:Row>
+                              <b:Column size="5">
+                                  <g:Label ui:field="motivationView"/>
+                              </b:Column>
+                          </b:Row>
+                        <b:Row>
+                              <b:Column size="2">
+                                  <b:Label type="INFO">Feedback</b:Label>
+                              </b:Column>
+                          </b:Row>
+                          <b:Row>
+                              <b:Column size="5">
+                                  <g:Label ui:field="feedbackView"/>
+                                  <b:TextArea ui:field="feedbackEdit" size="5" />
+                              </b:Column>
+                          </b:Row>
+                        <b:Row>
+                              <b:Column size="2">
+                                  <b:Label type="INFO">Status</b:Label>
+                              </b:Column>
+                          </b:Row>
+                          <b:Row>
+                              <b:Column size="5">
+                                  <g:Label ui:field="statusView" />
+                                  <b:ValueListBox ui:field="statusBox"/>
+                              </b:Column>
+                          </b:Row>
+                        <b:Row>
+                         <b:Column size="5">
+                             <b:Button type="INFO" block="true" ui:field="saveBtn">Save</b:Button>
+                         </b:Column>
+                     </b:Row>
+
                  </b:Fieldset>
              </b:WellForm>
           </b:Column>

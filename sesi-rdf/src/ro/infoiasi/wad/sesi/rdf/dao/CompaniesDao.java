@@ -1,26 +1,5 @@
 package ro.infoiasi.wad.sesi.rdf.dao;
 
-import static ro.infoiasi.wad.sesi.core.util.Constants.COMPANY_CLASS;
-import static ro.infoiasi.wad.sesi.core.util.Constants.DESCRIPTION_PROP;
-import static ro.infoiasi.wad.sesi.core.util.Constants.ID_PROP;
-import static ro.infoiasi.wad.sesi.core.util.Constants.IS_ACTIVE_PROP;
-import static ro.infoiasi.wad.sesi.core.util.Constants.NAME_PROP;
-import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_OBJECTS_NS;
-import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_SCHEMA_NS;
-import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_URL_PROP;
-import static ro.infoiasi.wad.sesi.core.util.Constants.SITE_URL_PROP;
-
-import org.apache.commons.lang.RandomStringUtils;
-import org.openrdf.model.Resource;
-import org.openrdf.model.URI;
-import org.openrdf.model.vocabulary.RDF;
-import org.openrdf.model.vocabulary.RDFS;
-import org.openrdf.rio.RDFFormat;
-
-import ro.infoiasi.wad.sesi.core.model.Company;
-import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
-import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
-
 import com.complexible.common.rdf.model.StardogValueFactory;
 import com.complexible.common.rdf.model.Values;
 import com.complexible.stardog.StardogException;
@@ -28,6 +7,17 @@ import com.complexible.stardog.api.Adder;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.Remover;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
+import org.apache.commons.lang.RandomStringUtils;
+import org.openrdf.model.Resource;
+import org.openrdf.model.URI;
+import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.model.vocabulary.RDFS;
+import org.openrdf.rio.RDFFormat;
+import ro.infoiasi.wad.sesi.core.model.Company;
+import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
+import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
+
+import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
 public class CompaniesDao implements Dao {
     private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
@@ -138,7 +128,7 @@ public class CompaniesDao implements Dao {
             adder.statement(newCompany, RDFS.LABEL, Values.literal(companyName));
             adder.statement(newCompany, name, Values.literal(companyName, StardogValueFactory.XSD.STRING));
             adder.statement(newCompany, id, Values.literal(companyId, StardogValueFactory.XSD.STRING));
-            adder.statement(newCompany, uri, Values.literal("/companies/" + companyId, StardogValueFactory.XSD.STRING));
+            adder.statement(newCompany, uri, Values.literal("/companies/" + companyId));
 
             con.commit();
             return "/companies/" + companyId;

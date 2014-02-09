@@ -149,4 +149,19 @@ public class StudentsResource {
         }
     }
 
+    @DELETE
+    @Path("/{username}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response deleteUser(@PathParam("username") String username) {
+        boolean removeUser = usersTable.removeUser(new DBUser(username, null, null));
+
+        if (removeUser) {
+            return Response.ok().build();
+        }
+
+        // TODO delete from rdf too - setting it to inactive
+        return Response.status(Response.Status.NOT_FOUND).build();
+
+    }
+
 }

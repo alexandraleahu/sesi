@@ -1,10 +1,12 @@
-package ro.infoiasi.wad.sesi.client.authentication;
+package ro.infoiasi.wad.sesi.server.login;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.LinkedInApi;
 import org.scribe.model.*;
 import org.scribe.oauth.OAuthService;
+import ro.infoiasi.wad.sesi.client.authentication.SigninRecord;
+import ro.infoiasi.wad.sesi.client.authentication.SigninService;
 import ro.infoiasi.wad.sesi.core.model.StudentLinkedinProfile;
 import ro.infoiasi.wad.sesi.core.util.XMLUtils;
 import ro.infoiasi.wad.sesi.core.model.User;
