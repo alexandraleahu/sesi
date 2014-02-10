@@ -8,25 +8,24 @@ import org.scribe.oauth.OAuthService;
 import ro.infoiasi.wad.sesi.client.authentication.SigninRecord;
 import ro.infoiasi.wad.sesi.client.authentication.SigninService;
 import ro.infoiasi.wad.sesi.core.model.StudentLinkedinProfile;
-import ro.infoiasi.wad.sesi.core.util.XMLUtils;
 import ro.infoiasi.wad.sesi.core.model.User;
+import ro.infoiasi.wad.sesi.core.util.XMLUtils;
 import ro.infoiasi.wad.sesi.server.util.APIKeys;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 
 public class SigninServiceImpl extends RemoteServiceServlet implements SigninService {
     static private String LinkedinAuthenticateUrl = "https://www.linkedin.com/uas/oauth/authenticate?oauth_token=";
 
-    private HashMap<String, OAuthService> services = new HashMap<String, OAuthService>();
+    private OAuthService oAuthService;
     //private Scribe linkedinService;
 
     @Override
     public String getAuthenticateUrl(String provider, String callbackUrl)
             throws Exception {
-        String url = this.getAuthUrl(provider);
+        String url = LinkedinAuthenticateUrl;
 
-        OAuthService service = this.getService(provider, callbackUrl);
+        OAuthService service = this.getService(callbackUrl);
 
         Token requestToken = service.getRequestToken();
         SigninRecord sr = new SigninRecord();
@@ -53,7 +52,7 @@ public class SigninServiceImpl extends RemoteServiceServlet implements SigninSer
 
         Token token = sr.token; //new Token(sr.requestToken, sr.requestSecret);
         Verifier verifier = new Verifier(verifierToken);
-        OAuthService service = services.get(sr.provider);
+        OAuthService service = oAuthService;
         Token aToken = service.getAccessToken(token, verifier);
         OAuthRequest request = new OAuthRequest(Verb.GET, this.getProfileRequestString(sr.provider));
 
@@ -83,7 +82,7 @@ public class SigninServiceImpl extends RemoteServiceServlet implements SigninSer
 
         Token token = sr.token; //new Token(sr.requestToken, sr.requestSecret);
         Verifier verifier = new Verifier(verifierToken);
-        OAuthService service = services.get(sr.provider);
+        OAuthService service = oAuthService;
         Token aToken = service.getAccessToken(token, verifier);
         OAuthRequest request = new OAuthRequest(Verb.GET, this.getProfileDetailsRequestString(sr.provider));
 
@@ -101,38 +100,27 @@ public class SigninServiceImpl extends RemoteServiceServlet implements SigninSer
 
     }
 
-    private OAuthService getService(String provider, String callback) {
-        OAuthService s = services.get(provider);
-        if (s != null) return s;
+    private OAuthService getService(String callback) {
+        if (oAuthService != null) return oAuthService;
 
         String key = null;
         String secret = null;
         String url = null;
-        if ("Linkedin".equals(provider)) {
-            key = APIKeys.LINKEDIN_API;
-            secret = APIKeys.LINKEDIN_SECRET;
-            url = LinkedinAuthenticateUrl;
-        }
+
+        key = APIKeys.LINKEDIN_API;
+        secret = APIKeys.LINKEDIN_SECRET;
+        url = LinkedinAuthenticateUrl;
 
         OAuthService service = new ServiceBuilder().provider(LinkedInApi.class)
                 .apiKey(key).apiSecret(secret).callback(callback).build();
-        services.put(provider, service);
-
+        oAuthService = service;
         return service;
-    }
-
-    private String getAuthUrl(String provider) {
-        String url = null;
-        if ("Linkedin".equals(provider)) {
-            url = LinkedinAuthenticateUrl;
-        }
-        return url;
     }
 
     private String getProfileDetailsRequestString(String provider) {
         //add your code to format the string per provider
         //done only for linked for now
-        return "http://api.linkedin.com/v1/people/~:(id,first-name,last-name,location,educations,skills)";
+        return "http://api.linkedin.com/v1/people/~:(id,first-name,last-name,location,projects,educations,skills)";
     }
 
     private String getProfileRequestString(String provider) {

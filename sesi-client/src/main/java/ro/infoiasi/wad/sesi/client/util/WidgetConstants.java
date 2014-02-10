@@ -22,7 +22,7 @@ public class WidgetConstants implements Serializable {
     public static final String CURRENT_ROLE_COOKIE = "currentUserRole";
     public static final String CURRENT_USER_NAME_COOKIE = "currentUsername";
     public static final String CURRENT_USER_ID_COOKIE = "currentUserId";
-
+    public static final String STUDENT_IMPORT_PROFILE_COOKIE = "studentImportLinkedInProfile";
 
     public static class TechnicalSkillFunction implements Function<String, TechnicalSkill> {
 

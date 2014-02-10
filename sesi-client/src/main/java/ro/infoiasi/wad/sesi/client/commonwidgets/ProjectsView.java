@@ -72,7 +72,7 @@ public class ProjectsView extends Composite implements LeafValueEditor<List<Stud
         description.setText(project.getDescription());
         group.add(description);
         Paragraph infourl = new Paragraph();
-        description.setText(project.getInfoUrl());
+        infourl.setText(project.getInfoUrl());
         group.add(infourl);
         if (project.getProgrammingLanguages() != null) {
             for (ProgrammingLanguage programmingLanguage : project.getProgrammingLanguages()) {

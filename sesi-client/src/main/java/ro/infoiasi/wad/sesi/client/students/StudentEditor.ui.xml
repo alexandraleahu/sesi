@@ -6,6 +6,12 @@
     <g:HTMLPanel styleName="{resource.style.withScroll}">
         <b:WellForm>
             <b:Row>
+                <b:Column size="3">
+                    <b:Button type="INFO" text="Import LinkedIn Profile" ui:field="importProfile"
+                              addStyleNames="{resource.style.standardMarginBottom}"/>
+                </b:Column>
+            </b:Row>
+            <b:Row>
                 <b:Column size="1">
                     <b:Label type="INFO" text="Name"/>
                 </b:Column>
@@ -54,75 +60,75 @@
             </b:Row>
             <b:WellForm>
                 <b:Row>
-                    <b:Column size="4">
+                    <b:Column size="2">
                         <b:Label type="INFO" text="Faculty"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="4">
+                    <b:Column size="2">
                         <b:TextBox ui:field="faculty" b:id="freebaseFaculty" size="3"
                                    placeholder="Freebase search faculty"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="3">
+                    <b:Column size="2">
                         <b:TextArea ui:field="facultyId" b:id="facultyId" size="3"
                                     placeholder="Selected faculty will go here"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="4">
+                    <b:Column size="2">
                         <b:Label type="INFO" text="University"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="3">
+                    <b:Column size="2">
                         <b:TextBox ui:field="university" b:id="freebaseUniversity" size="3"
                                    placeholder="Freebase search university"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="3">
+                    <b:Column size="2">
                         <b:TextArea ui:field="universityId" b:id="universityId" size="3"
                                     placeholder="Selected university will go here"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="4">
+                    <b:Column size="2">
                         <b:Label type="INFO" text="Degree"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="3">
+                    <b:Column size="2">
                         <b:TextBox ui:field="degree" b:id="freebaseDegree" size="3"
                                    placeholder="Freebase search degree"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="3">
+                    <b:Column size="2">
                         <b:TextArea ui:field="degreeId" b:id="degreeId" size="3"
                                     placeholder="Selected degree will go here"/>
                     </b:Column>
                 </b:Row>
                 <b:Row>
-                    <b:Column size="4">
+                    <b:Column size="2">
                         <c:DoubleEditor ui:field="yearOfStudy" size="3" placeholder="Year of study"/>
                     </b:Column>
                 </b:Row>
             </b:WellForm>
             <b:Row>
-                <b:Column size="4">
+                <b:Column size="2">
                     <b:Label type="INFO" text="Projects"/>
                 </b:Column>
             </b:Row>
 
             <b:Row>
-                <b:Column size="3">
+                <b:Column size="2">
                     <g:HTMLPanel ui:field="projectsPanel"/>
                 </b:Column>
             </b:Row>
             <b:Row>
-                <b:Column size="3">
+                <b:Column size="2">
                     <b:Button type="DEFAULT" text="Add project" ui:field="addProjectButton"
                               addStyleNames="{resource.style.standardMarginBottom}"/>
                 </b:Column>

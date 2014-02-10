@@ -19,11 +19,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
 import ro.infoiasi.wad.sesi.client.Sesi;
-import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationsService;
 import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationViewAndEditor;
+import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationsService;
 import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
 import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
+import ro.infoiasi.wad.sesi.client.companies.CompanyMainView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
@@ -245,9 +246,10 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
 
             switch (currentUserType) {
                 case COMPANY_ACCOUNT:
+                    mainPanel.setWidget(new CompanyMainView());
                     break;
                 case TEACHER_ACCOUNT:
-                     mainPanel.setWidget(new TeacherMainView());
+                    mainPanel.setWidget(new TeacherMainView());
                     break;
                 case STUDENT_ACCOUNT:
                     mainPanel.setWidget(new StudentMainView());
@@ -309,7 +311,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 }
             });
 
-        } else if (resourceType.equals(TeachersService.RESOURCE_PATH))  {
+        } else if (resourceType.equals(TeachersService.RESOURCE_PATH)) {
 
             TeachersService.App.getInstance().getTeacherById(id, new AsyncCallback<Teacher>() {
                 @Override
@@ -330,7 +332,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 }
             });
 
-        } else if (resourceType.equals(StudentsService.RESOURCE_PATH))  {
+        } else if (resourceType.equals(StudentsService.RESOURCE_PATH)) {
 
             StudentsService.App.getInstance().getStudentById(id, new AsyncCallback<Student>() {
                 @Override
@@ -351,7 +353,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 }
             });
 
-        }  else if (resourceType.equals(CompaniesService.RESOURCE_PATH))  {
+        } else if (resourceType.equals(CompaniesService.RESOURCE_PATH)) {
 
             CompaniesService.App.getInstance().getCompanyById(id, new AsyncCallback<Company>() {
                 @Override
@@ -370,7 +372,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 }
             });
 
-        } else if (resourceType.equals(InternshipApplicationsService.RESOURCE_PATH))  {
+        } else if (resourceType.equals(InternshipApplicationsService.RESOURCE_PATH)) {
 
             InternshipApplicationsService.App.getInstance().getApplicationById(id, new AsyncCallback<InternshipApplication>() {
                 @Override
@@ -392,8 +394,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
             });
 
 
-        } else if (resourceType.equals(InternshipsProgressDetailsService.RESOURCE_PATH))  {
-
+        } else if (resourceType.equals(InternshipsProgressDetailsService.RESOURCE_PATH)) {
 
 
             InternshipsProgressDetailsService.App.getInstance().getProgressDetailsById(id, new AsyncCallback<InternshipProgressDetails>() {
@@ -437,7 +438,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
     }
 
     private void showLoadingIcon() {
-         mainPanel.setWidget(loadingIcon);
+        mainPanel.setWidget(loadingIcon);
     }
 
 }

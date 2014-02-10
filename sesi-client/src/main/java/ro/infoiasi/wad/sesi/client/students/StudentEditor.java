@@ -1,7 +1,9 @@
 package ro.infoiasi.wad.sesi.client.students;
 
+import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.TextArea;
 import com.github.gwtbootstrap.client.ui.TextBox;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
@@ -14,8 +16,11 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import ro.infoiasi.wad.sesi.client.authentication.SigninService;
 import ro.infoiasi.wad.sesi.client.commonwidgets.DoubleEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ProjectEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetEditor;
@@ -140,10 +145,17 @@ public class StudentEditor extends Composite implements ResourceWidgetEditor<Stu
     @UiField
     @Ignore
     TextArea facultyId;
+    @UiField
+    @Ignore
+    Button importProfile;
 
     public StudentEditor() {
         initWidget(ourUiBinder.createAndBindUi(this));
         driver.initialize(this);
+        if(Cookies.getCookie(WidgetConstants.STUDENT_IMPORT_PROFILE_COOKIE) != null) {
+            importProfile(null);
+            Cookies.setCookie(WidgetConstants.STUDENT_IMPORT_PROFILE_COOKIE, null);
+        }
     }
 
     @UiHandler("addProjectButton")
@@ -153,5 +165,51 @@ public class StudentEditor extends Composite implements ResourceWidgetEditor<Stu
         projectsPanel.add(projectEditor);
 
         return projectEditor;
+    }
+
+    @UiHandler("importProfile")
+    public void importProfile(ClickEvent e) {
+        String v = Window.Location.getParameter("oauth_verifier");
+        if (v != null) {
+            SigninService.App.getInstance().getProfile(v, new AsyncCallback<StudentLinkedinProfile>() {
+
+                @Override
+                public void onFailure(Throwable caught) {
+                    //to be decided what to do
+                }
+
+                @Override
+                public void onSuccess(final StudentLinkedinProfile profile) {
+                    wireUiElements(profile);
+                }
+            });
+        } else {
+            SigninService.App.getInstance().getAuthenticateUrl("Linkedin", Window.Location.getHref(), new AsyncCallback<String>() {
+
+                @Override
+                public void onFailure(Throwable caught) {
+                    Window.alert(caught.getMessage());
+                }
+
+                @Override
+                public void onSuccess(String result) {
+                    Cookies.setCookie(WidgetConstants.STUDENT_IMPORT_PROFILE_COOKIE, "1");
+                    Window.Location.replace(result);
+                }
+            });
+        }
+    }
+
+
+    private void wireUiElements(StudentLinkedinProfile profile) {
+        name.setText(profile.firstName + " " + profile.lastName);
+        generalSkillsArea.setText(Joiner.on(", ").join(profile.skills));
+        for (String project : profile.projects) {
+            ProjectEditor editor = addProject(null);
+            StudentProject sp = new StudentProject();
+            sp.setName(project);
+            editor.setValue(sp);
+        }
+        facultyId.setText(Joiner.on(",").join(profile.schools));
     }
 }

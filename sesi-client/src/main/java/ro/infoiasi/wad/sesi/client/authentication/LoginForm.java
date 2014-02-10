@@ -8,11 +8,13 @@ import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
+import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 import java.io.IOException;
@@ -119,7 +121,7 @@ public class LoginForm extends Composite implements HasEventBus {
 
 
     private void loginWithLinkedin() {
-        //set cookie user type
+        Cookies.setCookie(WidgetConstants.CURRENT_ROLE_COOKIE, accountList.getValue().getDescription());
         SigninService.App.getInstance().getAuthenticateUrl("Linkedin", Window.Location.getHref(), new AsyncCallback<String>() {
 
             @Override
