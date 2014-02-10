@@ -14,15 +14,14 @@ import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Company;
-import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class CompaniesDao implements Dao {
-    private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
+public class CompaniesDao extends BasicDao {
 
     public String getAllCompanies(RDFFormat format) throws Exception {
+
         ReasoningConnection con = connectionPool.getConnection();
         try {
             GraphQuery graphQuery = con.graph("describe ?c where {?c rdf:type sesiSchema:SoftwareCompany .}");
@@ -35,7 +34,9 @@ public class CompaniesDao implements Dao {
     }
 
     public String getCompany(String id, RDFFormat format) throws Exception {
-
+        if (!resourceExists(id)) {
+            return null;
+        }
         ReasoningConnection con = connectionPool.getConnection();
         try {
             GraphQuery graphQuery = con.graph("describe ?c where {?c rdf:type sesiSchema:SoftwareCompany ; sesiSchema:id ?id .}");

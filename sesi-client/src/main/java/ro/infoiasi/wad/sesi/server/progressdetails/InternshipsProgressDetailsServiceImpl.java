@@ -10,6 +10,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 import java.io.StringReader;
 import java.util.List;
 
@@ -28,7 +29,11 @@ public class InternshipsProgressDetailsServiceImpl extends RemoteServiceServlet 
                 .accept(DEFAULT_ACCEPT_RDF_TYPE)
                 .buildGet();
 
-        String rdfAnswer = invocation.invoke()
+        Response response = invocation.invoke();
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())  {
+            return null;
+        }
+        String rdfAnswer = response
                 .readEntity(String.class);
 
         OntModel m = ModelFactory.createOntologyModel();

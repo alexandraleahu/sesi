@@ -1,7 +1,5 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
-import com.complexible.stardog.StardogException;
-import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Internship;
@@ -79,7 +77,12 @@ public class InternshipsResource {
             MediaTypeConstants.MediaTypeAndRdfFormat<TupleQueryResultFormat> returnTypes = MediaTypeConstants.getBestSparqlReturnTypes(acceptableMediaTypes);
 
             String internship = dao.getInternshipFieldsById(internshipId, fields, returnTypes.getRdfFormat());
-            return Response.ok(internship, returnTypes.getMediaType()).build();
+            if (internship == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+
+                return Response.ok(internship, returnTypes.getMediaType()).build();
+            }
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve internship fields with id" + internshipId, e);
         }

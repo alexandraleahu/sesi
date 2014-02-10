@@ -39,7 +39,12 @@ public class CompaniesResource {
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
             String company = dao.getCompany(companyId, returnTypes.getRdfFormat());
-            return Response.ok(company, returnTypes.getMediaType()).build();
+            if (company == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+
+                return Response.ok(company, returnTypes.getMediaType()).build();
+            }
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve company with id " + companyId, e);
         }

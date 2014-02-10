@@ -4,6 +4,7 @@ import com.complexible.common.rdf.model.StardogValueFactory;
 import com.complexible.common.rdf.model.Values;
 import com.complexible.stardog.StardogException;
 import com.complexible.stardog.api.Adder;
+import com.complexible.stardog.api.BooleanQuery;
 import com.complexible.stardog.api.GraphQuery;
 import com.complexible.stardog.api.reasoning.ReasoningConnection;
 import org.openrdf.model.Resource;
@@ -12,16 +13,16 @@ import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
-import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class InternshipApplicationsDao implements Dao {
-    private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
+public class InternshipApplicationsDao extends BasicDao {
 
     public String getApplicationById(String id, RDFFormat format) throws Exception {
-
+        if (!resourceExists(id)) {
+            return null;
+        }
         ReasoningConnection con = connectionPool.getConnection();
         try {
             GraphQuery graphQuery = con.graph("describe ?a where {?a rdf:type sesiSchema:InternshipApplication ; sesiSchema:id ?id .}");
@@ -40,6 +41,19 @@ public class InternshipApplicationsDao implements Dao {
             GraphQuery graphQuery = con.graph("describe ?a where {?a rdf:type sesiSchema:InternshipApplication .}");
 
             return ResultIOUtils.writeGraphResultsToString(graphQuery, format);
+
+        } finally {
+            connectionPool.releaseConnection(con);
+        }
+    }
+
+    public boolean applicationExists(String studentId, String internshipId) throws StardogException {
+        ReasoningConnection con = connectionPool.getConnection();
+        try {
+            BooleanQuery boolQuery = con.ask("ask {?a sesiSchema:candidate ?s ; sesiSchema:applicationInternship ?i.}");
+            boolQuery.parameter("s", Values.uri(SESI_OBJECTS_NS, studentId));
+            boolQuery.parameter("i", Values.uri(SESI_OBJECTS_NS, internshipId));
+            return boolQuery.execute();
 
         } finally {
             connectionPool.releaseConnection(con);

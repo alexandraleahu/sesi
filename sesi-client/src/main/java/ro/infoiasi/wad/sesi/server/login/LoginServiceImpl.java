@@ -30,7 +30,9 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
                 .buildPost(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
         Response response = invocation.invoke();
-        if (response.getStatus() == Status.FORBIDDEN.getStatusCode()) {
+        int status = response.getStatus();
+        client.close();
+        if (status == Status.FORBIDDEN.getStatusCode()) {
             throw new UnsuccessfulLoginException("Wrong username or password");
         }
 

@@ -8,11 +8,12 @@
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
     <g:HTMLPanel>
 
-        <b:Hero>
-            <g:Label ui:field="internshipTitleHeader" styleName="{resource.style.bigLabel}"/>
-        </b:Hero>
+        <b:Legend>
+            <g:Label ui:field="internshipTitleHeader"/>
+        </b:Legend>
 
         <b:WellForm>
+            <b:Fieldset>
             <b:Row>
                 <b:Column size="2">
                     <b:Label type="INFO" text="Published by"/>
@@ -165,18 +166,28 @@
                     <b:Button type="INFO" size="LARGE" block="true" ui:field="applyBtn">Apply to internship</b:Button>
                 </b:Column>
             </b:Row>
+            <b:Row>
+                <b:Column size="7">
+                    <b:Modal ui:field="motivationModal" title="Please write your motivation for this application" closeVisible="true" keyboard="true" animation="true">
+                        <b:TextArea ui:field="motivationArea"/>
 
-        </b:WellForm>
+                        <b:ModalFooter>
+                            <b:Button icon="FORWARD" type="INFO" ui:field="submitButton">Submit application</b:Button>
+                        </b:ModalFooter>
+                    </b:Modal>
+                </b:Column>
+            </b:Row>
            <b:Row>
-               <b:Column size="7">
-                   <b:Modal ui:field="motivationModal" title="Please write your motivation for this application" closeVisible="true" keyboard="true" animation="true">
-                       <b:TextArea ui:field="motivationArea"/>
-
-                       <b:ModalFooter>
-                           <b:Button icon="FORWARD" type="INFO" ui:field="submitButton">Submit application</b:Button>
-                       </b:ModalFooter>
-                   </b:Modal>
+               <b:Column size="5">
+                   <b:Controls>
+                       <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
+                               addStyleNames="{resource.style.noFlickering}"  />
+                       <b:Label type="IMPORTANT" visible="false" text="Error applying" ui:field="errorLabel"/>
+                   </b:Controls>
                </b:Column>
            </b:Row>
-    </g:HTMLPanel>
+        </b:Fieldset>
+    </b:WellForm>
+
+</g:HTMLPanel>
 </ui:UiBinder>

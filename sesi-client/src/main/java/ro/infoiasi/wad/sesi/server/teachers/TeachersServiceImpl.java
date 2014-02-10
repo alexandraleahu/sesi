@@ -88,7 +88,11 @@ public class TeachersServiceImpl extends RemoteServiceServlet implements Teacher
 
         Invocation invocation = target.request().accept(DEFAULT_ACCEPT_RDF_TYPE).buildGet();
 
-        String rdfAnswer = invocation.invoke().readEntity(String.class);
+        Response response = invocation.invoke();
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())  {
+            return null;
+        }
+        String rdfAnswer = response.readEntity(String.class);
 
         OntModel m = ModelFactory.createOntologyModel();
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);

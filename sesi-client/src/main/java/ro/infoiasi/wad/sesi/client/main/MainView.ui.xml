@@ -3,7 +3,7 @@
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
 
-    <g:HTMLPanel addStyleNames="{resource.style.withScroll}">
+    <g:HTMLPanel addStyleNames="{resource.style.withScroll} {resource.style.mainPadding}">
          <!--<b:Heading size="3" addStyleNames="{resource.style.bigLabel}">-->
              <!--Semantic Student Internships-->
          <!--</b:Heading>-->

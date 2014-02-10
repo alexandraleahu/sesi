@@ -12,6 +12,7 @@ import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDese
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.StringReader;
 import java.util.List;
 
@@ -31,7 +32,11 @@ public class InternshipsServiceImpl extends RemoteServiceServlet implements Inte
                 .accept(DEFAULT_ACCEPT_RDF_TYPE)
                 .buildGet();
 
-        String rdfAnswer = invocation.invoke()
+        Response response = invocation.invoke();
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())  {
+            return null;
+        }
+        String rdfAnswer = response
                 .readEntity(String.class);
 
         OntModel m = ModelFactory.createOntologyModel();

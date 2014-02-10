@@ -37,7 +37,11 @@ public class CompaniesServiceImpl extends RemoteServiceServlet implements Compan
                 .accept(DEFAULT_ACCEPT_RDF_TYPE)
                 .buildGet();
 
-        String rdfAnswer = invocation.invoke()
+        Response response = invocation.invoke();
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())  {
+            return null;
+        }
+        String rdfAnswer = response
                 .readEntity(String.class);
 
         OntModel m = ModelFactory.createOntologyModel();

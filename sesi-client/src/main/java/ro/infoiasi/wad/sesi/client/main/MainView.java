@@ -291,6 +291,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
             InternshipsService.App.getInstance().getInternshipById(id, new AsyncCallback<Internship>() {
                 @Override
                 public void onFailure(Throwable caught) {
+                    System.out.println(caught);
                     showGeneralError();
                 }
 

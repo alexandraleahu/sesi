@@ -83,6 +83,8 @@ public interface SesiResources extends ClientBundle {
 
         String smallMarginTop();
 
+        String mainPadding();
+
 //
 
     }

@@ -50,7 +50,12 @@ public class InternshipApplicationsResource {
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
             String application = dao.getApplicationById(applicationId, returnTypes.getRdfFormat());
-            return Response.ok(application, returnTypes.getMediaType()).build();
+            if (application == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+
+                return Response.ok(application, returnTypes.getMediaType()).build();
+            }
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve application with id:" + applicationId, e);
         }
@@ -85,9 +90,13 @@ public class InternshipApplicationsResource {
         InternshipApplicationsDao dao = new InternshipApplicationsDao();
 
         try {
+            if (dao.applicationExists(studentId, internshipId)) {
+                return Response.status(Response.Status.CONFLICT).build();
+            }
             dao.createApplication(application);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(id)).build();
             return Response.created(uri)
+                    .entity(application)
                     .build();
 
         } catch (StardogException e) {

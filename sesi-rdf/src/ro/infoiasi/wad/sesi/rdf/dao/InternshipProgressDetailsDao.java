@@ -11,18 +11,18 @@ import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
-import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class InternshipProgressDetailsDao implements Dao {
+public class InternshipProgressDetailsDao extends BasicDao {
 
 
-    private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
 
     public String getProgressDetailsById(String id, RDFFormat format) throws Exception {
-
+        if (!resourceExists(id)) {
+            return null;
+        }
         ReasoningConnection con = connectionPool.getConnection();
         try {
             GraphQuery graphQuery = con.graph("describe ?p where {?p rdf:type sesiSchema:InternshipProgressDetails ; sesiSchema:id ?id .}");

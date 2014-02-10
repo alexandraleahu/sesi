@@ -55,7 +55,12 @@ public class StudentsResource {
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
             String student = dao.getStudent(studentId, returnTypes.getRdfFormat());
-            return Response.ok(student, returnTypes.getMediaType()).build();
+            if (student == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+
+                return Response.ok(student, returnTypes.getMediaType()).build();
+            }
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve student with id " + studentId, e);
         }

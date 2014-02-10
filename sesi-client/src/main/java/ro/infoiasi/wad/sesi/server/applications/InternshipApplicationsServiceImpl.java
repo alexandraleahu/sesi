@@ -5,11 +5,12 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationsService;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.shared.ResourceAlreadyExistsException;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.StringReader;
 import java.util.List;
 
@@ -24,7 +25,11 @@ public class InternshipApplicationsServiceImpl extends RemoteServiceServlet impl
 
         Invocation invocation = target.request().accept(DEFAULT_ACCEPT_RDF_TYPE).buildGet();
 
-        String rdfAnswer = invocation.invoke().readEntity(String.class);
+        Response response = invocation.invoke();
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())  {
+            return null;
+        }
+        String rdfAnswer = response.readEntity(String.class);
 
         OntModel m = ModelFactory.createOntologyModel();
         m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
@@ -38,4 +43,35 @@ public class InternshipApplicationsServiceImpl extends RemoteServiceServlet impl
     public List<InternshipApplication> getAllApplications() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public InternshipApplication createApplication(String studentId, String internshipId, String motivation) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL)
+                .path(RESOURCE_PATH);
+        Form form = new Form();
+        form.param("studentId", studentId);
+        form.param("internshipId", internshipId);
+        form.param("motivation", motivation);
+        Invocation invocation = target.request(MediaType.APPLICATION_XML)
+                .buildPost(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+
+        Response response = invocation.invoke();
+        int status = response.getStatus();
+        client.close();
+        if (status / 100 == 2) {
+
+            return response.readEntity(InternshipApplication.class);
+        }  else if
+                (status == Response.Status.CONFLICT.getStatusCode()) {
+
+            throw new ResourceAlreadyExistsException("You cannot apply more than once");
+        }
+
+        else {
+            return null;// there was an internal error
+        }
+    }
+
+
 }

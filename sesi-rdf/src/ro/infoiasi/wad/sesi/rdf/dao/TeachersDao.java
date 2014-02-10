@@ -16,17 +16,17 @@ import ro.infoiasi.wad.sesi.core.model.City;
 import ro.infoiasi.wad.sesi.core.model.Faculty;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
 import ro.infoiasi.wad.sesi.core.model.University;
-import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class TeachersDao implements Dao {
+public class TeachersDao extends BasicDao {
 
-    private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
 
     public String getTeacherById(String id, RDFFormat format) throws Exception {
-
+        if (!resourceExists(id)) {
+            return null;
+        }
         ReasoningConnection con = connectionPool.getConnection();
         try {
             GraphQuery graphQuery = con.graph("describe ?t where {?t rdf:type sesiSchema:Teacher ; sesiSchema:id ?id .}");

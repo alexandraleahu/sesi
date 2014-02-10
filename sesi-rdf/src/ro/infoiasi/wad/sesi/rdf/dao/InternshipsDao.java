@@ -29,12 +29,13 @@ import java.util.List;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
-public class InternshipsDao implements Dao {
+public class InternshipsDao extends BasicDao {
 
-    private final SesiConnectionPool connectionPool = SesiConnectionPool.INSTANCE;
 
     public String getInternshipById(String id, RDFFormat format) throws Exception {
-
+        if (!resourceExists(id)) {
+            return null;
+        }
         ReasoningConnection con = connectionPool.getConnection();
         try {
             GraphQuery graphQuery = con.graph("describe ?i where {?i rdf:type sesiSchema:Internship ; sesiSchema:id ?id .}");

@@ -49,7 +49,12 @@ public class InternshipProgressDetailsResource {
             MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
 
             String progressDetails = dao.getProgressDetailsById(id, returnTypes.getRdfFormat());
-            return Response.ok(progressDetails, returnTypes.getMediaType()).build();
+            if (progressDetails == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+
+                return Response.ok(progressDetails, returnTypes.getMediaType()).build();
+            }
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve progress details for id: " + id, e);
         }
@@ -60,7 +65,7 @@ public class InternshipProgressDetailsResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/")
-    public Response createApplication(@FormParam("internshipId") String internshipId,
+    public Response createProgressDetails(@FormParam("internshipId") String internshipId,
                                       @FormParam("studentId") String studentId,
                                       @FormParam("teacherId") String teacherId,
                                       @FormParam("motivation") String motivation,

@@ -29,11 +29,14 @@ public class StudentsServiceImpl extends RemoteServiceServlet implements Student
                 .path(RESOURCE_PATH)
                 .path(studentId);
 
-        Invocation invocation = target.request()
+        Response response = target.request()
                 .accept(DEFAULT_ACCEPT_RDF_TYPE)
-                .buildGet();
+                .get();
 
-        String rdfAnswer = invocation.invoke()
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())  {
+            return null;
+        }
+        String rdfAnswer = response
                 .readEntity(String.class);
 
         OntModel m = ModelFactory.createOntologyModel();

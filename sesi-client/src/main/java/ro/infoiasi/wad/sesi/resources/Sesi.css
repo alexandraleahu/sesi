@@ -70,6 +70,11 @@ h1 {
     overflow: auto;
 }
 
+.mainPadding {
+
+    padding: 20pt;
+}
+
 .displayInline {
     display: inline;
 }

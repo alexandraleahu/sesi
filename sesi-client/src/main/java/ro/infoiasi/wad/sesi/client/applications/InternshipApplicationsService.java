@@ -25,5 +25,7 @@ public interface InternshipApplicationsService extends RemoteService {
 
     List<InternshipApplication> getAllApplications();
 
+    InternshipApplication createApplication(String studentId, String internshipId, String motivation);
+
     public static final String RESOURCE_PATH = "applications";
 }

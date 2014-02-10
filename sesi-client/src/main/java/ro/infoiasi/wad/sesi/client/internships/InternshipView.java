@@ -1,6 +1,7 @@
 package ro.infoiasi.wad.sesi.client.internships;
 
 import com.github.gwtbootstrap.client.ui.Button;
+import com.github.gwtbootstrap.client.ui.Icon;
 import com.github.gwtbootstrap.client.ui.Modal;
 import com.github.gwtbootstrap.client.ui.TextArea;
 import com.google.common.base.Joiner;
@@ -10,20 +11,20 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import ro.infoiasi.wad.sesi.client.Sesi;
+import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationsService;
 import ro.infoiasi.wad.sesi.client.commonwidgets.DoubleView;
 import ro.infoiasi.wad.sesi.client.commonwidgets.IntegerView;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetViewer;
 import ro.infoiasi.wad.sesi.client.ontologyextrainfo.OntologyExtraInfoView;
 import ro.infoiasi.wad.sesi.client.technicalskills.TechnicalSkillView;
-import ro.infoiasi.wad.sesi.core.model.City;
-import ro.infoiasi.wad.sesi.core.model.Currency;
-import ro.infoiasi.wad.sesi.core.model.Internship;
-import ro.infoiasi.wad.sesi.core.model.UserAccountType;
+import ro.infoiasi.wad.sesi.core.model.*;
 
 
 public class InternshipView extends Composite implements ResourceWidgetViewer<Internship> {
@@ -111,9 +112,14 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     Button submitButton;
     @UiField
     Modal motivationModal;
+    @UiField
+    Icon loadingResultsIcon;
+    @UiField
+    @Ignore
+    com.github.gwtbootstrap.client.ui.Label errorLabel;
 
     // Create the Driver
-
+   private Internship internship;
     public InternshipView() {
         initWidget(ourUiBinder.createAndBindUi(this));
         driver.initialize(this);
@@ -121,6 +127,7 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
 
     @Override
     public void edit(Internship internship) {
+        this.internship = internship;
         driver.edit(internship);
 
         if (internship.getCompany() != null)
@@ -128,7 +135,7 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
 
         startDateLabel.setText(internship.getStartDate().toString());
         endDateLabel.setText(internship.getEndDate().toString());
-        relocationLabel.setText(Boolean.toString(internship.isOfferingRelocation()));
+        relocationLabel.setText(internship.isOfferingRelocation() ? "yes" : "no");
 
         preferredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getPreferredGeneralSkills()));
         acquiredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getAcquiredGeneralSkills()));
@@ -148,7 +155,25 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
 
     @UiHandler("submitButton")
     public void submitApplication(ClickEvent e) {
-        // TODO send application
+        String studentId = Sesi.getCurrentUserId();
+        String internshipId = internship.getId();
+        String motivation = motivationArea.getText();
+        motivationModal.hide();
+        loadingResultsIcon.setVisible(true);
+        InternshipApplicationsService.App.getInstance().createApplication(studentId, internshipId, motivation, new AsyncCallback<InternshipApplication>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                loadingResultsIcon.setVisible(true);
+                errorLabel.setVisible(true);
+            }
+
+            @Override
+            public void onSuccess(InternshipApplication result) {
+                loadingResultsIcon.setVisible(true);
+                errorLabel.setVisible(false);
+                History.newItem(result.getRelativeUri());
+            }
+        });
     }
 
 
