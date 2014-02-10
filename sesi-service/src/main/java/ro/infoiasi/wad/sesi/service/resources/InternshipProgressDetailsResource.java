@@ -29,7 +29,7 @@ public class InternshipProgressDetailsResource {
             String allProgressDetails = dao.getAllProgressDetails(returnTypes.getRdfFormat());
             return Response.ok(allProgressDetails, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve progress details ", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -53,7 +53,7 @@ public class InternshipProgressDetailsResource {
                 return Response.ok(progressDetails, returnTypes.getMediaType()).build();
             }
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve progress details for id: " + id, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -68,7 +68,7 @@ public class InternshipProgressDetailsResource {
             dao.updateStatus(appId, StudentInternshipRelation.Status.valueOf(newStatus));
             return Response.ok().build();
         } catch (StardogException e) {
-            throw new InternalServerErrorException("Could not update application status", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -83,7 +83,7 @@ public class InternshipProgressDetailsResource {
             dao.updateFeedback(appId, newFeedback);
             return Response.ok().build();
         } catch (StardogException e) {
-            throw new InternalServerErrorException("Could not update application feedback", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -124,7 +124,7 @@ public class InternshipProgressDetailsResource {
                     .build();
 
         } catch (StardogException e) {
-            throw new InternalServerErrorException("Could not create progress", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
 
     }

@@ -38,7 +38,7 @@ public class StudentsResource {
             String allInternships = dao.getAllStudents(returnTypes.getRdfFormat());
             return Response.ok(allInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve students", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -62,7 +62,7 @@ public class StudentsResource {
                 return Response.ok(student, returnTypes.getMediaType()).build();
             }
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve student with id " + studentId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -80,7 +80,7 @@ public class StudentsResource {
             String recommendedInternships = dao.getStudentRecommendedInternships(studentId, returnTypes.getRdfFormat());
             return Response.ok(recommendedInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve recommended internships student with id " + studentId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -100,7 +100,7 @@ public class StudentsResource {
             String applications = dao.getAllStudentApplications(studentId, returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internship applications for student with id" + studentId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -119,7 +119,7 @@ public class StudentsResource {
             String progressDetails = dao.getStudentInternshipsProgressDetails(studentId, returnTypes.getRdfFormat());
             return Response.ok(progressDetails, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internship progress details for student with id" + studentId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -148,7 +148,7 @@ public class StudentsResource {
                         .build();
 
             } catch (StardogException e) {
-                throw new InternalServerErrorException(e.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
             }
         } else {
 
@@ -167,7 +167,7 @@ public class StudentsResource {
             new StudentsDao().updateStudent(updatedStudent);
             return Response.ok().build();
         } catch (StardogException e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 

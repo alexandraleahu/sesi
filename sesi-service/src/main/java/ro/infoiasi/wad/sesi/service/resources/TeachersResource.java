@@ -36,7 +36,7 @@ public class TeachersResource {
             String allTeachers = dao.getAllTeachers(returnTypes.getRdfFormat());
             return Response.ok(allTeachers, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve teachers", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -55,7 +55,7 @@ public class TeachersResource {
             String teacher = dao.getTeacherById(teacherId, returnTypes.getRdfFormat());
             return Response.ok(teacher, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve teacher with id " + teacherId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -75,7 +75,7 @@ public class TeachersResource {
             String teacher = dao.getAllInternshipProgressDetails(teacherId, returnTypes.getRdfFormat());
             return Response.ok(teacher, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve teacher internship progress details with sid " + teacherId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -94,7 +94,7 @@ public class TeachersResource {
                         .build();
 
             } catch (StardogException e) {
-                throw new InternalServerErrorException(e.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
             }
         } else {
 
@@ -114,7 +114,7 @@ public class TeachersResource {
             new TeachersDao().updateTeacher(updatedTeacher);
             return Response.ok().build();
         } catch (StardogException e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 

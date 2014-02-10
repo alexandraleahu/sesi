@@ -34,7 +34,7 @@ public class InternshipApplicationsResource {
             String allApplications = dao.getAllApplications(returnTypes.getRdfFormat());
             return Response.ok(allApplications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve applications", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -58,7 +58,7 @@ public class InternshipApplicationsResource {
                 return Response.ok(application, returnTypes.getMediaType()).build();
             }
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve application with id:" + applicationId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -73,7 +73,7 @@ public class InternshipApplicationsResource {
             dao.updateStatus(appId, StudentInternshipRelation.Status.valueOf(newStatus));
             return Response.ok().build();
         } catch (StardogException e) {
-            throw new InternalServerErrorException("Could not update application status", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -88,7 +88,7 @@ public class InternshipApplicationsResource {
             dao.updateFeedback(appId, newFeedback);
             return Response.ok().build();
         } catch (StardogException e) {
-            throw new InternalServerErrorException("Could not update application feedback", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -131,7 +131,7 @@ public class InternshipApplicationsResource {
                     .build();
 
         } catch (StardogException e) {
-            throw new InternalServerErrorException("Could not create application", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
 
     }

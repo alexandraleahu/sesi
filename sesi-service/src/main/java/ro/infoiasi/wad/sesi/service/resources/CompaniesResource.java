@@ -46,7 +46,7 @@ public class CompaniesResource {
                 return Response.ok(company, returnTypes.getMediaType()).build();
             }
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve company with id " + companyId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -66,7 +66,7 @@ public class CompaniesResource {
             String allCompanies = dao.getAllCompanies(returnTypes.getRdfFormat());
             return Response.ok(allCompanies, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve companies", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -85,7 +85,7 @@ public class CompaniesResource {
             String companiesInternships = dao.getAllCompanyInternships(companyId, returnTypes.getRdfFormat());
             return Response.ok(companiesInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve companies internships", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -104,7 +104,7 @@ public class CompaniesResource {
             String companyApplications = dao.getAllCompanyApplications(companyId, returnTypes.getRdfFormat());
             return Response.ok(companyApplications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve company applications", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -123,7 +123,7 @@ public class CompaniesResource {
             String companyInternshipProgressDetails = dao.getAllCompanyInternshipProgressDetails(companyId, returnTypes.getRdfFormat());
             return Response.ok(companyInternshipProgressDetails, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve company internship progress details", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -141,7 +141,7 @@ public class CompaniesResource {
             dao.updateCompany(updatedCompany);
             return Response.ok().build();
         } catch (StardogException e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -160,7 +160,7 @@ public class CompaniesResource {
                         .build();
 
             } catch (StardogException e) {
-                throw new InternalServerErrorException(e.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
             }
         } else {
 

@@ -41,7 +41,7 @@ public class InternshipsResource {
             }
             return Response.ok(allInternships, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internships", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -61,7 +61,7 @@ public class InternshipsResource {
             String internship = dao.getInternshipById(internshipId, returnTypes.getRdfFormat());
             return Response.ok(internship, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internship with id" + internshipId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -84,7 +84,7 @@ public class InternshipsResource {
                 return Response.ok(internship, returnTypes.getMediaType()).build();
             }
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internship fields with id" + internshipId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -105,7 +105,7 @@ public class InternshipsResource {
             String applications = dao.getAllInternshipApplications(internshipId, (RDFFormat) returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internship applications for internship with id" + internshipId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -125,7 +125,7 @@ public class InternshipsResource {
             String applications = dao.getInternshipSalary(internshipId, returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internship applications for internship with id" + internshipId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -144,7 +144,7 @@ public class InternshipsResource {
             String applications = dao.getInternshipCurrency(internshipId, returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internship currency for internship with id" + internshipId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -164,7 +164,7 @@ public class InternshipsResource {
             return Response.created(uri)
                     .build();
         } catch (StardogException e) {
-            throw new InternalServerErrorException("Could not create internship ", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
