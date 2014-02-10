@@ -11,7 +11,7 @@ import java.util.List;
 public interface CompaniesServiceAsync {
     void getCompanyById(String companyId, AsyncCallback<Company> async);
 
-    void getCompanyApplications(String companyApplications, AsyncCallback<List<InternshipApplication>> async);
+    void getCompanyApplications(String companyId, AsyncCallback<List<InternshipApplication>> async);
 
     void getAllCompanies(AsyncCallback<List<Company>> async);
 

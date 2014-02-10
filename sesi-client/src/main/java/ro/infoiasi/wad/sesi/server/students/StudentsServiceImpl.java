@@ -4,10 +4,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import ro.infoiasi.wad.sesi.client.students.StudentsService;
+import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Student;
 import ro.infoiasi.wad.sesi.server.applications.InternshipApplicationDeserializer;
+import ro.infoiasi.wad.sesi.server.internships.InternshipDeserializer;
 import ro.infoiasi.wad.sesi.server.progressdetails.InternshipProgressDetailsDeserializer;
 
 import javax.ws.rs.client.*;
@@ -32,7 +34,7 @@ public class StudentsServiceImpl extends RemoteServiceServlet implements Student
         Response response = target.request(DEFAULT_ACCEPT_RDF_TYPE)
                 .get();
 
-        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())  {
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
             return null;
         }
         String rdfAnswer = response
@@ -106,6 +108,23 @@ public class StudentsServiceImpl extends RemoteServiceServlet implements Student
         int status = response.getStatus();
         client.close();
         return status == Response.Status.OK.getStatusCode();
+    }
+
+    @Override
+    public List<Internship> getRecommendedInternships(String studentId) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH).path(studentId).path("recommendedInternships");
+
+        Invocation invocation = target.request().accept(DEFAULT_ACCEPT_RDF_TYPE).buildGet();
+
+        String rdfAnswer = invocation.invoke().readEntity(String.class);
+
+        OntModel m = ModelFactory.createOntologyModel();
+        m.read(new StringReader(rdfAnswer), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
+
+        List<Internship> details = new InternshipDeserializer().deserialize(m);
+        client.close();
+        return details;
     }
 
     @Override

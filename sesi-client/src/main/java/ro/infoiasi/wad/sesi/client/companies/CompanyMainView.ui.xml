@@ -9,5 +9,20 @@
                 <b:Button type="INFO" text="Save profile" ui:field="saveProfileBtn"/>
             </g:HTMLPanel>
         </b:Tab>
+        <b:Tab heading="My Applications"  icon="LIST" active="true">
+            <g:HTMLPanel ui:field="applicationsPanel">
+
+            </g:HTMLPanel>
+        </b:Tab>
+        <b:Tab heading="My Progress Details"  icon="LIST" active="true">
+            <g:HTMLPanel ui:field="progressDetailsPanel">
+
+            </g:HTMLPanel>
+        </b:Tab>
+        <b:Tab heading="My Internships"  icon="LIST" active="true">
+            <g:HTMLPanel ui:field="internshipPanel">
+
+            </g:HTMLPanel>
+        </b:Tab>
     </b:TabPanel>
 </ui:UiBinder>

@@ -4,6 +4,7 @@ import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.Icon;
 import com.github.gwtbootstrap.client.ui.Label;
 import com.github.gwtbootstrap.client.ui.TabPanel;
+import com.github.gwtbootstrap.client.ui.constants.LabelType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,9 +15,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import ro.infoiasi.wad.sesi.client.Sesi;
+import ro.infoiasi.wad.sesi.client.commonwidgets.ResourceListVew;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceMainView;
 import ro.infoiasi.wad.sesi.client.reports.ReportEditor;
+import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Teacher;
+
+import java.util.List;
 
 
 public class TeacherMainView extends Composite implements ResourceMainView<Teacher> {
@@ -87,8 +92,10 @@ public class TeacherMainView extends Composite implements ResourceMainView<Teach
     @UiField
     Icon loadingResultsIcon;
     @UiField
-            @Editor.Ignore
+    @Editor.Ignore
     Label errorLabel;
+    @UiField
+    HTMLPanel internshipPanel;
 
     private TeacherProfileView profileView;
     private TeacherProfileEditor profileEditor;
@@ -162,7 +169,29 @@ public class TeacherMainView extends Composite implements ResourceMainView<Teach
 
             }
         });
+        initMonitoredInternships();
 
+    }
 
+    private void initMonitoredInternships() {
+        if(teacher == null) {
+            return;
+        }
+        TeachersService.App.getInstance().getProgressDetailsForTeacher(teacher.getId(), new AsyncCallback<List<InternshipProgressDetails>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+                internshipPanel.add(new Label(LabelType.IMPORTANT, "Could not load internship applications!"));
+            }
+
+            @Override
+            public void onSuccess(List<InternshipProgressDetails> result) {
+
+                ResourceListVew<InternshipProgressDetails> resourceListVew = new ResourceListVew<InternshipProgressDetails>();
+                internshipPanel.add(resourceListVew);
+
+                resourceListVew.setValue(result);
+            }
+        });
     }
 }

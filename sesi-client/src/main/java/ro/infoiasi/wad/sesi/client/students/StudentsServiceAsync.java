@@ -1,6 +1,7 @@
 package ro.infoiasi.wad.sesi.client.students;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Student;
@@ -19,4 +20,6 @@ public interface StudentsServiceAsync {
     void registerStudent(String username, String password, String name, AsyncCallback<Boolean> async);
 
     void updateStudent(Student student, AsyncCallback<Boolean> async);
+
+    void getRecommendedInternships(String studentId, AsyncCallback<List<Internship>> async);
 }

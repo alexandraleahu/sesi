@@ -23,6 +23,9 @@
             <c:ReportEditor ui:field="reportEditor"/>
          </b:Tab>
         <b:Tab heading="Monitored internships" icon="LIST">
+            <g:HTMLPanel ui:field="internshipPanel">
+
+            </g:HTMLPanel>
 
          </b:Tab>
     </b:TabPanel>

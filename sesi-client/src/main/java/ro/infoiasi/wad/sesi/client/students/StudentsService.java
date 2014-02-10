@@ -3,6 +3,7 @@ package ro.infoiasi.wad.sesi.client.students;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Student;
@@ -34,6 +35,8 @@ public interface StudentsService extends RemoteService {
     List<InternshipProgressDetails> getStudentInternshipProgressDetails(String studentId);
 
     boolean updateStudent(Student student);
+
+    List<Internship> getRecommendedInternships(String studentId);
 
     public static final String RESOURCE_PATH = "students";
 

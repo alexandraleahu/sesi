@@ -1,12 +1,11 @@
 package ro.infoiasi.wad.sesi.client.students;
 
-import com.github.gwtbootstrap.client.ui.Button;
-import com.github.gwtbootstrap.client.ui.Icon;
-import com.github.gwtbootstrap.client.ui.Label;
-import com.github.gwtbootstrap.client.ui.TabPanel;
+import com.github.gwtbootstrap.client.ui.*;
+import com.github.gwtbootstrap.client.ui.constants.LabelType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -14,8 +13,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import ro.infoiasi.wad.sesi.client.Sesi;
+import ro.infoiasi.wad.sesi.client.commonwidgets.ResourceListVew;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceMainView;
+import ro.infoiasi.wad.sesi.core.model.Internship;
+import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.Student;
+
+import java.util.List;
 
 public class StudentMainView extends Composite implements ResourceMainView<Student> {
 
@@ -71,8 +76,14 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
     @UiField
     Icon loadingResultsIcon;
     @UiField
-            @Editor.Ignore
+    @Editor.Ignore
     Label errorLabel;
+    @UiField
+    HTMLPanel recommendedPanel;
+    @UiField
+    HTMLPanel progressDetailsPanel;
+    @UiField
+    HTMLPanel applicationsPanel;
 
     private StudentView profileView;
     private StudentEditor profileEditor;
@@ -88,7 +99,6 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
         // TODO call the service
         switchViewMode();
     }
-
 
 
     public StudentMainView() {
@@ -121,5 +131,75 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
 
             }
         });
+        initApplicationsPanel();
+        initProgressDetailsTab();
+        initRecommendedInternships();
+    }
+
+    private void initRecommendedInternships() {
+        if(student == null) {
+            return;
+        }
+        StudentsService.App.getInstance().getRecommendedInternships(student.getId(), new AsyncCallback<List<Internship>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+                recommendedPanel.add(new Label(LabelType.IMPORTANT, "Could not load recommended internships!"));
+            }
+
+            @Override
+            public void onSuccess(List<Internship> result) {
+
+                ResourceListVew<Internship> resourceListVew = new ResourceListVew<Internship>();
+                recommendedPanel.add(resourceListVew);
+
+                resourceListVew.setValue(result);
+            }
+        });
+    }
+
+    private void initProgressDetailsTab() {
+        if(student == null) {
+            return;
+        }
+        StudentsService.App.getInstance().getStudentInternshipProgressDetails(student.getId(), new AsyncCallback<List<InternshipProgressDetails>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+                progressDetailsPanel.add(new Label(LabelType.IMPORTANT, "Could not load internship progress details!"));
+            }
+
+            @Override
+            public void onSuccess(List<InternshipProgressDetails> result) {
+
+                ResourceListVew<InternshipProgressDetails> resourceListVew = new ResourceListVew<InternshipProgressDetails>();
+                progressDetailsPanel.add(resourceListVew);
+
+                resourceListVew.setValue(result);
+            }
+        });
+    }
+
+    private void initApplicationsPanel() {
+        if(student == null) {
+            return;
+        }
+        StudentsService.App.getInstance().getStudentApplications(student.getId(), new AsyncCallback<List<InternshipApplication>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+                applicationsPanel.add(new Label(LabelType.IMPORTANT, "Could not load internship applications!"));
+            }
+
+            @Override
+            public void onSuccess(List<InternshipApplication> result) {
+
+                ResourceListVew<InternshipApplication> resourceListVew = new ResourceListVew<InternshipApplication>();
+                applicationsPanel.add(resourceListVew);
+
+                resourceListVew.setValue(result);
+            }
+        });
+
     }
 }
