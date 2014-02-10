@@ -3,10 +3,7 @@ package ro.infoiasi.wad.sesi.service.resources;
 import com.complexible.stardog.StardogException;
 import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.core.model.Internship;
-import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
-import ro.infoiasi.wad.sesi.core.model.Student;
-import ro.infoiasi.wad.sesi.core.model.Teacher;
+import ro.infoiasi.wad.sesi.core.model.*;
 import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.rdf.dao.InternshipProgressDetailsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
@@ -60,6 +57,35 @@ public class InternshipProgressDetailsResource {
         }
     }
 
+    @PUT
+    @Path("/{id}/status")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updateStatus(@PathParam("id") String appId, String newStatus) {
+
+        InternshipProgressDetailsDao dao = new InternshipProgressDetailsDao();
+        try {
+            dao.updateStatus(appId, StudentInternshipRelation.Status.valueOf(newStatus));
+            return Response.ok().build();
+        } catch (StardogException e) {
+            throw new InternalServerErrorException("Could not update application status", e);
+        }
+    }
+
+    @PUT
+    @Path("/{id}/feedback")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updateFeedback(@PathParam("id") String appId, String newFeedback) {
+
+        InternshipProgressDetailsDao dao = new InternshipProgressDetailsDao();
+        try {
+            dao.updateFeedback(appId, newFeedback);
+            return Response.ok().build();
+        } catch (StardogException e) {
+            throw new InternalServerErrorException("Could not update application feedback", e);
+        }
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

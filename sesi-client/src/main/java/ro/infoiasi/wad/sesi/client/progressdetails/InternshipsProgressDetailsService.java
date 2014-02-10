@@ -1,9 +1,10 @@
 package ro.infoiasi.wad.sesi.client.progressdetails;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.google.gwt.core.client.GWT;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
+import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ public interface InternshipsProgressDetailsService extends RemoteService {
     InternshipProgressDetails getProgressDetailsById(String id);
 
     List<InternshipProgressDetails> getAllProgressDetails();
+
+    boolean updateStatus(String appId, StudentInternshipRelation.Status newStatus);
+    boolean updateFeedback(String appId, String newFeedback);
+
 
     public static final String RESOURCE_PATH = "internshipProgressDetails";
 }

@@ -110,6 +110,8 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
                 if (result != null) {
                     errorLabel.setVisible(false);
                     student = result;
+                    editProfileBtn.setVisible(true);
+                    saveProfileBtn.setVisible(true);
                     switchViewMode();
                 } else {
                     errorLabel.setVisible(true);

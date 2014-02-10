@@ -5,6 +5,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationsService;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
 import ro.infoiasi.wad.sesi.shared.ResourceAlreadyExistsException;
 
 import javax.ws.rs.client.*;
@@ -71,6 +72,32 @@ public class InternshipApplicationsServiceImpl extends RemoteServiceServlet impl
         else {
             return null;// there was an internal error
         }
+    }
+
+    @Override
+    public boolean updateStatus(String appId, StudentInternshipRelation.Status newStatus) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL)
+                .path(RESOURCE_PATH).path("status");
+        Response response = target.request(MediaType.APPLICATION_XML)
+                .put(Entity.entity(newStatus.toString(), MediaType.APPLICATION_XML_TYPE));
+
+        int status = response.getStatus();
+        client.close();
+        return (status/100 == 2);
+    }
+
+    @Override
+    public boolean updateFeedback(String appId, String newFeedback) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(SESI_BASE_URL)
+                .path(RESOURCE_PATH).path("feedback");
+        Response response = target.request(MediaType.APPLICATION_XML)
+                .put(Entity.entity(newFeedback.toString(), MediaType.APPLICATION_XML_TYPE));
+
+        int status = response.getStatus();
+        client.close();
+        return (status/100 == 2);
     }
 
 

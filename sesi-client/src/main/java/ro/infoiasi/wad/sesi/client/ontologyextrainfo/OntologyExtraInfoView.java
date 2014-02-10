@@ -16,7 +16,17 @@ public class OntologyExtraInfoView<T extends OntologyExtraInfo> extends Composit
     public void setValue(T value) {
         if (value != null) {
             ontologyExtraInfoLink.setText(value.getName());
-            ontologyExtraInfoLink.setHref("http://" + value.getInfoUrl());
+            String infoUrl = value.getInfoUrl();
+            if (infoUrl != null) {
+
+                if (!infoUrl.startsWith("http://")) {
+
+                    ontologyExtraInfoLink.setHref("http://" + infoUrl);
+                }
+                else {
+                    ontologyExtraInfoLink.setHref(infoUrl);
+                }
+            }
         }
 
     }

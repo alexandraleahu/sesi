@@ -6,6 +6,7 @@ import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.Student;
+import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
 import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.rdf.dao.InternshipApplicationsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
@@ -58,6 +59,36 @@ public class InternshipApplicationsResource {
             }
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve application with id:" + applicationId, e);
+        }
+    }
+
+    @PUT
+    @Path("/{id}/status")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updateStatus(@PathParam("id") String appId, String newStatus) {
+
+        InternshipApplicationsDao dao = new InternshipApplicationsDao();
+        try {
+            dao.updateStatus(appId, StudentInternshipRelation.Status.valueOf(newStatus));
+            return Response.ok().build();
+        } catch (StardogException e) {
+            throw new InternalServerErrorException("Could not update application status", e);
+        }
+    }
+
+    @PUT
+    @Path("/{id}/feedback")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updateFeedback(@PathParam("id") String appId, String newFeedback) {
+
+        InternshipApplicationsDao dao = new InternshipApplicationsDao();
+        try {
+            dao.updateFeedback(appId, newFeedback);
+            return Response.ok().build();
+        } catch (StardogException e) {
+            throw new InternalServerErrorException("Could not update application feedback", e);
         }
     }
 
