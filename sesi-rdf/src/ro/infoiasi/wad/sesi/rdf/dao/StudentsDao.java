@@ -206,7 +206,7 @@ public class StudentsDao extends BasicDao {
             adder.statement(newStudent, RDFS.LABEL, Values.literal(studentName));
             adder.statement(newStudent, name, Values.literal(studentName, StardogValueFactory.XSD.STRING));
             adder.statement(newStudent, id, Values.literal(studentId, StardogValueFactory.XSD.STRING));
-            adder.statement(newStudent, uri, Values.literal("/students/" + studentId, StardogValueFactory.XSD.STRING));
+            adder.statement(newStudent, uri, Values.literal("/students/" + studentId));
 
             con.commit();
             return "/students/" + studentId;

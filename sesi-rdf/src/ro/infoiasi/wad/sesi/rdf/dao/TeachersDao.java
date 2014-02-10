@@ -90,7 +90,7 @@ public class TeachersDao extends BasicDao {
             adder.statement(newTeacher, RDFS.LABEL, Values.literal(teacherName));
             adder.statement(newTeacher, name, Values.literal(teacherName, StardogValueFactory.XSD.STRING));
             adder.statement(newTeacher, id, Values.literal(teacherId, StardogValueFactory.XSD.STRING));
-            adder.statement(newTeacher, uri, Values.literal("/teachers/" + teacherId, StardogValueFactory.XSD.STRING));
+            adder.statement(newTeacher, uri, Values.literal("/teachers/" + teacherId));
 
             con.commit();
             return "/teachers/" + teacherId;
