@@ -165,6 +165,8 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
         driver.initialize(this);
 
         wireUiElements();
+
+        edit(new ReportBean());
     }
     private void wireUiElements() {
         mainResourceBox.setAcceptableValues(Arrays.asList(ReportBean.MainResourceType.values()));
@@ -200,6 +202,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                 }
             }
         });
+
 
         submitBtn.addClickHandler(this);
 

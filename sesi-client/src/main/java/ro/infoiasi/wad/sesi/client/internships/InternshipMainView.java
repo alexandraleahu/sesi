@@ -54,6 +54,7 @@ public class InternshipMainView extends Composite implements ResourceMainView<In
         internshipPanel.add(saveProfileBtn);
 
         internshipEditor.edit(internship);
+        Sesi.freebase();
     }
 
 
@@ -122,13 +123,12 @@ public class InternshipMainView extends Composite implements ResourceMainView<In
         });
     }
 
-    public InternshipMainView() {
+    public InternshipMainView(String id) {
         initWidget(ourUiBinder.createAndBindUi(this));
 
-        String internshipId = Sesi.getCurrentUserId();
         loadingResultsIcon.setVisible(true);
         errorLabel.setVisible(false);
-        InternshipsService.App.getInstance().getInternshipById(internshipId, new AsyncCallback<Internship>() {
+        InternshipsService.App.getInstance().getInternshipById(id, new AsyncCallback<Internship>() {
             @Override
             public void onFailure(Throwable caught) {
                 loadingResultsIcon.setVisible(false);

@@ -8,11 +8,6 @@
     <g:HTMLPanel addStyleNames="{resource.style.withScroll}
                                 ">
 
-
-        <b:Hero>
-            <g:Label  text="Define new internship" styleName="{resource.style.bigLabel}"/>
-        </b:Hero>
-
         <b:WellForm>
             <b:Row>
                 <b:Column size="2">

@@ -1,24 +1,18 @@
 package ro.infoiasi.wad.sesi.client.companies;
 
-import com.github.gwtbootstrap.client.ui.Button;
-import com.github.gwtbootstrap.client.ui.Label;
-import com.github.gwtbootstrap.client.ui.Tab;
-import com.github.gwtbootstrap.client.ui.TabPanel;
+import com.github.gwtbootstrap.client.ui.*;
 import com.github.gwtbootstrap.client.ui.constants.LabelType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.commonwidgets.ResourceListVew;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceMainView;
-import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
-import ro.infoiasi.wad.sesi.client.students.StudentsService;
-import ro.infoiasi.wad.sesi.client.students.StudentsServiceAsync;
 import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
@@ -86,43 +80,122 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
     HTMLPanel progressDetailsPanel;
     @UiField
     HTMLPanel applicationsPanel;
+    @UiField
+    Icon loadingResultsIcon;
+    @UiField
+    Label errorLabel;
+    @UiField
+    Tab progressDetailsTab;
+    @UiField
+    Tab applicationsTab;
+    @UiField
+    Tab profileTab;
 
     private CompanyView profileView;
     private CompanyEditor profileEditor;
 
     @UiHandler("editProfileBtn")
     public void editProfile(ClickEvent event) {
-        // TODO call the service
+
         switchEditMode();
     }
 
     @UiHandler("saveProfileBtn")
     public void saveProfile(ClickEvent event) {
-        // TODO call the service
+
         switchViewMode();
+        loadingResultsIcon.setVisible(true);
+        errorLabel.setVisible(false);
+        company.setId(Sesi.getCurrentUserId());
+        CompaniesService.App.getInstance().updateCompany(company, new AsyncCallback<Boolean>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                loadingResultsIcon.setVisible(false);
+                errorLabel.setVisible(true);
+                errorLabel.setText("Could not update profile!");
+                System.out.println("Could not update company because: " + caught);
+
+            }
+
+            @Override
+            public void onSuccess(Boolean result) {
+                loadingResultsIcon.setVisible(false);
+                if (result) {
+                    errorLabel.setVisible(false);
+                    editProfileBtn.setVisible(true);
+                    saveProfileBtn.setVisible(true);
+                } else {
+                    errorLabel.setVisible(true);
+                    errorLabel.setText("Could not update profile!");
+                }
+            }
+        });
     }
 
     public CompanyMainView() {
         initWidget(ourUiBinder.createAndBindUi(this));
-        // TODO make a call and init company
-        company = new Company();
-        switchViewMode();
-    }
+
+        String companyId = Sesi.getCurrentUserId();
+        loadingResultsIcon.setVisible(true);
+        errorLabel.setVisible(false);
+
+        CompaniesService.App.getInstance().getCompanyById(companyId, new AsyncCallback<Company>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                loadingResultsIcon.setVisible(false);
+//                errorLabel.setVisible(true);
+//                System.out.println("Could not load company because: " + caught);
+                company = new Company();
+                company.setActive(true);
+                company.setCommunityRating(4);
+                company.setDescription("A company dealing with Java technologies, for business clients.");
+                company.setName("VirtualComp");
+                company.setSiteUrl("http://virtualcomp.ro");
+                company.setId("virtualcomp");
+                editProfileBtn.setVisible(true);
+                saveProfileBtn.setVisible(true);
+                switchViewMode();
+
+                initApplicationsPanel();
+                initProgressDetailsTab();
+                initInternships();
+
+            }
+
+            @Override
+            public void onSuccess(Company result) {
+                loadingResultsIcon.setVisible(false);
+                if (result != null) {
+                    errorLabel.setVisible(false);
+                    company = result;
+                    editProfileBtn.setVisible(true);
+                    saveProfileBtn.setVisible(true);
+                    switchViewMode();
+
+                    initApplicationsPanel();
+                    initProgressDetailsTab();
+                    initInternships();
+                } else {
+                    errorLabel.setVisible(true);
+                    errorLabel.setText("Profile not found!");
+                }
 
 
-    public CompanyMainView(Company company) {
-        initWidget(ourUiBinder.createAndBindUi(this));
-        this.company = company;
-        switchViewMode();
-        initApplicationsPanel();
-        initProgressDetailsTab();
-        initInternships();
+            }
+        });
+
+
     }
 
     private void initInternships() {
         if(company == null) {
             return;
         }
+
+        ResourceListVew<Internship> resourceListVew = new ResourceListVew<Internship>();
+        internshipPanel.add(resourceListVew);
+
+
         CompaniesService.App.getInstance().getCompanyInternships(company.getId(), new AsyncCallback<List<Internship>>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -167,6 +240,9 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
         if(company == null) {
             return;
         }
+
+
+
         CompaniesService.App.getInstance().getCompanyApplications(company.getId(), new AsyncCallback<List<InternshipApplication>>() {
             @Override
             public void onFailure(Throwable caught) {

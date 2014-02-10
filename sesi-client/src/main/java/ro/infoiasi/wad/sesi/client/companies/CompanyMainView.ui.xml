@@ -3,23 +3,28 @@
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
     <b:TabPanel tabPosition="left">
-        <b:Tab heading="Profile" icon="PENCIL" active="true">
+        <b:Tab heading="Profile" icon="PENCIL" active="true" ui:field="profileTab">
             <g:HTMLPanel ui:field="profilePanel">
+                <b:Controls>
+                    <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
+                            addStyleNames="{resource.style.noFlickering}"  />
+                    <b:Label type="IMPORTANT" visible="false" text="Could not load profile" ui:field="errorLabel"/>
+                </b:Controls>
                 <b:Button type="INFO" text="Edit profile" ui:field="editProfileBtn"/>
                 <b:Button type="INFO" text="Save profile" ui:field="saveProfileBtn"/>
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="My Applications"  icon="LIST" active="true">
+        <b:Tab heading="My Applications"  icon="LIST" ui:field="applicationsTab">
             <g:HTMLPanel ui:field="applicationsPanel">
 
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="My Progress Details"  icon="LIST" active="true">
+        <b:Tab heading="My Progress Details"  icon="LIST" ui:field="progressDetailsTab" >
             <g:HTMLPanel ui:field="progressDetailsPanel">
 
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="My Internships"  icon="LIST" active="true">
+        <b:Tab heading="My Internships"  icon="LIST" >
             <g:HTMLPanel ui:field="internshipPanel">
 
             </g:HTMLPanel>

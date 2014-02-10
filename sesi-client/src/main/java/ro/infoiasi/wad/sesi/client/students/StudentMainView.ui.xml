@@ -9,21 +9,21 @@
                 <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
                         addStyleNames="{resource.style.noFlickering}"  />
                 <b:Label type="IMPORTANT" visible="false" text="Could not load profile" ui:field="errorLabel"/>
-                <b:Button type="INFO" text="Edit profile" visible="false" ui:field="editProfileBtn"/>
+                <b:Button type="INFO" text="Edit profile"  ui:field="editProfileBtn"/>
                 <b:Button type="INFO" text="Save profile" visible="false" ui:field="saveProfileBtn"/>
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="My Applications"  icon="LIST" active="true">
+        <b:Tab heading="My Applications"  icon="LIST" >
             <g:HTMLPanel ui:field="applicationsPanel">
 
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="My Progress Details"  icon="LIST" active="true">
+        <b:Tab heading="My Progress Details"  icon="LIST" >
             <g:HTMLPanel ui:field="progressDetailsPanel">
 
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="Recommended internships"  icon="LIST" active="true">
+        <b:Tab heading="Recommended internships"  icon="LIST" >
             <g:HTMLPanel ui:field="recommendedPanel">
 
             </g:HTMLPanel>

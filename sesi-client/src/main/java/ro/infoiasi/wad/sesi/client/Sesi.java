@@ -32,6 +32,7 @@ public class Sesi implements EntryPoint {
         String v = Window.Location.getParameter("oauth_verifier");
         if (v != null) {
             verifyOAuth(v);
+
             return;
         }
 

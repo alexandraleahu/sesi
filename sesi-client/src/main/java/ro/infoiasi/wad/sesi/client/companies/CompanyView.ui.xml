@@ -12,7 +12,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <b:Label ui:field="name"/>
+                    <g:Label ui:field="name"/>
                 </b:Column>
             </b:Row>
             <b:Row>
@@ -22,7 +22,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <b:Label ui:field="description"/>
+                    <g:Label ui:field="description"/>
                 </b:Column>
             </b:Row>
             <b:Row>
@@ -32,7 +32,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <b:Label ui:field="active"/>
+                    <g:Label ui:field="active"/>
                 </b:Column>
             </b:Row>
             <b:Row>
@@ -42,7 +42,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <b:Label ui:field="companyUrl"/>
+                    <g:Label ui:field="companyUrl"/>
                 </b:Column>
             </b:Row>
             <b:Row>
@@ -52,7 +52,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <b:Label ui:field="communityRating"/>
+                    <g:Label ui:field="communityRating"/>
                 </b:Column>
             </b:Row>
         </b:WellForm>

@@ -25,6 +25,7 @@ import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
 import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
 import ro.infoiasi.wad.sesi.client.companies.CompanyMainView;
+import ro.infoiasi.wad.sesi.client.internships.InternshipMainView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
@@ -286,7 +287,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
         }
         String[] resourceUrl = event.getValue().split("/");
         String resourceType = resourceUrl[1];
-        String id = resourceUrl[2];
+        final String id = resourceUrl[2];
         showLoadingIcon();
 
         if (resourceType.equals(InternshipsService.RESOURCE_PATH)) {
@@ -301,10 +302,14 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 @Override
                 public void onSuccess(Internship result) {
                     if (result != null) {
+                        if (UserAccountType.COMPANY_ACCOUNT.equals(Sesi.getCurrentUserType())) {
 
-                        InternshipView view = new InternshipView();
-                        mainPanel.setWidget(view);
-                        view.edit(result);
+                            InternshipMainView view = new InternshipMainView(id);
+                            mainPanel.setWidget(view);
+                        } else {
+                            InternshipView v = new InternshipView();
+                            mainPanel.setWidget(v);
+                        }
                     } else {
                         showResourceNotFoundError();
                     }
