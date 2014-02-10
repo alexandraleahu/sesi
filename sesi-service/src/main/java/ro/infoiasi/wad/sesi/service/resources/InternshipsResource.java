@@ -1,5 +1,7 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
+import com.complexible.stardog.StardogException;
+import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.Internship;
@@ -7,10 +9,8 @@ import ro.infoiasi.wad.sesi.rdf.dao.InternshipsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -144,37 +144,29 @@ public class InternshipsResource {
             String applications = dao.getInternshipCurrency(internshipId, returnTypes.getRdfFormat());
             return Response.ok(applications, returnTypes.getMediaType()).build();
         } catch (Exception e) {
-            throw new InternalServerErrorException("Could not retrieve internship applications for internship with id" + internshipId, e);
+            throw new InternalServerErrorException("Could not retrieve internship currency for internship with id" + internshipId, e);
         }
     }
 
 
-//    @POST
-//    @Path("/")
-//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public Response createInternship(@Context HttpHeaders headers, Internship internship) {
-//        InternshipsDao dao = new InternshipsDao();
-//        internship.setId(RandomStringUtils.randomAlphanumeric(4));
-//        try {
-//            String uri = dao.createInternship(internship);
-//            System.out.println("i got here");
-//            List<MediaType> acceptableMediaTypes = headers.getAcceptableMediaTypes();
-//            MediaTypeConstants.MediaTypeAndRdfFormat<RDFFormat> returnTypes = MediaTypeConstants.getBestRdfReturnTypes(acceptableMediaTypes);
-//            return Response.ok(uri, returnTypes.getMediaType()).build();
-//        } catch (StardogException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
     @POST
     @Path("/")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response applyToInternship(@PathParam("id") String studentId,
-                                      @FormParam("internshipId") String internshipId) {
-
-        return null;
+    public Response createInternship(@Context HttpHeaders headers, Internship internship,
+                                     @Context UriInfo uriInfo) {
+        InternshipsDao dao = new InternshipsDao();
+        String id = RandomStringUtils.randomAlphanumeric(4);
+        internship.setId(id);
+        try {
+             dao.createInternship(internship);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(id)).build();
+            return Response.created(uri)
+                    .build();
+        } catch (StardogException e) {
+            throw new InternalServerErrorException("Could not create internship ", e);
+        }
     }
+
+
 }

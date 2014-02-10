@@ -568,4 +568,14 @@ public class SparqlService {
         }
         return null;
     }
+
+    public Course getCourse(String courseUri) {
+        OntologyExtraInfo extraInfo = getOntologyExtraInfo(courseUri);
+        Course c = new Course();
+        c.setOntologyUri(courseUri);
+        c.setName(extraInfo.getName());
+        c.setInfoUrl(extraInfo.getInfoUrl());
+
+        return c;
+    }
 }

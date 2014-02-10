@@ -33,6 +33,8 @@ public class Constants implements Serializable {
     public static final String STUDENT_PROJECT_CLASS = "StudentProject";
     public static final String STUDIES_CLASS= "AcademicStudies";
     public static final String TEACHER_CLASS = "Teacher";
+    public static final String COURSE_CLASS = "Course";
+
 
     public static final String ID_PROP = "id";
     public static final String NAME_PROP = "name";
@@ -77,6 +79,7 @@ public class Constants implements Serializable {
     public static final String YEAR_OF_STUDY_PROP = "yearOfStudy";
     public static final String ENROLLED_STUDENT_PROP = "enrolledStudent";
     public static final String DEGREE_PROP = "degree";
+    public static final String TEACHES_PROP = "teaches";
     public static final String DEVELOPED_BY_PROP = "developedBy";
 
     public static final String IS_ACTIVE_PROP = "isActive";

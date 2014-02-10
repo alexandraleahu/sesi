@@ -38,6 +38,8 @@ public interface InternshipsService extends RemoteService {
 
     List<InternshipProgressDetails> getInternshipProgressDetails(String internshipId);
 
+    boolean postInternship(Internship internship);
+
     void save(Internship internship);
 
     public static final String RESOURCE_PATH = "internships";

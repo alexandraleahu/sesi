@@ -20,4 +20,6 @@ public interface InternshipsServiceAsync {
     void getInternshipProgressDetails(String internshipId, AsyncCallback<List<Internship>> async);
 
     void getInternshipApplications(String internshipId, AsyncCallback<List<InternshipApplication>> async);
+
+    void postInternship(Internship internship, AsyncCallback<Boolean> async);
 }

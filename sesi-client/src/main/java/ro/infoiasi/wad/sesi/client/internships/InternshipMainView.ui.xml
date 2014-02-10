@@ -1,0 +1,20 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+
+             xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.reports'
+             xmlns:o='urn:import:ro.infoiasi.wad.sesi.client.ontologyextrainfo'
+             xmlns:t="urn:import:ro.infoiasi.wad.sesi.client.teachers">
+
+
+    <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
+    <g:HTMLPanel ui:field="internshipPanel">
+        <b:Controls>
+            <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
+                    addStyleNames="{resource.style.noFlickering}"  />
+            <b:Label type="IMPORTANT" visible="false" text="Could not load internship" ui:field="errorLabel"/>
+        </b:Controls>
+        <b:Button type="INFO" text="Edit profile" visible="false" ui:field="editProfileBtn" />
+        <b:Button type="INFO" text="Save profile" visible="false" ui:field="saveProfileBtn" />
+    </g:HTMLPanel>
+</ui:UiBinder>

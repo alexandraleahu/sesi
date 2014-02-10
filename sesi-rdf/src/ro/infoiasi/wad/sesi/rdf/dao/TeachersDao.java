@@ -12,11 +12,10 @@ import org.openrdf.model.URI;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
 import org.openrdf.rio.RDFFormat;
-import ro.infoiasi.wad.sesi.core.model.City;
-import ro.infoiasi.wad.sesi.core.model.Faculty;
-import ro.infoiasi.wad.sesi.core.model.Teacher;
-import ro.infoiasi.wad.sesi.core.model.University;
+import ro.infoiasi.wad.sesi.core.model.*;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
+
+import java.util.List;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
 
@@ -140,6 +139,7 @@ public class TeachersDao extends BasicDao {
 
             URI cityResource = Values.uri(universityCity.getOntologyUri());
             URI inCity = Values.uri(SESI_SCHEMA_NS, CITY_PROP);
+            URI teachesProp = Values.uri(SESI_SCHEMA_NS, TEACHES_PROP);
 
             adder.statement(cityResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(cityResource, RDF.TYPE, Values.uri(FREEBASE_NS, CITY_CLASS));
@@ -169,6 +169,20 @@ public class TeachersDao extends BasicDao {
             URI isTeacherOf = Values.uri(SESI_SCHEMA_NS, IS_TEACHER_OF_PROP);
             adder.statement(newTeacher, isTeacherOf, facultyResource);
 
+            // adding the courses
+            List<Course> courses = teacher.getCourses();
+
+            for (Course c : courses) {
+                URI courseResource = Values.uri(SESI_OBJECTS_NS, c.getName().replace(' ', '_'));
+                adder.statement(courseResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
+                adder.statement(courseResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, COURSE_CLASS));
+                adder.statement(courseResource, RDFS.LABEL, Values.literal(c.getName()));
+                adder.statement(courseResource, name, Values.literal(c.getName(), StardogValueFactory.XSD.STRING));
+                adder.statement(courseResource, RDFS.SEEALSO, Values.literal(c.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
+
+
+                adder.statement(newTeacher, teachesProp, courseResource);
+            }
 
             con.commit();
 

@@ -48,9 +48,26 @@ public class TeacherDeserializer implements Deserializer<Teacher> {
             //faculty
             statement = m.getProperty(teacherResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, IS_TEACHER_OF_PROP));
             if (statement != null) {
-                String facultyUri = statement.getResource().getURI();
+                String facultyUri = statement.getObject().asResource().getURI();
                 Faculty faculty = sparqlService.getFaculty(facultyUri);
                 teacher.setFaculty(faculty);
+            }
+
+            // courses
+            StmtIterator stmtIterator = teacherResource.listProperties(ResourceFactory.createProperty(SESI_SCHEMA_NS, TEACHES_PROP));
+            List<Course> courses = Lists.newArrayList();
+            while (stmtIterator.hasNext()) {
+                Statement nextStatement = stmtIterator.nextStatement();
+                if (nextStatement != null) {
+                    String courseUri = nextStatement.getObject().asResource().getURI();
+                    Course course = sparqlService.getCourse(courseUri);
+                    courses.add(course);
+                }
+
+                teacher.setCourses(courses);
+            }
+            if (statement != null) {
+                String courseUri = statement.getObject().asResource().getURI();
             }
         }
 
