@@ -1,6 +1,8 @@
 package ro.infoiasi.wad.sesi.client.internships;
 
 import com.github.gwtbootstrap.client.ui.Button;
+import com.github.gwtbootstrap.client.ui.Modal;
+import com.github.gwtbootstrap.client.ui.TextArea;
 import com.google.common.base.Joiner;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -102,6 +104,13 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     TechnicalSkillView acquiredTechnicalSkillsTable;
     @UiField
     Button applyBtn;
+    @UiField
+    @Ignore
+    TextArea motivationArea;
+    @UiField
+    Button submitButton;
+    @UiField
+    Modal motivationModal;
 
     // Create the Driver
 
@@ -134,7 +143,12 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
 
     @UiHandler("applyBtn")
     public void appyToInternship(ClickEvent e) {
+         motivationModal.show();
+    }
 
+    @UiHandler("submitButton")
+    public void submitApplication(ClickEvent e) {
+        // TODO send application
     }
 
 

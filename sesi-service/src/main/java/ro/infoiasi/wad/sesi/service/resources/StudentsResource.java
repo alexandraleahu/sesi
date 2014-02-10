@@ -10,10 +10,8 @@ import ro.infoiasi.wad.sesi.service.authentication.UsersTable;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
+import java.net.URI;
 import java.util.List;
 
 @Path("/students")
@@ -135,11 +133,14 @@ public class StudentsResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response register(@FormParam("username") String username, @FormParam("password") String password,
-                             @FormParam("name") String studentName) {
+                             @FormParam("name") String studentName,
+                             @Context UriInfo uriInfo) {
         if (usersTable.addUser(new DBUser(username, password, UserAccountType.STUDENT_ACCOUNT.getDescription()))) {
             try {
                 new StudentsDao().createMinimalStudent(studentName, username);
-                return Response.ok().build();
+                URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(username)).build();
+                return Response.created(uri)
+                        .build();
 
             } catch (StardogException e) {
                 throw new InternalServerErrorException(e.getMessage());

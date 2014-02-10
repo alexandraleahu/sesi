@@ -165,6 +165,18 @@
                     <b:Button type="INFO" size="LARGE" block="true" ui:field="applyBtn">Apply to internship</b:Button>
                 </b:Column>
             </b:Row>
+
         </b:WellForm>
+           <b:Row>
+               <b:Column size="7">
+                   <b:Modal ui:field="motivationModal" title="Please write your motivation for this application" closeVisible="true" keyboard="true" animation="true">
+                       <b:TextArea ui:field="motivationArea"/>
+
+                       <b:ModalFooter>
+                           <b:Button icon="FORWARD" type="INFO" ui:field="submitButton">Submit application</b:Button>
+                       </b:ModalFooter>
+                   </b:Modal>
+               </b:Column>
+           </b:Row>
     </g:HTMLPanel>
 </ui:UiBinder>

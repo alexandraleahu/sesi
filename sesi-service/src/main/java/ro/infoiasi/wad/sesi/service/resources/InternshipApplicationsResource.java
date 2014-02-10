@@ -1,18 +1,23 @@
 package ro.infoiasi.wad.sesi.service.resources;
 
+import com.complexible.stardog.StardogException;
+import org.apache.commons.lang.RandomStringUtils;
 import org.openrdf.rio.RDFFormat;
+import ro.infoiasi.wad.sesi.core.model.Internship;
+import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.core.model.Student;
+import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.rdf.dao.InternshipApplicationsDao;
 import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
+import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 @Path("/applications")
-public class ApplicationResource {
+public class InternshipApplicationsResource {
 
     @GET
     @Path("/")
@@ -49,6 +54,46 @@ public class ApplicationResource {
         } catch (Exception e) {
             throw new InternalServerErrorException("Could not retrieve application with id:" + applicationId, e);
         }
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("/")
+    public Response createApplication(@FormParam("internshipId") String internshipId,
+                                      @FormParam("studentId") String studentId,
+                                      @FormParam("motivation") String motivation,
+                                      @Context UriInfo uriInfo) {
+
+        InternshipApplication application = new InternshipApplication();
+
+        String id = RandomStringUtils.randomAlphanumeric(Constants.ID_LENGTH);
+        application.setId(id);
+        application.setPublishedAt(new Date());
+
+        Student student = new Student();
+        student.setId(studentId);
+        application.setStudent(student);
+
+        Internship i = new Internship();
+        i.setId(internshipId);
+        application.setInternship(i);
+
+
+        application.setMotivation(motivation);
+
+        InternshipApplicationsDao dao = new InternshipApplicationsDao();
+
+        try {
+            dao.createApplication(application);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(id)).build();
+            return Response.created(uri)
+                    .build();
+
+        } catch (StardogException e) {
+            throw new InternalServerErrorException("Could not create application", e);
+        }
+
     }
 
 }
