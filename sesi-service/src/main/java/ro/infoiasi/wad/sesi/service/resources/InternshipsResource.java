@@ -11,6 +11,7 @@ import ro.infoiasi.wad.sesi.service.util.MediaTypeConstants;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -158,10 +159,12 @@ public class InternshipsResource {
         InternshipsDao dao = new InternshipsDao();
         String id = RandomStringUtils.randomAlphanumeric(4);
         internship.setId(id);
+        internship.setPublishedAt(new Date());
         try {
              dao.createInternship(internship);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(id)).build();
             return Response.created(uri)
+                    .entity(internship)
                     .build();
         } catch (StardogException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();

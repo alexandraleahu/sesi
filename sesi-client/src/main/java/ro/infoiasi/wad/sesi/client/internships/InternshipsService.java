@@ -38,7 +38,7 @@ public interface InternshipsService extends RemoteService {
 
     List<InternshipProgressDetails> getInternshipProgressDetails(String internshipId);
 
-    boolean postInternship(Internship internship);
+    Internship postInternship(Internship internship);
 
     void save(Internship internship);
 

@@ -304,11 +304,13 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                     if (result != null) {
                         if (UserAccountType.COMPANY_ACCOUNT.equals(Sesi.getCurrentUserType())) {
 
-                            InternshipMainView view = new InternshipMainView(id);
+                            InternshipMainView view = new InternshipMainView(result);
                             mainPanel.setWidget(view);
+
                         } else {
                             InternshipView v = new InternshipView();
                             mainPanel.setWidget(v);
+                            v.edit(result);
                         }
                     } else {
                         showResourceNotFoundError();

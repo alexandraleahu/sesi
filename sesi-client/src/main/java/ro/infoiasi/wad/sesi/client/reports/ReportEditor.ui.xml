@@ -40,7 +40,7 @@
                                 <b:ValueListBox ui:field="relationBox" size="2"/>
                             </b:Column>
                             <b:Column size="3">
-                                <g:Label text="with status"/>
+                                <g:Label text="with status (any) "/>
                                 <c:NamesListEditor ui:field="statusList"/>
                             </b:Column>
 

@@ -43,12 +43,12 @@
 
             <b:Row>
                 <b:Column size="2">
-                    <b:Label type="INFO" text="Category"/>
+                    <b:Label type="INFO" text="Categories"/>
                 </b:Column>
             </b:Row>
             <b:Row>
                 <b:Column size="3">
-                    <b:ValueListBox ui:field="categoryList" size="3"/>
+                    <b:ListBox ui:field="categoryList" size="3" visibleItemCount="4"/>
                 </b:Column>
             </b:Row>
 
@@ -168,11 +168,11 @@
 
                 </b:Column>
             </b:Row>
-            <b:Row>
-                <b:Column size="5">
-                    <b:Button type="INFO" block="true" size="LARGE" ui:field="publishBtn">Publish</b:Button>
-                </b:Column>
-            </b:Row>
+            <!--<b:Row>-->
+                <!--<b:Column size="5">-->
+                    <!--<b:Button type="INFO" block="true" size="LARGE" ui:field="publishBtn">Publish</b:Button>-->
+                <!--</b:Column>-->
+            <!--</b:Row>-->
         </b:WellForm>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -117,15 +117,21 @@ public class InternshipsServiceImpl extends RemoteServiceServlet implements Inte
     }
 
     @Override
-    public boolean postInternship(Internship internship) {
+    public Internship postInternship(Internship internship) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH);
-        Response response = target.request(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE)
+        Response response = target.request(MediaType.APPLICATION_XML_TYPE)
                 .post(Entity.entity(internship, MediaType.APPLICATION_XML_TYPE));
 
         int status = response.getStatus();
-        client.close();
-        return status == Response.Status.OK.getStatusCode();
+        if (status == Response.Status.OK.getStatusCode()) {
+            return null;
+        }               else {
+            Internship entity = response.readEntity(Internship.class);
+            client.close();
+
+            return entity;
+        }
     }
 
     @Override

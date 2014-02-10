@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import ro.infoiasi.wad.sesi.client.commonwidgets.ResourceListVew;
 import ro.infoiasi.wad.sesi.core.model.Internship;
-import sun.plugin.viewer.IExplorerPluginContext;
 
 import java.util.List;
 import java.util.Map;

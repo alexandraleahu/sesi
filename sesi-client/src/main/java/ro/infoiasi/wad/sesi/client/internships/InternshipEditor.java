@@ -17,16 +17,17 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import ro.infoiasi.wad.sesi.client.commonwidgets.DoubleEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.IntegerEditor;
-import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetEditor;
+import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class InternshipEditor extends Composite implements ResourceWidgetEditor<Internship>,
-                                                            ValueChangeHandler<KnowledgeLevel>, ClickHandler {
+                                                            ValueChangeHandler<KnowledgeLevel>{
 
     @Override
     public Internship save() {
@@ -58,6 +59,13 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
         List<TechnicalSkill> preferredTechnicalSkills = Lists.transform(rawPreferredGeneralSkills, new WidgetConstants.TechnicalSkillFunction());
         internship.setPreferredTechnicalSkills(preferredTechnicalSkills);
 
+        List<Internship.Category> cats = new ArrayList<Internship.Category>();
+        for(int i = 0; i < categoryList.getItemCount(); ++i) {
+            if (categoryList.isItemSelected(i)) {
+                cats.add(Internship.Category.fromDescription(categoryList.getItemText(i)));
+            }
+        }
+        internship.setCategories(cats);
         // id and published date will be set on the backend
 
 
@@ -67,13 +75,14 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
     @Override
     public void edit(Internship resource) {
         driver.edit(resource);
+        for(int i = 0; i < categoryList.getItemCount(); ++i) {
+            if (resource.getCategories().contains(Internship.Category.fromDescription(categoryList.getItemText(i)))) {
+                categoryList.setItemSelected(i, true);
+            }
+        }
     }
 
-    @Override
-    public void onClick(ClickEvent event) {
-        Internship save = save();
 
-    }
 
 
     interface InternshipEditorUiBinder extends UiBinder<HTMLPanel, InternshipEditor> {
@@ -104,19 +113,8 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
     DateTimeBox endDateBox;
 
     @UiField(provided = true)
-    @Path("category")
-    ValueListBox<Internship.Category> categoryList = new ValueListBox<Internship.Category>(new Renderer<Internship.Category>() {
-        @Override
-        public String render(Internship.Category category) {
-            return category == null ? "" : category.getDescription();
-        }
-
-        @Override
-        public void render(Internship.Category category, Appendable appendable) throws IOException {
-            if (category != null)
-                appendable.append(category.getDescription());
-        }
-    });
+    @Ignore
+    ListBox categoryList = new ListBox(true);
 
     @UiField
     @Path("description")
@@ -190,8 +188,8 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
     @UiField
     @Ignore
     TextArea acquiredTechnicalSkillIdArea;
-    @UiField
-    Button publishBtn;
+//    @UiField
+//    Button publishBtn;
 
 
     public InternshipEditor() {
@@ -204,8 +202,10 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
 
     private void wireUiElements() {
 
-        categoryList.setValue(Internship.Category.WebDev);
-        categoryList.setAcceptableValues(Arrays.asList(Internship.Category.values()));
+        for(Internship.Category cat : Internship.Category.values()) {
+
+            categoryList.addItem(cat.getDescription());
+        }
 
         preferredLevelList.setValue(KnowledgeLevel.Basic);
         preferredLevelList.setAcceptableValues(Arrays.asList(KnowledgeLevel.values()));
@@ -219,7 +219,6 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
         currencyBox.setValue("RON");
         currencyBox.setAcceptableValues(Lists.newArrayList("RON", "EURO", "USD"));
 
-        publishBtn.addClickHandler(this);
     }
 
     @Override

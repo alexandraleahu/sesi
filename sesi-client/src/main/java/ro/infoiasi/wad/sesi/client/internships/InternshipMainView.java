@@ -9,7 +9,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import ro.infoiasi.wad.sesi.client.Sesi;
@@ -95,64 +94,41 @@ public class InternshipMainView extends Composite implements ResourceMainView<In
     public void saveProfile(ClickEvent event) {
 
         switchViewMode();
-        loadingResultsIcon.setVisible(true);
+//        loadingResultsIcon.setVisible(true);
         errorLabel.setVisible(false);
         internship.setId(Sesi.getCurrentUserId());
-        InternshipsService.App.getInstance().postInternship(internship, new AsyncCallback<Boolean>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                loadingResultsIcon.setVisible(false);
-                errorLabel.setVisible(true);
-                errorLabel.setText("Could not update profile!");
-                System.out.println("Could not update internship because: " + caught);
-
-            }
-
-            @Override
-            public void onSuccess(Boolean result) {
-                loadingResultsIcon.setVisible(false);
-                if (result) {
-                    errorLabel.setVisible(false);
-                    editProfileBtn.setVisible(true);
-                    saveProfileBtn.setVisible(true);
-                } else {
-                    errorLabel.setVisible(true);
-                    errorLabel.setText("Could not update profile!");
-                }
-            }
-        });
+//        InternshipsService.App.getInstance().postInternship(internship, new AsyncCallback<Boolean>() {
+//            @Override
+//            public void onFailure(Throwable caught) {
+//                loadingResultsIcon.setVisible(false);
+//                errorLabel.setVisible(true);
+//                errorLabel.setText("Could not update profile!");
+//                System.out.println("Could not update internship because: " + caught);
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(Boolean result) {
+//                loadingResultsIcon.setVisible(false);
+//                if (result) {
+//                    errorLabel.setVisible(false);
+//                    editProfileBtn.setVisible(true);
+//                    saveProfileBtn.setVisible(true);
+//                } else {
+//                    errorLabel.setVisible(true);
+//                    errorLabel.setText("Could not update profile!");
+//                }
+//            }
+//        });
     }
 
-    public InternshipMainView(String id) {
+    public InternshipMainView(Internship i) {
         initWidget(ourUiBinder.createAndBindUi(this));
 
-        loadingResultsIcon.setVisible(true);
-        errorLabel.setVisible(false);
-        InternshipsService.App.getInstance().getInternshipById(id, new AsyncCallback<Internship>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                loadingResultsIcon.setVisible(false);
-                errorLabel.setVisible(true);
-                System.out.println("Could not load internship because: " + caught);
-            }
-
-            @Override
-            public void onSuccess(Internship result) {
-                loadingResultsIcon.setVisible(false);
-                if (result != null) {
-                    errorLabel.setVisible(false);
-                    internship = result;
-                    editProfileBtn.setVisible(true);
-                    saveProfileBtn.setVisible(true);
-                    switchViewMode();
-                } else {
-                    errorLabel.setVisible(true);
-                    errorLabel.setText("Profile not found!");
-                }
+        this.internship = i;
+        switchViewMode();
 
 
-            }
-        });
 
     }
 

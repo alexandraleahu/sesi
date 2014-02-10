@@ -123,6 +123,10 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     public InternshipView() {
         initWidget(ourUiBinder.createAndBindUi(this));
         driver.initialize(this);
+        if (!UserAccountType.STUDENT_ACCOUNT.equals(Sesi.getCurrentUserType())) {
+
+            applyBtn.removeFromParent();
+        }
     }
 
     @Override
@@ -139,12 +143,9 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
 
         preferredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getPreferredGeneralSkills()));
         acquiredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getAcquiredGeneralSkills()));
-        categoryLabel.setText(internship.getCategory().getDescription());
+        categoryLabel.setText(Joiner.on(",").join(internship.getCategories()));
 
-        if (!UserAccountType.STUDENT_ACCOUNT.equals(Sesi.getCurrentUserType())) {
 
-             applyBtn.removeFromParent();
-        }
 
     }
 

@@ -3,10 +3,7 @@ package ro.infoiasi.wad.sesi.core.model;
 import ro.infoiasi.wad.sesi.core.util.HasDescription;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @XmlRootElement // used for XML/JSON (de)serialization
 public class Internship implements Resource, Event {
@@ -24,7 +21,7 @@ public class Internship implements Resource, Event {
     private List<TechnicalSkill> preferredTechnicalSkills;
     private boolean offeringRelocation;
     private String id;
-    private Category category;
+    private List<Category> category;
     private Currency salaryCurrency;
     private double salaryValue;
     private int applicationsCount;
@@ -39,7 +36,7 @@ public class Internship implements Resource, Event {
     }
 
     public Internship() {
-        category = Category.WebDev;
+        category = Arrays.asList(Category.WebDev);
         salaryCurrency = new Currency();
         salaryCurrency.setName("RON");
     }
@@ -204,11 +201,11 @@ public class Internship implements Resource, Event {
         this.id = id;
     }
 
-    public Category getCategory() {
+    public List<Category> getCategories() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategories(List<Category> category) {
         this.category = category;
     }
 

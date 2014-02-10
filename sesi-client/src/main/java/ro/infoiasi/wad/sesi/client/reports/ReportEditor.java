@@ -264,7 +264,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                             companyNamesList.setValue(result);
 
                             firstFilterNamesPanel.setWidget(companyNamesList);
-                            firstFilterLabel.setText("From companies");
+                            firstFilterLabel.setText("From companies (any)");
 
 
                             displayAllFacultiesNames(ReportBean.MainResourceType.Internships);
@@ -295,7 +295,7 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                             facultyNamesList.setValue(result);
 
                             firstFilterNamesPanel.setWidget(facultyNamesList);
-                            firstFilterLabel.setText("From schools");
+                            firstFilterLabel.setText("From schools(any)");
 
                             displayAllCompaniesNames(ReportBean.MainResourceType.Students);
 
@@ -337,12 +337,12 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                 if (resourceType == ReportBean.MainResourceType.Students) {
 
                     firstFilterNamesPanel.setWidget(facultyNamesList);
-                    firstFilterLabel.setText("From schools");
+                    firstFilterLabel.setText("From schools (any)");
 
                 }   else {
 
                     secondFilterNamesPanel.setWidget(facultyNamesList);
-                    secondFilterLabel.setText("from students of schools");
+                    secondFilterLabel.setText("from students of schools (any)");
 
 
             }
@@ -377,11 +377,11 @@ public class ReportEditor extends Composite implements WidgetEditor<ReportBean>,
                 if (resourceType == ReportBean.MainResourceType.Internships) {
 
                     firstFilterNamesPanel.setWidget(companyNamesList);
-                    firstFilterLabel.setText("From companies");
+                    firstFilterLabel.setText("From companies (any)");
                 } else {
 
                     secondFilterNamesPanel.setWidget(companyNamesList);
-                    secondFilterLabel.setText("to companies");
+                    secondFilterLabel.setText("to companies (any)");
                 }
 
 

@@ -19,7 +19,6 @@ import org.openrdf.model.vocabulary.RDFS;
 import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.rio.RDFFormat;
 import ro.infoiasi.wad.sesi.core.model.*;
-import ro.infoiasi.wad.sesi.rdf.connection.SesiConnectionPool;
 import ro.infoiasi.wad.sesi.rdf.util.ResultIOUtils;
 
 import java.util.Arrays;
@@ -368,7 +367,10 @@ public class InternshipsDao extends BasicDao {
             adder.statement(newInternship, ID, Values.literal(internship.getId(), StardogValueFactory.XSD.STRING));
             adder.statement(newInternship, offersRelocation, Values.literal(internship.isOfferingRelocation()));
             adder.statement(newInternship, openingsCount, Values.literal(internship.getOpenings()));
-            adder.statement(newInternship, category, Values.uri(SESI_OBJECTS_NS, internship.getCategory().toString()));
+            for(Internship.Category cat : internship.getCategories()) {
+
+                adder.statement(newInternship, category, Values.uri(SESI_OBJECTS_NS, cat.toString()));
+            }
             adder.statement(newInternship, sesiUrl, Values.literal(internship.getRelativeUri()));
 
             // adding another salary
@@ -507,7 +509,7 @@ public class InternshipsDao extends BasicDao {
 
         internship.setOfferingRelocation(true);
         internship.setOpenings(3);
-        internship.setCategory(Internship.Category.Mobile);
+        internship.setCategories(Arrays.asList(Internship.Category.Mobile));
 
         City iasi = new City();
 

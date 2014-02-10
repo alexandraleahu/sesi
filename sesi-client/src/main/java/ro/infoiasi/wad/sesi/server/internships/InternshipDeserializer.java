@@ -99,13 +99,18 @@ public class InternshipDeserializer implements ResourceDeserializer<Internship> 
             }
     
             // category
-            statement = m.getProperty(internshipResource,
+            StmtIterator stmtIterator1 = internshipResource.listProperties(
                     ResourceFactory.createProperty(SESI_SCHEMA_NS, CATEGORY_PROP));
-    
-            if (statement != null) {
-                Resource category = statement.getObject().asResource();
-                internship.setCategory(Internship.Category.valueOf(category.getLocalName()));
+            List<Internship.Category> cats = Lists.newArrayList();
+            while (stmtIterator1.hasNext()) {
+                Statement nextStatement = stmtIterator1.nextStatement();
+                if (nextStatement != null) {
+                    Resource category = nextStatement.getResource();
+                    cats.add(Internship.Category.valueOf(category.getLocalName()));
+                }
             }
+            internship.setCategories(cats);
+
     
             // salary
             statement = m.getProperty(internshipResource,

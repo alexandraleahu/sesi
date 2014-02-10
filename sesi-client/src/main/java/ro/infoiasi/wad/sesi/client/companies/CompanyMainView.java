@@ -4,6 +4,7 @@ import com.github.gwtbootstrap.client.ui.*;
 import com.github.gwtbootstrap.client.ui.constants.LabelType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -13,6 +14,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.commonwidgets.ResourceListVew;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceMainView;
+import ro.infoiasi.wad.sesi.client.internships.InternshipEditor;
+import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
 import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
@@ -22,6 +25,7 @@ import java.util.List;
 
 public class CompanyMainView extends Composite implements ResourceMainView<Company> {
     private Company company;
+    private List<Internship> internships;
 
     @Override
     public void switchViewMode() {
@@ -90,9 +94,25 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
     Tab applicationsTab;
     @UiField
     Tab profileTab;
+    @UiField
+    Button newInternship;
+    @UiField
+    HTMLPanel newInternshipsPanel;
+    @UiField
+    ResourceListVew<Internship> internshipsList;
+    @UiField
+    ResourceListVew<InternshipProgressDetails> progressDetailsList;
+    @UiField
+    ResourceListVew<InternshipApplication> applicationsList;
+    @UiField
+    Tab internshipsTab;
+    @UiField
+    Button publishBtn;
 
     private CompanyView profileView;
     private CompanyEditor profileEditor;
+
+    private InternshipEditor editor = new InternshipEditor();
 
     @UiHandler("editProfileBtn")
     public void editProfile(ClickEvent event) {
@@ -132,13 +152,64 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
         });
     }
 
+    @UiHandler("publishBtn")
+    public void publishInternship(ClickEvent e) {
+        final Internship i = editor.save();
+        InternshipsService.App.getInstance().postInternship(i, new AsyncCallback<Internship>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                newInternshipsPanel.clear();
+                internshipPanel.add(new Label(LabelType.IMPORTANT, "Could not create internship!"));
+
+            }
+
+            @Override
+            public void onSuccess(Internship result) {
+
+                internships.add(result);
+                internshipsList.setValue(internships);
+                newInternshipsPanel.clear();
+                publishBtn.setVisible(false);
+                newInternship.setVisible(true);
+
+            }
+        });
+    }
+    @UiHandler("newInternship")
+    public void createNewInternship(ClickEvent e) {
+
+        editor.edit(new Internship());
+        newInternshipsPanel.add(editor);
+        Sesi.freebase();
+        newInternship.setVisible(false);
+        publishBtn.setVisible(true);
+
+
+    }
     public CompanyMainView() {
         initWidget(ourUiBinder.createAndBindUi(this));
 
         String companyId = Sesi.getCurrentUserId();
         loadingResultsIcon.setVisible(true);
         errorLabel.setVisible(false);
-
+        internshipsTab.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                initInternships();
+            }
+        });
+        applicationsTab.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                initApplicationsPanel();
+            }
+        });
+        progressDetailsTab.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                initProgressDetailsTab();
+            }
+        });
         CompaniesService.App.getInstance().getCompanyById(companyId, new AsyncCallback<Company>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -156,10 +227,6 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
                 saveProfileBtn.setVisible(true);
                 switchViewMode();
 
-                initApplicationsPanel();
-                initProgressDetailsTab();
-                initInternships();
-
             }
 
             @Override
@@ -172,9 +239,6 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
                     saveProfileBtn.setVisible(true);
                     switchViewMode();
 
-                    initApplicationsPanel();
-                    initProgressDetailsTab();
-                    initInternships();
                 } else {
                     errorLabel.setVisible(true);
                     errorLabel.setText("Profile not found!");
@@ -192,10 +256,6 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
             return;
         }
 
-        ResourceListVew<Internship> resourceListVew = new ResourceListVew<Internship>();
-        internshipPanel.add(resourceListVew);
-
-
         CompaniesService.App.getInstance().getCompanyInternships(company.getId(), new AsyncCallback<List<Internship>>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -206,10 +266,8 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
             @Override
             public void onSuccess(List<Internship> result) {
 
-                ResourceListVew<Internship> resourceListVew = new ResourceListVew<Internship>();
-                internshipPanel.add(resourceListVew);
-
-                resourceListVew.setValue(result);
+                internships = result;
+                internshipsList.setValue(internships);
             }
         });
     }
@@ -228,10 +286,7 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
             @Override
             public void onSuccess(List<InternshipProgressDetails> result) {
 
-                ResourceListVew<InternshipProgressDetails> resourceListVew = new ResourceListVew<InternshipProgressDetails>();
-                progressDetailsPanel.add(resourceListVew);
-
-                resourceListVew.setValue(result);
+                progressDetailsList.setValue(result);
             }
         });
     }
@@ -253,10 +308,7 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
             @Override
             public void onSuccess(List<InternshipApplication> result) {
 
-                ResourceListVew<InternshipApplication> resourceListVew = new ResourceListVew<InternshipApplication>();
-                applicationsPanel.add(resourceListVew);
-
-                resourceListVew.setValue(result);
+                applicationsList.setValue(result);
             }
         });
 
