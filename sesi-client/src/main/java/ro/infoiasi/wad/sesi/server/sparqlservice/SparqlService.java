@@ -295,6 +295,7 @@ public class SparqlService {
                 Faculty faculty = new Faculty();
                 faculty.setName(name);
                 faculty.setUniversity(university);
+                faculty.setOntologyUri(facultyUri);
                 return faculty;
             }
         } catch (Exception e) {
