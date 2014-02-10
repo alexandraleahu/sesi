@@ -29,6 +29,7 @@ import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
 import ro.infoiasi.wad.sesi.client.progressdetails.InternshipProgressDetailsViewerAndEditor;
 import ro.infoiasi.wad.sesi.client.progressdetails.InternshipsProgressDetailsService;
+import ro.infoiasi.wad.sesi.client.students.StudentMainView;
 import ro.infoiasi.wad.sesi.client.students.StudentView;
 import ro.infoiasi.wad.sesi.client.students.StudentsService;
 import ro.infoiasi.wad.sesi.client.teachers.TeacherMainView;
@@ -136,7 +137,6 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                     });
                 }
             });
-            return;
         }
     }
 
@@ -250,6 +250,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                      mainPanel.setWidget(new TeacherMainView());
                     break;
                 case STUDENT_ACCOUNT:
+                    mainPanel.setWidget(new StudentMainView());
                     break;
             }
         }

@@ -247,7 +247,7 @@ public class StudentsDao extends BasicDao {
                 URI projectResource = Values.uri(SESI_OBJECTS_NS, RandomStringUtils.randomAlphanumeric(ID_LENGTH));
                 adder.statement(projectResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                 adder.statement(projectResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDENT_PROJECT_CLASS));
-                adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getName().replace(' ', '_')));
+                adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getName().replaceAll("[\\s,-]", "_")));
                 adder.statement(projectResource, name, Values.literal(studentProject.getName(), StardogValueFactory.XSD.STRING));
                 adder.statement(projectResource, Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP), Values.literal(studentProject.getDescription()), StardogValueFactory.XSD.STRING);
 
@@ -257,7 +257,7 @@ public class StudentsDao extends BasicDao {
                     URI programmingLanguageURI = Values.uri(lang.getOntologyUri());
                     adder.statement(programmingLanguageURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                     adder.statement(programmingLanguageURI, RDF.TYPE, Values.uri(FREEBASE_NS, PROGRAMMING_LANG_CLASS));
-                    adder.statement(programmingLanguageURI, RDFS.LABEL, Values.literal(lang.getName().replace(' ', '_')));
+                    adder.statement(programmingLanguageURI, RDFS.LABEL, Values.literal(lang.getName().replaceAll("[\\s,-]", "_")));
                     adder.statement(programmingLanguageURI, name, Values.literal(lang.getName(), StardogValueFactory.XSD.STRING));
                     adder.statement(programmingLanguageURI, RDFS.SEEALSO, Values.literal(lang.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
                     adder.statement(projectResource, programmingLanguageProperty, programmingLanguageURI);
@@ -267,7 +267,7 @@ public class StudentsDao extends BasicDao {
                     URI techURI = Values.uri(tech.getOntologyUri());
                     adder.statement(techURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                     adder.statement(techURI, RDF.TYPE, Values.uri(FREEBASE_NS, SOFTWARE_CLASS));
-                    adder.statement(techURI, RDFS.LABEL, Values.literal(tech.getName().replace(' ', '_')));
+                    adder.statement(techURI, RDFS.LABEL, Values.literal(tech.getName().replaceAll("[\\s,-]", "_")));
                     adder.statement(techURI, name, Values.literal(tech.getName(), StardogValueFactory.XSD.STRING));
                     adder.statement(techURI, RDFS.SEEALSO, Values.literal(tech.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
                     adder.statement(projectResource, technologyProperty, techURI);
@@ -305,7 +305,7 @@ public class StudentsDao extends BasicDao {
 
 
             //add the faculty
-            URI facultyResource = Values.uri(SESI_OBJECTS_NS, faculty.getName().replace(' ', '_'));
+            URI facultyResource = Values.uri(SESI_OBJECTS_NS, faculty.getName().replaceAll("[\\s,-]", "_"));
             adder.statement(facultyResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
             adder.statement(facultyResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, FACULTY_CLASS));
             adder.statement(facultyResource, Values.uri(SESI_SCHEMA_NS, UNIVERSITY_PROP), Values.uri(university.getOntologyUri()));
@@ -381,7 +381,7 @@ public class StudentsDao extends BasicDao {
                 remover.statements(projectResource, Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP), null);
                 adder.statement(projectResource, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                 adder.statement(projectResource, RDF.TYPE, Values.uri(SESI_SCHEMA_NS, STUDENT_PROJECT_CLASS));
-                adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getName().replace(' ', '_')));
+                adder.statement(projectResource, RDFS.LABEL, Values.literal(studentProject.getName().replaceAll("[\\s,-]", "_")));
                 adder.statement(projectResource, name, Values.literal(studentProject.getName(), StardogValueFactory.XSD.STRING));
                 adder.statement(projectResource, Values.uri(SESI_SCHEMA_NS, DESCRIPTION_PROP), Values.literal(studentProject.getDescription()), StardogValueFactory.XSD.STRING);
 
@@ -398,7 +398,7 @@ public class StudentsDao extends BasicDao {
 
                     adder.statement(programmingLanguageURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                     adder.statement(programmingLanguageURI, RDF.TYPE, Values.uri(FREEBASE_NS, PROGRAMMING_LANG_CLASS));
-                    adder.statement(programmingLanguageURI, RDFS.LABEL, Values.literal(lang.getName().replace(' ', '_')));
+                    adder.statement(programmingLanguageURI, RDFS.LABEL, Values.literal(lang.getName().replaceAll("[\\s,-]", "_")));
                     adder.statement(programmingLanguageURI, name, Values.literal(lang.getName(), StardogValueFactory.XSD.STRING));
                     adder.statement(programmingLanguageURI, RDFS.SEEALSO, Values.literal(lang.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
                     adder.statement(projectResource, programmingLanguageProperty, programmingLanguageURI);
@@ -413,7 +413,7 @@ public class StudentsDao extends BasicDao {
                     remover.statements(techURI, RDFS.SEEALSO, null);
                     adder.statement(techURI, RDF.TYPE, OWL_NAMED_INDIVIDUAL);
                     adder.statement(techURI, RDF.TYPE, Values.uri(FREEBASE_NS, SOFTWARE_CLASS));
-                    adder.statement(techURI, RDFS.LABEL, Values.literal(tech.getName().replace(' ', '_')));
+                    adder.statement(techURI, RDFS.LABEL, Values.literal(tech.getName().replaceAll("[\\s,-]", "_")));
                     adder.statement(techURI, name, Values.literal(tech.getName(), StardogValueFactory.XSD.STRING));
                     adder.statement(techURI, RDFS.SEEALSO, Values.literal(tech.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
                     adder.statement(projectResource, technologyProperty, techURI);
@@ -462,7 +462,7 @@ public class StudentsDao extends BasicDao {
 
 
             //add the faculty
-            URI facultyResource = Values.uri(SESI_OBJECTS_NS, faculty.getName().replace(' ', '_'));
+            URI facultyResource = Values.uri(SESI_OBJECTS_NS, faculty.getName().replaceAll("[\\s,-]", "_"));
             remover.statements(facultyResource, RDF.TYPE, null);
             remover.statements(facultyResource, Values.uri(SESI_SCHEMA_NS, UNIVERSITY_PROP), null);
             remover.statements(facultyResource, RDFS.LABEL, null);
@@ -537,7 +537,7 @@ public class StudentsDao extends BasicDao {
                 adder.statement(technologyUri, RDFS.SEEALSO, Values.literal(programmingLanguage.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
                 languageOrSoftwareUri = Values.uri(SESI_SCHEMA_NS, PROGRAMMING_USED_PROP);
-                sb.append(programmingLanguage.getName().replace(' ', '_'));
+                sb.append(programmingLanguage.getName().replaceAll("[\\s,-]", "_"));
 
             } else {
                 Technology software = technicalSkill.getTechnology();
@@ -548,10 +548,10 @@ public class StudentsDao extends BasicDao {
                 adder.statement(technologyUri, RDFS.SEEALSO, Values.literal(software.getInfoUrl(), StardogValueFactory.XSD.ANYURI));
 
                 languageOrSoftwareUri = Values.uri(SESI_SCHEMA_NS, TECHNOLOGY_USED_PROP);
-                sb.append(software.getName().replace(' ', '_'));
+                sb.append(software.getName().replaceAll("[\\s,-]", "_"));
 
             }
-            sb.append(technicalSkill.getLevel().toString());
+            sb.append("-").append(technicalSkill.getLevel().toString());
 
             URI softwareSkillResource = Values.uri(SESI_OBJECTS_NS, sb.toString());
             URI level = Values.uri(SESI_SCHEMA_NS, technicalSkill.getLevel().toString());

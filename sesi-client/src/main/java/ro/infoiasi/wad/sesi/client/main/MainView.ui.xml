@@ -3,7 +3,7 @@
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'>
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
 
-    <g:HTMLPanel addStyleNames="{resource.style.withScroll} {resource.style.mainPadding}">
+    <g:HTMLPanel addStyleNames="{resource.style.withScroll}">
          <!--<b:Heading size="3" addStyleNames="{resource.style.bigLabel}">-->
              <!--Semantic Student Internships-->
          <!--</b:Heading>-->
@@ -41,6 +41,6 @@
             </b:Nav>
 
         </b:ResponsiveNavbar>
-        <g:SimplePanel ui:field="mainPanel"/>
+        <g:SimplePanel ui:field="mainPanel" addStyleNames="{resource.style.mainPadding}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

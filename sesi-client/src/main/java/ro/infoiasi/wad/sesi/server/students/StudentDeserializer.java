@@ -10,9 +10,11 @@ import ro.infoiasi.wad.sesi.core.model.TechnicalSkill;
 import ro.infoiasi.wad.sesi.server.deserializerinterfaces.ResourceDeserializer;
 import ro.infoiasi.wad.sesi.server.sparqlservice.SparqlService;
 
+import java.io.StringReader;
 import java.util.List;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.*;
+import static ro.infoiasi.wad.sesi.server.util.ServiceConstants.DEFAULT_JENA_LANG;
 
 public class StudentDeserializer implements ResourceDeserializer<Student> {
     @Override
@@ -90,5 +92,29 @@ public class StudentDeserializer implements ResourceDeserializer<Student> {
             students.add(deserialize(m, parts[parts.length - 1]));
         }
         return students;
+    }
+
+    public static void main(String[] args) {
+        String s = "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n" +
+                "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n" +
+                "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n" +
+                "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" +
+                "@prefix stardog: <tag:stardog:api:> .\n" +
+                "\n" +
+                "<http://www.infoiasi.ro/wad/objects/sesi/ionpopescu> a owl:NamedIndividual , <http://www.infoiasi.ro/wad/schemas/sesi/Student> ;\n" +
+                "\t<http://www.infoiasi.ro/wad/schemas/sesi/name> \"Ion Popescu\"^^xsd:string ;\n" +
+                "\t<http://www.infoiasi.ro/wad/schemas/sesi/description> \"Ambitious student, looking to work mainly with Java technologies\" ;\n" +
+                "\t<http://www.infoiasi.ro/wad/schemas/sesi/id> \"ionpopescu\"^^xsd:string ;\n" +
+                "\t<http://www.infoiasi.ro/wad/schemas/sesi/sesiUrl> \"/students/ionpopescu\" ;\n" +
+                "\t<http://www.infoiasi.ro/wad/schemas/sesi/generalSkill> \"Team player\"^^xsd:string ;\n" +
+                "\t<http://www.infoiasi.ro/wad/schemas/sesi/workedOnProject> <http://www.infoiasi.ro/wad/objects/sesi/005> ;\n" +
+                "\t<http://www.infoiasi.ro/wad/schemas/sesi/technicalSkill> <http://www.infoiasi.ro/wad/objects/sesi/Java-Intermediate> ;\n" +
+                "\t<http://www.infoiasi.ro/wad/schemas/sesi/hasStudies> <http://www.infoiasi.ro/wad/objects/sesi/studies007> .\n";
+
+        OntModel m = ModelFactory.createOntologyModel();
+        m.read(new StringReader(s), SESI_SCHEMA_NS, DEFAULT_JENA_LANG);
+
+        StudentDeserializer d = new StudentDeserializer();
+        d.deserialize(m, "ionpopescu");
     }
 }

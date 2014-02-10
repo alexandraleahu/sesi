@@ -17,7 +17,7 @@
 ]>
 
 
-<rdf:RDF
+<rdf:RDF xmlns="http://www.infoiasi.ro/wad/objects/sesi#"
      xml:base="http://www.infoiasi.ro/wad/objects/sesi"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:foaf="http://xmlns.com/foaf/0.1/"
@@ -26,8 +26,8 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:sesiSchema="http://www.infoiasi.ro/wad/schemas/sesi/"
      xmlns:s="http://schema.org/"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:freebase="http://rdf.freebase.com/ns/"
      xmlns:doap="http://usefulinc.com/ns/doap#">
@@ -248,11 +248,11 @@
 
     <owl:NamedIndividual rdf:about="&sesi;ionpopescu">
         <rdf:type rdf:resource="&sesiSchema;Student"/>
+        <sesiSchema:name rdf:datatype="&xsd;string">Ion Popescu</sesiSchema:name>
         <sesiSchema:generalSkill rdf:datatype="&xsd;string">Team player</sesiSchema:generalSkill>
         <sesiSchema:id rdf:datatype="&xsd;string">ionpopescu</sesiSchema:id>
         <sesiSchema:description>Ambitious student, looking to work mainly with Java technologies</sesiSchema:description>
         <sesiSchema:sesiUrl>/students/ionpopescu</sesiSchema:sesiUrl>
-        <sesiSchema:name>Ion Popescu</sesiSchema:name>
         <sesiSchema:workedOnProject rdf:resource="&sesi;005"/>
         <sesiSchema:technicalSkill rdf:resource="&sesi;Java-Intermediate"/>
         <sesiSchema:hasStudies rdf:resource="&sesi;studies007"/>
@@ -287,6 +287,30 @@
     
 
 
+    <!-- https://rdf.freebase.com/ns/m.016t_3 -->
+
+    <rdf:Description rdf:about="https://rdf.freebase.com/ns/m.016t_3">
+        <sesiSchema:name rdf:datatype="&xsd;string">Master</sesiSchema:name>
+    </rdf:Description>
+    
+
+
+    <!-- https://rdf.freebase.com/ns/m.019v9k -->
+
+    <rdf:Description rdf:about="https://rdf.freebase.com/ns/m.019v9k">
+        <sesiSchema:name rdf:datatype="&xsd;string">Bachelor</sesiSchema:name>
+    </rdf:Description>
+    
+
+
+    <!-- https://rdf.freebase.com/ns/m.04zx3q1 -->
+
+    <rdf:Description rdf:about="https://rdf.freebase.com/ns/m.04zx3q1">
+        <sesiSchema:name rdf:datatype="&xsd;string">PhD</sesiSchema:name>
+    </rdf:Description>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -298,15 +322,8 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.02l6h"/>
-            <rdf:Description rdf:about="&freebase;m.02zsyq"/>
+            <rdf:Description rdf:about="&freebase;m.07657k"/>
+            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
@@ -319,8 +336,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.07657k"/>
-            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;m.02l6h"/>
+            <rdf:Description rdf:about="&freebase;m.02zsyq"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>

@@ -8,6 +8,7 @@ import com.complexible.stardog.jena.SDJenaFactory;
 import com.complexible.stardog.reasoning.api.ReasoningType;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import org.apache.jena.atlas.web.auth.ServiceAuthenticator;
@@ -73,8 +74,8 @@ public class SparqlService {
         builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
                 .append("select ?name ?seeAlso where { ")
-                .append("<").append(uri).append(">").append(" sesiSchema:name ?name . ")
-                .append("<").append(uri).append(">").append(" rdfs:seeAlso ?seeAlso . }");
+                .append("optional {").append("<").append(uri).append(">").append(" sesiSchema:name ?name . }")
+                .append("optional {").append("<").append(uri).append(">").append(" rdfs:seeAlso ?seeAlso . }}");
         Query query = QueryFactory.create(builder.toString());
         QueryExecution qe = getQueryExecution(query);
 
@@ -83,8 +84,16 @@ public class SparqlService {
             ResultSet rs = qe.execSelect();
             if (rs.hasNext()) {
                 QuerySolution solution = rs.nextSolution();
-                extraInfo.setName(solution.getLiteral("name").getString());
-                extraInfo.setInfoUrl(solution.getLiteral("seeAlso").getString());
+                Literal name = solution.getLiteral("name");
+                if (name != null) {
+
+                    extraInfo.setName(name.getString());
+                }
+                Literal seeAlso = solution.getLiteral("seeAlso");
+                if (seeAlso != null) {
+
+                    extraInfo.setInfoUrl(seeAlso.getString());
+                }
                 extraInfo.setOntologyUri(uri);
             }
         } catch (Exception e) {
@@ -245,10 +254,10 @@ public class SparqlService {
     public Studies getStudies(String studiesUri) {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
-                .append("select ?yearsOfStudy ?degree ?faculty where { ")
+                .append("select ?yearOfStudy ?degree ?faculty where { ")
                 .append("<").append(studiesUri).append(">").append(" sesiSchema:yearOfStudy ?yearOfStudy . ")
                 .append("<").append(studiesUri).append(">").append(" sesiSchema:degree ?degree . ")
-                .append("<").append(studiesUri).append(">").append(" sesiSchema:studyFaculty ?studyFaculty . }");
+                .append("<").append(studiesUri).append(">").append(" sesiSchema:studyFaculty ?faculty . }");
         Query query = QueryFactory.create(builder.toString());
         QueryExecution qe = getQueryExecution(query);
 
@@ -258,9 +267,9 @@ public class SparqlService {
                 Studies studies = new Studies();
                 QuerySolution solution = rs.nextSolution();
                 Integer yearOfStudy = solution.getLiteral("yearOfStudy").getInt();
-                String degreeUri = solution.getLiteral("degree").getString();
+                String degreeUri = solution.getResource("degree").getURI();
                 Degree degree = getDegree(degreeUri);
-                String facultyUri = solution.getLiteral("faculty").getString();
+                String facultyUri = solution.getResource("faculty").getURI();
                 Faculty faculty = getFaculty(facultyUri);
                 studies.setDegree(degree);
                 studies.setYearOfStudy(yearOfStudy);
@@ -279,9 +288,10 @@ public class SparqlService {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ")
                 .append("PREFIX sesiSchema: <http://www.infoiasi.ro/wad/schemas/sesi/> ")
-                .append("select ?name ?university where { ")
+                .append("select ?name ?university ?infoUrl where { ")
                 .append("<").append(facultyUri).append(">").append(" sesiSchema:name ?name . ")
-                .append("<").append(facultyUri).append(">").append(" sesiSchema:university ?university . }");
+                .append("<").append(facultyUri).append(">").append(" sesiSchema:university ?university . ")
+                .append("optional {<").append(facultyUri).append(">").append(" rdfs:seeAlso ?infoUrl. }}");
         Query query = QueryFactory.create(builder.toString());
         QueryExecution qe = getQueryExecution(query);
 
@@ -291,8 +301,14 @@ public class SparqlService {
                 QuerySolution solution = rs.nextSolution();
                 String name = solution.getLiteral("name").getString();
                 String universityUri = solution.getResource("university").getURI();
-                University university = getUniversity(universityUri);
+                Literal url = solution.getLiteral("infoUrl");
                 Faculty faculty = new Faculty();
+                if (url != null) {
+
+                    String infoUrl = url.getString();
+                    faculty.setInfoUrl(infoUrl);
+                }
+                University university = getUniversity(universityUri);
                 faculty.setName(name);
                 faculty.setUniversity(university);
                 faculty.setOntologyUri(facultyUri);

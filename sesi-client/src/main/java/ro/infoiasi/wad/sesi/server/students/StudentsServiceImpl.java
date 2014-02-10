@@ -29,8 +29,7 @@ public class StudentsServiceImpl extends RemoteServiceServlet implements Student
                 .path(RESOURCE_PATH)
                 .path(studentId);
 
-        Response response = target.request()
-                .accept(DEFAULT_ACCEPT_RDF_TYPE)
+        Response response = target.request(DEFAULT_ACCEPT_RDF_TYPE)
                 .get();
 
         if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode())  {

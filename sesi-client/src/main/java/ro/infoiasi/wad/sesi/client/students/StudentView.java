@@ -8,11 +8,15 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import ro.infoiasi.wad.sesi.client.commonwidgets.IntegerView;
 import ro.infoiasi.wad.sesi.client.commonwidgets.ProjectsView;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetViewer;
 import ro.infoiasi.wad.sesi.client.ontologyextrainfo.OntologyExtraInfoView;
 import ro.infoiasi.wad.sesi.client.technicalskills.TechnicalSkillView;
+import ro.infoiasi.wad.sesi.core.model.Degree;
+import ro.infoiasi.wad.sesi.core.model.Faculty;
 import ro.infoiasi.wad.sesi.core.model.Student;
+import ro.infoiasi.wad.sesi.core.model.University;
 
 public class StudentView extends Composite implements ResourceWidgetViewer<Student> {
     interface StudentViewUiBinder extends UiBinder<HTMLPanel, StudentView> {
@@ -42,20 +46,20 @@ public class StudentView extends Composite implements ResourceWidgetViewer<Stude
     TechnicalSkillView technicalSkillsTable;
 
     @UiField
-    @Ignore
-    Label faculty;
+    @Path("studies.faculty")
+    OntologyExtraInfoView<Faculty> faculty;
 
     @UiField
-    @Ignore
-    OntologyExtraInfoView university;
+    @Path("studies.faculty.university")
+    OntologyExtraInfoView<University> university;
 
     @UiField
-    @Ignore
-    OntologyExtraInfoView degree;
+    @Path("studies.degree")
+    OntologyExtraInfoView<Degree> degree;
 
     @UiField
-    @Ignore
-    Label yearOfStudy;
+    @Path("studies.yearOfStudy")
+    IntegerView yearOfStudy;
     @UiField
     @Path("projects")
     ProjectsView projects;
@@ -69,14 +73,7 @@ public class StudentView extends Composite implements ResourceWidgetViewer<Stude
     public void edit(Student student) {
         driver.edit(student);
 
-        studentNameHeader.setText(student.getName());
-        descriptionLabel.setText(student.getDescription());
         generalSkillsLabel.setText(Joiner.on(",").join(student.getGeneralSkills()));
-        technicalSkillsTable.setValue(student.getTechnicalSkills());
-        faculty.setText(student.getStudies().getFaculty().getName());
-        degree.setValue(student.getStudies().getDegree());
-        yearOfStudy.setText(student.getStudies().getYearOfStudy().toString());
-        university.setValue(student.getStudies().getFaculty().getUniversity());
     }
 
 }

@@ -7,7 +7,9 @@
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
     <g:HTMLPanel styleName="{resource.style.withScroll}">
         <b:WellForm>
-            <g:Label ui:field="studentNameHeader" styleName="{resource.style.bigLabel}"/>
+            <b:Legend>
+                <g:Label ui:field="studentNameHeader"/>
+            </b:Legend>
             <b:Row>
                 <b:Column size="1">
                     <b:Label type="INFO" text="Description"/>
@@ -50,7 +52,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <g:Label ui:field="faculty"/>
+                    <o:OntologyExtraInfoView ui:field="faculty"/>
                 </b:Column>
             </b:Row>
             <b:Row>
@@ -80,7 +82,7 @@
             </b:Row>
             <b:Row>
                 <b:Column size="4">
-                    <g:Label ui:field="yearOfStudy"/>
+                    <p:IntegerView ui:field="yearOfStudy"/>
                 </b:Column>
             </b:Row>
             <b:Row>

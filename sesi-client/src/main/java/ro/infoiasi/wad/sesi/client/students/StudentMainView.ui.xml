@@ -6,6 +6,9 @@
     <b:TabPanel tabPosition="left">
         <b:Tab heading="Profile" icon="PENCIL" active="true">
             <g:HTMLPanel ui:field="profilePanel">
+                <b:Icon type="SPINNER" size="TWO_TIMES" spin="true"  ui:field="loadingResultsIcon" visible="false"
+                        addStyleNames="{resource.style.noFlickering}"  />
+                <b:Label type="IMPORTANT" visible="false" text="Could not load profile" ui:field="errorLabel"/>
                 <b:Button type="INFO" text="Edit profile" ui:field="editProfileBtn"/>
                 <b:Button type="INFO" text="Save profile" ui:field="saveProfileBtn"/>
             </g:HTMLPanel>

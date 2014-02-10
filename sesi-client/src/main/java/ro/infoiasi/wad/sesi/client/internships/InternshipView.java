@@ -160,6 +160,7 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
         String motivation = motivationArea.getText();
         motivationModal.hide();
         loadingResultsIcon.setVisible(true);
+        errorLabel.setVisible(false);
         InternshipApplicationsService.App.getInstance().createApplication(studentId, internshipId, motivation, new AsyncCallback<InternshipApplication>() {
             @Override
             public void onFailure(Throwable caught) {

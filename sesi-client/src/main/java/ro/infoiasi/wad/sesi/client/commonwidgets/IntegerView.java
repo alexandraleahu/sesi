@@ -14,13 +14,17 @@ public class IntegerView extends Composite implements LeafValueEditor<Integer> {
 
     @Override
     public void setValue(Integer value) {
-        numberLabel.setText(value.toString());
+        if(value != null) {
+
+            numberLabel.setText(value.toString());
+        }
     }
 
     @Override
     public Integer getValue() {
 
-        return Integer.parseInt(numberLabel.getText());
+        String text = numberLabel.getText();
+        return Integer.parseInt(text.isEmpty() ? "0" : text);
     }
 
     interface NumberViewUiBinder extends UiBinder<Label, IntegerView> {
