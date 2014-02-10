@@ -1,7 +1,9 @@
 package ro.infoiasi.wad.sesi.core.model;
 
-import java.util.EnumSet;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Set;
 
+@XmlRootElement
 public abstract class StudentInternshipRelation implements Resource {
 
     public static enum Status {
@@ -36,7 +38,7 @@ public abstract class StudentInternshipRelation implements Resource {
         this.student = student;
     }
 
-    public abstract EnumSet<Status> getPossibleStatus();
+    public abstract Set<Status> getPossibleStatus();
 
     public String getId() {
         return id;

@@ -32,7 +32,7 @@
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi InternshipApplicationService</servlet-name>
-        <servlet-class>ro.infoiasi.wad.sesi.server.applications.InternshipApplicationServiceImpl</servlet-class>
+        <servlet-class>ro.infoiasi.wad.sesi.server.applications.InternshipApplicationsServiceImpl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ro.infoiasi.wad.sesi.Sesi ProgressDetailsService</servlet-name>

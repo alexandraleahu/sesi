@@ -42,7 +42,7 @@
     <servlet path="/TechnicalSkillsService" class="ro.infoiasi.wad.sesi.server.technicalskills.TechnicalSkillsServiceImpl"/>
     <servlet path="/StudentService" class="ro.infoiasi.wad.sesi.server.students.StudentsServiceImpl"/>
     <servlet path="/InternshipApplicationService"
-             class="ro.infoiasi.wad.sesi.server.applications.InternshipApplicationServiceImpl"/>
+             class="ro.infoiasi.wad.sesi.server.applications.InternshipApplicationsServiceImpl"/>
     <servlet path="/ProgressDetailsService" class="ro.infoiasi.wad.sesi.server.progressdetails.InternshipsProgressDetailsServiceImpl"/>
     <servlet path="/LoginService" class="ro.infoiasi.wad.sesi.server.login.LoginServiceImpl"/>
     <servlet path="/TeachersService" class="ro.infoiasi.wad.sesi.server.teachers.TeachersServiceImpl"/>

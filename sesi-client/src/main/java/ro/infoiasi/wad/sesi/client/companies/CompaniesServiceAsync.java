@@ -23,4 +23,5 @@ public interface CompaniesServiceAsync {
 
     void registerCompany(String username, String password, String name, AsyncCallback<Boolean> async);
 
+    void updateCompany(Company company, AsyncCallback<Boolean> async);
 }

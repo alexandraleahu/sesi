@@ -1,16 +1,13 @@
 package ro.infoiasi.wad.sesi.server.companies;
 
-import com.google.common.base.Joiner;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-
 import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
 import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
-import ro.infoiasi.wad.sesi.core.model.Student;
 import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.server.applications.InternshipApplicationDeserializer;
 import ro.infoiasi.wad.sesi.server.internships.InternshipDeserializer;
@@ -21,7 +18,6 @@ import javax.ws.rs.client.*;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.io.StringReader;
 import java.util.List;
 
@@ -119,22 +115,16 @@ public class CompaniesServiceImpl extends RemoteServiceServlet implements Compan
         return details;
     }
 
-    public String updateCompany(Company company) {
+    @Override
+    public boolean updateCompany(Company company) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL).path(RESOURCE_PATH).path(company.getId());
-        Form form = new Form();
-        form.param("description", company.getDescription());
-        form.param("name", company.getName());
-        form.param("infoUrl", company.getInfoUrl());
-        form.param("siteUrl", company.getSiteUrl());
-        form.param("active", String.valueOf(company.isActive()));
-        form.param("communityRating", String.valueOf(company.getCommunityRating()));
-        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
-        if (response.getStatus() == Response.Status.FORBIDDEN.getStatusCode()) {
-            return null;
-        }
-        return response.getEntity().toString();
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE)
+                .put(Entity.entity(company, MediaType.APPLICATION_XML));
+        int status = response.getStatus();
+        client.close();
+        return (status == Response.Status.OK.getStatusCode());
+
     }
 
 

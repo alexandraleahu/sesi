@@ -4,20 +4,24 @@ import com.github.gwtbootstrap.client.ui.Button;
 import com.google.common.base.Joiner;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
+import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.commonwidgets.DoubleView;
 import ro.infoiasi.wad.sesi.client.commonwidgets.IntegerView;
+import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetViewer;
 import ro.infoiasi.wad.sesi.client.ontologyextrainfo.OntologyExtraInfoView;
 import ro.infoiasi.wad.sesi.client.technicalskills.TechnicalSkillView;
-import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetViewer;
 import ro.infoiasi.wad.sesi.core.model.City;
 import ro.infoiasi.wad.sesi.core.model.Currency;
 import ro.infoiasi.wad.sesi.core.model.Internship;
+import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 
 
 public class InternshipView extends Composite implements ResourceWidgetViewer<Internship> {
@@ -121,6 +125,15 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
         acquiredGeneralSkillsLabel.setText(Joiner.on(", ").join(internship.getAcquiredGeneralSkills()));
         categoryLabel.setText(internship.getCategory().getDescription());
 
+        if (!UserAccountType.STUDENT_ACCOUNT.equals(Sesi.getCurrentUserType())) {
+
+             applyBtn.removeFromParent();
+        }
+
+    }
+
+    @UiHandler("applyBtn")
+    public void appyToInternship(ClickEvent e) {
 
     }
 

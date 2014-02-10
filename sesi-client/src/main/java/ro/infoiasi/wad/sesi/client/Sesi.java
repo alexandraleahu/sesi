@@ -7,8 +7,9 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import ro.infoiasi.wad.sesi.client.authentication.SigninService;
-import ro.infoiasi.wad.sesi.client.main.MainView;
+import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
+import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.core.model.User;
 import ro.infoiasi.wad.sesi.core.model.UserAccountType;
 import ro.infoiasi.wad.sesi.resources.SesiResources;
@@ -37,9 +38,28 @@ public class Sesi implements EntryPoint {
 //
         RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
         rootLayoutPanel.setStyleName(SesiResources.INSTANCE.style().backgroundColor());
-        rootLayoutPanel.add(new MainView(eventBus));
+        //rootLayoutPanel.add(new MainView(eventBus));
+
+          Company company = new Company();
+        company.setId("testcomp");
+        company.setName("Testcomp");
+        company.setActive(true);
+        company.setCommunityRating(2);
+        company.setDescription("bla bla");
+        company.setSiteUrl("http://balbla");
 
 
+        CompaniesService.App.getInstance().updateCompany(company, new AsyncCallback<Boolean>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                System.out.println(caught);
+            }
+
+            @Override
+            public void onSuccess(Boolean result) {
+                System.out.println(result);
+            }
+        });
 //        instance.getInternshipById("003", new AsyncCallback<Internship>() {
 //            @Override
 //            public void onFailure(Throwable caught) {

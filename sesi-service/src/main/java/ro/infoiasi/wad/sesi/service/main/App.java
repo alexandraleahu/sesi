@@ -13,4 +13,5 @@ public class App extends ResourceConfig {
         register(RolesAllowedDynamicFeature.class);
         packages("ro.infoiasi.wad.sesi.service.resources");
     }
+
 }

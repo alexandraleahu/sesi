@@ -33,7 +33,7 @@ public interface StudentsService extends RemoteService {
 
     List<InternshipProgressDetails> getStudentInternshipProgressDetails(String studentId);
 
-    String updateStudent(Student student);
+    boolean updateStudent(Student student);
 
     public static final String RESOURCE_PATH = "students";
 

@@ -2,9 +2,11 @@ package ro.infoiasi.wad.sesi.core.model;
 
 import ro.infoiasi.wad.sesi.core.util.HasDescription;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
 import java.util.Map;
 
+@XmlRootElement
 public enum UserAccountType implements HasDescription {
     STUDENT_ACCOUNT("student"),
     TEACHER_ACCOUNT("teacher"),

@@ -3,7 +3,7 @@ package ro.infoiasi.wad.sesi.server.applications;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationService;
+import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationsService;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 
 import javax.ws.rs.client.Client;
@@ -16,7 +16,7 @@ import java.util.List;
 import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_SCHEMA_NS;
 import static ro.infoiasi.wad.sesi.server.util.ServiceConstants.*;
 
-public class InternshipApplicationServiceImpl extends RemoteServiceServlet implements InternshipApplicationService {
+public class InternshipApplicationsServiceImpl extends RemoteServiceServlet implements InternshipApplicationsService {
     @Override
     public InternshipApplication getApplicationById(String companyId) {
         Client client = ClientBuilder.newClient();

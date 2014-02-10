@@ -5,7 +5,7 @@ import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 
 import java.util.List;
 
-public interface InternshipApplicationServiceAsync {
+public interface InternshipApplicationsServiceAsync {
     void getApplicationById(String companyId, AsyncCallback<InternshipApplication> async);
 
     void getAllApplications(AsyncCallback<List<InternshipApplication>> async);

@@ -16,4 +16,6 @@ public interface TeachersServiceAsync {
     void registerTeacher(String username, String password, String name, AsyncCallback<Boolean> async);
 
     void importTeacherProfile(String url, AsyncCallback<Teacher> async);
+
+    void updateTeacher(Teacher teacher, AsyncCallback<Boolean> async);
 }

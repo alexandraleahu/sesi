@@ -1,5 +1,8 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Currency extends OntologyExtraInfo {
 
     @Override

@@ -32,6 +32,8 @@ public interface TeachersService extends RemoteService {
 
     List<InternshipProgressDetails> getProgressDetailsForTeacher(String teacherId);
 
+    boolean updateTeacher(Teacher teacher);
+
     public static final String RESOURCE_PATH = "teachers";
 
 

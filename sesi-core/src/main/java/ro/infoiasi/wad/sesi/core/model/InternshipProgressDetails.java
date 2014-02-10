@@ -1,16 +1,19 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
+@XmlRootElement
 public class InternshipProgressDetails extends StudentInternshipRelation {
 
     public static final List<Status> POSSIBLE_STATUSES = Arrays.asList(Status.inProgress, Status.finished);
     private Teacher teacher;
 
     @Override
-    public EnumSet<Status> getPossibleStatus() {
+    public Set<Status> getPossibleStatus() {
         return EnumSet.copyOf(POSSIBLE_STATUSES);
     }
 

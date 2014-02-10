@@ -19,7 +19,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
 import ro.infoiasi.wad.sesi.client.Sesi;
-import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationService;
+import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationsService;
 import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationViewAndEditor;
 import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
@@ -368,9 +368,9 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 }
             });
 
-        } else if (resourceType.equals(InternshipApplicationService.RESOURCE_PATH))  {
+        } else if (resourceType.equals(InternshipApplicationsService.RESOURCE_PATH))  {
 
-            InternshipApplicationService.App.getInstance().getApplicationById(id, new AsyncCallback<InternshipApplication>() {
+            InternshipApplicationsService.App.getInstance().getApplicationById(id, new AsyncCallback<InternshipApplication>() {
                 @Override
                 public void onFailure(Throwable caught) {
                     showGeneralError();

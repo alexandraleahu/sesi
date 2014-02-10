@@ -1,12 +1,12 @@
 package ro.infoiasi.wad.sesi.core.model;
 
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+@XmlRootElement
 public class StudentLinkedinProfile implements Serializable {
     public String name;
     public String lastName;

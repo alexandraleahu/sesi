@@ -1,5 +1,8 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Studies extends BaseExtraInfo {
     private Faculty faculty;
     private Integer yearOfStudy;

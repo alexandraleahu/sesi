@@ -1,7 +1,9 @@
 package ro.infoiasi.wad.sesi.core.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
+@XmlRootElement
 public class TechnicalSkill implements Serializable {
 
     private ProgrammingLanguage programmingLanguage;

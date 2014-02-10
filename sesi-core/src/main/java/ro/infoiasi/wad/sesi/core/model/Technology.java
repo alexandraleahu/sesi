@@ -3,9 +3,11 @@ package ro.infoiasi.wad.sesi.core.model;
 import ro.infoiasi.wad.sesi.core.util.HasDescription;
 import ro.infoiasi.wad.sesi.core.util.HasName;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement
 public class Technology extends OntologyExtraInfo implements HasDescription {
 
     private String description;

@@ -8,15 +8,15 @@ import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
 import java.util.List;
 
 @RemoteServiceRelativePath("InternshipApplicationService")
-public interface InternshipApplicationService extends RemoteService {
+public interface InternshipApplicationsService extends RemoteService {
     /**
      * Utility/Convenience class.
-     * Use InternshipApplicationService.App.getInstance() to access static instance of InternshipApplicationServiceAsync
+     * Use InternshipApplicationsService.App.getInstance() to access static instance of InternshipApplicationServiceAsync
      */
     public static class App {
-        private static final InternshipApplicationServiceAsync ourInstance = (InternshipApplicationServiceAsync) GWT.create(InternshipApplicationService.class);
+        private static final InternshipApplicationsServiceAsync ourInstance = (InternshipApplicationsServiceAsync) GWT.create(InternshipApplicationsService.class);
 
-        public static InternshipApplicationServiceAsync getInstance() {
+        public static InternshipApplicationsServiceAsync getInstance() {
             return ourInstance;
         }
     }

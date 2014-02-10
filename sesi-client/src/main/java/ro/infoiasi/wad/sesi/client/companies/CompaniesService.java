@@ -39,5 +39,7 @@ public interface CompaniesService extends RemoteService {
 
     List<String> getAllCompaniesNames();
 
+    boolean updateCompany(Company company);
+
     public static final String RESOURCE_PATH = "companies";
 }
