@@ -3,6 +3,7 @@ package ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces;
 import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.TextArea;
 import com.github.gwtbootstrap.client.ui.TextBox;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.LeafValueEditor;
@@ -33,6 +34,20 @@ public class ProjectEditor extends Composite implements LeafValueEditor<StudentP
             projectDescription.setText(value.getDescription());
             repository.setText(value.getRepository());
             projectUrl.setText(value.getInfoUrl());
+            if(value.getProgrammingLanguages() != null) {
+                List langs = Lists.newArrayList();
+                for (ProgrammingLanguage programmingLanguage : value.getProgrammingLanguages()) {
+                    langs.add(programmingLanguage.getName());
+                }
+                programmingLanguagesIdArea.setText(Joiner.on(",").join(langs));
+            }
+            if(value.getTechnologies() != null) {
+                List langs = Lists.newArrayList();
+                for (Technology technology : value.getTechnologies()) {
+                    langs.add(technology.getName());
+                }
+                technologiesIdArea.setText(Joiner.on(",").join(langs));
+            }
         }
     }
 

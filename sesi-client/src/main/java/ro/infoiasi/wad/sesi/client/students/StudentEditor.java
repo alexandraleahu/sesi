@@ -152,9 +152,11 @@ public class StudentEditor extends Composite implements ResourceWidgetEditor<Stu
     public StudentEditor() {
         initWidget(ourUiBinder.createAndBindUi(this));
         driver.initialize(this);
-        if(Cookies.getCookie(WidgetConstants.STUDENT_IMPORT_PROFILE_COOKIE) != null) {
-            importProfile(null);
+        if (Cookies.getCookie(WidgetConstants.STUDENT_IMPORT_PROFILE_COOKIE) != null) {
             Cookies.setCookie(WidgetConstants.STUDENT_IMPORT_PROFILE_COOKIE, null);
+            if (Window.Location.getParameter("oauth_verifier") != null) {
+                importProfile(null);
+            }
         }
     }
 

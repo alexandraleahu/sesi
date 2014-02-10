@@ -123,7 +123,7 @@
             </b:Row>
 
             <b:Row>
-                <b:Column size="2">
+                <b:Column size="7">
                     <g:HTMLPanel ui:field="projectsPanel"/>
                 </b:Column>
             </b:Row>
