@@ -22,7 +22,7 @@
         <b:Tab heading="Reports" icon="GROUP">
             <c:ReportEditor ui:field="reportEditor"/>
          </b:Tab>
-        <b:Tab heading="Monitored internships" icon="LIST">
+        <b:Tab heading="Monitored internships" icon="LIST" ui:field="monitoredInternshipsTab">
             <g:HTMLPanel ui:field="internshipPanel">
 
             </g:HTMLPanel>

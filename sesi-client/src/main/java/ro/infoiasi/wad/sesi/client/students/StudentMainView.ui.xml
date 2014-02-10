@@ -13,17 +13,17 @@
                 <b:Button type="INFO" text="Save profile" visible="false" ui:field="saveProfileBtn"/>
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="My Applications"  icon="LIST" >
+        <b:Tab heading="My Applications"  icon="LIST" ui:field="applicationsTab">
             <g:HTMLPanel ui:field="applicationsPanel">
 
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="My Progress Details"  icon="LIST" >
+        <b:Tab heading="My Progress Details"  icon="LIST" ui:field="progressDetailsTab">
             <g:HTMLPanel ui:field="progressDetailsPanel">
 
             </g:HTMLPanel>
         </b:Tab>
-        <b:Tab heading="Recommended internships"  icon="LIST" >
+        <b:Tab heading="Recommended internships"  icon="LIST" ui:field="recommendedInternshipsTab">
             <g:HTMLPanel ui:field="recommendedPanel">
 
             </g:HTMLPanel>

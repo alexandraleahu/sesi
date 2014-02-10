@@ -84,6 +84,12 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
     HTMLPanel progressDetailsPanel;
     @UiField
     HTMLPanel applicationsPanel;
+    @UiField
+    Tab progressDetailsTab;
+    @UiField
+    Tab recommendedInternshipsTab;
+    @UiField
+    Tab applicationsTab;
 
     private StudentView profileView;
     private StudentEditor profileEditor;
@@ -106,6 +112,24 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
         String studentId = Sesi.getCurrentUserId();
         loadingResultsIcon.setVisible(true);
         errorLabel.setVisible(false);
+        recommendedInternshipsTab.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                initRecommendedInternships();
+            }
+        });
+        applicationsTab.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                initApplicationsPanel();
+            }
+        });
+        progressDetailsTab.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                initProgressDetailsTab();
+            }
+        });
         StudentsService.App.getInstance().getStudentById(studentId, new AsyncCallback<Student>() {
             @Override
             public void onFailure(Throwable caught) {

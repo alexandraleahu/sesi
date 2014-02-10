@@ -1,13 +1,11 @@
 package ro.infoiasi.wad.sesi.client.teachers;
 
-import com.github.gwtbootstrap.client.ui.Button;
-import com.github.gwtbootstrap.client.ui.Icon;
-import com.github.gwtbootstrap.client.ui.Label;
-import com.github.gwtbootstrap.client.ui.TabPanel;
+import com.github.gwtbootstrap.client.ui.*;
 import com.github.gwtbootstrap.client.ui.constants.LabelType;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -96,6 +94,8 @@ public class TeacherMainView extends Composite implements ResourceMainView<Teach
     Label errorLabel;
     @UiField
     HTMLPanel internshipPanel;
+    @UiField
+    Tab monitoredInternshipsTab;
 
     private TeacherProfileView profileView;
     private TeacherProfileEditor profileEditor;
@@ -144,6 +144,12 @@ public class TeacherMainView extends Composite implements ResourceMainView<Teach
         String teacherId = Sesi.getCurrentUserId();
         loadingResultsIcon.setVisible(true);
         errorLabel.setVisible(false);
+        monitoredInternshipsTab.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                initMonitoredInternships();
+            }
+        });
         TeachersService.App.getInstance().getTeacherById(teacherId, new AsyncCallback<Teacher>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -169,7 +175,6 @@ public class TeacherMainView extends Composite implements ResourceMainView<Teach
 
             }
         });
-        initMonitoredInternships();
 
     }
 
