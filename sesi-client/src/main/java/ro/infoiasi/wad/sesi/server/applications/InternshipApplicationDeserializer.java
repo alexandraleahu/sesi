@@ -72,7 +72,7 @@ public class InternshipApplicationDeserializer implements ResourceDeserializer<I
             //student
             statement = m.getProperty(applicationResource, ResourceFactory.createProperty(SESI_SCHEMA_NS, CANDIDATE_PROP));
             if (statement != null) {
-                String studentID = sparqlService.getIDFromURI(statement.getResource().getURI());
+                String studentID = statement.getObject().asResource().getLocalName();
                 StudentsServiceImpl studentService = new StudentsServiceImpl();
                 application.setStudent(studentService.getStudentById(studentID));
             }

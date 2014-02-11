@@ -21,9 +21,7 @@
                 <b:Column size="1">
                     <b:Label type="INFO" text="Openings"/>
                 </b:Column>
-                <b:Column size="1">
-                    <b:Label type="INFO" text="Applications"/>
-                </b:Column>
+
             </b:Row>
             <b:Row>
                 <b:Column size="2">
@@ -32,9 +30,7 @@
                 <b:Column size="1">
                     <c:IntegerView ui:field="openingsLabel"/>
                 </b:Column>
-                <b:Column size="1">
-                    <c:IntegerView ui:field="applicationsLabel"/>
-                </b:Column>
+
             </b:Row>
 
             <b:Row>

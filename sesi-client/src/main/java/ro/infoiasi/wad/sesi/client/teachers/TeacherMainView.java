@@ -92,10 +92,13 @@ public class TeacherMainView extends Composite implements ResourceMainView<Teach
     @UiField
     @Editor.Ignore
     Label errorLabel;
-    @UiField
-    HTMLPanel internshipPanel;
+
     @UiField
     Tab monitoredInternshipsTab;
+    @UiField
+    ResourceListVew<InternshipProgressDetails> resourceListVew;
+    @UiField
+    HTMLPanel internshipsPanel;
 
     private TeacherProfileView profileView;
     private TeacherProfileEditor profileEditor;
@@ -186,14 +189,13 @@ public class TeacherMainView extends Composite implements ResourceMainView<Teach
             @Override
             public void onFailure(Throwable caught) {
 
-                internshipPanel.add(new Label(LabelType.IMPORTANT, "Could not load internship applications!"));
+                Label widget = new Label("Could not load resource");
+                widget.setType(LabelType.IMPORTANT);
+                internshipsPanel.add(widget);
             }
 
             @Override
             public void onSuccess(List<InternshipProgressDetails> result) {
-
-                ResourceListVew<InternshipProgressDetails> resourceListVew = new ResourceListVew<InternshipProgressDetails>();
-                internshipPanel.add(resourceListVew);
 
                 resourceListVew.setValue(result);
             }

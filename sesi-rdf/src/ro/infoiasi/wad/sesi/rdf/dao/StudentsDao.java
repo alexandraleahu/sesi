@@ -64,9 +64,9 @@ public class StudentsDao extends BasicDao {
             StringBuilder sb = new StringBuilder()
                     .append("describe ?application  ")
                     .append("where {")
-                    .append("[] rdf:type sesiSchema:Student ; ")
-                    .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:submittedApplication ?application . ")
+                    .append("?s rdf:type sesiSchema:Student ; ")
+                    .append("sesiSchema:id ?id . ")
+                    .append("?application sesiSchema:candidate ?s . ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
@@ -171,11 +171,11 @@ public class StudentsDao extends BasicDao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("describe ?progressDetails ")
+                    .append("describe ?application  ")
                     .append("where {")
-                    .append("[] rdf:type sesiSchema:Student ; ")
-                    .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:attendedInternshipProgress ?progressDetails . ")
+                    .append("?s rdf:type sesiSchema:Student ; ")
+                    .append("sesiSchema:id ?id . ")
+                    .append("?application sesiSchema:attendeeStudent ?s . ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());

@@ -57,9 +57,9 @@ public class TeachersDao extends BasicDao {
             StringBuilder sb = new StringBuilder()
                     .append("describe ?details ")
                     .append("where {")
-                    .append("[] rdf:type sesiSchema:Teacher ; ")
-                    .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:isAssociateInternshipTeacherOf ?details . ")
+                    .append("?t rdf:type sesiSchema:Teacher ; ")
+                    .append("sesiSchema:id ?id . ")
+                    .append("?details sesiSchema:associateInternshipTeacher ?t . ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());

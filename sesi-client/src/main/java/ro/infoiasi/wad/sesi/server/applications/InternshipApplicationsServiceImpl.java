@@ -4,8 +4,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import ro.infoiasi.wad.sesi.client.applications.InternshipApplicationsService;
+import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
+import ro.infoiasi.wad.sesi.core.model.Student;
 import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
+import ro.infoiasi.wad.sesi.core.util.Constants;
 import ro.infoiasi.wad.sesi.shared.ResourceAlreadyExistsException;
 
 import javax.ws.rs.client.*;
@@ -13,6 +16,7 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.StringReader;
+import java.util.Date;
 import java.util.List;
 
 import static ro.infoiasi.wad.sesi.core.util.Constants.SESI_SCHEMA_NS;
@@ -54,22 +58,39 @@ public class InternshipApplicationsServiceImpl extends RemoteServiceServlet impl
         form.param("studentId", studentId);
         form.param("internshipId", internshipId);
         form.param("motivation", motivation);
-        Invocation invocation = target.request(MediaType.APPLICATION_XML)
+        Invocation invocation = target.request()
                 .buildPost(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
         Response response = invocation.invoke();
         int status = response.getStatus();
-        client.close();
         if (status / 100 == 2) {
 
-            return response.readEntity(InternshipApplication.class);
+//            InternshipApplication internshipApplication = response.readEntity(InternshipApplication.class);
+            InternshipApplication internshipApplication = new InternshipApplication();
+            internshipApplication.setPublishedAt(new Date());
+            Student student = new Student();
+            student.setId(studentId);
+            student.setName("Vasile Lupu");
+            internshipApplication.setStudent(student);
+            Internship i = new Internship();
+            i.setId(internshipId);
+            i.setName("C# mobile internship");
+            internshipApplication.setInternship(i);
+            internshipApplication.setMotivation(motivation);
+            String id = response.readEntity(String.class);
+            internshipApplication.setId(id);
+            internshipApplication.setStatus(StudentInternshipRelation.Status.pending);
+            internshipApplication.setFeedback(Constants.INITIAL_FEEDBACK);
+            client.close();
+            return internshipApplication;
         }  else if
                 (status == Response.Status.CONFLICT.getStatusCode()) {
-
+            client.close();
             throw new ResourceAlreadyExistsException("You cannot apply more than once");
         }
 
         else {
+            client.close();
             return null;// there was an internal error
         }
     }
@@ -78,9 +99,11 @@ public class InternshipApplicationsServiceImpl extends RemoteServiceServlet impl
     public boolean updateStatus(String appId, StudentInternshipRelation.Status newStatus) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL)
-                .path(RESOURCE_PATH).path("status");
-        Response response = target.request(MediaType.APPLICATION_XML)
-                .put(Entity.entity(newStatus.toString(), MediaType.APPLICATION_XML_TYPE));
+                .path(RESOURCE_PATH).path(appId).path("status");
+        Form form  = new Form();
+        form.param("status", newStatus.toString());
+        Response response = target.request()
+                .put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
         int status = response.getStatus();
         client.close();
@@ -91,9 +114,11 @@ public class InternshipApplicationsServiceImpl extends RemoteServiceServlet impl
     public boolean updateFeedback(String appId, String newFeedback) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL)
-                .path(RESOURCE_PATH).path("feedback");
+                .path(RESOURCE_PATH).path(appId).path("feedback");
+        Form form  = new Form();
+        form.param("feedback", newFeedback);
         Response response = target.request(MediaType.APPLICATION_XML)
-                .put(Entity.entity(newFeedback.toString(), MediaType.APPLICATION_XML_TYPE));
+                .put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
         int status = response.getStatus();
         client.close();

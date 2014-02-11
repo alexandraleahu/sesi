@@ -61,10 +61,6 @@ public class InternshipView extends Composite implements ResourceWidgetViewer<In
     Label endDateLabel;
 
     @UiField
-    @Path("applicationsCount")
-    IntegerView applicationsLabel;
-
-    @UiField
     @Ignore
     Label categoryLabel;
 

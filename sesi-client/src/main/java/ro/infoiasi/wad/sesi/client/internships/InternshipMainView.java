@@ -32,7 +32,7 @@ public class InternshipMainView extends Composite implements ResourceMainView<In
         internshipPanel.remove(saveProfileBtn);
         internshipPanel.add(internshipView);
         internshipPanel.add(editProfileBtn);
-
+        editProfileBtn.setVisible(true);
 
         internshipView.edit(internship);
 

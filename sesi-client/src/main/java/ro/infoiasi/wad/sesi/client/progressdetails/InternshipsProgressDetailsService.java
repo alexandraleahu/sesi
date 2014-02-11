@@ -30,5 +30,5 @@ public interface InternshipsProgressDetailsService extends RemoteService {
     boolean updateFeedback(String appId, String newFeedback);
 
 
-    public static final String RESOURCE_PATH = "internshipProgressDetails";
+    public static final String RESOURCE_PATH = "internshipsProgressDetails";
 }

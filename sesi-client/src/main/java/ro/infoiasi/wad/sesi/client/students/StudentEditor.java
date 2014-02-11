@@ -26,7 +26,9 @@ import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ProjectEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetEditor;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.core.util.Constants;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,7 +54,11 @@ public class StudentEditor extends Composite implements ResourceWidgetEditor<Stu
 
         //technical skills
         List<String> rawTechnicalSkills = Arrays.asList(freebaseTechnicalSkillsBox.getText().split(WidgetConstants.multipleSkillSeparator));
-        List<TechnicalSkill> technicalSkills = Lists.transform(rawTechnicalSkills, new WidgetConstants.TechnicalSkillFunction());
+        List<TechnicalSkill> technicalSkills = new ArrayList<TechnicalSkill>();
+        for (String rrth : rawTechnicalSkills) {
+            TechnicalSkill technicalSkill = apply(rrth);
+            technicalSkills.add(technicalSkill);
+        }
         student.setTechnicalSkills(technicalSkills);
 
         //studies
@@ -82,6 +88,28 @@ public class StudentEditor extends Composite implements ResourceWidgetEditor<Stu
 
         return student;
     }
+
+    public TechnicalSkill apply(String input) {
+        String[] rawSkills = input.split(WidgetConstants.dataSeparator);
+        TechnicalSkill technicalSkill = new TechnicalSkill();
+
+        String progrType = Constants.PROGRAMMING_LANG_TITLE;
+
+        if (rawSkills[1].equalsIgnoreCase(progrType)) {
+            ProgrammingLanguage lang = new ProgrammingLanguage();
+            OntologyExtraInfo.fillWithOntologyExtraInfo(lang, rawSkills[0], rawSkills[2]);
+            technicalSkill.setProgrammingLanguage(lang);
+        } else {
+            Technology tech = new Technology();
+            OntologyExtraInfo.fillWithOntologyExtraInfo(tech, rawSkills[0], rawSkills[2]);
+            technicalSkill.setTechnology(tech);
+        }
+        KnowledgeLevel level = KnowledgeLevel.valueOf(rawSkills[3]);
+        technicalSkill.setLevel(level);
+        return technicalSkill;
+    }
+
+
 
     @Override
     public void edit(Student bean) {

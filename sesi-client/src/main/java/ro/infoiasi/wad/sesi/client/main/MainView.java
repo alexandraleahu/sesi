@@ -25,6 +25,7 @@ import ro.infoiasi.wad.sesi.client.authentication.*;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.HasEventBus;
 import ro.infoiasi.wad.sesi.client.companies.CompaniesService;
 import ro.infoiasi.wad.sesi.client.companies.CompanyMainView;
+import ro.infoiasi.wad.sesi.client.companies.CompanyView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipMainView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipsByCategoryView;
@@ -233,6 +234,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
     @UiHandler("logoutBtn")
     public void logoutBtnClicked(ClickEvent event) {
         Sesi.removeAllCookies();
+        History.newItem("");
         logoutBtn.setVisible(false);
         profileBtn.setVisible(false);
         loginBtn.setVisible(true);
@@ -242,6 +244,7 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
 
     @UiHandler("profileBtn")
     public void profileBtnClicked(ClickEvent event) {
+        History.newItem("");
         UserAccountType currentUserType = Sesi.getCurrentUserType();
         if (currentUserType != null) {
 
@@ -372,7 +375,9 @@ public class MainView implements IsWidget, ValueChangeHandler<String>, HasEventB
                 public void onSuccess(Company result) {
                     if (result != null) {
 
-                        // TODO
+                        CompanyView v = new CompanyView();
+                        mainPanel.setWidget(v);
+                        v.edit(result);
                     } else {
                         showResourceNotFoundError();
                     }

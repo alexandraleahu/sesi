@@ -64,9 +64,9 @@ public class InternshipApplicationsResource {
 
     @PUT
     @Path("/{id}/status")
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes("application/x-www-form-urlencoded")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response updateStatus(@PathParam("id") String appId, String newStatus) {
+    public Response updateStatus(@PathParam("id") String appId, @FormParam("status")String newStatus) {
 
         InternshipApplicationsDao dao = new InternshipApplicationsDao();
         try {
@@ -79,9 +79,9 @@ public class InternshipApplicationsResource {
 
     @PUT
     @Path("/{id}/feedback")
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes("application/x-www-form-urlencoded")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response updateFeedback(@PathParam("id") String appId, String newFeedback) {
+    public Response updateFeedback(@PathParam("id") String appId, @FormParam("feedback")String newFeedback) {
 
         InternshipApplicationsDao dao = new InternshipApplicationsDao();
         try {
@@ -94,7 +94,7 @@ public class InternshipApplicationsResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.TEXT_PLAIN})
     @Path("/")
     public Response createApplication(@FormParam("internshipId") String internshipId,
                                       @FormParam("studentId") String studentId,
@@ -127,7 +127,7 @@ public class InternshipApplicationsResource {
             dao.createApplication(application);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(id)).build();
             return Response.created(uri)
-                    .entity(application)
+                    .entity(id)
                     .build();
 
         } catch (StardogException e) {

@@ -5,21 +5,20 @@ import com.github.gwtbootstrap.datetimepicker.client.ui.DateTimeBox;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.commonwidgets.DoubleEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.IntegerEditor;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceWidgetEditor;
 import ro.infoiasi.wad.sesi.client.util.WidgetConstants;
 import ro.infoiasi.wad.sesi.core.model.*;
+import ro.infoiasi.wad.sesi.core.util.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,9 +34,9 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
         Internship internship = driver.flush();
 
         // publisher company (we assume that the current logged in user is a company, because no one else can create an internship)
-        String companyId = Cookies.getCookie("currentUser");
         Company company = new Company();
-        company.setId(companyId);
+
+        company.setId(Sesi.getCurrentUserId());
 
         internship.setCompany(company);
 
@@ -52,12 +51,22 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
 
          // acquired & preferred technicalSkills
         List<String> rawAcquiredTechnicalSkills = Arrays.asList(acquiredTechnicalSkillIdArea.getText().split(WidgetConstants.multipleSkillSeparator));
-        List<TechnicalSkill> acquiredTechnicalSkills = Lists.transform(rawAcquiredTechnicalSkills, new WidgetConstants.TechnicalSkillFunction());
-        internship.setAcquiredTechnicalSkills(acquiredTechnicalSkills);
+
+        List<TechnicalSkill> ts = new ArrayList<TechnicalSkill>();
+        for (String rrth : rawAcquiredTechnicalSkills) {
+            TechnicalSkill technicalSkill = apply(rrth);
+            ts.add(technicalSkill);
+        }
+
+        internship.setAcquiredTechnicalSkills(ts);
 
         List<String> rawPreferredGeneralSkills = Arrays.asList(preferredTechnicalSkillIdArea.getText().split(WidgetConstants.multipleSkillSeparator));
-        List<TechnicalSkill> preferredTechnicalSkills = Lists.transform(rawPreferredGeneralSkills, new WidgetConstants.TechnicalSkillFunction());
-        internship.setPreferredTechnicalSkills(preferredTechnicalSkills);
+        List<TechnicalSkill> pts = new ArrayList<TechnicalSkill>();
+        for (String rrth : rawPreferredGeneralSkills) {
+            TechnicalSkill technicalSkill = apply(rrth);
+            pts.add(technicalSkill);
+        }
+        internship.setPreferredTechnicalSkills(pts);
 
         List<Internship.Category> cats = new ArrayList<Internship.Category>();
         for(int i = 0; i < categoryList.getItemCount(); ++i) {
@@ -71,6 +80,28 @@ public class InternshipEditor extends Composite implements ResourceWidgetEditor<
 
         return internship;
     }
+
+    public TechnicalSkill apply(String input) {
+        String[] rawSkills = input.split(WidgetConstants.dataSeparator);
+        TechnicalSkill technicalSkill = new TechnicalSkill();
+
+        String progrType = Constants.PROGRAMMING_LANG_TITLE;
+
+        if (rawSkills[1].equalsIgnoreCase(progrType)) {
+            ProgrammingLanguage lang = new ProgrammingLanguage();
+            OntologyExtraInfo.fillWithOntologyExtraInfo(lang, rawSkills[0], rawSkills[2]);
+            technicalSkill.setProgrammingLanguage(lang);
+        } else {
+            Technology tech = new Technology();
+            OntologyExtraInfo.fillWithOntologyExtraInfo(tech, rawSkills[0], rawSkills[2]);
+            technicalSkill.setTechnology(tech);
+        }
+        KnowledgeLevel level = KnowledgeLevel.valueOf(rawSkills[3]);
+        technicalSkill.setLevel(level);
+        return technicalSkill;
+    }
+
+
 
     @Override
     public void edit(Internship resource) {

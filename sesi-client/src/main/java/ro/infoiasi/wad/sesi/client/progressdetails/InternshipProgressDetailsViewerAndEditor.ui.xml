@@ -7,7 +7,7 @@
             <b:Column size="6">
                 <b:WellForm type="HORIZONTAL">
                     <b:Fieldset>
-                        <b:Legend>Internship Application</b:Legend>
+                        <b:Legend>Internship Progress Details</b:Legend>
 
                         <b:Row>
                             <b:Column size="2">
@@ -62,7 +62,7 @@
 
                         <b:Row>
                             <b:Column size="2">
-                                <b:Label type="INFO">Feedback</b:Label>
+                                <b:Label type="INFO" ui:field="feedbackLabel">Feedback</b:Label>
                             </b:Column>
                         </b:Row>
                         <b:Row>
@@ -85,6 +85,11 @@
                         <b:Row>
                             <b:Column size="5">
                                 <b:Button type="INFO" block="true" ui:field="saveBtn">Save</b:Button>
+                            </b:Column>
+                        </b:Row>
+                        <b:Row>
+                            <b:Column size="5">
+                                <g:Label ui:field="result"/>
                             </b:Column>
                         </b:Row>
 

@@ -124,7 +124,7 @@ public class InternshipsServiceImpl extends RemoteServiceServlet implements Inte
                 .post(Entity.entity(internship, MediaType.APPLICATION_XML_TYPE));
 
         int status = response.getStatus();
-        if (status == Response.Status.OK.getStatusCode()) {
+        if (status != Response.Status.OK.getStatusCode()) {
             return null;
         }               else {
             Internship entity = response.readEntity(Internship.class);

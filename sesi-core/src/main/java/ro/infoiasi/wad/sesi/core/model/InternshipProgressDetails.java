@@ -22,6 +22,7 @@ public class InternshipProgressDetails extends StudentInternshipRelation {
         return getFeedback();
     }
 
+
     public Teacher getTeacher() {
         return teacher;
     }

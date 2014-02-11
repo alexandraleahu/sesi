@@ -34,7 +34,7 @@
             </g:HTMLPanel>
             <b:Button type="INFO" ui:field="newInternship" text="Create new internship"/>
             <g:HTMLPanel ui:field="newInternshipsPanel"/>
-            <b:Button ui:field="publishBtn" text="Publish" type="INFO" visible="false"/>
+            <b:Button ui:field="publishBtn" text="Publish" type="INFO" visible="false" addStyleNames="{resource.style.standardMarginTop}"/>
         </b:Tab>
     </b:TabPanel>
 </ui:UiBinder>

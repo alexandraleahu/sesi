@@ -90,6 +90,12 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
     Tab recommendedInternshipsTab;
     @UiField
     Tab applicationsTab;
+    @UiField
+    ResourceListVew<Internship> recommendedList;
+    @UiField
+    ResourceListVew<InternshipProgressDetails> progressDetailsList;
+    @UiField
+    ResourceListVew<InternshipApplication> applicationsList;
 
     private StudentView profileView;
     private StudentEditor profileEditor;
@@ -155,9 +161,7 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
 
             }
         });
-        initApplicationsPanel();
-        initProgressDetailsTab();
-        initRecommendedInternships();
+
     }
 
     private void initRecommendedInternships() {
@@ -174,10 +178,8 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
             @Override
             public void onSuccess(List<Internship> result) {
 
-                ResourceListVew<Internship> resourceListVew = new ResourceListVew<Internship>();
-                recommendedPanel.add(resourceListVew);
 
-                resourceListVew.setValue(result);
+                recommendedList.setValue(result);
             }
         });
     }
@@ -196,10 +198,8 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
             @Override
             public void onSuccess(List<InternshipProgressDetails> result) {
 
-                ResourceListVew<InternshipProgressDetails> resourceListVew = new ResourceListVew<InternshipProgressDetails>();
-                progressDetailsPanel.add(resourceListVew);
 
-                resourceListVew.setValue(result);
+                progressDetailsList.setValue(result);
             }
         });
     }
@@ -218,10 +218,8 @@ public class StudentMainView extends Composite implements ResourceMainView<Stude
             @Override
             public void onSuccess(List<InternshipApplication> result) {
 
-                ResourceListVew<InternshipApplication> resourceListVew = new ResourceListVew<InternshipApplication>();
-                applicationsPanel.add(resourceListVew);
 
-                resourceListVew.setValue(result);
+                applicationsList.setValue(result);
             }
         });
 

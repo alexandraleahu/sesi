@@ -54,9 +54,9 @@ public class CompaniesDao extends BasicDao {
             StringBuilder sb = new StringBuilder()
                     .append("describe ?internship ")
                     .append("where {")
-                    .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
-                    .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:publishedInternship ?internship . ")
+                    .append("?c rdf:type sesiSchema:SoftwareCompany ; ")
+                    .append("sesiSchema:id ?id . ")
+                    .append("?internship sesiSchema:publishedByCompany ?c. ")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
@@ -74,9 +74,9 @@ public class CompaniesDao extends BasicDao {
             StringBuilder sb = new StringBuilder()
                     .append("describe ?application ")
                     .append("where {")
-                    .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
-                    .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:hasApplication ?application . ")
+                    .append("?c rdf:type sesiSchema:SoftwareCompany ; ")
+                    .append("sesiSchema:id ?id . ")
+                    .append("?i sesiSchema:publishedByCompany ?c. ?application sesiSchema:applicationInternship ?i")
                     .append("}");
 
             GraphQuery graphQuery = con.graph(sb.toString());
@@ -93,12 +93,11 @@ public class CompaniesDao extends BasicDao {
         ReasoningConnection con = connectionPool.getConnection();
         try {
             StringBuilder sb = new StringBuilder()
-                    .append("describe ?progressDetails ")
+                    .append("describe ?pd ")
                     .append("where {")
-                    .append("[] rdf:type sesiSchema:SoftwareCompany ; ")
-                    .append("sesiSchema:id ?id ; ")
-                    .append("sesiSchema:publishedInternship ?internship . ")
-                    .append("?internship sesiSchema:progressDetails ?progressDetails . ")
+                    .append("?c rdf:type sesiSchema:SoftwareCompany ; ")
+                    .append("sesiSchema:id ?id . ")
+                    .append("?i sesiSchema:publishedByCompany ?c. ?pd sesiSchema:attendedInternship ?i.")
                     .append("}");
 
 

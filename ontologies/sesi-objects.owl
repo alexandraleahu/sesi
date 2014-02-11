@@ -129,48 +129,6 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/objects/sesi#anothercompanyinternship -->
-
-    <owl:NamedIndividual rdf:about="http://www.infoiasi.ro/wad/objects/sesi#anothercompanyinternship">
-        <rdf:type rdf:resource="&sesiSchema;Internship"/>
-        <rdfs:label>Mobile_Internship</rdfs:label>
-        <sesiSchema:id rdf:datatype="&xsd;string">103</sesiSchema:id>
-        <sesiSchema:openingsCount rdf:datatype="&xsd;nonNegativeInteger">2</sesiSchema:openingsCount>
-        <sesiSchema:salaryValue rdf:datatype="&xsd;decimal">200</sesiSchema:salaryValue>
-        <sesiSchema:publishedAt rdf:datatype="&xsd;dateTime">2014-02-12T11:00:00</sesiSchema:publishedAt>
-        <freebase:time.event.start_date rdf:datatype="&xsd;dateTime">2014-07-14T10:00:00</freebase:time.event.start_date>
-        <freebase:time.event.end_date rdf:datatype="&xsd;dateTime">2014-09-14T18:00:00</freebase:time.event.end_date>
-        <sesiSchema:name rdf:datatype="&xsd;string">C# mobile internship</sesiSchema:name>
-        <sesiSchema:preferredGeneralSkill rdf:datatype="&xsd;string">Motivated</sesiSchema:preferredGeneralSkill>
-        <sesiSchema:acquiredGeneralSkill rdf:datatype="&xsd;string">Team work</sesiSchema:acquiredGeneralSkill>
-        <sesiSchema:description rdf:datatype="&xsd;string">This internship consists of developing new modules to our existing mobile application</sesiSchema:description>
-        <sesiSchema:offersRelocation rdf:datatype="&xsd;boolean">true</sesiSchema:offersRelocation>
-        <sesiSchema:sesiUrl>/internships/103</sesiSchema:sesiUrl>
-        <sesiSchema:inCity rdf:resource="&freebase;m.01fhg3"/>
-        <sesiSchema:salaryCurrency rdf:resource="&freebase;m.02zsyq"/>
-        <sesiSchema:preferredTechnicalSkill rdf:resource="&freebase;m.07657k"/>
-        <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;Java-Intermediate"/>
-        <sesiSchema:publishedByCompany rdf:resource="&sesi;anothercomp"/>
-        <sesiSchema:category rdf:resource="&sesiSchema;BusinessSoftware"/>
-        <sesiSchema:category rdf:resource="&sesiSchema;Mobile"/>
-        <sesiSchema:category rdf:resource="&sesiSchema;WebDev"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/objects/sesi#vasileprogressdetails -->
-
-    <owl:NamedIndividual rdf:about="http://www.infoiasi.ro/wad/objects/sesi#vasileprogressdetails">
-        <rdf:type rdf:resource="&sesiSchema;InternshipProgressDetails"/>
-        <sesiSchema:feedback rdf:datatype="&xsd;string">Your application has been considered.</sesiSchema:feedback>
-        <sesiSchema:attendedInternship rdf:resource="http://www.infoiasi.ro/wad/objects/sesi#anothercompanyinternship"/>
-        <sesiSchema:associateInternshipTeacher rdf:resource="&sesi;ionbarbu"/>
-        <sesiSchema:status rdf:resource="&sesiSchema;pending"/>
-        <sesiSchema:attendeeStudent rdf:resource="&sesiSchema;vasilelupu"/>
-    </owl:NamedIndividual>
-    
-
-
     <!-- http://www.infoiasi.ro/wad/objects/sesi/003 -->
 
     <owl:NamedIndividual rdf:about="&sesi;003">
@@ -231,6 +189,36 @@
     
 
 
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/103 -->
+
+    <owl:NamedIndividual rdf:about="&sesi;103">
+        <rdf:type rdf:resource="&sesiSchema;Internship"/>
+        <rdfs:label>Mobile_Internship</rdfs:label>
+        <sesiSchema:id rdf:datatype="&xsd;string">103</sesiSchema:id>
+        <sesiSchema:openingsCount rdf:datatype="&xsd;nonNegativeInteger">2</sesiSchema:openingsCount>
+        <sesiSchema:salaryValue rdf:datatype="&xsd;decimal">200</sesiSchema:salaryValue>
+        <sesiSchema:publishedAt rdf:datatype="&xsd;dateTime">2014-02-12T11:00:00</sesiSchema:publishedAt>
+        <freebase:time.event.start_date rdf:datatype="&xsd;dateTime">2014-07-14T10:00:00</freebase:time.event.start_date>
+        <freebase:time.event.end_date rdf:datatype="&xsd;dateTime">2014-09-14T18:00:00</freebase:time.event.end_date>
+        <sesiSchema:name rdf:datatype="&xsd;string">C# mobile internship</sesiSchema:name>
+        <sesiSchema:preferredGeneralSkill rdf:datatype="&xsd;string">Motivated</sesiSchema:preferredGeneralSkill>
+        <sesiSchema:acquiredGeneralSkill rdf:datatype="&xsd;string">Team work</sesiSchema:acquiredGeneralSkill>
+        <sesiSchema:description rdf:datatype="&xsd;string">This internship consists of developing new modules to our existing mobile application</sesiSchema:description>
+        <sesiSchema:offersRelocation rdf:datatype="&xsd;boolean">true</sesiSchema:offersRelocation>
+        <sesiSchema:sesiUrl>/internships/103</sesiSchema:sesiUrl>
+        <sesiSchema:inCity rdf:resource="&freebase;m.01fhg3"/>
+        <sesiSchema:salaryCurrency rdf:resource="&freebase;m.02zsyq"/>
+        <sesiSchema:preferredTechnicalSkill rdf:resource="&freebase;m.07657k"/>
+        <sesiSchema:preferredTechnicalSkill rdf:resource="&sesi;Java-Intermediate"/>
+        <sesiSchema:acquiredTechnicalSkill rdf:resource="&sesi;Java_Platform__Enterprise_Edition-Basic"/>
+        <sesiSchema:publishedByCompany rdf:resource="&sesi;anotherComp"/>
+        <sesiSchema:category rdf:resource="&sesiSchema;BusinessSoftware"/>
+        <sesiSchema:category rdf:resource="&sesiSchema;Mobile"/>
+        <sesiSchema:category rdf:resource="&sesiSchema;WebDev"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.infoiasi.ro/wad/objects/sesi/Faculty_Of_Computer_Science -->
 
     <owl:NamedIndividual rdf:about="&sesi;Faculty_Of_Computer_Science">
@@ -272,17 +260,47 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/objects/sesi/anothercomp -->
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/anotherComp -->
 
-    <owl:NamedIndividual rdf:about="&sesi;anothercomp">
+    <owl:NamedIndividual rdf:about="&sesi;anotherComp">
         <rdf:type rdf:resource="&sesiSchema;SoftwareCompany"/>
         <rdfs:label>AnotherCompany</rdfs:label>
-        <sesiSchema:sesiUrl rdf:datatype="&xsd;string">/companies/anothercomp/</sesiSchema:sesiUrl>
         <sesiSchema:name rdf:datatype="&xsd;string">C# Company</sesiSchema:name>
         <sesiSchema:description rdf:datatype="&xsd;string">Software company working with C# technologies.</sesiSchema:description>
         <sesiSchema:id rdf:datatype="&xsd;string">anotherComp</sesiSchema:id>
         <sesiSchema:isActive rdf:datatype="&xsd;boolean">true</sesiSchema:isActive>
-        <sesiSchema:siteUrl rdf:datatype="&xsd;string">www.anothercompany.com</sesiSchema:siteUrl>
+        <sesiSchema:siteUrl rdf:datatype="&xsd;anyURI">www.anothercompany.com</sesiSchema:siteUrl>
+        <sesiSchema:sesiUrl>/companies/anotherComp/</sesiSchema:sesiUrl>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/asdQ -->
+
+    <owl:NamedIndividual rdf:about="&sesi;asdQ">
+        <rdf:type rdf:resource="&sesiSchema;InternshipProgressDetails"/>
+        <sesiSchema:feedback rdf:datatype="&xsd;string">The student is accomplishing his tasks very well</sesiSchema:feedback>
+        <sesiSchema:id rdf:datatype="&xsd;string">asdQ</sesiSchema:id>
+        <sesiSchema:sesiUrl>/internshipsProgressDetails/asdQ</sesiSchema:sesiUrl>
+        <sesiSchema:attendedInternship rdf:resource="&sesi;003"/>
+        <sesiSchema:associateInternshipTeacher rdf:resource="&sesi;ionbarbu"/>
+        <sesiSchema:attendeeStudent rdf:resource="&sesi;ionpopescu"/>
+        <sesiSchema:status rdf:resource="&sesiSchema;inProgress"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/hyrf -->
+
+    <owl:NamedIndividual rdf:about="&sesi;hyrf">
+        <rdf:type rdf:resource="&sesiSchema;InternshipProgressDetails"/>
+        <sesiSchema:feedback rdf:datatype="&xsd;string">The student looks overwhelmed by his tasks</sesiSchema:feedback>
+        <sesiSchema:id rdf:datatype="&xsd;string">hyrf</sesiSchema:id>
+        <sesiSchema:sesiUrl>/internshipsProgressDetails/hyrf</sesiSchema:sesiUrl>
+        <sesiSchema:attendedInternship rdf:resource="&sesi;103"/>
+        <sesiSchema:associateInternshipTeacher rdf:resource="&sesi;ionbarbu"/>
+        <sesiSchema:attendeeStudent rdf:resource="&sesi;vasilelupu"/>
+        <sesiSchema:status rdf:resource="&sesiSchema;inProgress"/>
     </owl:NamedIndividual>
     
 
@@ -329,6 +347,34 @@
     
 
 
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/studies008 -->
+
+    <owl:NamedIndividual rdf:about="&sesi;studies008">
+        <rdf:type rdf:resource="&sesiSchema;AcademicStudies"/>
+        <sesiSchema:yearOfStudy rdf:datatype="&xsd;nonNegativeInteger">1</sesiSchema:yearOfStudy>
+        <sesiSchema:studyFaculty rdf:resource="&sesi;Faculty_Of_Computer_Science"/>
+        <sesiSchema:hasEnrolledStudent rdf:resource="&sesi;vasilelupu"/>
+        <sesiSchema:degree rdf:resource="https://rdf.freebase.com/ns/m.016t_3"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.infoiasi.ro/wad/objects/sesi/vasilelupu -->
+
+    <owl:NamedIndividual rdf:about="&sesi;vasilelupu">
+        <rdf:type rdf:resource="&sesiSchema;Student"/>
+        <sesiSchema:description rdf:datatype="&xsd;string">Fast learning and motivated</sesiSchema:description>
+        <sesiSchema:name rdf:datatype="&xsd;string">Vasile Lupu</sesiSchema:name>
+        <sesiSchema:generalSkill rdf:datatype="&xsd;string">motivated</sesiSchema:generalSkill>
+        <sesiSchema:id rdf:datatype="&xsd;string">vasilelupu</sesiSchema:id>
+        <sesiSchema:sesiUrl>/students/vasilelupu/</sesiSchema:sesiUrl>
+        <sesiSchema:workedOnProject rdf:resource="&sesi;005"/>
+        <sesiSchema:technicalSkill rdf:resource="&sesi;Java-Intermediate"/>
+        <sesiSchema:hasStudies rdf:resource="&sesi;studies008"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.infoiasi.ro/wad/objects/sesi/virtualcomp -->
 
     <owl:NamedIndividual rdf:about="&sesi;virtualcomp">
@@ -344,34 +390,6 @@
     
 
 
-    <!-- http://www.infoiasi.ro/wad/objects/sesi/virtualprogressdetails -->
-
-    <owl:NamedIndividual rdf:about="&sesi;virtualprogressdetails">
-        <rdf:type rdf:resource="&sesiSchema;InternshipProgressDetails"/>
-        <sesiSchema:feedback rdf:datatype="&xsd;string">We are considering you application.</sesiSchema:feedback>
-        <sesiSchema:attendedInternship rdf:resource="&sesi;003"/>
-        <sesiSchema:associateInternshipTeacher rdf:resource="&sesi;ionbarbu"/>
-        <sesiSchema:attendeeStudent rdf:resource="&sesi;ionpopescu"/>
-        <sesiSchema:status rdf:resource="&sesiSchema;pending"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.infoiasi.ro/wad/schemas/sesi/vasilelupu -->
-
-    <owl:NamedIndividual rdf:about="&sesiSchema;vasilelupu">
-        <rdf:type rdf:resource="&sesiSchema;Student"/>
-        <sesiSchema:description rdf:datatype="&xsd;string">Fast learning and motivated</sesiSchema:description>
-        <sesiSchema:name rdf:datatype="&xsd;string">Vasile Lupu</sesiSchema:name>
-        <sesiSchema:generalSkill rdf:datatype="&xsd;string">motivated</sesiSchema:generalSkill>
-        <sesiSchema:id rdf:datatype="&xsd;string">vasilelupu</sesiSchema:id>
-        <sesiSchema:sesiUrl>/students/vasilelupu/</sesiSchema:sesiUrl>
-        <sesiSchema:technicalSkill rdf:resource="&sesi;Java-Intermediate"/>
-        <sesiSchema:hasStudies rdf:resource="&sesi;studies007"/>
-    </owl:NamedIndividual>
-    
-
-
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -383,15 +401,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
-            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
+            <rdf:Description rdf:about="&freebase;m.07657k"/>
+            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.02l6h"/>
-            <rdf:Description rdf:about="&freebase;m.02zsyq"/>
+            <rdf:Description rdf:about="&sesi;Java-Intermediate"/>
+            <rdf:Description rdf:about="&sesi;Java_Platform__Enterprise_Edition-Intermediate"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>
@@ -404,8 +422,15 @@
     <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&freebase;m.07657k"/>
-            <rdf:Description rdf:about="&freebase;m.07sbkfb"/>
+            <rdf:Description rdf:about="&sesi;ionpopescu"/>
+            <rdf:Description rdf:about="&sesi;vasilelupu"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&freebase;m.02l6h"/>
+            <rdf:Description rdf:about="&freebase;m.02zsyq"/>
         </owl:distinctMembers>
     </rdf:Description>
     <rdf:Description>

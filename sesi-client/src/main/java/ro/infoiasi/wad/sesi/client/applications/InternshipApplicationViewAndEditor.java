@@ -10,6 +10,7 @@ import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -119,6 +120,9 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
     Hyperlink internshipLink;
     @UiField
     Button saveBtn;
+    @UiField
+            @Ignore
+    Label result;
 
     public InternshipApplicationViewAndEditor() {
         initWidget(ourUiBinder.createAndBindUi(this));
@@ -156,9 +160,30 @@ public class InternshipApplicationViewAndEditor extends Composite implements Res
 
     @UiHandler("saveBtn")
     public void saveApplications(ClickEvent e) {
-        // TODO calling the server with the updates
+        InternshipApplication save = save();
+        InternshipApplicationsService.App.getInstance().updateStatus(save.getId(), save.getStatus(), new AsyncCallback<Boolean>() {
+            @Override
+            public void onFailure(Throwable caught) {
 
-        System.out.println(save());
+            }
+
+            @Override
+            public void onSuccess(Boolean r) {
+                 result.setText("Successfully updated!");
+            }
+        });
+        InternshipApplicationsService.App.getInstance().updateFeedback(save.getId(), save.getFeedback(), new AsyncCallback<Boolean>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+            }
+
+            @Override
+            public void onSuccess(Boolean r) {
+                result.setText("Successfully updated!");
+            }
+        });
+
     }
 
     

@@ -59,9 +59,9 @@ public class InternshipProgressDetailsResource {
 
     @PUT
     @Path("/{id}/status")
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes("application/x-www-form-urlencoded")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response updateStatus(@PathParam("id") String appId, String newStatus) {
+    public Response updateStatus(@PathParam("id") String appId, @FormParam("status")String newStatus) {
 
         InternshipProgressDetailsDao dao = new InternshipProgressDetailsDao();
         try {
@@ -74,9 +74,9 @@ public class InternshipProgressDetailsResource {
 
     @PUT
     @Path("/{id}/feedback")
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes("application/x-www-form-urlencoded")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response updateFeedback(@PathParam("id") String appId, String newFeedback) {
+    public Response updateFeedback(@PathParam("id") String appId, @FormParam("feedback")String newFeedback) {
 
         InternshipProgressDetailsDao dao = new InternshipProgressDetailsDao();
         try {
@@ -121,6 +121,8 @@ public class InternshipProgressDetailsResource {
             dao.createProgressDetails(progress);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(id)).build();
             return Response.created(uri)
+                    .entity(progress)
+                    .type(MediaType.APPLICATION_XML_TYPE)
                     .build();
 
         } catch (StardogException e) {

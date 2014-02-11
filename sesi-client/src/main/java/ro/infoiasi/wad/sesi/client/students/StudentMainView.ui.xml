@@ -1,7 +1,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
-        >
+             xmlns:r='urn:import:ro.infoiasi.wad.sesi.client.commonwidgets'>
+
     <ui:with field="resource" type="ro.infoiasi.wad.sesi.resources.SesiResources"/>
     <b:TabPanel tabPosition="left">
         <b:Tab heading="Profile" icon="PENCIL" active="true">
@@ -15,17 +16,20 @@
         </b:Tab>
         <b:Tab heading="My Applications"  icon="LIST" ui:field="applicationsTab">
             <g:HTMLPanel ui:field="applicationsPanel">
+                <r:ResourceListVew ui:field="applicationsList"/>
 
             </g:HTMLPanel>
         </b:Tab>
         <b:Tab heading="My Progress Details"  icon="LIST" ui:field="progressDetailsTab">
             <g:HTMLPanel ui:field="progressDetailsPanel">
+                <r:ResourceListVew ui:field="progressDetailsList"/>
 
             </g:HTMLPanel>
         </b:Tab>
         <b:Tab heading="Recommended internships"  icon="LIST" ui:field="recommendedInternshipsTab">
+            <g:Label text="These are the internships recommended to you based on your skills and projects you've worked on:"/>
             <g:HTMLPanel ui:field="recommendedPanel">
-
+                <r:ResourceListVew ui:field="recommendedList"/>
             </g:HTMLPanel>
         </b:Tab>
     </b:TabPanel>

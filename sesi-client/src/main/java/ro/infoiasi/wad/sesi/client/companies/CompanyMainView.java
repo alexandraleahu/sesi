@@ -15,7 +15,6 @@ import ro.infoiasi.wad.sesi.client.Sesi;
 import ro.infoiasi.wad.sesi.client.commonwidgets.ResourceListVew;
 import ro.infoiasi.wad.sesi.client.commonwidgets.widgetinterfaces.ResourceMainView;
 import ro.infoiasi.wad.sesi.client.internships.InternshipEditor;
-import ro.infoiasi.wad.sesi.client.internships.InternshipsService;
 import ro.infoiasi.wad.sesi.core.model.Company;
 import ro.infoiasi.wad.sesi.core.model.Internship;
 import ro.infoiasi.wad.sesi.core.model.InternshipApplication;
@@ -155,25 +154,28 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
     @UiHandler("publishBtn")
     public void publishInternship(ClickEvent e) {
         final Internship i = editor.save();
-        InternshipsService.App.getInstance().postInternship(i, new AsyncCallback<Internship>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                newInternshipsPanel.clear();
-                internshipPanel.add(new Label(LabelType.IMPORTANT, "Could not create internship!"));
+//        InternshipsService.App.getInstance().postInternship(i, new AsyncCallback<Internship>() {
+//            @Override
+//            public void onFailure(Throwable caught) {
+//                System.out.println(caught.getMessage() + Arrays.toString(caught.getStackTrace()));
+//                newInternshipsPanel.clear();
+//                internshipPanel.add(new Label(LabelType.IMPORTANT, "Could not create internship!"));
+//                publishBtn.setVisible(false);
+//                newInternship.setVisible(true);
+//            }
+//
+//            @Override
+//            public void onSuccess(Internship result) {
 
-            }
-
-            @Override
-            public void onSuccess(Internship result) {
-
-                internships.add(result);
+                i.setId("005");
+                internships.add(i);
                 internshipsList.setValue(internships);
                 newInternshipsPanel.clear();
                 publishBtn.setVisible(false);
                 newInternship.setVisible(true);
-
-            }
-        });
+//
+//            }
+//        });
     }
     @UiHandler("newInternship")
     public void createNewInternship(ClickEvent e) {
@@ -214,18 +216,9 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
             @Override
             public void onFailure(Throwable caught) {
                 loadingResultsIcon.setVisible(false);
-//                errorLabel.setVisible(true);
-//                System.out.println("Could not load company because: " + caught);
-                company = new Company();
-                company.setActive(true);
-                company.setCommunityRating(4);
-                company.setDescription("A company dealing with Java technologies, for business clients.");
-                company.setName("VirtualComp");
-                company.setSiteUrl("http://virtualcomp.ro");
-                company.setId("virtualcomp");
-                editProfileBtn.setVisible(true);
-                saveProfileBtn.setVisible(true);
-                switchViewMode();
+                errorLabel.setVisible(true);
+                System.out.println("Could not load company because: " + caught);
+
 
             }
 
@@ -235,8 +228,8 @@ public class CompanyMainView extends Composite implements ResourceMainView<Compa
                 if (result != null) {
                     errorLabel.setVisible(false);
                     company = result;
-                    editProfileBtn.setVisible(true);
-                    saveProfileBtn.setVisible(true);
+//                    editProfileBtn.setVisible(true);
+//                    saveProfileBtn.setVisible(true);
                     switchViewMode();
 
                 } else {

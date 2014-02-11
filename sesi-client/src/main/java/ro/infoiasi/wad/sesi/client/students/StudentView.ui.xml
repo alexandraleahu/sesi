@@ -41,11 +41,6 @@
                 </b:Column>
             </b:Row>
             <b:Row>
-                <b:Column size="2">
-                    <b:Label type="INFO" text="Studies"/>
-                </b:Column>
-            </b:Row>
-            <b:Row>
                 <b:Column size="4">
                     <b:Label type="INFO" text="Faculty"/>
                 </b:Column>

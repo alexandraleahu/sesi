@@ -10,6 +10,7 @@ import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -133,6 +134,12 @@ public class InternshipProgressDetailsViewerAndEditor extends Composite implemen
     Label statusView;
     @UiField
     Button saveBtn;
+    @UiField
+            @Ignore
+    Label result;
+    @UiField
+            @Ignore
+    com.github.gwtbootstrap.client.ui.Label feedbackLabel;
 
     public InternshipProgressDetailsViewerAndEditor() {
         initWidget(ourUiBinder.createAndBindUi(this));
@@ -162,7 +169,8 @@ public class InternshipProgressDetailsViewerAndEditor extends Composite implemen
             statusView.setVisible(true);
 
             feedbackEdit.removeFromParent();
-            feedbackView.setVisible(true);
+            feedbackView.setVisible(false);
+            feedbackLabel.setVisible(false);
 
             saveBtn.removeFromParent();
         }
@@ -172,8 +180,28 @@ public class InternshipProgressDetailsViewerAndEditor extends Composite implemen
 
     @UiHandler("saveBtn")
     public void saveApplications(ClickEvent e) {
-        // TODO calling the server with the updates
+        InternshipProgressDetails save = save();
+        InternshipsProgressDetailsService.App.getInstance().updateStatus(save.getId(), save.getStatus(), new AsyncCallback<Boolean>() {
+            @Override
+            public void onFailure(Throwable caught) {
 
-        System.out.println(save());
+            }
+
+            @Override
+            public void onSuccess(Boolean r) {
+                result.setText("Successfully updated!");
+            }
+        });
+        InternshipsProgressDetailsService.App.getInstance().updateFeedback(save.getId(), save.getFeedback(), new AsyncCallback<Boolean>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+            }
+
+            @Override
+            public void onSuccess(Boolean r) {
+                result.setText("Successfully updated!");
+            }
+        });
     }
 }

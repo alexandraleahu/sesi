@@ -2,6 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:b='urn:import:com.github.gwtbootstrap.client.ui'
              xmlns:c='urn:import:ro.infoiasi.wad.sesi.client.reports'
+             xmlns:r='urn:import:ro.infoiasi.wad.sesi.client.commonwidgets'
              xmlns:o='urn:import:ro.infoiasi.wad.sesi.client.ontologyextrainfo'
              xmlns:t="urn:import:ro.infoiasi.wad.sesi.client.teachers">
 
@@ -23,8 +24,8 @@
             <c:ReportEditor ui:field="reportEditor"/>
          </b:Tab>
         <b:Tab heading="Monitored internships" icon="LIST" ui:field="monitoredInternshipsTab">
-            <g:HTMLPanel ui:field="internshipPanel">
-
+            <g:HTMLPanel ui:field="internshipsPanel">
+                <r:ResourceListVew ui:field="resourceListVew"/>
             </g:HTMLPanel>
 
          </b:Tab>

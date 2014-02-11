@@ -76,6 +76,11 @@
                              <b:Button type="INFO" block="true" ui:field="saveBtn">Save</b:Button>
                          </b:Column>
                      </b:Row>
+                     <b:Row>
+                         <b:Column size="5">
+                             <g:Label ui:field="result"/>
+                         </b:Column>
+                     </b:Row>
 
                  </b:Fieldset>
              </b:WellForm>

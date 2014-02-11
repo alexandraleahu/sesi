@@ -8,6 +8,7 @@ import ro.infoiasi.wad.sesi.core.model.InternshipProgressDetails;
 import ro.infoiasi.wad.sesi.core.model.StudentInternshipRelation;
 
 import javax.ws.rs.client.*;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.StringReader;
@@ -53,9 +54,11 @@ public class InternshipsProgressDetailsServiceImpl extends RemoteServiceServlet 
     public boolean updateStatus(String appId, StudentInternshipRelation.Status newStatus) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL)
-                .path(RESOURCE_PATH).path("status");
+                .path(RESOURCE_PATH).path(appId).path("status");
+        Form form  = new Form();
+        form.param("status", newStatus.toString());
         Response response = target.request(MediaType.APPLICATION_XML)
-                .put(Entity.entity(newStatus.toString(), MediaType.APPLICATION_XML_TYPE));
+                .put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
         int status = response.getStatus();
         client.close();
@@ -66,9 +69,11 @@ public class InternshipsProgressDetailsServiceImpl extends RemoteServiceServlet 
     public boolean updateFeedback(String appId, String newFeedback) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(SESI_BASE_URL)
-                .path(RESOURCE_PATH).path("feedback");
+                .path(RESOURCE_PATH).path(appId).path("feedback");
+        Form form  = new Form();
+        form.param("feedback", newFeedback);
         Response response = target.request(MediaType.APPLICATION_XML)
-                .put(Entity.entity(newFeedback.toString(), MediaType.APPLICATION_XML_TYPE));
+                .put(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 
         int status = response.getStatus();
         client.close();

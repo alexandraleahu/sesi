@@ -20,8 +20,11 @@ public class TechnicalSkillView extends Composite implements LeafValueEditor<Lis
     private List<TechnicalSkill> value;
     @Override
     public void setValue(List<TechnicalSkill> value) {
-        this.value = value;
-        skillsTable.setRowData(this.value);
+        if (value != null) {
+            this.value = value;
+            skillsTable.setRowData(this.value);
+        }
+
     }
 
     @Override
